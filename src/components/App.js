@@ -5,6 +5,11 @@ import 'styles/App.css';
 import Home from 'components/Home';
 import About from 'components/About';
 
+const ENV_ROUTES = {
+  production: '/build',
+  development: '/'
+}
+
 function Routes(props) {
   return (
     <Router basename={props.basedir}>
@@ -17,11 +22,6 @@ function Routes(props) {
 }
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.basedir = '/build';
-    console.log(process.env);
-  }
   render() {
     return (
       <div className="App">
@@ -32,7 +32,7 @@ class App extends React.Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <Routes basedir={this.basedir} />
+        <Routes basedir={ENV_ROUTES[process.env.NODE_ENV]} />
       </div>
     );
   }
