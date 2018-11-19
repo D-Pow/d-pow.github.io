@@ -4,17 +4,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'styles/App.css';
 import Home from 'components/Home';
 import About from 'components/About';
+import Header from 'components/Header';
 import Footer from 'components/Footer';
 
 const ENV_ROUTES = {
   production: '/build',
   development: '/'
-}
+};
 
 function Routes(props) {
   return (
     <Router basename={props.basedir}>
-      <div>
+      <div className={'container'}>
         <Route exact path='/' component={Home} />
         <Route path='/about' component={About} />
       </div>
@@ -26,6 +27,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <Header />
         <Routes basedir={ENV_ROUTES[process.env.NODE_ENV]} />
         <Footer />
       </div>
