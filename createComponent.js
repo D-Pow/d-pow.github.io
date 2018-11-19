@@ -23,6 +23,23 @@ function createComponent(componentName = "MyComponent") {
 function createClass(componentName, dirName = 'components') {
     const dir = `./src/${dirName}/${componentName}`;
     const indexText = `import ${componentName} from './${componentName}';\n\nexport default ${componentName};\n`;
+    const componentText = 
+`import React from 'react';
+
+class ${componentName} extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div></div>
+        );
+    }
+}
+
+export default ${componentName};
+`;
     fs.mkdir(`${dir}`, {recursive: true}, err => {
         if (err) {
             error(err);
@@ -31,7 +48,7 @@ function createClass(componentName, dirName = 'components') {
                 if (err) {
                     error(err);
                 } else {
-                    fs.writeFile(`${dir}/${componentName}.js`, '', err => {
+                    fs.writeFile(`${dir}/${componentName}.js`, componentText, err => {
                         if (err) {
                             error(err);
                         } else {
