@@ -31,7 +31,7 @@ function Routes(props) {
     return (
         <Router basename={props.basedir}>
             <div className={'container-fluid'}>
-                <Header />
+                <Header navRoutes={routes} />
                 {renderedRoutes}
                 <Footer />
             </div>
