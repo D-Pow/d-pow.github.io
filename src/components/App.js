@@ -8,31 +8,31 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 
 const ENV_ROUTES = {
-  production: '/build',
-  development: '/'
+    production: '/build',
+    development: '/'
 };
 
 function Routes(props) {
-  return (
-    <Router basename={props.basedir}>
-      <div className={'container'}>
-        <Route exact path='/' component={Home} />
-        <Route path='/about' component={About} />
-      </div>
-    </Router>
-  );
+    return (
+        <Router basename={props.basedir}>
+            <div className={'container-fluid'}>
+                <Header />
+                <Route exact path='/' component={Home} />
+                <Route path='/about' component={About} />
+                <Footer />
+            </div>
+        </Router>
+    );
 }
 
 class App extends React.Component {
-  render() {
-    return (
-      <div className="App">
-        <Header />
-        <Routes basedir={ENV_ROUTES[process.env.NODE_ENV]} />
-        <Footer />
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="App">
+                <Routes basedir={ENV_ROUTES[process.env.NODE_ENV]} />
+            </div>
+        );
+    }
 }
 
 export default App;
