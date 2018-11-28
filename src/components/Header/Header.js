@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 
 class Header extends React.Component {
     renderNav() {
-        return (<Navbar routes={this.props.navRoutes} />);
+        return (<Navbar basedir={this.props.basedir} routes={this.props.navRoutes} />);
     }
 
     render() {
@@ -17,9 +17,10 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
+    basedir: PropTypes.string.isRequired,
     navRoutes: PropTypes.arrayOf(PropTypes.shape({
         path: PropTypes.string.isRequired,
-        component: PropTypes.func
+        component: PropTypes.func.isRequired
     }))
 };
 
