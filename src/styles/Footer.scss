@@ -1,0 +1,21 @@
+.footer-title {
+    display: inline;
+    color: #999;
+}
+
+.react-logo {
+    vertical-align: middle;
+    animation: logo-spin infinite 10s linear;
+    height: 30px;
+}
+
+.footer-container {
+    background-color: #f7f6f6;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+@keyframes logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
