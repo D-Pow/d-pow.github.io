@@ -12,13 +12,27 @@ const ENV_ROUTES = {
     development: '/'
 };
 
+const routes = [
+    {
+        path: '/',
+        component: Home,
+        exact: true
+    },
+    {
+        path: '/about',
+        component: About
+    }
+];
+
 function Routes(props) {
+    const renderedRoutes = routes.map(routeAria => (
+        <Route key={routeAria.path} {...routeAria} />
+    ));
     return (
         <Router basename={props.basedir}>
             <div className={'container-fluid'}>
                 <Header />
-                <Route exact path='/' component={Home} />
-                <Route path='/about' component={About} />
+                {renderedRoutes}
                 <Footer />
             </div>
         </Router>

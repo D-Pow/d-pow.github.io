@@ -1,3 +1,7 @@
 .App {
     text-align: center;
 }
+
+.container-fluid {
+    padding: 0px;
+}
