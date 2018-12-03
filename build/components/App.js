@@ -1,36 +1,53 @@
 import React from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'styles/App.css';
 import Home from 'components/Home';
 import About from 'components/About';
+import Header from 'components/Header';
 import Footer from 'components/Footer';
 
 const ENV_ROUTES = {
-  production: '/build',
-  development: '/'
-}
+    production: '/build',
+    development: '/'
+};
+
+const routes = [
+    {
+        path: '/',
+        component: Home,
+        exact: true
+    },
+    {
+        path: '/about',
+        component: About
+    }
+];
 
 function Routes(props) {
-  return (
-    <Router basename={props.basedir}>
-      <div>
-        <Route exact path='/' component={Home} />
-        <Route path='/about' component={About} />
-      </div>
-    </Router>
-  );
+    const renderedRoutes = routes.map(routeAria => (
+        <Route key={routeAria.path} {...routeAria} />
+    ));
+    return (
+        <Router basename={props.basedir}>
+            <React.Fragment>
+                <Header basedir={props.basedir} navRoutes={routes} />
+                <div className={'justify-content-center flex-grow-1'}>
+                    {renderedRoutes}
+                </div>
+                <Footer />
+            </React.Fragment>
+        </Router>
+    );
 }
 
 class App extends React.Component {
-  render() {
-    return (
-      <div className="App">
-        <Routes basedir={ENV_ROUTES[process.env.NODE_ENV]} />
-        <Footer />
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="App text-center h-100 d-flex flex-column flex-grow-1">
+                <Routes basedir={ENV_ROUTES[process.env.NODE_ENV]} />
+            </div>
+        );
+    }
 }
 
 export default App;

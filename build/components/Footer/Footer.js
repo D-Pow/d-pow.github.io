@@ -1,15 +1,21 @@
 import React from 'react';
 import reactLogo from 'assets/react_logo.svg';
-import 'styles/Footer.css';
+import 'styles/Footer.scss';
 
 class Footer extends React.Component {
+    renderReactLogo() {
+        return (
+            <span className={'d-flex justify-content-center'}>
+                <h4 className={'footer-title'}>Made with React 16</h4>
+                <img src={reactLogo} className="react-logo" alt="logo" />
+            </span>
+        );
+    }
+
     render() {
         return (
-            <footer>
-                <span>
-                    <h4 className={'inline-title'}>Made with React 16</h4>
-                    <img src={reactLogo} className="react-logo" alt="logo" />
-                </span>
+            <footer className={'footer-container w-100'}>
+                {this.renderReactLogo()}
             </footer>
         );
     }

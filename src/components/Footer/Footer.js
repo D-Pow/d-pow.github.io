@@ -5,7 +5,7 @@ import 'styles/Footer.scss';
 class Footer extends React.Component {
     renderReactLogo() {
         return (
-            <span>
+            <span className={'d-flex justify-content-center'}>
                 <h4 className={'footer-title'}>Made with React 16</h4>
                 <img src={reactLogo} className="react-logo" alt="logo" />
             </span>
@@ -14,7 +14,7 @@ class Footer extends React.Component {
 
     render() {
         return (
-            <footer className={'footer-container'}>
+            <footer className={'footer-container w-100'}>
                 {this.renderReactLogo()}
             </footer>
         );

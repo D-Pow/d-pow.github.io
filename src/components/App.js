@@ -1,7 +1,6 @@
 import React from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'styles/App.css';
 import Home from 'components/Home';
 import About from 'components/About';
 import Header from 'components/Header';
@@ -30,11 +29,13 @@ function Routes(props) {
     ));
     return (
         <Router basename={props.basedir}>
-            <div className={'container-fluid'}>
+            <React.Fragment>
                 <Header basedir={props.basedir} navRoutes={routes} />
-                {renderedRoutes}
+                <div className={'justify-content-center flex-grow-1'}>
+                    {renderedRoutes}
+                </div>
                 <Footer />
-            </div>
+            </React.Fragment>
         </Router>
     );
 }
@@ -42,7 +43,7 @@ function Routes(props) {
 class App extends React.Component {
     render() {
         return (
-            <div className="App">
+            <div className="App text-center h-100 d-flex flex-column flex-grow-1">
                 <Routes basedir={ENV_ROUTES[process.env.NODE_ENV]} />
             </div>
         );
