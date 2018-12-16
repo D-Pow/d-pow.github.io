@@ -6,11 +6,6 @@ import About from 'components/About';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
-const ENV_ROUTES = {
-    production: '/website',
-    development: '/'
-};
-
 const routes = [
     {
         path: '/',
@@ -44,7 +39,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="App text-center h-100 d-flex flex-column flex-grow-1">
-                <Routes basedir={ENV_ROUTES[process.env.NODE_ENV]} />
+                <Routes />
             </div>
         );
     }

@@ -16,7 +16,6 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-    basedir: PropTypes.string.isRequired,
     navRoutes: PropTypes.arrayOf(PropTypes.shape({
         path: PropTypes.string.isRequired,
         component: PropTypes.func.isRequired
