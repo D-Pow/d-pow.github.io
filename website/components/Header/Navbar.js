@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import { Link } from 'react-router-dom';
 
 class Navbar extends React.Component {
     renderRouteButtons() {
         return this.props.routes.map(routeAria => {
-            const name = routeAria.component.name;
-            const { path } = routeAria;
-            const url = `${this.props.basedir}#${path}`;
+            const { path, component: { name }} = routeAria;
             const currentPath = window.location.hash.slice(1);
             const active = currentPath === path;
             const classNames = ['nav-link'];
@@ -14,7 +13,7 @@ class Navbar extends React.Component {
                 classNames.push('active');
             }
             return (
-                <a className={classNames.join(' ')} href={url} key={url}>{name}</a>
+                <Link to={path} className={classNames.join(' ')} key={path} replace={active}>{name}</Link>
             );
         });
     }
@@ -29,7 +28,6 @@ class Navbar extends React.Component {
 }
 
 Navbar.propTypes = {
-    basedir: PropTypes.string.isRequired,
     routes: PropTypes.arrayOf(PropTypes.shape({
         path: PropTypes.string.isRequired,
         component: PropTypes.func.isRequired
