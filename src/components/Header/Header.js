@@ -3,17 +3,13 @@ import PropTypes from 'prop-types';
 import Navbar from './Navbar';
 
 class Header extends React.Component {
-    renderNav() {
-        return (<Navbar basedir={this.props.basedir} routes={this.props.navRoutes} />);
-    }
-
     render() {
         return (
             <header className={'d-flex w-100 justify-content-center'}>
                 <div className={'navbar-brand'}>
                     Header
                 </div>
-                {this.renderNav()}
+                <Navbar routes={this.props.navRoutes} />
             </header>
         );
     }
