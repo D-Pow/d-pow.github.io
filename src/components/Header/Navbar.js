@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class Navbar extends React.Component {
     renderRouteButtons() {
         return this.props.routes.map(routeAria => {
-            const { path, component: { name }} = routeAria;
+            const { path, name } = routeAria;
             const currentPath = window.location.hash.slice(1);
             const active = currentPath === path;
             const classNames = ['nav-link'];
