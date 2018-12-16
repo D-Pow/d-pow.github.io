@@ -2,7 +2,7 @@
   "name": "d-pow.github.io",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://d-pow.github.io/build",
+  "homepage": "http://d-pow.github.io/website",
   "dependencies": {
     "@babel/core": "7.1.0",
     "@svgr/webpack": "2.4.1",
