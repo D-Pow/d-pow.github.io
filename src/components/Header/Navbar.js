@@ -8,7 +8,7 @@ class Navbar extends React.Component {
             const { path, name } = routeAria;
             const currentPath = window.location.hash.slice(1);
             const active = currentPath === path;
-            const classNames = ['nav-link'];
+            const classNames = ['nav-link text-light'];
             if (active) {
                 classNames.push('active');
             }
@@ -20,7 +20,7 @@ class Navbar extends React.Component {
 
     render() {
         return (
-            <nav className={'nav justify-content-end'}>
+            <nav className={'nav ml-auto border-left border-bottom border-primary border-size-3'}>
                 {this.renderRouteButtons()}
             </nav>
         );

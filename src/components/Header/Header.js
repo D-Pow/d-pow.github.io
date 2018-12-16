@@ -6,9 +6,6 @@ class Header extends React.Component {
     render() {
         return (
             <header className={'d-flex w-100 justify-content-center'}>
-                <div className={'navbar-brand'}>
-                    Header
-                </div>
                 <Navbar routes={this.props.navRoutes} />
             </header>
         );
