@@ -13,7 +13,7 @@ class Navbar extends React.Component {
                 classNames.push('active');
             }
             return (
-                <Link to={path} className={classNames.join(' ')} key={path}>{name}</Link>
+                <Link to={path} className={classNames.join(' ')} key={path} replace={active}>{name}</Link>
             );
         });
     }
