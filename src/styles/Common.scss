@@ -1,0 +1,19 @@
+$primary: #3500D3;
+$secondary: #240090;
+$tertiary: #190061;
+$quaternary: #0C0032;
+$light: #f7f6f6;
+$dark: #282828;
+
+$theme-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "tertiary": $tertiary,
+    "quaternary": $quaternary,
+    "light": $light,
+    "dark": $dark
+);
+
+$body-bg: $dark;
+
+@import "~bootstrap/scss/bootstrap";
