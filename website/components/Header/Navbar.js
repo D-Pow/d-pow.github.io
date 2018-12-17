@@ -20,7 +20,7 @@ class Navbar extends React.Component {
 
     render() {
         return (
-            <nav className={'nav justify-content-end'}>
+            <nav className={'nav ml-auto border-left border-bottom border-primary border-size-3'}>
                 {this.renderRouteButtons()}
             </nav>
         );

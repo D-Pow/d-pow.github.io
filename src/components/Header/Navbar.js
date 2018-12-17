@@ -8,7 +8,7 @@ class Navbar extends React.Component {
             const { path, name } = routeAria;
             const currentPath = window.location.hash.slice(1);
             const active = currentPath === path;
-            const classNames = ['nav-link text-light'];
+            const classNames = ['nav-link'];
             if (active) {
                 classNames.push('active');
             }
