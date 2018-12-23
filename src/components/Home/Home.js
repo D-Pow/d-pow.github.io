@@ -1,9 +1,12 @@
 import React from 'react';
+import 'styles/Header.scss';
 
 class Home extends React.Component {
     render() {
         return (
-            <React.Fragment>Home</React.Fragment>
+            <div style={{height: '1000px'}}>
+                Home
+            </div>
         );
     }
 }
