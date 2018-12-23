@@ -1,12 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Navbar from './Navbar';
+import {Link} from "react-router-dom";
 
 class Header extends React.Component {
-    render() {
+    renderNavBar() {
+        const routeLinks = this.props.navRoutes.map(routeAria => {
+            const { path, name } = routeAria;
+            const currentPath = window.location.hash.slice(1);
+            const active = currentPath === path;
+            const classNames = ['nav-link'];
+            if (active) {
+                routeAria.active = true;
+                classNames.push('active');
+            }
+            return (
+                <Link to={path} className={classNames.join(' ')} key={path} replace={active}>{name}</Link>
+            );
+        });
+
         return (
-            <header className={'d-flex w-100 justify-content-center'}>
-                <Navbar routes={this.props.navRoutes} />
+            <nav className={'nav ml-auto border-left border-bottom border-primary border-size-3'}>
+                {routeLinks}
+            </nav>
+        );
+    }
+
+    render() {
+        const navBar = this.renderNavBar();
+        const classNames = [
+            'header',
+            'd-flex',
+            'w-100',
+            'justify-content-center'
+        ];
+
+        return (
+            <header className={classNames.join(' ')} ref={this.ref}>
+                {navBar}
             </header>
         );
     }
