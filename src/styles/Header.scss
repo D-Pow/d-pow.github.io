@@ -1,4 +1,10 @@
 .header {
   position: fixed;
   top: 0px;
+  transition: all 0.5s ease-out;
+}
+
+.header.header-hidden {
+  top: -100px;
+  visibility: hidden;
 }
