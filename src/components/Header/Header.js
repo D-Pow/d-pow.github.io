@@ -5,7 +5,14 @@ import {Link} from "react-router-dom";
 class Header extends React.Component {
     constructor(props) {
         super(props);
-        this.ref = React.createRef();
+        this.state = {
+            classList: [
+                'header',
+                'd-flex',
+                'w-100',
+                'justify-content-center'
+            ]
+        };
         this.handleScroll = this.handleScroll.bind(this);
     }
 
@@ -15,26 +22,32 @@ class Header extends React.Component {
     }
 
     handleScroll() {
-        const hideHeader = this.props.navRoutes[0].active && window.scrollY === 0;
-        this.toggleHeader(hideHeader)
+        const hideHeader = this.isActivePath(0) && window.scrollY === 0;
+        this.toggleHeader(hideHeader);
     }
 
     toggleHeader(hide) {
-        const { classList } = this.ref.current;
-        if (hide) {
-            classList.remove('d-flex');
-            classList.add('d-none');
-        } else {
-            classList.remove('d-none');
-            classList.add('d-flex');
+        const classList = [...this.state.classList];
+        const className = 'header-hidden';
+        const index = classList.indexOf(className);
+        if (hide && index === -1) {
+            classList.push(className);
+        } else if (index >= 0) {
+            classList.splice(index, 1);
         }
+        this.setState({ classList: classList});
+    }
+
+    isActivePath(routeIndex) {
+        const { path } = this.props.navRoutes[routeIndex];
+        const currentPath = window.location.hash.slice(1);
+        return currentPath === path;
     }
 
     renderNavBar() {
-        const routeLinks = this.props.navRoutes.map(routeAria => {
+        const routeLinks = this.props.navRoutes.map((routeAria, index) => {
             const { path, name } = routeAria;
-            const currentPath = window.location.hash.slice(1);
-            const active = currentPath === path;
+            const active = this.isActivePath(index);
             const classNames = ['nav-link'];
             if (active) {
                 routeAria.active = true;
@@ -54,15 +67,9 @@ class Header extends React.Component {
 
     render() {
         const navBar = this.renderNavBar();
-        const classNames = [
-            'header',
-            'd-flex',
-            'w-100',
-            'justify-content-center'
-        ];
 
         return (
-            <header className={classNames.join(' ')} ref={this.ref}>
+            <header className={this.state.classList.join(' ')} ref={this.ref}>
                 {navBar}
             </header>
         );
