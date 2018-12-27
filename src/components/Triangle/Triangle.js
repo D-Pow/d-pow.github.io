@@ -1,8 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'styles/Triangle.scss';
+import triangleStyles from 'styles/Triangle.scss';
+import { COLORS } from "../../utils/Constants";
+
+const triangleBasePixels = `${triangleStyles.base}`.replace(/\D/g, '');
+const numTrianglesInRow = Math.ceil(window.innerWidth / Number(triangleBasePixels)) * 2;
 
 class Triangle extends React.Component {
+    static CONFIG = {
+        colors: COLORS,
+        randomColor: () => {
+            return COLORS[Math.floor(Math.random() * COLORS.length)];
+        },
+        numTrianglesInRow: numTrianglesInRow
+    };
+
     render() {
         const {
             upsideDown,

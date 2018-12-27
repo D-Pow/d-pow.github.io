@@ -30,3 +30,7 @@ $upsideDownTrigHeight: ($height / 3);
   98% { transform: rotate(370deg);}
   100% { transform: rotate(360deg);}
 }
+
+:export {
+  base: $base
+}
