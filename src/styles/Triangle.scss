@@ -10,16 +10,15 @@ $upsideDownTrigHeight: ($height / 3);
   height: 0px;
   border-left: $baseHalved solid transparent;
   border-right: $baseHalved solid transparent;
-  border-bottom: $height solid red;
+  border-bottom: $height solid;
   animation: spin 9s infinite;
   transform-origin: $baseHalved $trigHeight;
 }
 
 .triangle.upside-down {
-  border-top: $height solid blue;
+  border-top: $height solid;
   border-bottom: 0px;
   transform-origin: $baseHalved $upsideDownTrigHeight;
-  animation-delay: -4s;
 }
 
 @keyframes spin {
