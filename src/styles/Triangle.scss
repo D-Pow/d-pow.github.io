@@ -5,6 +5,7 @@ $trigHeight: ($height * 2 / 3);
 $upsideDownTrigHeight: ($height / 3);
 
 .triangle {
+  display: inline-block;
   background: transparent;
   width: 0px;
   height: 0px;
@@ -13,6 +14,7 @@ $upsideDownTrigHeight: ($height / 3);
   border-bottom: $height solid;
   animation: spin 9s infinite;
   transform-origin: $baseHalved $trigHeight;
+  margin-left: -$baseHalved;
 }
 
 .triangle.upside-down {
