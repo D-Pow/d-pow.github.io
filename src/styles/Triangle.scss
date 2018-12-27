@@ -1,0 +1,31 @@
+$base: 100px;
+$height: 86px;
+$baseHalved: ($base / 2);
+$trigHeight: ($height * 2 / 3);
+$upsideDownTrigHeight: ($height / 3);
+
+.triangle {
+  background: transparent;
+  width: 0px;
+  height: 0px;
+  border-left: $baseHalved solid transparent;
+  border-right: $baseHalved solid transparent;
+  border-bottom: $height solid red;
+  animation: spin 9s infinite;
+  transform-origin: $baseHalved $trigHeight;
+}
+
+.triangle.upside-down {
+  border-top: $height solid blue;
+  border-bottom: 0px;
+  transform-origin: $baseHalved $upsideDownTrigHeight;
+  animation-delay: -4s;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  85% { transform: rotate(0deg);}
+  87% { transform: rotate(-10deg);}
+  98% { transform: rotate(370deg);}
+  100% { transform: rotate(360deg);}
+}
