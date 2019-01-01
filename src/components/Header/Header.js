@@ -21,6 +21,10 @@ class Header extends React.Component {
         this.handleScroll();
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
     handleScroll() {
         const hideHeader = this.isActivePath(0) && window.pageYOffset === 0;
         this.toggleHeader(hideHeader);
