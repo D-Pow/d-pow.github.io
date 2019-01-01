@@ -22,7 +22,7 @@ class Header extends React.Component {
     }
 
     handleScroll() {
-        const hideHeader = this.isActivePath(0) && window.scrollY === 0;
+        const hideHeader = this.isActivePath(0) && window.pageYOffset === 0;
         this.toggleHeader(hideHeader);
     }
 
