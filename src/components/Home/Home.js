@@ -18,10 +18,19 @@ class Home extends React.Component {
         );
     }
 
-    render() {
+    renderSplashSection() {
+        // TODO add welcome text
         return (
             <React.Fragment>
                 {this.renderTriangles()}
+            </React.Fragment>
+        );
+    }
+
+    render() {
+        return (
+            <React.Fragment>
+                {this.renderSplashSection()}
             </React.Fragment>
         );
     }
