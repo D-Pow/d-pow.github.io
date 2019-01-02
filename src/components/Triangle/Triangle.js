@@ -4,16 +4,15 @@ import 'styles/Triangle.scss';
 import triangleStyles from 'styles/Triangle.scss';
 import { COLORS } from "../../utils/Constants";
 
-const triangleBasePixels = `${triangleStyles.base}`.replace(/\D/g, '');
-const numTrianglesInRow = Math.ceil(window.innerWidth / Number(triangleBasePixels)) * 2;
-
 class Triangle extends React.Component {
+    static triangleBasePixels = `${triangleStyles.base}`.replace(/\D/g, '');
+
     static CONFIG = {
         colors: COLORS,
         randomColor: () => {
             return COLORS[Math.floor(Math.random() * COLORS.length)];
         },
-        numTrianglesInRow: numTrianglesInRow
+        numTrianglesInRow: Math.ceil(window.innerWidth / Number(Triangle.triangleBasePixels)) * 2
     };
 
     render() {
