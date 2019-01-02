@@ -30,7 +30,7 @@ class ScrollToShow extends React.Component {
         }
         const thresholdScrollPosition = window.innerHeight * this.props.threshold;
         const elemTop = this.getTotalOffsetTop(this.state.childRefs[index].current);
-        return elemTop - window.pageYOffset <= thresholdScrollPosition;
+        return elemTop <= thresholdScrollPosition;
     }
 
     updateChildState(index) {
