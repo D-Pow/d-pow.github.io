@@ -21,3 +21,5 @@ export const COLORS = [
     'salmon',
     'sandybrown'
 ];
+
+export const SHOW_ELEMENT_SCROLL_THRESHOLD = 3/4;
