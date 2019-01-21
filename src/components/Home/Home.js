@@ -8,16 +8,22 @@ class Home extends React.Component {
         const triangleHeight = window.innerHeight / numRows;
         const numTrianglesInRow = Math.ceil(window.innerWidth / triangleHeight);
         const rows = [];
-        for (let i = 0; i < numRows; i++) {
-            const row = [];
-            for (let col = 0; col <= numTrianglesInRow; col++) {
+        for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
+            const renderedRow = [];
+            for (let colIndex = 0; colIndex <= numTrianglesInRow; colIndex++) {
                 const color = Triangle.CONFIG.randomColor();
                 // TODO add color-picking checks to prevent same colors from touching
-                row.push((
-                    <Triangle color={color} height={triangleHeight} key={col} spinDelay={-5} upsideDown={col % 2 === 0} />
+                renderedRow.push((
+                    <Triangle
+                        color={color}
+                        height={triangleHeight}
+                        key={`${renderedRow}-${colIndex}`}
+                        spinDelay={-5}
+                        upsideDown={(colIndex + rowIndex) % 2 === 0}
+                    />
                 ));
             }
-            rows.push(row);
+            rows.push(renderedRow);
         }
         return (
             <div style={{height: `${window.innerHeight}px`, lineHeight: 0}}>
