@@ -36,12 +36,12 @@ class Triangle extends React.Component {
 
         const style = {
             [borderColorField]: color,
-            'borderLeftWidth': `${baseHalved}px`,
-            'borderRightWidth': `${baseHalved}px`,
             [borderHeightField]: `${height}px`,
-            'animationDelay': `${spinDelay}s`,
-            'transformOrigin': `${baseHalved} ${originHeight}`,
-            'marginLeft': `-${baseHalved}px`
+            borderLeftWidth: `${baseHalved}px`,
+            borderRightWidth: `${baseHalved}px`,
+            animationDelay: `${spinDelay}s`,
+            transformOrigin: `${baseHalved} ${originHeight}`,
+            marginLeft: `-${baseHalved}px`
         };
 
         return (

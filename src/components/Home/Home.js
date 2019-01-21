@@ -3,30 +3,39 @@ import 'styles/Header.scss';
 import Triangle from 'components/Triangle';
 
 class Home extends React.Component {
-    renderTriangles(triangleHeight, numRows, numCols) {
-        const row = [];
-        for (let i = 0; i <= numCols; i++) {
-            const color = Triangle.CONFIG.randomColor();
-            // TODO add color-picking checks to prevent same colors from touching
-            row.push((
-                <Triangle color={color} height={triangleHeight} key={i} spinDelay={-5} upsideDown={i % 2 === 0} />
-            ));
+    renderTriangles() {
+        const numRows = 6;
+        const triangleHeight = window.innerHeight / numRows;
+        const numTrianglesInRow = Math.ceil(window.innerWidth / triangleHeight);
+        const rows = [];
+        for (let i = 0; i < numRows; i++) {
+            const row = [];
+            for (let col = 0; col <= numTrianglesInRow; col++) {
+                const color = Triangle.CONFIG.randomColor();
+                // TODO add color-picking checks to prevent same colors from touching
+                row.push((
+                    <Triangle color={color} height={triangleHeight} key={col} spinDelay={-5} upsideDown={col % 2 === 0} />
+                ));
+            }
+            rows.push(row);
         }
         return (
-            <div className={'flex-row'} style={{height: '1000px'}}>
-                {row}
+            <div style={{height: `${window.innerHeight}px`, lineHeight: 0}}>
+                {rows.map((row, i) => (
+                    <div className={'flex-row'} key={i}>
+                        {row}
+                    </div>
+                ))}
             </div>
         );
     }
 
     renderSplashSection() {
         // TODO add welcome text
-        const numTriangleRowsInScreen = 6;
-        const triangleHeight = window.innerHeight / numTriangleRowsInScreen;
-        const numTrianglesInRow = Math.ceil(window.innerWidth / triangleHeight) * 2;
         return (
             <React.Fragment>
-                {this.renderTriangles(triangleHeight, numTriangleRowsInScreen, numTrianglesInRow)}
+                {this.renderTriangles()}
+                <div style={{height: '500px'}}>Meh</div>
             </React.Fragment>
         );
     }
