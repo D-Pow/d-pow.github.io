@@ -5,7 +5,7 @@ class Home extends React.Component {
     renderTriangles() {
         const numRows = 6;
         const triangleHeight = window.innerHeight / numRows;
-        const numTrianglesInRow = Math.ceil(window.innerWidth / triangleHeight);
+        const numTrianglesInRow = Math.ceil(window.innerWidth / triangleHeight) * 2; // 2x num triangles since half are upside-down
         const rows = [];
         for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
             const renderedRow = [];
