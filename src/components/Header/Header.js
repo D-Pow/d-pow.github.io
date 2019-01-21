@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import 'styles/Header.scss';
 import {Link} from "react-router-dom";
 
 class Header extends React.Component {

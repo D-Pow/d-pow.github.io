@@ -1,5 +1,4 @@
 import React from 'react';
-import 'styles/Header.scss';
 import Triangle from 'components/Triangle';
 
 class Home extends React.Component {
