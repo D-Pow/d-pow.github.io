@@ -13,14 +13,12 @@ $upsideDownTrigHeight: ($height / 3);
   border-right: $baseHalved solid transparent;
   border-bottom: $height solid;
   animation: spin 9s infinite;
-  transform-origin: $baseHalved $trigHeight;
   margin-left: -$baseHalved;
 }
 
 .triangle.upside-down {
   border-top: $height solid;
   border-bottom: 0px;
-  transform-origin: $baseHalved $upsideDownTrigHeight;
 }
 
 @keyframes spin {
@@ -29,8 +27,4 @@ $upsideDownTrigHeight: ($height / 3);
   87% { transform: rotate(-10deg);}
   98% { transform: rotate(370deg);}
   100% { transform: rotate(360deg);}
-}
-
-:export {
-  base: $base
 }

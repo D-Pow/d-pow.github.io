@@ -1,37 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'styles/Triangle.scss';
-import triangleStyles from 'styles/Triangle.scss';
 import { COLORS } from "../../utils/Constants";
 
 class Triangle extends React.Component {
-    static triangleBasePixels = `${triangleStyles.base}`.replace(/\D/g, '');
-
     static CONFIG = {
         colors: COLORS,
         randomColor: () => {
             return COLORS[Math.floor(Math.random() * COLORS.length)];
-        },
-        numTrianglesInRow: Math.ceil(window.innerWidth / Number(Triangle.triangleBasePixels)) * 2
+        }
     };
 
     render() {
         const {
             upsideDown,
             color,
-            spinDelay
+            spinDelay,
+            height
         } = this.props;
-        const borderField = upsideDown ? 'borderTopColor' : 'borderBottomColor';
-        const style = {
-            [borderField]: color,
-            'animationDelay': `${spinDelay}s`
-        };
+        const base = height / Math.sin(Math.PI / 3);
+        const baseHalved = base/2;
+
+        let borderColorField = 'borderBottomColor';
+        let borderHeightField = 'borderBottomWidth';
+        let originHeight = `${height * 2/3}px`;
         const classNames = [
             'triangle'
         ];
         if (upsideDown) {
+            borderColorField = 'borderTopColor';
+            borderHeightField = 'borderTopWidth';
+            originHeight = `${height / 3}px`;
             classNames.push('upside-down');
         }
+
+        const style = {
+            [borderColorField]: color,
+            'borderLeftWidth': `${baseHalved}px`,
+            'borderRightWidth': `${baseHalved}px`,
+            [borderHeightField]: `${height}px`,
+            'animationDelay': `${spinDelay}s`,
+            'transformOrigin': `${baseHalved} ${originHeight}`,
+            'marginLeft': `-${baseHalved}px`
+        };
 
         return (
             <div className={classNames.join(' ')} style={style} />
@@ -42,13 +53,15 @@ class Triangle extends React.Component {
 Triangle.propTypes = {
     color: PropTypes.string,
     spinDelay: PropTypes.number,
-    upsideDown: PropTypes.bool
+    upsideDown: PropTypes.bool,
+    height: PropTypes.number
 };
 
 Triangle.defaultProps = {
     color: 'red',
     spinDelay: 0,
-    upsideDown: false
+    upsideDown: false,
+    height: 86
 };
 
 export default Triangle;

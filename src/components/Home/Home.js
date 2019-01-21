@@ -3,12 +3,13 @@ import 'styles/Header.scss';
 import Triangle from 'components/Triangle';
 
 class Home extends React.Component {
-    renderTriangles() {
+    renderTriangles(triangleHeight, numRows, numCols) {
         const row = [];
-        for (let i = 0; i <= Triangle.CONFIG.numTrianglesInRow; i++) {
+        for (let i = 0; i <= numCols; i++) {
             const color = Triangle.CONFIG.randomColor();
+            // TODO add color-picking checks to prevent same colors from touching
             row.push((
-                <Triangle color={color} key={i} spinDelay={-5} upsideDown={i % 2 === 0} />
+                <Triangle color={color} height={triangleHeight} key={i} spinDelay={-5} upsideDown={i % 2 === 0} />
             ));
         }
         return (
@@ -20,9 +21,12 @@ class Home extends React.Component {
 
     renderSplashSection() {
         // TODO add welcome text
+        const numTriangleRowsInScreen = 6;
+        const triangleHeight = window.innerHeight / numTriangleRowsInScreen;
+        const numTrianglesInRow = Math.ceil(window.innerWidth / triangleHeight) * 2;
         return (
             <React.Fragment>
-                {this.renderTriangles()}
+                {this.renderTriangles(triangleHeight, numTriangleRowsInScreen, numTrianglesInRow)}
             </React.Fragment>
         );
     }
