@@ -1,5 +1,6 @@
 import React from 'react';
 import 'styles/Home.scss';
+import { randomColor, randomInt } from 'utils/Functions';
 import Triangle from 'components/Triangle';
 
 class Home extends React.Component {
@@ -12,8 +13,8 @@ class Home extends React.Component {
         for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
             const renderedRow = [];
             for (let colIndex = 0; colIndex < numTrianglesInRow; colIndex++) {
-                const color = Triangle.CONFIG.randomColor();
-                const spinDelay = Triangle.CONFIG.randomSpinDelay(-500, 500);
+                const color = randomColor();
+                const spinDelay = randomInt(-500, 500);
                 // TODO add color-picking checks to prevent same colors from touching
                 renderedRow.push((
                     <Triangle

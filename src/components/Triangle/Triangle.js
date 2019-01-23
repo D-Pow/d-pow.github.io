@@ -1,19 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'styles/Triangle.scss';
-import { COLORS } from "../../utils/Constants";
 
 class Triangle extends React.Component {
-    static CONFIG = {
-        colors: COLORS,
-        randomColor: () => {
-            return COLORS[Math.floor(Math.random() * COLORS.length)];
-        },
-        randomSpinDelay: (start, end) => {
-            return (Math.random() * (end - start)) + start;
-        }
-    };
-
     render() {
         const {
             upsideDown,
