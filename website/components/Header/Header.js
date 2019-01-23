@@ -1,12 +1,79 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Navbar from './Navbar';
+import 'styles/Header.scss';
+import {Link} from "react-router-dom";
 
 class Header extends React.Component {
-    render() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            classList: [
+                'header',
+                'float-right'
+            ]
+        };
+        this.handleScroll = this.handleScroll.bind(this);
+    }
+
+    componentDidMount() {
+        window.addEventListener('scroll', this.handleScroll);
+        this.handleScroll();
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    handleScroll() {
+        const hideHeader = this.isActivePath(0) && window.pageYOffset === 0;
+        this.toggleHeader(hideHeader);
+    }
+
+    toggleHeader(hide) {
+        const classList = [...this.state.classList];
+        const className = 'header-hidden';
+        const index = classList.indexOf(className);
+        if (hide && index === -1) {
+            classList.push(className);
+        } else if (index >= 0) {
+            classList.splice(index, 1);
+        }
+        this.setState({ classList: classList});
+    }
+
+    isActivePath(routeIndex) {
+        const { path } = this.props.navRoutes[routeIndex];
+        const currentPath = window.location.hash.slice(1);
+        return currentPath === path;
+    }
+
+    renderNavBar() {
+        const routeLinks = this.props.navRoutes.map((routeAria, index) => {
+            const { path, name } = routeAria;
+            const active = this.isActivePath(index);
+            const classNames = ['nav-link'];
+            if (active) {
+                routeAria.active = true;
+                classNames.push('active');
+            }
+            return (
+                <Link to={path} className={classNames.join(' ')} key={path} replace={active}>{name}</Link>
+            );
+        });
+
         return (
-            <header className={'d-flex w-100 justify-content-center'}>
-                <Navbar routes={this.props.navRoutes} />
+            <nav className={'nav border-left border-bottom border-primary border-size-3'}>
+                {routeLinks}
+            </nav>
+        );
+    }
+
+    render() {
+        const navBar = this.renderNavBar();
+
+        return (
+            <header className={this.state.classList.join(' ')} ref={this.ref}>
+                {navBar}
             </header>
         );
     }
