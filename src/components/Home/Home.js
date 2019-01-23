@@ -16,7 +16,7 @@ class Home extends React.Component {
     }
 
     renderTriangles() {
-        const numRows = 6;
+        const numRows = 8;
         const triangleHeight = window.innerHeight / numRows;
         const numTrianglesInRow = Math.ceil(window.innerWidth / triangleHeight) * 2; // Two triangles fit inside one base length
 
