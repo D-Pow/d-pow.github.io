@@ -13,13 +13,14 @@ class Home extends React.Component {
             const renderedRow = [];
             for (let colIndex = 0; colIndex < numTrianglesInRow; colIndex++) {
                 const color = Triangle.CONFIG.randomColor();
+                const spinDelay = Triangle.CONFIG.randomSpinDelay(-500, 500);
                 // TODO add color-picking checks to prevent same colors from touching
                 renderedRow.push((
                     <Triangle
                         color={color}
                         height={triangleHeight}
                         key={`${renderedRow}-${colIndex}`}
-                        spinDelay={-5}
+                        spinDelay={spinDelay}
                         upsideDown={(colIndex + rowIndex) % 2 === 0}
                     />
                 ));

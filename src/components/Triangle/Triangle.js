@@ -8,6 +8,9 @@ class Triangle extends React.Component {
         colors: COLORS,
         randomColor: () => {
             return COLORS[Math.floor(Math.random() * COLORS.length)];
+        },
+        randomSpinDelay: (start, end) => {
+            return (Math.random() * (end - start)) + start;
         }
     };
 
