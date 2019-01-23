@@ -4,18 +4,32 @@ import { randomColor, randomInt } from 'utils/Functions';
 import Triangle from 'components/Triangle';
 
 class Home extends React.Component {
+    getNeighboringColors(rowIndex, colIndex, colorMatrix) {
+        const neighbors = [];
+        if (rowIndex > 0) {
+            neighbors.push(colorMatrix[rowIndex-1][colIndex]);
+        }
+        if (colIndex > 0) {
+            neighbors.push(colorMatrix[rowIndex][colIndex-1]);
+        }
+        return neighbors;
+    }
+
     renderTriangles() {
         const numRows = 6;
         const triangleHeight = window.innerHeight / numRows;
         const numTrianglesInRow = Math.ceil(window.innerWidth / triangleHeight) * 2; // Two triangles fit inside one base length
 
         const rows = [];
+        const chosenColors = [];
         for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
+            chosenColors.push([]);
             const renderedRow = [];
             for (let colIndex = 0; colIndex < numTrianglesInRow; colIndex++) {
-                const color = randomColor();
+                const neighboringColors = this.getNeighboringColors(rowIndex, colIndex, chosenColors);
+                const color = randomColor(neighboringColors);
+                chosenColors[rowIndex].push(color);
                 const spinDelay = randomInt(-500, 500);
-                // TODO add color-picking checks to prevent same colors from touching
                 renderedRow.push((
                     <Triangle
                         color={color}
