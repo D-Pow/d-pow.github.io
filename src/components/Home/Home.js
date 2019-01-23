@@ -27,7 +27,7 @@ class Home extends React.Component {
         return (
             <div style={{height: `${window.innerHeight}px`, lineHeight: 0}}>
                 {rows.map((row, i) => (
-                    <div className={'flex-row'} key={i}>
+                    <div key={i}>
                         {row}
                     </div>
                 ))}

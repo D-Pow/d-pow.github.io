@@ -9,9 +9,7 @@ class Header extends React.Component {
         this.state = {
             classList: [
                 'header',
-                'd-flex',
-                'w-100',
-                'justify-content-center'
+                'float-right'
             ]
         };
         this.handleScroll = this.handleScroll.bind(this);
@@ -64,7 +62,7 @@ class Header extends React.Component {
         });
 
         return (
-            <nav className={'nav ml-auto border-left border-bottom border-primary border-size-3'}>
+            <nav className={'nav border-left border-bottom border-primary border-size-3'}>
                 {routeLinks}
             </nav>
         );

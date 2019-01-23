@@ -27,9 +27,7 @@ function Routes(props) {
         <Router basename={props.basedir}>
             <React.Fragment>
                 <Header basedir={props.basedir} navRoutes={routes} />
-                <div className={'justify-content-center flex-grow-1'}>
-                    {renderedRoutes}
-                </div>
+                {renderedRoutes}
                 <Footer />
             </React.Fragment>
         </Router>
@@ -39,7 +37,7 @@ function Routes(props) {
 class App extends React.Component {
     render() {
         return (
-            <div className="App text-center h-100 d-flex flex-column flex-grow-1">
+            <div className="App text-center">
                 <Routes />
             </div>
         );
