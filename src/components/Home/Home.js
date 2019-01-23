@@ -1,15 +1,17 @@
 import React from 'react';
+import 'styles/Home.scss';
 import Triangle from 'components/Triangle';
 
 class Home extends React.Component {
     renderTriangles() {
         const numRows = 6;
         const triangleHeight = window.innerHeight / numRows;
-        const numTrianglesInRow = Math.ceil(window.innerWidth / triangleHeight) * 2; // 2x num triangles since half are upside-down
+        const numTrianglesInRow = Math.ceil(window.innerWidth / triangleHeight) * 2; // Two triangles fit inside one base length
+
         const rows = [];
         for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
             const renderedRow = [];
-            for (let colIndex = 0; colIndex <= numTrianglesInRow; colIndex++) {
+            for (let colIndex = 0; colIndex < numTrianglesInRow; colIndex++) {
                 const color = Triangle.CONFIG.randomColor();
                 // TODO add color-picking checks to prevent same colors from touching
                 renderedRow.push((
@@ -24,10 +26,11 @@ class Home extends React.Component {
             }
             rows.push(renderedRow);
         }
+
         return (
-            <div style={{height: `${window.innerHeight}px`, lineHeight: 0}}>
+            <div className={'triangle-section'}>
                 {rows.map((row, i) => (
-                    <div key={i}>
+                    <div className={'triangle-row'} key={i}>
                         {row}
                     </div>
                 ))}
