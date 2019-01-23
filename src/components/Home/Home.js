@@ -20,7 +20,7 @@ class Home extends React.Component {
                     <Triangle
                         color={color}
                         height={triangleHeight}
-                        key={`${renderedRow}-${colIndex}`}
+                        key={`${rowIndex}-${colIndex}`}
                         spinDelay={spinDelay}
                         upsideDown={(colIndex + rowIndex) % 2 === 0}
                     />
