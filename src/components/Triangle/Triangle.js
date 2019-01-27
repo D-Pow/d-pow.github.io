@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import 'styles/Triangle.scss';
 import { durationMin, durationMax } from 'styles/Triangle.scss';
-import { randomInt } from "../../utils/Functions";
+import { randomNumber } from "../../utils/Functions";
 
 class Triangle extends React.Component {
     render() {
@@ -27,8 +27,8 @@ class Triangle extends React.Component {
             classNames.push('upside-down');
         }
 
-        const spinDelay = this.props.spinDelay || randomInt(1);
-        const animationDuration = this.props.animationDuration || Math.round(randomInt(durationMin, durationMax));
+        const spinDelay = this.props.spinDelay || randomNumber(1);
+        const animationDuration = this.props.animationDuration || Math.round(randomNumber(durationMin, durationMax));
         const style = {
             [borderColorField]: color,
             [borderHeightField]: `${height}px`,

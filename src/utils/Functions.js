@@ -17,6 +17,17 @@ export function randomColor(colorsToAvoid) {
     return chosenColor;
 }
 
-export function randomInt(min, max) {
+export function randomNumber(min, max) {
+    if (max == null) {
+        max = min;
+        min = 0;
+    }
+
+    min = Number(min);
+    max = Number(max);
+    if (isNaN(min) || isNaN(max)) {
+        return Math.random();
+    }
+
     return (Math.random() * (max - min)) + min;
 }
