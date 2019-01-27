@@ -1,6 +1,6 @@
 import React from 'react';
 import 'styles/Home.scss';
-import { randomColor, randomInt } from 'utils/Functions';
+import { randomColor } from 'utils/Functions';
 import Triangle from 'components/Triangle';
 
 class Home extends React.Component {
@@ -29,13 +29,11 @@ class Home extends React.Component {
                 const neighboringColors = this.getNeighboringColors(rowIndex, colIndex, chosenColors);
                 const color = randomColor(neighboringColors);
                 chosenColors[rowIndex].push(color);
-                const spinDelay = randomInt(-500, 500);
                 renderedRow.push((
                     <Triangle
                         color={color}
                         height={triangleHeight}
                         key={`${rowIndex}-${colIndex}`}
-                        spinDelay={spinDelay}
                         upsideDown={(colIndex + rowIndex) % 2 === 0}
                     />
                 ));

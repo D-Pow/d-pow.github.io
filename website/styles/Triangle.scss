@@ -12,7 +12,7 @@ $upsideDownTrigHeight: ($height / 3);
   border-left: $baseHalved solid transparent;
   border-right: $baseHalved solid transparent;
   border-bottom: $height solid;
-  animation: spin 9s infinite;
+  animation-iteration-count: infinite;
   margin-left: -$baseHalved;
 }
 
@@ -21,10 +21,23 @@ $upsideDownTrigHeight: ($height / 3);
   border-bottom: 0px;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg);}
-  85% { transform: rotate(0deg);}
-  87% { transform: rotate(-10deg);}
-  98% { transform: rotate(370deg);}
-  100% { transform: rotate(360deg);}
+$durationMin: 3;
+$durationMax: 20;
+$spinDuration: 1.5;
+
+@for $time from $durationMin through $durationMax {
+  $tenPercent: ($spinDuration / $time) * 10;
+  $start: ($time - $spinDuration) / $time * 100;
+  @keyframes spin-#{$time} {
+    0% { transform: rotate(0deg);}
+    #{$start}% { transform: rotate(0deg);}
+    #{$start + $tenPercent}% { transform: rotate(-10deg);}
+    #{100 - $tenPercent}% { transform: rotate(370deg);}
+    100% { transform: rotate(360deg);}
+  }
+}
+
+:export {
+  durationMin: $durationMin;
+  durationMax: $durationMax;
 }

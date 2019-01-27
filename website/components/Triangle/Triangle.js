@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'styles/Triangle.scss';
+import { durationMin, durationMax } from 'styles/Triangle.scss';
+import { randomNumber } from "../../utils/Functions";
 
 class Triangle extends React.Component {
     render() {
         const {
             upsideDown,
             color,
-            spinDelay,
             height
         } = this.props;
         const base = height / Math.sin(Math.PI / 3); // Equilateral triangle: sin(60deg == pi/3) = height / base
@@ -26,11 +27,15 @@ class Triangle extends React.Component {
             classNames.push('upside-down');
         }
 
+        const spinDelay = this.props.spinDelay || randomNumber(1);
+        const animationDuration = this.props.animationDuration || Math.round(randomNumber(durationMin, durationMax));
         const style = {
             [borderColorField]: color,
             [borderHeightField]: `${height}px`,
             borderLeftWidth: `${baseHalved}px`,
             borderRightWidth: `${baseHalved}px`,
+            animationName: `spin-${animationDuration}`,
+            animationDuration: `${animationDuration}s`,
             animationDelay: `${spinDelay}s`,
             transformOrigin: `${baseHalved} ${originHeight}`,
             marginLeft: `-${baseHalved}px`
@@ -45,13 +50,13 @@ class Triangle extends React.Component {
 Triangle.propTypes = {
     color: PropTypes.string,
     spinDelay: PropTypes.number,
+    animationDuration: PropTypes.number,
     upsideDown: PropTypes.bool,
     height: PropTypes.number
 };
 
 Triangle.defaultProps = {
     color: 'red',
-    spinDelay: 0,
     upsideDown: false,
     height: 86
 };
