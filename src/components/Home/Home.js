@@ -48,7 +48,7 @@ class Home extends React.Component {
         }
 
         return (
-            <div className={'triangle-section'}>
+            <div className={'triangle-section bg-white'}>
                 {rows.map((row, i) => (
                     <div className={'triangle-row'} key={i}>
                         {row}

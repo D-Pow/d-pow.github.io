@@ -5,7 +5,7 @@
 $primary: #3500D3;
 $secondary: #240090;
 $tertiary: #190061;
-$light: #f7f6f6;
+$light: rgb(225, 224, 224);
 $dark: #282828;
 
 $theme-colors: (
@@ -16,7 +16,7 @@ $theme-colors: (
     "dark": $dark
 );
 
-$body-bg: $dark;
+$body-bg: $light;
 
 .nav-link {
   color: $light;

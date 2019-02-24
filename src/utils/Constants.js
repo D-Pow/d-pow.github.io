@@ -6,7 +6,6 @@ export const COLORS = [
     'orange',
     'green',
     'yellow',
-    'white',
     'gray',
     'teal',
     'cyan',

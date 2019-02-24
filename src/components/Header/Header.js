@@ -62,7 +62,7 @@ class Header extends React.Component {
         });
 
         return (
-            <nav className={'nav border-left border-bottom border-primary border-size-3'}>
+            <nav className={'nav border-left border-bottom border-primary border-size-3 bg-dark'}>
                 {routeLinks}
             </nav>
         );
