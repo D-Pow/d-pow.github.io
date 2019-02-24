@@ -32,11 +32,11 @@ class Header extends React.Component {
     toggleHeader(hide) {
         const classList = [...this.state.classList];
         const className = 'header-hidden';
-        const index = classList.indexOf(className);
-        if (hide && index === -1) {
+        const isHidden = classList.indexOf(className) >= 0;
+        if (hide && !isHidden) {
             classList.push(className);
-        } else if (index >= 0) {
-            classList.splice(index, 1);
+        } else if (!hide && isHidden) {
+            classList.splice(isHidden, 1);
         }
         this.setState({ classList: classList});
     }
