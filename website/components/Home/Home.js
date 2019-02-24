@@ -4,6 +4,12 @@ import { randomColor } from 'utils/Functions';
 import Triangle from 'components/Triangle';
 
 class Home extends React.Component {
+    componentDidMount() {
+        window.onresize = () => {
+            this.forceUpdate();
+        }
+    }
+
     getNeighboringColors(rowIndex, colIndex, colorMatrix) {
         const neighbors = [];
         if (rowIndex > 0) {
@@ -42,7 +48,7 @@ class Home extends React.Component {
         }
 
         return (
-            <div className={'triangle-section'}>
+            <div className={'triangle-section bg-white'}>
                 {rows.map((row, i) => (
                     <div className={'triangle-row'} key={i}>
                         {row}
