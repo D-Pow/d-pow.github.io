@@ -14,6 +14,7 @@ $upsideDownTrigHeight: ($height / 3);
   border-bottom: $height solid;
   animation-iteration-count: infinite;
   margin-left: -$baseHalved;
+  opacity: 0.4;
 }
 
 .triangle.upside-down {
