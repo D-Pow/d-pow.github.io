@@ -31,4 +31,10 @@ $body-bg: $light;
   color: $info;
 }
 
+@for $pix from 0 through 100 {
+  .top-#{$pix} {
+    top: $pix + 0%;
+  }
+}
+
 @import "~bootstrap/scss/bootstrap";

@@ -4,10 +4,26 @@ import { randomColor } from 'utils/Functions';
 import Triangle from 'components/Triangle';
 
 class Home extends React.Component {
+    pageText = {
+        welcomeTitle: "Hey there, I'm Devon!"
+    };
+
     componentDidMount() {
         window.onresize = () => {
             this.forceUpdate();
         }
+    }
+
+    renderWelcomeText() {
+        const renderedTitle = (<h2 className={'text-white'}>{this.pageText.welcomeTitle}</h2>);
+
+        return (
+            <div className={'text-center position-absolute w-100 top-30'}>
+                <div className={'bg-dark m-auto py-3 px-1'} style={{width: '40%'}}>
+                    {renderedTitle}
+                </div>
+            </div>
+        );
     }
 
     getNeighboringColors(rowIndex, colIndex, colorMatrix) {
@@ -62,7 +78,10 @@ class Home extends React.Component {
         // TODO add welcome text
         return (
             <React.Fragment>
-                {this.renderTriangles()}
+                <div>
+                    {this.renderTriangles()}
+                    {this.renderWelcomeText()}
+                </div>
                 <div style={{height: '500px'}}>Meh</div>
             </React.Fragment>
         );
