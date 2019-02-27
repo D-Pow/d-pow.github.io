@@ -19,7 +19,7 @@ class Home extends React.Component {
 
         return (
             <div className={'text-center position-absolute w-100 top-30'}>
-                <div className={'bg-dark m-auto py-3 px-1'} style={{width: '40%'}}>
+                <div className={'bg-dark border border-primary border-size-5 rounded shadow-lg m-auto py-3 px-1'} style={{width: '40%'}}>
                     {renderedTitle}
                 </div>
             </div>
