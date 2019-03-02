@@ -8,9 +8,25 @@ class Home extends React.Component {
         welcomeTitle: "Hey there, I'm Devon!"
     };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            windowSize: {
+                width: window.innerWidth,
+                height: window.innerHeight
+            },
+            triangleColorMatrix: []
+        };
+    }
+
     componentDidMount() {
         window.onresize = () => {
-            this.forceUpdate();
+            this.setState({
+                windowSize: {
+                    width: window.innerWidth,
+                    height: window.innerHeight
+                }
+            });
         }
     }
 
@@ -37,12 +53,7 @@ class Home extends React.Component {
         return neighbors;
     }
 
-    renderTriangles() {
-        const numRows = 8;
-        const triangleHeight = window.innerHeight / numRows;
-        const numTrianglesInRow = Math.ceil(window.innerWidth / triangleHeight) * 2; // Two triangles fit inside one base length
-
-        const rows = [];
+    initTriangleColorMatrix(numRows, numTrianglesInRow) {
         const chosenColors = [];
         for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
             chosenColors.push([]);
@@ -51,21 +62,34 @@ class Home extends React.Component {
                 const neighboringColors = this.getNeighboringColors(rowIndex, colIndex, chosenColors);
                 const color = randomColor(neighboringColors);
                 chosenColors[rowIndex].push(color);
-                renderedRow.push((
-                    <Triangle
-                        color={color}
-                        height={triangleHeight}
-                        key={`${rowIndex}-${colIndex}`}
-                        upsideDown={(colIndex + rowIndex) % 2 === 0}
-                    />
-                ));
             }
-            rows.push(renderedRow);
         }
+
+        this.setState({ triangleColorMatrix: chosenColors });
+    }
+
+    renderTriangles() {
+        const { windowSize: { width, height }, triangleColorMatrix } = this.state;
+        const numRows = 8;
+        const triangleHeight = height / numRows;
+        const numTrianglesInRow = Math.ceil(width / triangleHeight) * 2; // Two triangles fit inside one base length
+
+        if (triangleColorMatrix.length === 0) {
+            this.initTriangleColorMatrix(numRows, numTrianglesInRow);
+        }
+
+        const renderedTriangleMatrix = triangleColorMatrix.map((row, rowIndex) => row.map((col, colIndex) => (
+            <Triangle
+                color={col}
+                height={triangleHeight}
+                key={`${rowIndex}-${colIndex}`}
+                upsideDown={(colIndex + rowIndex) % 2 === 0}
+            />
+        )));
 
         return (
             <div className={'triangle-section bg-white'}>
-                {rows.map((row, i) => (
+                {renderedTriangleMatrix.map((row, i) => (
                     <div className={'triangle-row'} key={i}>
                         {row}
                     </div>
