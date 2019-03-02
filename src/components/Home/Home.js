@@ -4,7 +4,10 @@ import SplashSection from 'components/Home/SplashSection';
 class Home extends React.Component {
     render() {
         return (
-            <SplashSection />
+            <React.Fragment>
+                <SplashSection />
+                <div style={{height: '500px'}}>Meh</div>
+            </React.Fragment>
         );
     }
 }

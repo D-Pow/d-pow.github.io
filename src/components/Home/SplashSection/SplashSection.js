@@ -113,23 +113,11 @@ class SplashSection extends React.Component {
         );
     }
 
-    renderSplashSection() {
-        // TODO add welcome text
-        return (
-            <React.Fragment>
-                <div>
-                    {this.renderTriangles()}
-                    {this.renderWelcomeText()}
-                </div>
-                <div style={{height: '500px'}}>Meh</div>
-            </React.Fragment>
-        );
-    }
-
     render() {
         return (
             <React.Fragment>
-                {this.renderSplashSection()}
+                {this.renderTriangles()}
+                {this.renderWelcomeText()}
             </React.Fragment>
         );
     }
