@@ -22,6 +22,8 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
+        this.updateTriangleColorMatrix();
+
         window.onresize = () => {
             this.setState({
                 windowSize: {
@@ -90,10 +92,6 @@ class Home extends React.Component {
 
     renderTriangles() {
         const { triangleColorMatrix } = this.state;
-
-        if (triangleColorMatrix.length === 0) {
-            this.updateTriangleColorMatrix();
-        }
 
         const renderedTriangleMatrix = triangleColorMatrix.map((row, rowIndex) => row.map((col, colIndex) => (
             <Triangle
