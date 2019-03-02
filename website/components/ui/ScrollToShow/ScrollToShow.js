@@ -20,17 +20,18 @@ class ScrollToShow extends React.Component {
         this.handleScroll = this.handleScroll.bind(this);
     }
 
-    getTotalOffsetTop(element) {
-        return element.getBoundingClientRect().top;
+    componentDidMount() {
+        window.addEventListener('scroll', this.handleScroll);
     }
 
-    shouldBeShown(index) {
-        if (index >= this.state.childRefs.length) {
-            return false;
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    handleScroll() {
+        for (let i = 0; i < this.state.childRefs.length; i++) {
+            this.updateChildState(i);
         }
-        const thresholdScrollPosition = window.innerHeight * this.props.threshold;
-        const elemTop = this.getTotalOffsetTop(this.state.childRefs[index].current);
-        return elemTop <= thresholdScrollPosition;
     }
 
     updateChildState(index) {
@@ -45,6 +46,19 @@ class ScrollToShow extends React.Component {
         }
     }
 
+    shouldBeShown(index) {
+        if (index >= this.state.childRefs.length) {
+            return false;
+        }
+        const thresholdScrollPosition = window.innerHeight * this.props.threshold;
+        const elemTop = this.getTotalOffsetTop(this.state.childRefs[index].current);
+        return elemTop <= thresholdScrollPosition;
+    }
+
+    getTotalOffsetTop(element) {
+        return element.getBoundingClientRect().top;
+    }
+
     getClassNames(index) {
         const { addClasses } = this.props;
         let classes = [];
@@ -52,20 +66,6 @@ class ScrollToShow extends React.Component {
             classes = Array.isArray(addClasses) ? addClasses : [addClasses];
         }
         return classes.join(' ');
-    }
-
-    handleScroll() {
-        for (let i = 0; i < this.state.childRefs.length; i++) {
-            this.updateChildState(i);
-        }
-    }
-
-    componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
     }
 
     render() {
