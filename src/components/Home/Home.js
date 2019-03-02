@@ -30,6 +30,10 @@ class Home extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        window.onresize = null;
+    }
+
     renderWelcomeText() {
         const renderedTitle = (<h2 className={'text-white'}>{this.pageText.welcomeTitle}</h2>);
 
