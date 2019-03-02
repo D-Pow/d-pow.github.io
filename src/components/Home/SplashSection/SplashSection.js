@@ -39,18 +39,6 @@ class SplashSection extends React.Component {
         window.onresize = null;
     }
 
-    renderWelcomeText() {
-        const renderedTitle = (<h2 className={'text-white'}>{this.pageText.welcomeTitle}</h2>);
-
-        return (
-            <div className={'text-center position-absolute w-100 top-30'}>
-                <div className={'bg-dark border border-primary border-size-5 rounded shadow-lg m-auto py-3 px-1'} style={{width: '40%'}}>
-                    {renderedTitle}
-                </div>
-            </div>
-        );
-    }
-
     get triangleHeight() {
         return this.state.windowSize.height / this.numRows;
     }
@@ -109,6 +97,18 @@ class SplashSection extends React.Component {
                         {row}
                     </div>
                 ))}
+            </div>
+        );
+    }
+
+    renderWelcomeText() {
+        const renderedTitle = (<h2 className={'text-white'}>{this.pageText.welcomeTitle}</h2>);
+
+        return (
+            <div className={'text-center position-absolute w-100 top-30'}>
+                <div className={'bg-dark border border-primary border-size-5 rounded shadow-lg m-auto py-3 px-1'} style={{width: '40%'}}>
+                    {renderedTitle}
+                </div>
             </div>
         );
     }

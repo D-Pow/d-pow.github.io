@@ -3,6 +3,7 @@ import SplashSection from 'components/Home/SplashSection';
 
 class Home extends React.Component {
     render() {
+        // TODO What would you like to know about me? (list traits here)
         return (
             <React.Fragment>
                 <SplashSection />
