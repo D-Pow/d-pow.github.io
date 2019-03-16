@@ -1,4 +1,4 @@
-import { COLORS } from "./Constants";
+import { COLORS, MOBILE_BROWSER_REGEX } from "./Constants";
 
 export function randomColor(colorsToAvoid) {
     let forbiddenColors;
@@ -30,4 +30,9 @@ export function randomNumber(min, max) {
     }
 
     return (Math.random() * (max - min)) + min;
+}
+
+export function isMobileBrowser() {
+    alert(navigator.userAgent || navigator.vendor || window.opera);
+    return MOBILE_BROWSER_REGEX.test(navigator.userAgent || navigator.vendor || window.opera);
 }
