@@ -25,6 +25,7 @@ function createClass(componentName, dirName = 'components') {
     const indexText = `import ${componentName} from './${componentName}';\n\nexport default ${componentName};\n`;
     const componentText = 
 `import React from 'react';
+import PropTypes from 'prop-types';
 
 class ${componentName} extends React.Component {
     constructor(props) {
@@ -37,6 +38,10 @@ class ${componentName} extends React.Component {
         );
     }
 }
+
+${componentName}.propTypes = {
+
+};
 
 export default ${componentName};
 `;
