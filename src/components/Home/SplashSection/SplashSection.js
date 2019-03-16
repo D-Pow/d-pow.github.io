@@ -1,7 +1,7 @@
 import React from 'react';
 import 'styles/SplashSection.scss';
 import Triangle from 'components/Triangle';
-import { randomColor } from 'utils/Functions';
+import { isMobileBrowser, randomColor } from 'utils/Functions';
 
 class SplashSection extends React.Component {
     pageText = {
@@ -24,14 +24,16 @@ class SplashSection extends React.Component {
     componentDidMount() {
         this.updateTriangleColorMatrix();
 
-        window.onresize = () => {
-            this.setState({
-                windowSize: {
-                    width: window.innerWidth,
-                    height: window.innerHeight
-                }
-            });
-            this.updateTriangleColorMatrix();
+        if (!isMobileBrowser()) {
+            window.onresize = () => {
+                this.setState({
+                    windowSize: {
+                        width: window.innerWidth,
+                        height: window.innerHeight
+                    }
+                });
+                this.updateTriangleColorMatrix();
+            }
         }
     }
 
