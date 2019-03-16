@@ -33,6 +33,5 @@ export function randomNumber(min, max) {
 }
 
 export function isMobileBrowser() {
-    alert(navigator.userAgent || navigator.vendor || window.opera);
     return MOBILE_BROWSER_REGEX.test(navigator.userAgent || navigator.vendor || window.opera);
 }
