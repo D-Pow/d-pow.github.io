@@ -1,5 +1,6 @@
 import React from 'react';
 import SplashSection from 'components/Home/SplashSection';
+import IntroGrid from 'components/Home/IntroGrid';
 
 class Home extends React.Component {
     render() {
@@ -7,7 +8,7 @@ class Home extends React.Component {
         return (
             <React.Fragment>
                 <SplashSection />
-                <div style={{height: '500px'}}>Meh</div>
+                <IntroGrid />
             </React.Fragment>
         );
     }

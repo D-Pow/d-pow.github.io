@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SHOW_ELEMENT_SCROLL_THRESHOLD } from "utils/Constants";
+import { SHOW_ELEMENT_SCROLL_THRESHOLD } from 'utils/Constants';
 
 class ScrollToShow extends React.Component {
     constructor(props) {
