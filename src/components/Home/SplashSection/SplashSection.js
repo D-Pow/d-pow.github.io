@@ -1,6 +1,6 @@
 import React from 'react';
 import 'styles/SplashSection.scss';
-import Triangle from 'components/Triangle';
+import Triangle from 'components/ui/Triangle';
 import { isMobileBrowser, randomColor } from 'utils/Functions';
 
 class SplashSection extends React.Component {

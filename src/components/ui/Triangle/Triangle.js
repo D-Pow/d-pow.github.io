@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import 'styles/Triangle.scss';
 import { durationMin, durationMax } from 'styles/Triangle.scss';
-import { randomNumber } from "../../utils/Functions";
+import { randomNumber } from 'utils/Functions';
 
 class Triangle extends React.Component {
     render() {

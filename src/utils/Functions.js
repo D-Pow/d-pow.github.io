@@ -1,4 +1,4 @@
-import { COLORS, MOBILE_BROWSER_REGEX } from "./Constants";
+import { COLORS, MOBILE_BROWSER_REGEX } from './Constants';
 
 export function randomColor(colorsToAvoid) {
     let forbiddenColors;
