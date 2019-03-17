@@ -23,4 +23,8 @@ Column.propTypes = {
     className: PropTypes.string
 };
 
+Column.defaultProps = {
+    areaName: Column.name
+};
+
 export default Column;

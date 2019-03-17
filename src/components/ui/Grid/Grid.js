@@ -10,19 +10,24 @@ class Grid extends React.Component {
     static Column = Column;
 
     render() {
-        const { areasFormat, className } = this.props;
+        const children = React.Children.toArray(this.props.children);
+        const numRows = React.Children.count(this.props.children);
         const style = {};
 
-        if (areasFormat) {
-            style['gridTemplateAreas'] = areasFormat.map(rowEntries => {
-                return rowEntries.join(' ');
-            }).map(row => {
-                return `'${row}'`
+        if (numRows > 0) {
+            style.gridTemplateAreas = children.map(row => {
+                const rowChildren = React.Children.toArray(row.props.children);
+
+                if (rowChildren.length > 0) {
+                    return `'${rowChildren.map(col => col.props.areaName).join(' ')}'`;
+                }
+
+                return `'${row.props.areaName}'`;
             }).join(' ');
         }
 
         return (
-            <div className={`${className} grid`} style={style}>
+            <div className={`${this.props.className} grid`} style={style}>
                 {this.props.children}
             </div>
         );
@@ -37,10 +42,7 @@ Grid.propTypes = {
             }
         }
     },
-    className: PropTypes.string,
-    columns: PropTypes.number,
-    areasFormat: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
-    rows: PropTypes.number
+    className: PropTypes.string
 };
 
 Grid.defaultProps = {
