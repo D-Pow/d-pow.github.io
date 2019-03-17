@@ -35,3 +35,11 @@ export function randomNumber(min, max) {
 export function isMobileBrowser() {
     return MOBILE_BROWSER_REGEX.test(navigator.userAgent || navigator.vendor || window.opera);
 }
+
+export function childIsOfType(child, component) {
+    return child.type === component;
+}
+
+export function getChildName(child) {
+    return child.type.name;
+}
