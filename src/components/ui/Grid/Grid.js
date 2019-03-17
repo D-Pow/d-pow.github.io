@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Row from './Row';
 import Column from './Column';
+import { childIsOfType, getChildName } from 'utils/Functions';
 import 'styles/Grid.scss';
 
 class Grid extends React.Component {
@@ -29,6 +30,13 @@ class Grid extends React.Component {
 }
 
 Grid.propTypes = {
+    children: props => {
+        for (let child of React.Children.toArray(props.children)) {
+            if (!childIsOfType(child, Row)) {
+                return new Error(`Invalid prop ${getChildName(child)} passed to Grid. Expected Row.`);
+            }
+        }
+    },
     className: PropTypes.string,
     columns: PropTypes.number,
     areasFormat: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
