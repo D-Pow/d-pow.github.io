@@ -9,26 +9,38 @@ class Grid extends React.Component {
     static Row = Row;
     static Column = Column;
 
+    generateGridNames() {
+        const gridAreaNamesUsed = [];
+        const gridTemplateAreasText = React.Children.map(this.props.children, (row, rowIndex) => {
+            const rowAreaNamesUsed = [];
+            const rowAreaNamesText = React.Children.map(row.props.children, (column, colIndex) => {
+                const columnAreaName = `grid-cell-${rowIndex}-${colIndex}`;
+                const columnAreaNames = Array.from({ length: column.props.colSpan }, () => {
+                    return columnAreaName;
+                });
+
+                rowAreaNamesUsed.push(columnAreaName);
+
+                return columnAreaNames.join(' ');
+            });
+
+            gridAreaNamesUsed.push(rowAreaNamesUsed);
+
+            return `'${rowAreaNamesText.join(' ')}'`;
+        }).join(' ');
+
+        return { gridTemplateAreasText, gridAreaNamesUsed };
+    }
+
     render() {
-        const children = React.Children.toArray(this.props.children);
-        const numRows = React.Children.count(this.props.children);
-        const style = {};
-
-        if (numRows > 0) {
-            style.gridTemplateAreas = children.map(row => {
-                const rowChildren = React.Children.toArray(row.props.children);
-
-                if (rowChildren.length > 0) {
-                    return `'${rowChildren.map(col => col.props.areaName).join(' ')}'`;
-                }
-
-                return `'${row.props.areaName}'`;
-            }).join(' ');
-        }
+        const { gridTemplateAreasText, gridAreaNamesUsed } = this.generateGridNames();
+        const renderedRows = React.Children.map(this.props.children, (row, index) => {
+            return React.cloneElement(row, { gridTemplateAreas: gridAreaNamesUsed[index]})
+        });
 
         return (
-            <div className={`${this.props.className} grid`} style={style}>
-                {this.props.children}
+            <div className={`${this.props.className} grid`} style={{ gridTemplateAreas: gridTemplateAreasText }}>
+                {renderedRows}
             </div>
         );
     }

@@ -6,19 +6,36 @@ class IntroGrid extends React.Component {
         return (
             <Grid>
                 <Grid.Row>
-                    <Grid.Column areaName={'col-1'}>
+                    <Grid.Column>
                         1-1
                     </Grid.Column>
-                    <Grid.Column areaName={'col-2'}>
+                    <Grid.Column>
                         1-2
+                    </Grid.Column>
+                    <Grid.Column>
+                        1-3
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
-                    <Grid.Column areaName={'col-3'}>
+                    <Grid.Column>
                         2-1
                     </Grid.Column>
-                    <Grid.Column areaName={'col-4'}>
+                    <Grid.Column>
                         2-2
+                    </Grid.Column>
+                    <Grid.Column>
+                        2-3
+                    </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                    <Grid.Column>
+                        3-1
+                    </Grid.Column>
+                    <Grid.Column>
+                        3-2
+                    </Grid.Column>
+                    <Grid.Column>
+                        3-3
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

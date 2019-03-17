@@ -3,15 +3,10 @@ import PropTypes from 'prop-types';
 
 class Column extends React.Component {
     render() {
-        const { areaName } = this.props;
-        const style = {};
-
-        if (areaName) {
-            style['gridArea'] = areaName;
-        }
+        const { className, gridArea } = this.props;
 
         return (
-            <div className={this.props.className} style={style}>
+            <div className={className} style={{ gridArea }}>
                 {this.props.children}
             </div>
         );
@@ -19,12 +14,14 @@ class Column extends React.Component {
 }
 
 Column.propTypes = {
-    areaName: PropTypes.string,
-    className: PropTypes.string
+    className: PropTypes.string,
+    colSpan: PropTypes.number,
+    gridArea: PropTypes.string
 };
 
 Column.defaultProps = {
-    areaName: Column.name
+    colSpan: 1,
+    gridArea: Column.name
 };
 
 export default Column;
