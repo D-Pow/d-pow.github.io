@@ -1,32 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Column from './Column';
+import { childIsOfType, getChildName } from 'utils/Functions';
 
 class Row extends React.Component {
     render() {
-        const { areaName } = this.props;
-        const style = {};
-
-        if (areaName) {
-            style['gridArea'] = areaName;
-        }
+        const renderedColumns = React.Children.map(this.props.children, (column, colIndex) => {
+            return React.cloneElement(column, { gridArea: this.props.gridTemplateAreas[colIndex] });
+        });
 
         return (
-            <div className={this.props.className} style={style}>
-                {this.props.children}
-            </div>
+            <React.Fragment>
+                {renderedColumns}
+            </React.Fragment>
         );
     }
 }
 
 Row.propTypes = {
-    areaName: PropTypes.string,
-    className: PropTypes.string,
-    colSpan: PropTypes.number
-};
-
-Row.defaultProps = {
-    className: '',
-    colSpan: 1
+    children: props => {
+        for (let child of React.Children.toArray(props.children)) {
+            if (!childIsOfType(child, Column)) {
+                return new Error(`Invalid prop ${getChildName(child)} passed to Grid. Expected Column.`);
+            }
+        }
+    },
+    gridTemplateAreas: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default Row;
