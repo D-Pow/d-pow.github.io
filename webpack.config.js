@@ -8,10 +8,15 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 /*
 ToDo
 favico & manifest
-injecting PUBLIC_URL in front of static without changing the actual file output
 Fix client.css code splitting to be smaller files
 npm vulnerabilities
  */
+
+const outputPaths = {
+    dev: '',
+    prod: 'dist'
+};
+const outputPath = process.env.NODE_ENV === 'production' ? outputPaths.prod : outputPaths.dev;
 
 const env = dotenv.config({
     path: './.env'
@@ -21,7 +26,7 @@ process.env = {
     ...process.env,
     ...env,
     NODE_ENV: process.env.NODE_ENV || 'development',
-    PUBLIC_URL: process.env.NODE_ENV === 'production' ? 'website' : ''
+    PUBLIC_URL: outputPath
 };
 
 const publicEnv = {
@@ -82,15 +87,15 @@ module.exports = {
         vendor: ['react', 'react-dom', 'react-router-dom', 'prop-types']
     },
     output: {
-        path: path.resolve(__dirname, 'dist/'),
-        publicPath: '/',
+        path: path.resolve(__dirname, outputPath),
+        publicPath: outputPath,
         filename: `static/js/[name].[hash:8].bundle.js`,
         chunkFilename: `static/js/[name].[hash:8].chunk.js`
     },
     devServer: {
-        // contentBase: path.join(__dirname, 'dist/'),
+        // contentBase: path.join(__dirname, outputPaths.prod),
         port: 3000,
-        // publicPath: 'http://localhost:3000/website',
+        // publicPath: `http://localhost:3000/${outputPath.prod}`,
         // hotOnly: true,
         historyApiFallback: true // For React Router
     },
