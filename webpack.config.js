@@ -8,8 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 /*
 ToDo
-favico & manifest
-Fix client.css code splitting to be smaller files
+Fix image to be smaller chunk
 npm vulnerabilities
  */
 
@@ -119,30 +118,22 @@ module.exports = {
     },
     stats: { modules: false, children: false }, // clean up npm output
     plugins: [
-        new webpack.DefinePlugin({ 'process.env': JSON.stringify(publicEnv) }), // Makes env available to src
+        // makes env available to src
+        new webpack.DefinePlugin({ 'process.env': JSON.stringify(publicEnv) }),
         new webpack.HotModuleReplacementPlugin(),
+        // injects tags like <script> into index.html
         new HtmlWebpackPlugin({
             template: './src/index.html',
-            filename: './index.html',
-            // favicon: './src/assets/favicon.ico',
-            // minify: argv.mode === 'production' ? {
-            //     removeComments: true,
-            //     collapseWhitespace: true,
-            //     removeRedundantAttributes: true,
-            //     useShortDoctype: true,
-            //     removeEmptyAttributes: true,
-            //     removeStyleLinkTypeAttributes: true,
-            //     keepClosingSlash: true,
-            //     minifyJS: true,
-            //     minifyCSS: true,
-            //     minifyURLs: true,
-            // } : false
+            filename: './index.html'
         }),
-        new InterpolateHtmlPlugin(publicEnv), // replaces %PUBLIC_URL% with env entry
+        // replaces %PUBLIC_URL% in index.html with env entry
+        new InterpolateHtmlPlugin(publicEnv),
+        // splits CSS out from the rest of the code
         new MiniCssExtractPlugin({
             filename: `static/css/[name].[contenthash:8].css`,
             chunkFilename: `static/css/[name].[contenthash:8].chunk.css`
         }),
+        // manually copies files from src to dest
         new CopyWebpackPlugin([
             {
                 from: 'src/manifest.json',
@@ -169,7 +160,7 @@ module.exports = {
             },
             maxSize: 240000, // split very large output files into smaller chunks
             minSize: 100000, // prevent splitting of small files
-            chunks: 'all'
+            chunks: 'all' // removes repeated code from generated chunks
         },
         runtimeChunk: true
     }
