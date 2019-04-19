@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 /*
 ToDo
@@ -124,7 +125,21 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: `static/css/[name].[contenthash:8].css`,
             chunkFilename: `static/css/[name].[contenthash:8].chunk.css`
-        })
+        }),
+        new CopyWebpackPlugin([
+            {
+                from: 'src/manifest.json',
+                to: '[name].[ext]'
+            },
+            {
+                from: 'src/ServiceWorker.js',
+                to: '[name].[ext]'
+            },
+            {
+                from: 'src/assets/favicon.ico',
+                to: 'static/assets/[name].[ext]'
+            }
+        ])
     ],
     optimization: {
         splitChunks: {
