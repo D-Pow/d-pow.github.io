@@ -7,19 +7,28 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 /*
 ToDo
-ServiceWorker in index.js (PUBLIC_URL injection)
 favico & manifest
 injecting PUBLIC_URL in front of static without changing the actual file output
 Fix client.css code splitting to be smaller files
 npm vulnerabilities
  */
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-process.env.PUBLIC_URL = process.env.NODE_ENV === 'production' ? 'website' : '';
-
 const env = dotenv.config({
     path: './.env'
 }).parsed;
+
+process.env = {
+    ...process.env,
+    ...env,
+    NODE_ENV: process.env.NODE_ENV || 'development',
+    PUBLIC_URL: process.env.NODE_ENV === 'production' ? 'website' : ''
+};
+
+const publicEnv = {
+    NODE_ENV: process.env.NODE_ENV,
+    NODE_PATH: process.env.NODE_PATH,
+    PUBLIC_URL: process.env.PUBLIC_URL
+};
 
 const jsRegex = /\.jsx?$/;
 const cssRegex = /\.css$/;
@@ -64,7 +73,7 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx'],
         modules: [
-            path.resolve(__dirname, env.NODE_PATH),
+            path.resolve(__dirname, process.env.NODE_PATH),
             'node_modules'
         ]
     },
@@ -87,7 +96,7 @@ module.exports = {
     },
     stats: { modules: false, children: false },
     plugins: [
-        new webpack.DefinePlugin({ 'process.env': env }),
+        new webpack.DefinePlugin({ 'process.env': JSON.stringify(publicEnv) }), // Makes env available to src
         // new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: './src/index.html',
@@ -106,7 +115,7 @@ module.exports = {
             //     minifyURLs: true,
             // } : false
         }),
-        new InterpolateHtmlPlugin(process.env),
+        new InterpolateHtmlPlugin(publicEnv), // replaces %PUBLIC_URL% with env entry
         new MiniCssExtractPlugin({
             filename: `static/css/[name].[contenthash:8].css`,
             chunkFilename: `static/css/[name].[contenthash:8].chunk.css`
