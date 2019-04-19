@@ -57,11 +57,28 @@ module.exports = {
             },
             {
                 test: sassRegex,
-                use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            hmr: process.env.NODE_ENV === 'development',
+                        }
+                    },
+                    'css-loader',
+                    'sass-loader'
+                ]
             },
             {
                 test: cssRegex,
-                use: [ MiniCssExtractPlugin.loader, 'css-loader' ]
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            hmr: process.env.NODE_ENV === 'development',
+                        }
+                    },
+                    'css-loader'
+                ]
             },
             {
                 test: assetRegex,
@@ -103,7 +120,7 @@ module.exports = {
     stats: { modules: false, children: false }, // clean up npm output
     plugins: [
         new webpack.DefinePlugin({ 'process.env': JSON.stringify(publicEnv) }), // Makes env available to src
-        // new webpack.HotModuleReplacementPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: './src/index.html',
             filename: './index.html',
