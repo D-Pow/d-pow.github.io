@@ -160,13 +160,15 @@ module.exports = {
     ],
     optimization: {
         splitChunks: {
-            cacheGroups: { // split node_modules (as vendor) from src (as client)
-                vendor: {
+            cacheGroups: {
+                vendor: { // split node_modules (as vendor) from src (as client)
                     test: /[\\/]node_modules[\\/]/,
                     name: 'vendor',
                     chunks: 'all'
                 }
             },
+            maxSize: 240000, // split very large output files into smaller chunks
+            minSize: 100000, // prevent splitting of small files
             chunks: 'all'
         },
         runtimeChunk: true
