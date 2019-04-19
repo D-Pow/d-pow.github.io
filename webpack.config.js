@@ -87,7 +87,7 @@ module.exports = {
         vendor: ['react', 'react-dom', 'react-router-dom', 'prop-types']
     },
     output: {
-        path: path.resolve(__dirname, outputPath),
+        path: path.resolve(__dirname, outputPath), // set specific output path for github global user .io domain
         publicPath: outputPath,
         filename: `static/js/[name].[hash:8].bundle.js`,
         chunkFilename: `static/js/[name].[hash:8].chunk.js`
@@ -99,7 +99,7 @@ module.exports = {
         // hotOnly: true,
         historyApiFallback: true // For React Router
     },
-    stats: { modules: false, children: false },
+    stats: { modules: false, children: false }, // clean up npm output
     plugins: [
         new webpack.DefinePlugin({ 'process.env': JSON.stringify(publicEnv) }), // Makes env available to src
         // new webpack.HotModuleReplacementPlugin(),
@@ -128,7 +128,7 @@ module.exports = {
     ],
     optimization: {
         splitChunks: {
-            cacheGroups: {
+            cacheGroups: { // split node_modules (as vendor) from src (as client)
                 vendor: {
                     test: /[\\/]node_modules[\\/]/,
                     name: 'vendor',
