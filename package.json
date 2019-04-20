@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "http://d-pow.github.io/website",
+  "scripts": {
+    "start": "webpack-dev-server --open",
+    "build": "cross-env NODE_ENV=production webpack --mode production",
+    "create": "node createComponent.js"
+  },
   "dependencies": {
     "bootstrap": "^4.3.1",
     "jquery": "^3.3.1",
@@ -12,17 +17,6 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0"
   },
-  "scripts": {
-    "start": "webpack-dev-server --open",
-    "build": "cross-env NODE_ENV=production webpack --mode production",
-    "create": "node createComponent.js"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
@@ -44,6 +38,12 @@
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.3.1"
   },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "eslintConfig": {
     "extends": "react-app"
   }
