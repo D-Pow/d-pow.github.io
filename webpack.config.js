@@ -120,7 +120,6 @@ module.exports = {
     plugins: [
         // makes env available to src
         new webpack.DefinePlugin({ 'process.env': JSON.stringify(publicEnv) }),
-        new webpack.HotModuleReplacementPlugin(),
         // injects tags like <script> into index.html
         new HtmlWebpackPlugin({
             template: './src/index.html',
