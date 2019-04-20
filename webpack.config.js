@@ -112,7 +112,7 @@ module.exports = {
     devServer: {
         // contentBase: path.join(__dirname, outputPaths.prod),
         port: 3000,
-        // publicPath: `http://localhost:3000/${outputPath.prod}`,
+        // publicPath: `http://localhost:3000/${outputPaths.prod}`,
         // hotOnly: true,
         historyApiFallback: true // For React Router
     },
