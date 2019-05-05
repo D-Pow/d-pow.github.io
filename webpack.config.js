@@ -6,11 +6,6 @@ const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-/*
-ToDo
-favico not loading
-*/
-
 const outputPaths = {
     dev: '',
     prod: 'dist'
