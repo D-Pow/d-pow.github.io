@@ -8,7 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const outputPaths = {
     dev: '',
-    prod: 'dist'
+    prod: 'website'
 };
 const outputPath = process.env.NODE_ENV === 'production' ? outputPaths.prod : outputPaths.dev;
 
