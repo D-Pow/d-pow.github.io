@@ -8,9 +8,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 /*
 ToDo
-Fix image to be smaller chunk
-npm vulnerabilities
- */
+favico not loading
+*/
 
 const outputPaths = {
     dev: '',
@@ -162,5 +161,8 @@ module.exports = {
             chunks: 'all' // removes repeated code from generated chunks
         },
         runtimeChunk: true
+    },
+    performance: {
+        hints: false // disable "entrypoint size limit" warning
     }
 };
