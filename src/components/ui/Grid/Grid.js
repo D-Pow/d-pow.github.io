@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Row from './Row';
 import Column from './Column';
 import { childIsOfType, getChildName } from 'utils/Functions';
+import 'styles/Common.scss';
 import 'styles/Grid.scss';
 
 class Grid extends React.Component {
@@ -37,9 +38,13 @@ class Grid extends React.Component {
         const renderedRows = React.Children.map(this.props.children, (row, index) => {
             return React.cloneElement(row, { gridTemplateAreas: gridAreaNamesUsed[index]})
         });
+        const style = {
+            gridTemplateAreas: gridTemplateAreasText,
+            width: this.props.width
+        };
 
         return (
-            <div className={`${this.props.className} grid`} style={{ gridTemplateAreas: gridTemplateAreasText }}>
+            <div className={`${this.props.className} grid`} style={style}>
                 {renderedRows}
             </div>
         );
@@ -54,11 +59,13 @@ Grid.propTypes = {
             }
         }
     },
-    className: PropTypes.string
+    className: PropTypes.string,
+    width: PropTypes.string
 };
 
 Grid.defaultProps = {
-    className: ''
+    className: '',
+    width: '100%'
 };
 
 export default Grid;
