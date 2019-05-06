@@ -43,6 +43,10 @@ ${componentName}.propTypes = {
 
 };
 
+${componentName}.defaultProps = {
+
+};
+
 export default ${componentName};
 `;
     fs.mkdir(`${dir}`, {recursive: true}, err => {
