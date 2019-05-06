@@ -99,7 +99,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, outputPath), // set specific output path for github global user .io domain
-        publicPath: outputPath,
+        // publicPath: 'outputPath',  // appends ${outputPath} to <script> src tags; not needed since CRA-stripping
         filename: `static/js/[name].[hash:8].bundle.js`,
         chunkFilename: `static/js/[name].[hash:8].chunk.js`
     },
