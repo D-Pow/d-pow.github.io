@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --open",
     "build": "cross-env NODE_ENV=production webpack --mode production",
-    "create": "node createComponent.js"
+    "create": "node scripts/createComponent.js"
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
