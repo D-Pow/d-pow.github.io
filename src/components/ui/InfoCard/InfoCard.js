@@ -1,22 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Image from 'components/ui/Image';
 
 class InfoCard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { imageSrc: '' };
-        this.loadImage();
-    }
-
-    loadImage() {
-        const { image } = this.props;
-
-        if (image !== '') {
-            import(`assets/${image}`).then(module => {
-                this.setState({ imageSrc: module.default });
-            });
-        }
-    }
 
     render() {
         const textContent = (
@@ -25,7 +11,7 @@ class InfoCard extends React.Component {
                 <p>{this.props.description}</p>
             </React.Fragment>
         );
-        const imageContent = (<img src={this.state.imageSrc} alt={this.props.image} />);
+        const imageContent = (<Image image={this.props.image} />);
         const pageContent = [ textContent, imageContent ];
 
         return (

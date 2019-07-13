@@ -1,5 +1,5 @@
 import React from 'react';
-import reactLogo from 'assets/react_logo.svg';
+import Image from 'components/ui/Image';
 import 'styles/Footer.scss';
 
 class Footer extends React.Component {
@@ -7,7 +7,7 @@ class Footer extends React.Component {
         return (
             <span>
                 <h4 className={'footer-title'}>Made with React 16</h4>
-                <img src={reactLogo} className="react-logo" alt="logo" />
+                <Image className="react-logo" image={'react_logo.svg'} />
             </span>
         );
     }
