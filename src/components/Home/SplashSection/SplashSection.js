@@ -104,11 +104,11 @@ class SplashSection extends React.Component {
     }
 
     renderWelcomeText() {
-        const renderedTitle = (<h2 className={'text-white'}>{this.pageText.welcomeTitle}</h2>);
+        const renderedTitle = (<h1 className={'text-white'}>{this.pageText.welcomeTitle}</h1>);
 
         return (
             <div className={'text-center position-absolute w-100 top-30'}>
-                <div className={'bg-dark-fadeout rounded m-auto py-2 px-1'} style={{width: '40%'}}>
+                <div className={'bg-dark-fadeout rounded m-auto py-2 px-3'} style={{width: '50%'}}>
                     {renderedTitle}
                 </div>
             </div>
