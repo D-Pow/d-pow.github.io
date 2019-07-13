@@ -43,4 +43,13 @@ $body-bg: $lighter;
   margin: auto;
 }
 
+.fade-in {
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+.fade-in.fade-in-show {
+  opacity: 1;
+}
+
 @import "~bootstrap/scss/bootstrap";
