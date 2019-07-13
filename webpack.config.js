@@ -32,7 +32,7 @@ const publicEnv = {
 const jsRegex = /\.jsx?$/;
 const cssRegex = /\.css$/;
 const sassRegex = /\.scss$/;
-const assetRegex = /\.(png|gif|jpe?g|svg|ico)$/;
+const assetRegex = /\.(png|gif|jpe?g|svg|ico|pdf|tex)$/;
 
 module.exports = {
     module: {
