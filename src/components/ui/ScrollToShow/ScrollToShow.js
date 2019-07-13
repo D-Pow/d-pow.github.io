@@ -70,7 +70,7 @@ class ScrollToShow extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
+            <div className={this.props.className}>
                 {React.Children.map(this.props.children, (child, index) => (
                     React.cloneElement(child, {
                         className: `${child.props.className ? child.props.className : ''} ${this.getClassNames(index)}`,
@@ -78,12 +78,13 @@ class ScrollToShow extends React.Component {
                         ref: this.state.childRefs[index]
                     })
                 ))}
-            </React.Fragment>
+            </div>
         );
     }
 }
 
 ScrollToShow.propTypes = {
+    className: PropTypes.string,
     addClasses: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.arrayOf(PropTypes.string)
@@ -92,6 +93,7 @@ ScrollToShow.propTypes = {
 };
 
 ScrollToShow.defaultProps = {
+    className: '',
     threshold: SHOW_ELEMENT_SCROLL_THRESHOLD
 };
 
