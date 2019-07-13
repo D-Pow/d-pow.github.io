@@ -1,6 +1,6 @@
 import React from 'react';
 import SplashSection from 'components/Home/SplashSection';
-import IntroGrid from 'components/Home/IntroGrid';
+import GistSection from 'components/Home/GistSection';
 
 class Home extends React.Component {
     render() {
@@ -8,7 +8,7 @@ class Home extends React.Component {
         return (
             <React.Fragment>
                 <SplashSection />
-                <IntroGrid />
+                <GistSection />
             </React.Fragment>
         );
     }
