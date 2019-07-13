@@ -60,8 +60,12 @@ class ScrollToShow extends React.Component {
     }
 
     getClassNames(index) {
-        const { addClasses } = this.props;
+        const { addClasses, distributeClasses } = this.props;
         let classes = [];
+
+        if (distributeClasses) {
+            classes.push(distributeClasses);
+        }
 
         if (this.state.shownChildren[index]) {
             classes.push(addClasses);
@@ -88,11 +92,13 @@ class ScrollToShow extends React.Component {
 ScrollToShow.propTypes = {
     className: PropTypes.string,
     addClasses: PropTypes.string.isRequired,
+    distributeClasses: PropTypes.string,
     threshold: PropTypes.number
 };
 
 ScrollToShow.defaultProps = {
     className: '',
+    distributeClasses: '',
     threshold: SHOW_ELEMENT_SCROLL_THRESHOLD
 };
 
