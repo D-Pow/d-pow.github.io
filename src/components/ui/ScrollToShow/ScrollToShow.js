@@ -62,9 +62,11 @@ class ScrollToShow extends React.Component {
     getClassNames(index) {
         const { addClasses } = this.props;
         let classes = [];
+
         if (this.state.shownChildren[index]) {
-            classes = Array.isArray(addClasses) ? addClasses : [addClasses];
+            classes.push(addClasses);
         }
+
         return classes.join(' ');
     }
 
@@ -85,10 +87,7 @@ class ScrollToShow extends React.Component {
 
 ScrollToShow.propTypes = {
     className: PropTypes.string,
-    addClasses: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.arrayOf(PropTypes.string)
-    ]).isRequired,
+    addClasses: PropTypes.string.isRequired,
     threshold: PropTypes.number
 };
 
