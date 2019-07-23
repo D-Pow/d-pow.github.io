@@ -13,14 +13,12 @@ class InfoCard extends React.Component {
         const pageContent = [ textContent, this.props.children ];
 
         return (
-            <div className={this.props.className} ref={this.props.forwardedRef}>
-                <div className={'row'}>
-                    <div className={'col-sm-6 margin-center'}>
-                        {pageContent[Number(this.props.flipped)]}
-                    </div>
-                    <div className={'col-sm-6'}>
-                        {pageContent[Number(!this.props.flipped)]}
-                    </div>
+            <div className={`row ${this.props.className}`} ref={this.props.forwardedRef}>
+                <div className={'col-sm-6 margin-center'}>
+                    {pageContent[Number(this.props.flipped)]}
+                </div>
+                <div className={'col-sm-6'}>
+                    {pageContent[Number(!this.props.flipped)]}
                 </div>
             </div>
         );
