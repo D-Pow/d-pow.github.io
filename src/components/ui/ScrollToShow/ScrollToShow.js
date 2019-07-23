@@ -5,6 +5,8 @@ import { SHOW_ELEMENT_SCROLL_THRESHOLD } from 'utils/Constants';
 class ScrollToShow extends React.Component {
     constructor(props) {
         super(props);
+        // refs used to get the top position of an HTML element
+        // shownChildren used to keep track of who should be shown
         const childRefs = [];
         const shownChildren = [];
         for (let i = 0; i < this.props.children.length; i++) {
@@ -90,9 +92,16 @@ class ScrollToShow extends React.Component {
 }
 
 ScrollToShow.propTypes = {
+    // Parent div's class, not affected by the scroll amount
     className: PropTypes.string,
+
+    // Classes to distribute to all children after they should be shown
     addClasses: PropTypes.string.isRequired,
+
+    // Classes to distribute to all children before they should be shown
     distributeClasses: PropTypes.string,
+
+    // Percentage of the way down the screen the user needs to scroll in order to activate appending addClasses
     threshold: PropTypes.number
 };
 
