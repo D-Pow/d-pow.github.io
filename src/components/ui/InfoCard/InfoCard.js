@@ -30,7 +30,7 @@ class InfoCard extends React.Component {
 InfoCard.propTypes = {
     className: PropTypes.string,
     title: PropTypes.string,
-    description: PropTypes.string,
+    description: PropTypes.node,
     flipped: PropTypes.bool,
     forwardedRef: PropTypes.object
 };
