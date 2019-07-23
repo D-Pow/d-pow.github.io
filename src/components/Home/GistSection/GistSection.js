@@ -1,14 +1,14 @@
 import React from 'react';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import InfoCard from 'components/ui/InfoCard';
-import { ETRADE_LINK } from 'utils/CommonRenders';
+import { ETRADE_MUTUAL_FUNDS_LINK } from 'utils/CommonRenders';
 
 class GistSection extends React.Component {
     pageText = {
         infoCards: [
             {
                 title: 'Full-stack software engineer',
-                description: (<React.Fragment>I build platforms at E-Trade for creating {ETRADE_LINK} investment plans</React.Fragment>),
+                description: (<React.Fragment>I build platforms at E-Trade for creating {ETRADE_MUTUAL_FUNDS_LINK} investment plans</React.Fragment>),
                 children: (
                     <React.Fragment>
                         <h5>Major interests include:</h5>
