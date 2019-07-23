@@ -1,0 +1,16 @@
+@keyframes flip-x {
+    0% {
+        transform: rotate3d(1, 0, 0, 90deg);
+        animation-timing-function: ease-out;
+        opacity: 0;
+    }
+    100% {
+        transform: rotate3d(1, 0, 0, 0deg);
+        opacity: 1;
+    }
+}
+
+.flip {
+    animation-name: flip-x;
+    animation-duration: 1.5s;
+}
