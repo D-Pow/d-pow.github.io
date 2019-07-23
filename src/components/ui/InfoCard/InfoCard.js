@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Image from 'components/ui/Image';
 
 class InfoCard extends React.Component {
 
@@ -11,8 +10,7 @@ class InfoCard extends React.Component {
                 <p>{this.props.description}</p>
             </React.Fragment>
         );
-        const imageContent = (<Image image={this.props.image} />);
-        const pageContent = [ textContent, imageContent ];
+        const pageContent = [ textContent, this.props.children ];
 
         return (
             <div className={this.props.className} ref={this.props.forwardedRef}>
@@ -33,7 +31,6 @@ InfoCard.propTypes = {
     className: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
-    image: PropTypes.string,
     flipped: PropTypes.bool,
     forwardedRef: PropTypes.object
 };
@@ -42,7 +39,6 @@ InfoCard.defaultProps = {
     className: '',
     title: '',
     description: '',
-    image: '',
     flipped: false
 };
 
