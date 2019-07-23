@@ -20,6 +20,8 @@ $theme-colors: (
 
 $body-bg: $lighter;
 
+@import "Animation";
+
 .nav-link {
   color: $light;
   transition: color 0.5s;

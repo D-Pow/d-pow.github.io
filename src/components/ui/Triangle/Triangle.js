@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'styles/Triangle.scss';
-import { durationMin, durationMax } from 'styles/Triangle.scss';
+import { spinDurationMin, spinDurationMax } from 'styles/Animation.scss';
 import { randomNumber } from 'utils/Functions';
 
 class Triangle extends React.Component {
@@ -28,7 +28,7 @@ class Triangle extends React.Component {
         }
 
         const spinDelay = this.props.spinDelay || randomNumber(1);
-        const animationDuration = this.props.animationDuration || Math.round(randomNumber(durationMin, durationMax));
+        const animationDuration = this.props.animationDuration || Math.round(randomNumber(spinDurationMin, spinDurationMax));
         const style = {
             [borderColorField]: color,
             [borderHeightField]: `${height}px`,
