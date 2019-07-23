@@ -1,2 +1,2 @@
-# d-pow.github.io
-[My personal website](http://d-pow.github.io)
+# [My personal website](devonpowell.net)
+A profile website about me
