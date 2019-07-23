@@ -15,7 +15,7 @@ class InfoCard extends React.Component {
         const pageContent = [ textContent, imageContent ];
 
         return (
-            <React.Fragment>
+            <div className={this.props.className} ref={this.props.forwardedRef}>
                 <div className={'row'}>
                     <div className={'col-sm-6 margin-center'}>
                         {pageContent[Number(this.props.flipped)]}
@@ -24,23 +24,26 @@ class InfoCard extends React.Component {
                         {pageContent[Number(!this.props.flipped)]}
                     </div>
                 </div>
-            </React.Fragment>
+            </div>
         );
     }
 }
 
 InfoCard.propTypes = {
+    className: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
     image: PropTypes.string,
-    flipped: PropTypes.bool
+    flipped: PropTypes.bool,
+    forwardedRef: PropTypes.object
 };
 
 InfoCard.defaultProps = {
+    className: '',
     title: '',
     description: '',
     image: '',
     flipped: false
 };
 
-export default InfoCard;
+export default React.forwardRef((props, ref) => <InfoCard forwardedRef={ref} {...props} />);
