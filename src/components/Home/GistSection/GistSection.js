@@ -28,7 +28,9 @@ class GistSection extends React.Component {
         return (
             <ScrollToShow className={'margin-center container'} addClasses={'fade-in-show'} distributeClasses={'fade-in'}>
                 <h2 className={'p-5'}>The gist...</h2>
-                {this.pageText.infoCards.map((content, index) => (<InfoCard {...content} key={index} />))}
+                {this.pageText.infoCards.map((content, index) => (
+                    <InfoCard className={'mb-5'} {...content} flipped={Boolean(index % 2)} key={index} />
+                ))}
             </ScrollToShow>
         );
     }
