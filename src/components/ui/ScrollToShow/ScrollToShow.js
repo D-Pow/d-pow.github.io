@@ -17,9 +17,6 @@ class ScrollToShow extends React.Component {
             childRefs,
             shownChildren
         };
-        this.updateChildState = this.updateChildState.bind(this);
-        this.getClassNames = this.getClassNames.bind(this);
-        this.handleScroll = this.handleScroll.bind(this);
     }
 
     componentDidMount() {
@@ -30,22 +27,27 @@ class ScrollToShow extends React.Component {
         window.removeEventListener('scroll', this.handleScroll);
     }
 
-    handleScroll() {
+    handleScroll = () => {
         for (let i = 0; i < this.state.childRefs.length; i++) {
-            this.updateChildState(i);
+            if (this.shouldMakeChildShow(i)) {
+                this.toggleChild(i);
+            }
         }
-    }
+    };
 
-    updateChildState(index) {
+    toggleChild = (index) => {
+        const newShownChildren = [...this.state.shownChildren];
+        newShownChildren[index] = true;
+        this.setState({
+            shownChildren: newShownChildren
+        });
+    };
+
+    shouldMakeChildShow(index) {
         const shouldShowChild = this.shouldBeShown(index);
         const isShown = this.state.shownChildren[index];
-        if (shouldShowChild && !isShown) {
-            const newShownChildren = [...this.state.shownChildren];
-            newShownChildren[index] = true;
-            this.setState({
-                shownChildren: newShownChildren
-            });
-        }
+
+        return shouldShowChild && !isShown;
     }
 
     shouldBeShown(index) {
@@ -61,7 +63,7 @@ class ScrollToShow extends React.Component {
         return element.getBoundingClientRect().top;
     }
 
-    getClassNames(index) {
+    getClassNames = (index) => {
         const { addClasses, distributeClasses } = this.props;
         let classes = [];
 
@@ -74,7 +76,7 @@ class ScrollToShow extends React.Component {
         }
 
         return classes.join(' ');
-    }
+    };
 
     render() {
         return (
