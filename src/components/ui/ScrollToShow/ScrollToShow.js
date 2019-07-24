@@ -28,9 +28,25 @@ class ScrollToShow extends React.Component {
     }
 
     handleScroll = () => {
-        for (let i = 0; i < this.state.childRefs.length; i++) {
-            if (this.shouldMakeChildShow(i)) {
-                this.toggleChild(i);
+        const { distributeSimultaneously } = this.props;
+
+        if (distributeSimultaneously != null) {
+            if (this.shouldMakeChildShow(0)) {
+                this.toggleChild(0);
+
+                for (let i = 1; i < this.state.childRefs.length; i++) {
+                    const timeToShow = distributeSimultaneously*1000*i;
+
+                    setTimeout(() => {
+                        this.toggleChild(i);
+                    }, timeToShow);
+                }
+            }
+        } else {
+            for (let i = 0; i < this.state.childRefs.length; i++) {
+                if (this.shouldMakeChildShow(i)) {
+                    this.toggleChild(i);
+                }
             }
         }
     };
@@ -102,6 +118,9 @@ ScrollToShow.propTypes = {
 
     // Classes to distribute to all children before they should be shown
     distributeClasses: PropTypes.string,
+
+    // Distribute the classes as soon as the first element is found, each separated by `distributeSimultaneously` seconds
+    distributeSimultaneously: PropTypes.number,
 
     // Percentage of the way down the screen the user needs to scroll in order to activate appending addClasses
     threshold: PropTypes.number
