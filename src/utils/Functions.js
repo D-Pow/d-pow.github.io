@@ -5,7 +5,7 @@ export function parseScssMap(scssMapStr) {
     return JSON.parse(scssMapStr.replace('(', '{').replace(')', '"}').replace(/([#,])/g, '"$1'));
 }
 
-export function randomColor(colorsToAvoid) {
+export function randomColor(colorsToAvoid, onlyColors = null) {
     let forbiddenColors;
     if (colorsToAvoid == null) {
         forbiddenColors = [''];
@@ -17,7 +17,7 @@ export function randomColor(colorsToAvoid) {
 
     const themeColorsObj = parseScssMap(themeColors);
     const themeColorNames = Object.keys(themeColorsObj);
-    const validColors = COLORS.concat(themeColorNames);
+    const validColors = onlyColors ? onlyColors : COLORS.concat(themeColorNames);
 
     let chosenColor;
     do {
