@@ -55,3 +55,7 @@ $body-bg: $lighter;
 }
 
 @import "~bootstrap/scss/bootstrap";
+
+:export {
+  themeColors: #{$theme-colors};
+}

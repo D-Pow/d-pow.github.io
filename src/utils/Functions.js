@@ -1,4 +1,9 @@
 import { COLORS, MOBILE_BROWSER_REGEX } from './Constants';
+import { themeColors } from 'styles/Common.scss';
+
+export function parseScssMap(scssMapStr) {
+    return JSON.parse(scssMapStr.replace('(', '{').replace(')', '"}').replace(/([#,])/g, '"$1'));
+}
 
 export function randomColor(colorsToAvoid) {
     let forbiddenColors;
@@ -10,10 +15,19 @@ export function randomColor(colorsToAvoid) {
         forbiddenColors = colorsToAvoid;
     }
 
+    const themeColorsObj = parseScssMap(themeColors);
+    const themeColorNames = Object.keys(themeColorsObj);
+    const validColors = COLORS.concat(themeColorNames);
+
     let chosenColor;
     do {
-        chosenColor = COLORS[Math.floor(Math.random() * COLORS.length)];
-    } while(forbiddenColors.includes(chosenColor));
+        chosenColor = validColors[Math.floor(randomNumber(validColors.length))];
+    } while(forbiddenColors.includes(chosenColor) || forbiddenColors.includes(themeColorsObj[chosenColor]));
+
+    if (themeColorNames.includes(chosenColor)) {
+        chosenColor = themeColorsObj[chosenColor];
+    }
+
     return chosenColor;
 }
 
