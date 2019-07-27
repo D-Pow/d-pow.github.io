@@ -71,7 +71,7 @@ class SplashSection extends React.Component {
             for (let colIndex = 0; colIndex < numTrianglesInRow; colIndex++) {
                 if (!row[colIndex]) {
                     const neighboringColors = this.getNeighboringColors(rowIndex, colIndex, chosenColors);
-                    const color = randomColor(neighboringColors);
+                    let color = randomColor(neighboringColors, ['primary', 'secondary', 'tertiary', 'info', 'dark']);
                     chosenColors[rowIndex].push(color);
                 }
             }

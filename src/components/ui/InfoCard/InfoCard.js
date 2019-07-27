@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class InfoCard extends React.Component {
-
     render() {
         const textContent = (
             <React.Fragment>
