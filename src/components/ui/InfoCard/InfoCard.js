@@ -6,7 +6,7 @@ class InfoCard extends React.Component {
         const textContent = (
             <React.Fragment>
                 <h3 className={'p-2'}>{this.props.title}</h3>
-                <div>{this.props.description}</div>
+                <div className={'lead'}>{this.props.description}</div>
             </React.Fragment>
         );
         const pageContent = [ textContent, this.props.children ];
