@@ -59,9 +59,15 @@ class InfoCard extends React.Component {
 
 InfoCard.propTypes = {
     className: PropTypes.string,
+
+    // Text content; main section of card
     title: PropTypes.string,
     description: PropTypes.node,
+
+    // Option to alternate left/right renders (desktop only)
     flipped: PropTypes.bool,
+
+    // Ref for entire rendered content
     forwardedRef: PropTypes.object
 };
 
