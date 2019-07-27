@@ -15,7 +15,7 @@ export function randomColor(colorsToAvoid, onlyColors = null) {
         forbiddenColors = colorsToAvoid;
     }
 
-    const themeColorsObj = parseScssMap(themeColors);
+    const themeColorsObj = parseScssMap(themeColors); // e.g. { primary: "#ffffff" }
     const themeColorNames = Object.keys(themeColorsObj);
     const validColors = onlyColors ? onlyColors : COLORS.concat(themeColorNames);
 
@@ -24,6 +24,8 @@ export function randomColor(colorsToAvoid, onlyColors = null) {
         chosenColor = validColors[Math.floor(randomNumber(validColors.length))];
     } while(forbiddenColors.includes(chosenColor) || forbiddenColors.includes(themeColorsObj[chosenColor]));
 
+    // If chosenColor is a theme color, the returned value will be a hex so that it can be used in any CSS field
+    // Thus, forbiddenColors will need to search the hex value instead of the named value
     if (themeColorNames.includes(chosenColor)) {
         chosenColor = themeColorsObj[chosenColor];
     }
