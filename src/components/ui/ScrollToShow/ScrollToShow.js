@@ -9,7 +9,7 @@ class ScrollToShow extends React.Component {
         // shownChildren used to keep track of who should be shown
         const childRefs = [];
         const shownChildren = [];
-        for (let i = 0; i < this.props.children.length; i++) {
+        for (let i = 0; i < React.Children.count(this.props.children); i++) {
             childRefs.push(React.createRef());
             shownChildren.push(false);
         }
