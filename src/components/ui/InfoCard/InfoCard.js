@@ -4,16 +4,25 @@ import { parseScssMap } from 'utils/Functions';
 import { gridBreakpoints } from 'styles/Common.scss';
 
 class InfoCard extends React.Component {
-    renderDesktop(pageContent) {
+    renderDesktop(textContent) {
+        const colSize = 'col-sm-6';
+        const renderedText = (
+            <div className={`${colSize} margin-center`}>
+                {textContent}
+            </div>
+        );
+        const renderedChildren = (
+            <div className={colSize}>
+                {this.props.children}
+            </div>
+        );
+        const pageContent = [ renderedText, renderedChildren ];
+
         return (
             <div className={`d-none d-sm-block ${this.props.className}`}>
                 <div className={'row'} ref={this.props.forwardedRef}>
-                    <div className={'col-sm-6 margin-center'}>
-                        {pageContent[Number(this.props.flipped)]}
-                    </div>
-                    <div className={'col-sm-6'}>
-                        {pageContent[Number(!this.props.flipped)]}
-                    </div>
+                    {pageContent[Number(this.props.flipped)]}
+                    {pageContent[Number(!this.props.flipped)]}
                 </div>
             </div>
         );
@@ -39,13 +48,12 @@ class InfoCard extends React.Component {
                 <div className={'lead'}>{this.props.description}</div>
             </React.Fragment>
         );
-        const pageContent = [ textContent, this.props.children ];
 
         // Since refs only work when attached to the actual div they pertain to, render only one of either desktop or mobile
         const mobileThreshold = Number(parseScssMap(gridBreakpoints).sm.replace(/\D/g, ''));
         const isMobile = window.innerWidth < mobileThreshold;
 
-        return isMobile ? this.renderMobile(textContent) : this.renderDesktop(pageContent);
+        return isMobile ? this.renderMobile(textContent) : this.renderDesktop(textContent);
     }
 }
 
