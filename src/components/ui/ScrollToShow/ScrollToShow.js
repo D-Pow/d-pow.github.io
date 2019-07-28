@@ -76,7 +76,7 @@ class ScrollToShow extends React.Component {
     }
 
     getTotalOffsetTop(element) {
-        return element.getBoundingClientRect().top;
+        return element.getBoundingClientRect().top - Number(getComputedStyle(element).marginTop.replace(/[^\d.]/g, ''));
     }
 
     getClassNames = (index) => {
