@@ -78,4 +78,4 @@ InfoCard.defaultProps = {
     flipped: false
 };
 
-export default React.forwardRef((props, ref) => <InfoCard forwardedRef={ref} {...props} />);
+export default InfoCard;
