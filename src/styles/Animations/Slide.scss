@@ -3,7 +3,7 @@ $slideAmount: 500px;
 @keyframes slideInLeft {
     0% {
         opacity: 0;
-        transform: translateX($slideAmount);
+        transform: translateX(-$slideAmount);
     }
     100% {
         opacity: 1;
