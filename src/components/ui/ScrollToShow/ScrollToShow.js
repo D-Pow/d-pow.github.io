@@ -99,7 +99,7 @@ class ScrollToShow extends React.Component {
             <div className={this.props.className}>
                 {React.Children.map(this.props.children, (child, index) => (
                     React.cloneElement(child, {
-                        className: `${child.props.className ? child.props.className : ''} ${this.getClassNames(index)}`,
+                        className: `${child.props && child.props.className ? child.props.className : ''} ${this.getClassNames(index)}`,
                         key: index,
                         ref: this.state.childRefs[index]
                     })
