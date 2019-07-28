@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { parseScssMap } from 'utils/Functions';
-import { gridBreakpoints } from 'styles/Common.scss';
 
 class InfoCard extends React.Component {
-    renderDesktop(textContent) {
+    static renderDefaultTextContent(title, description) {
+        return (
+            <div>
+                <h3 className={'p-2'}>{title}</h3>
+                <div className={'lead'}>{description}</div>
+            </div>
+        );
+    }
+
+    renderDesktop() {
         const colSize = 'col-sm-6';
-        const renderedText = (
+        const renderedMain = (
             <div className={`${colSize} margin-center`}>
-                {textContent}
+                {this.props.mainContent}
             </div>
         );
         const renderedChildren = (
@@ -16,11 +23,11 @@ class InfoCard extends React.Component {
                 {this.props.children}
             </div>
         );
-        const pageContent = [ renderedText, renderedChildren ];
+        const pageContent = [ renderedMain, renderedChildren ];
 
         return (
             <div className={`d-none d-sm-block ${this.props.className}`}>
-                <div className={'row'} ref={this.props.forwardedRef}>
+                <div className={'row'}>
                     {pageContent[Number(this.props.flipped)]}
                     {pageContent[Number(!this.props.flipped)]}
                 </div>
@@ -28,11 +35,11 @@ class InfoCard extends React.Component {
         );
     }
 
-    renderMobile(textContent) {
+    renderMobile() {
         return (
-            <div className={`d-block d-sm-none ${this.props.className}`} ref={this.props.forwardedRef}>
+            <div className={`d-block d-sm-none ${this.props.className}`}>
                 <div className={'row margin-center mb-4'}>
-                    {textContent}
+                    {this.props.mainContent}
                 </div>
                 <div>
                     {this.props.children}
@@ -42,39 +49,28 @@ class InfoCard extends React.Component {
     }
 
     render() {
-        const textContent = (
+        return (
             <React.Fragment>
-                <h3 className={'p-2'}>{this.props.title}</h3>
-                <div className={'lead'}>{this.props.description}</div>
+                {this.renderDesktop()}
+                {this.renderMobile()}
             </React.Fragment>
         );
-
-        // Since refs only work when attached to the actual div they pertain to, render only one of either desktop or mobile
-        const mobileThreshold = Number(parseScssMap(gridBreakpoints).sm.replace(/\D/g, ''));
-        const isMobile = window.innerWidth < mobileThreshold;
-
-        return isMobile ? this.renderMobile(textContent) : this.renderDesktop(textContent);
     }
 }
 
 InfoCard.propTypes = {
     className: PropTypes.string,
 
-    // Text content; main section of card
-    title: PropTypes.string,
-    description: PropTypes.node,
+    // Main section of card
+    mainContent: PropTypes.node,
 
     // Option to alternate left/right renders (desktop only)
     flipped: PropTypes.bool,
-
-    // Ref for entire rendered content
-    forwardedRef: PropTypes.object
 };
 
 InfoCard.defaultProps = {
     className: '',
-    title: '',
-    description: '',
+    mainContent: '',
     flipped: false
 };
 
