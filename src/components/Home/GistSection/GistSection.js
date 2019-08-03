@@ -46,10 +46,45 @@ class GistSection extends React.Component {
         );
     }
 
+    renderProductionsSection() {
+        return (
+            <h1 className={'p-5 mb-5'}>Productions</h1>
+        );
+    }
+
+    renderProjectsSection() {
+        return (
+            <h1 className={'p-5 mb-5'}>Projects</h1>
+        );
+    }
+
+    renderPastimesSection() {
+        return (
+            <h1 className={'p-5 mb-5'}>Pastimes</h1>
+        );
+    }
+
+    renderPublicationsSection() {
+        return (
+            <h1 className={'p-5 mb-5'}>Publications</h1>
+        );
+    }
+
+    renderPersonalContactSection() {
+        return (
+            <h1 className={'p-5 mb-5'}>Personal Contact</h1>
+        );
+    }
+
     render() {
         return (
             <React.Fragment>
                 {this.renderGistSection()}
+                {this.renderProductionsSection()}
+                {this.renderProjectsSection()}
+                {this.renderPastimesSection()}
+                {this.renderPublicationsSection()}
+                {this.renderPersonalContactSection()}
             </React.Fragment>
         );
     }
