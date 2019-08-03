@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class InfoCard extends React.Component {
+    static colSize = 'col-sm-6';
+
     static renderDefaultTextContent(title, description) {
         return (
             <div>
@@ -12,14 +14,13 @@ class InfoCard extends React.Component {
     }
 
     renderDesktop() {
-        const colSize = 'col-sm-6';
         const renderedMain = (
-            <div className={`${colSize} margin-center`}>
+            <div className={`${InfoCard.colSize} margin-center`}>
                 {this.props.mainContent}
             </div>
         );
         const renderedChildren = (
-            <div className={colSize}>
+            <div className={InfoCard.colSize}>
                 {this.props.children}
             </div>
         );
