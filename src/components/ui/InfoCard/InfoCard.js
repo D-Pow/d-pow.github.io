@@ -6,7 +6,7 @@ class InfoCard extends React.Component {
 
     static renderDefaultTextContent(title, description) {
         return (
-            <div>
+            <div className={`margin-center ${InfoCard.colSize}`}>
                 <h3 className={'p-2'}>{title}</h3>
                 <div className={'lead'}>{description}</div>
             </div>
@@ -14,11 +14,7 @@ class InfoCard extends React.Component {
     }
 
     renderDesktop() {
-        const renderedMain = (
-            <div className={`${InfoCard.colSize} margin-center`}>
-                {this.props.mainContent}
-            </div>
-        );
+        const renderedMain = this.props.mainContent;
         const renderedChildren = (
             <div className={InfoCard.colSize}>
                 {this.props.children}
