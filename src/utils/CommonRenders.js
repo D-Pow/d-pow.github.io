@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const ETRADE_LINK = (
-    <a href={''}>
+    <a href={'https://etrade.com'} target={'_blank'}>
         <img
             src={'https://cdn.etrade.net/1/19042220580.0/aempros/etc/designs/responsive-etrade/pagemeta/images/favicon-16x16.png'}
             style={{ marginTop: '-1%' }}
