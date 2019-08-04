@@ -94,7 +94,7 @@ module.exports = {
         ]
     },
     entry: {
-        client: path.resolve(__dirname, 'src/index.js'),
+        client: ['@babel/polyfill', path.resolve(__dirname, 'src/index.js')],
         vendor: ['react', 'react-dom', 'react-router-dom', 'prop-types']
     },
     output: {
