@@ -72,3 +72,15 @@ export function childIsOfType(child, component) {
 export function getChildName(child) {
     return child.type.name;
 }
+
+export async function loadImage(image) {
+    if (image != null && image !== '') {
+        try {
+            const module = await import(`assets/${image}`);
+
+            return module.default;
+        } catch(error) {} // default return handles error case
+    }
+
+    return '';
+}
