@@ -1,7 +1,7 @@
 import React from 'react';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import InfoCard from 'components/ui/InfoCard';
-import Image from 'components/ui/Image';
+import Shape from 'components/ui/Shape';
 import { ETRADE_LINK, ETRADE_MUTUAL_FUNDS_LINK } from 'utils/CommonRenders';
 
 class GistSection extends React.Component {
@@ -37,7 +37,7 @@ class GistSection extends React.Component {
                     >
                         <ScrollToShow addClasses={'slide-in-right show'} distributeClasses={'animated'}>
                             <div>
-                                <Image image={'profile_pic.jpg'} aria={{style: { width: '80%' }}}/>
+                                <Shape image={'profile_pic.jpg'} sides={6} rotation={90} />
                             </div>
                         </ScrollToShow>
                     </InfoCard>
