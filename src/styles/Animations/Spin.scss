@@ -3,13 +3,13 @@ $spinDurationMax: 20;
 $spinDuration: 1.5;
 
 @for $time from $spinDurationMin through $spinDurationMax {
-    $tenPercent: ($spinDuration / $time) * 10;
-    $start: ($time - $spinDuration) / $time * 100;
+    $tenPercent: (($spinDuration / $time) * 10) * 1%;
+    $start: (($time - $spinDuration) / $time * 100) * 1%;
     @keyframes spin-#{$time} {
         0% { transform: rotate(0deg);}
-        #{$start}% { transform: rotate(0deg);}
-        #{$start + $tenPercent}% { transform: rotate(-10deg);}
-        #{100 - $tenPercent}% { transform: rotate(370deg);}
+        #{$start} { transform: rotate(0deg);}
+        #{$start + $tenPercent} { transform: rotate(-10deg);}
+        #{100 - $tenPercent} { transform: rotate(370deg);}
         100% { transform: rotate(360deg);}
     }
 }
