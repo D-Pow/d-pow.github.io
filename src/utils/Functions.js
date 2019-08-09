@@ -73,6 +73,10 @@ export function getChildName(child) {
     return child.type.name || child.type;
 }
 
+export function childIsReactElement(child) {
+    return typeof child.type === 'function';
+}
+
 export async function loadImage(image) {
     if (image != null && image !== '') {
         try {
