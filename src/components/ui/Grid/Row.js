@@ -21,7 +21,7 @@ Row.propTypes = {
     children: props => {
         for (let child of React.Children.toArray(props.children)) {
             if (!childIsOfType(child, Column)) {
-                return new Error(`Invalid prop ${getChildName(child)} passed to Grid. Expected Column.`);
+                return new Error(`Invalid child ${getChildName(child)} passed to Row. Expected Column.`);
             }
         }
     },
