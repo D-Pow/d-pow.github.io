@@ -70,7 +70,7 @@ export function childIsOfType(child, component) {
 }
 
 export function getChildName(child) {
-    return child.type.name;
+    return child.type.name || child.type;
 }
 
 export async function loadImage(image) {
