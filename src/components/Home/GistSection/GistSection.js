@@ -30,7 +30,7 @@ class GistSection extends React.Component {
                     <InfoCard
                         className={'mb-5'}
                         mainContent={(
-                            <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={' animated'}>
+                            <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated'}>
                                 {InfoCard.renderDefaultTextContent(this.pageText.gist.title, this.pageText.gist.description)}
                             </ScrollToShow>
                         )}
