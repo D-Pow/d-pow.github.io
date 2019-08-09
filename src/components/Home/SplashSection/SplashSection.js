@@ -25,21 +25,23 @@ class SplashSection extends React.Component {
         this.updateTriangleColorMatrix();
 
         if (!isMobileBrowser()) {
-            window.onresize = () => {
-                this.setState({
-                    windowSize: {
-                        width: window.innerWidth,
-                        height: window.innerHeight
-                    }
-                });
-                this.updateTriangleColorMatrix();
-            }
+            window.addEventListener('resize', this.handleResize);
         }
     }
 
     componentWillUnmount() {
-        window.onresize = null;
+        window.removeEventListener('resize', this.handleResize);
     }
+
+    handleResize = () => {
+        this.setState({
+            windowSize: {
+                width: window.innerWidth,
+                height: window.innerHeight
+            }
+        });
+        this.updateTriangleColorMatrix();
+    };
 
     get triangleHeight() {
         return this.state.windowSize.height / this.numRows;
