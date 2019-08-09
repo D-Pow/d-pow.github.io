@@ -36,9 +36,7 @@ class GistSection extends React.Component {
                         )}
                     >
                         <ScrollToShow addClasses={'slide-in-right show'} distributeClasses={'animated'}>
-                            <div>
-                                <Shape image={'profile_pic.jpg'} sides={6} rotation={90} />
-                            </div>
+                            <Shape image={'profile_pic.jpg'} sides={6} rotation={90} />
                         </ScrollToShow>
                     </InfoCard>
                 </div>

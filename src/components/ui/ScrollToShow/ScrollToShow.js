@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SHOW_ELEMENT_SCROLL_THRESHOLD } from 'utils/Constants';
+import { childIsReactElement } from 'utils/Functions';
 
 class ScrollToShow extends React.Component {
     constructor(props) {
@@ -94,14 +95,35 @@ class ScrollToShow extends React.Component {
         return classes.join(' ');
     };
 
+    /**
+     * Forces child to be a render-able HTML element that can hold a ref.
+     * If the child is an HTML element, it will be cloned; if it's a React
+     * component, it will be wrapped in a div.
+     * The returned element will contain the appropriate classes from props.addClasses
+     * and props.distributeClasses, as well as an attached ref.
+     *
+     * @param child {Node} Child either of type HTML element or React component
+     * @param index {number} Index of child in this.props.children
+     * @returns {Node} HTML element with attached ref
+     */
+    asHtmlElement = (child, index) => {
+        if (childIsReactElement(child)) {
+            return (
+                <div className={this.getClassNames(index)} key={index} ref={this.state.childRefs[index]}>
+                    {child}
+                </div>
+            );
+        }
+
+        return React.cloneElement(child, {
+            className: `${child.props && child.props.className ? child.props.className : ''} ${this.getClassNames(index)}`,
+            key: index,
+            ref: this.state.childRefs[index]
+        });
+    };
+
     render() {
-        const renderedContent = React.Children.map(this.props.children, (child, index) => (
-            React.cloneElement(child, {
-                className: `${child.props && child.props.className ? child.props.className : ''} ${this.getClassNames(index)}`,
-                key: index,
-                ref: this.state.childRefs[index]
-            })
-        ));
+        const renderedContent = React.Children.map(this.props.children, this.asHtmlElement);
 
         if (this.props.className) {
             return (
