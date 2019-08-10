@@ -7,7 +7,7 @@ class Footer extends React.Component {
         return (
             <span>
                 <h4 className={'footer-title'}>Made with React 16</h4>
-                <Image className="react-logo" image={'react_logo.svg'} />
+                <Image className={'react-logo'} image={'react_logo.svg'} fillParent={false} />
             </span>
         );
     }
