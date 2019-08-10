@@ -67,14 +67,16 @@ class GistSection extends React.Component {
                 </ScrollToShow>
                 <div className={'container'}>
                     <div className={'row'}>
-                        <ScrollToShow addClasses={'flip-y show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.5}>
-                            {this.pageText.productions.imageCards.map((props, index) => (
-                                // Nest in div.col so ImageCard's ScrollToShow animation pertains only to image and not containing div
-                                <div className={'col-sm-6 mb-5'} key={index}>
-                                    <ImageCard {...props} />
-                                </div>
-                            ))}
-                        </ScrollToShow>
+                        <ImageCard.SameHeightProvider>
+                            <ScrollToShow addClasses={'flip-y show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.5}>
+                                {this.pageText.productions.imageCards.map((props, index) => (
+                                    // Nest in div.col so ImageCard's ScrollToShow animation pertains only to image and not containing div
+                                    <div className={'col-sm-6 mb-5'} key={index}>
+                                        <ImageCard {...props} />
+                                    </div>
+                                ))}
+                            </ScrollToShow>
+                        </ImageCard.SameHeightProvider>
                     </div>
                 </div>
             </React.Fragment>
