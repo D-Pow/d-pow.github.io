@@ -18,3 +18,11 @@
         transition-duration: $duration;
     }
 }
+
+.ease-in {
+    animation-timing-function: ease-in;
+}
+
+.linear {
+    animation-timing-function: linear;
+}
