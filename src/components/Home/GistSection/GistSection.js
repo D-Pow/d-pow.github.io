@@ -23,7 +23,7 @@ class GistSection extends React.Component {
     renderGistSection() {
         return (
             <React.Fragment>
-                <ScrollToShow addClasses={'show'} distributeClasses={'fade-in'}>
+                <ScrollToShow addClasses={'show'} distributeClasses={'fade-in duration-20'}>
                     <h1 className={'p-5 mb-5 bg-light'}>The gist...</h1>
                 </ScrollToShow>
                 <div className={'container'}>
