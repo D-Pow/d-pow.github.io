@@ -1,5 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+export function UseContext({ Context, defaultValue = null, children }) {
+    const [ value, setValue ] = useState(defaultValue);
+
+    return (
+        <Context.Provider value={{ value, setValue }}>
+            {children}
+        </Context.Provider>
+    );
+}
+
 export function useHover() {
     const [ isHovered, setIsHovered ] = useState(false);
     const ref = useRef(null);
