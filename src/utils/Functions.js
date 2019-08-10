@@ -86,5 +86,5 @@ export async function loadImage(image) {
         } catch(error) {} // default return handles error case
     }
 
-    return '';
+    throw new Error(`Image at ${image} was not found`);
 }
