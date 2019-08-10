@@ -77,12 +77,26 @@ export function childIsReactElement(child) {
     return typeof child.type === 'function';
 }
 
-export async function loadImage(image) {
+export async function loadImage(image, base64 = false) {
     if (image != null && image !== '') {
         try {
             const module = await import(`assets/${image}`);
+            const imageSrc = module.default;
 
-            return module.default;
+            if (base64) {
+                return fetch(imageSrc).then(res => res.blob()).then(blob => new Promise((res, rej) => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        res(reader.result);
+                    };
+                    reader.onerror = () => {
+                        rej(); // error handled below
+                    };
+                    reader.readAsDataURL(blob);
+                }));
+            }
+
+            return imageSrc;
         } catch(error) {} // default return handles error case
     }
 
