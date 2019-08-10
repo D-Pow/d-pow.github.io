@@ -1,6 +1,7 @@
 import React from 'react';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import SectionCard from 'components/ui/SectionCard';
+import ImageCard from 'components/ui/ImageCard';
 import Shape from 'components/ui/Shape';
 import { ETRADE_LINK, ETRADE_MUTUAL_FUNDS_LINK } from 'utils/CommonRenders';
 
@@ -17,6 +18,20 @@ class GistSection extends React.Component {
                     worthwhile.
                 </React.Fragment>
             )
+        },
+        productions: {
+            imageCards: [
+                {
+                    image: 'prebuilt_portfolios.jpg',
+                    title: 'Prebuilt Portfolios',
+                    description: 'Selections of mutual funds to fit individual investment styles without needing to invest research time'
+                },
+                {
+                    image: 'automatic_investing.jpg',
+                    title: 'Automatic Investing',
+                    description: 'Automates investing into funds with varying frequencies and contribution amounts'
+                }
+            ]
         }
     };
 
@@ -46,7 +61,23 @@ class GistSection extends React.Component {
 
     renderProductionsSection() {
         return (
-            <h1 className={'p-5 mb-5'}>Productions</h1>
+            <React.Fragment>
+                <ScrollToShow addClasses={'show'} distributeClasses={'fade-in duration-20'}>
+                    <h1 className={'p-5 mb-5 bg-light'}>Productions</h1>
+                </ScrollToShow>
+                <div className={'container'}>
+                    <div className={'row'}>
+                        <ScrollToShow addClasses={'flip-y show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.5}>
+                            {this.pageText.productions.imageCards.map((props, index) => (
+                                // Nest in div.col so ImageCard's ScrollToShow animation pertains only to image and not containing div
+                                <div className={'col-sm-6 mb-5'} key={index}>
+                                    <ImageCard {...props} />
+                                </div>
+                            ))}
+                        </ScrollToShow>
+                    </div>
+                </div>
+            </React.Fragment>
         );
     }
 
