@@ -22,10 +22,40 @@ $slideAmount: 500px;
     }
 }
 
+@keyframes slideInTop {
+    0% {
+        opacity: 0;
+        transform: translateY(-$slideAmount);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY($slideAmount);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .slide-in-left {
     animation: slideInLeft 1s ease;
 }
 
 .slide-in-right {
     animation: slideInRight 1s ease;
+}
+
+.slide-in-top {
+    animation: slideInTop 1s ease;
+}
+
+.slide-in-bottom {
+    animation: slideInBottom 1s ease;
 }
