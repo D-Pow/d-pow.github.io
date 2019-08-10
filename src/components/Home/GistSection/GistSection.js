@@ -1,6 +1,6 @@
 import React from 'react';
 import ScrollToShow from 'components/ui/ScrollToShow';
-import InfoCard from 'components/ui/InfoCard';
+import SectionCard from 'components/ui/SectionCard';
 import Shape from 'components/ui/Shape';
 import { ETRADE_LINK, ETRADE_MUTUAL_FUNDS_LINK } from 'utils/CommonRenders';
 
@@ -27,18 +27,18 @@ class GistSection extends React.Component {
                     <h1 className={'p-5 mb-5 bg-light'}>The gist...</h1>
                 </ScrollToShow>
                 <div className={'container'}>
-                    <InfoCard
+                    <SectionCard
                         className={'mb-5'}
                         mainContent={(
                             <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated'}>
-                                {InfoCard.renderDefaultTextContent(this.pageText.gist.title, this.pageText.gist.description)}
+                                {SectionCard.renderDefaultTextContent(this.pageText.gist.title, this.pageText.gist.description)}
                             </ScrollToShow>
                         )}
                     >
                         <ScrollToShow addClasses={'slide-in-right show'} distributeClasses={'animated'}>
                             <Shape image={'profile_pic.jpg'} sides={6} rotation={90} />
                         </ScrollToShow>
-                    </InfoCard>
+                    </SectionCard>
                 </div>
             </React.Fragment>
         );
