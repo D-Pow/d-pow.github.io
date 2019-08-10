@@ -16,7 +16,7 @@ class SectionCard extends React.Component {
     renderDesktop() {
         const renderedMain = this.props.mainContent;
         const renderedChildren = (
-            <div className={SectionCard.colSize}>
+            <div className={`margin-center ${SectionCard.colSize}`}>
                 {this.props.children}
             </div>
         );
