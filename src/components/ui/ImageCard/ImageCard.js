@@ -2,8 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'components/ui/Image';
 import { useHover, Hooked } from 'utils/Hooks';
+import ContextFactory from 'utils/Context';
+
+const defaultContextValue = 'auto';
+const ImageCardSizeContext = ContextFactory(defaultContextValue);
 
 class ImageCard extends React.Component {
+    static contextType = ImageCardSizeContext.Context;
+    static SameHeightProvider = ImageCardSizeContext.Provider;
+
+    ref = React.createRef();
+
+    updateContextHeight = () => {
+        const { height } = this.ref.current.getBoundingClientRect();
+
+        if (this.context.value === defaultContextValue || this.context.value > height) {
+            this.context.setValue(height);
+        }
+    };
+
     renderHoverContent() {
         const { title, description } = this.props;
         const positionCls = 'position-absolute fixed-top w-100 h-100';
@@ -34,10 +51,10 @@ class ImageCard extends React.Component {
 
     render() {
         return (
-            <div className={this.props.className} {...this.props.aria}>
+            <div className={this.props.className} ref={this.ref} {...this.props.aria}>
                 {/* Obey parent's padding with `position: relative` */}
-                <div className={'position-relative'}>
-                    <Image image={this.props.image} />
+                <div className={'position-relative w-100'} style={{ height: `${this.context.value}px`, overflow: 'hidden' }}>
+                    <Image image={this.props.image} onLoad={this.updateContextHeight} />
                     {this.renderHoverContent()}
                 </div>
             </div>
