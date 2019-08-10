@@ -15,6 +15,7 @@ class Image extends React.Component {
                 className={`${this.props.fillParent ? 'img-fluid' : ''} ${this.props.className}`}
                 src={this.state.imageSrc}
                 alt={this.props.image}
+                onLoad={this.props.onLoad}
                 {...this.props.aria}
             />
         );
@@ -25,6 +26,7 @@ Image.propTypes = {
     className: PropTypes.string,
     image: PropTypes.string,
     fillParent: PropTypes.bool,
+    onLoad: PropTypes.func,
     aria: PropTypes.object
 };
 
@@ -32,6 +34,7 @@ Image.defaultProps = {
     className: '',
     image: '',
     fillParent: true,
+    onLoad: () => {},
     aria: {}
 };
 
