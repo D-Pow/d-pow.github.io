@@ -36,6 +36,8 @@ class GistSection extends React.Component {
     };
 
     renderGistSection() {
+        const sectionCardShowThreshold = 2/3;
+
         return (
             <React.Fragment>
                 <ScrollToShow addClasses={'show'} distributeClasses={'fade-in duration-20'}>
@@ -45,12 +47,12 @@ class GistSection extends React.Component {
                     <SectionCard
                         className={'mb-5'}
                         mainContent={(
-                            <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated'}>
+                            <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated'} threshold={sectionCardShowThreshold}>
                                 {SectionCard.renderDefaultTextContent(this.pageText.gist.title, this.pageText.gist.description)}
                             </ScrollToShow>
                         )}
                     >
-                        <ScrollToShow addClasses={'slide-in-right show'} distributeClasses={'animated'}>
+                        <ScrollToShow addClasses={'slide-in-right show'} distributeClasses={'animated'} threshold={sectionCardShowThreshold}>
                             <Shape image={'profile_pic.jpg'} sides={6} rotation={90} />
                         </ScrollToShow>
                     </SectionCard>
