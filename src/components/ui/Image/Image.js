@@ -12,7 +12,7 @@ class Image extends React.Component {
     render() {
         return (
             <img
-                className={`img-fluid ${this.props.className}`}
+                className={`${this.props.fillParent ? 'img-fluid' : ''} ${this.props.className}`}
                 src={this.state.imageSrc}
                 alt={this.props.image}
                 {...this.props.aria}
@@ -24,12 +24,14 @@ class Image extends React.Component {
 Image.propTypes = {
     className: PropTypes.string,
     image: PropTypes.string,
+    fillParent: PropTypes.bool,
     aria: PropTypes.object
 };
 
 Image.defaultProps = {
     className: '',
     image: '',
+    fillParent: true,
     aria: {}
 };
 
