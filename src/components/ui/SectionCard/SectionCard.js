@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class InfoCard extends React.Component {
+class SectionCard extends React.Component {
     static colSize = 'col-sm-6';
 
     static renderDefaultTextContent(title, description) {
         return (
-            <div className={`margin-center ${InfoCard.colSize}`}>
+            <div className={`margin-center ${SectionCard.colSize}`}>
                 <h3 className={'p-2'}>{title}</h3>
                 <div className={'lead'}>{description}</div>
             </div>
@@ -16,7 +16,7 @@ class InfoCard extends React.Component {
     renderDesktop() {
         const renderedMain = this.props.mainContent;
         const renderedChildren = (
-            <div className={InfoCard.colSize}>
+            <div className={SectionCard.colSize}>
                 {this.props.children}
             </div>
         );
@@ -55,7 +55,7 @@ class InfoCard extends React.Component {
     }
 }
 
-InfoCard.propTypes = {
+SectionCard.propTypes = {
     className: PropTypes.string,
 
     // Main section of card
@@ -65,10 +65,10 @@ InfoCard.propTypes = {
     flipped: PropTypes.bool,
 };
 
-InfoCard.defaultProps = {
+SectionCard.defaultProps = {
     className: '',
     mainContent: '',
     flipped: false
 };
 
-export default InfoCard;
+export default SectionCard;
