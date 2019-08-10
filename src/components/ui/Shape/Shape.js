@@ -39,11 +39,12 @@ class Shape extends React.Component {
         }
 
         // clip path (image)
+        const patternId = Math.random().toString(36).substr(2); // radix = 36 uses both letters and numbers
         return (
             <React.Fragment>
                 <defs>
                     <clipPath
-                        id={this.props.image}
+                        id={patternId}
                         clipPathUnits={'userSpaceOnUse'}
                     >
                         <polygon
@@ -56,7 +57,7 @@ class Shape extends React.Component {
                 <image
                     href={this.state.imageSrc}
                     preserveAspectRatio={`xMidYMid slice`}
-                    clipPath={`url(#${this.props.image})`}
+                    clipPath={`url(#${patternId})`}
                     width={'100%'}
                     height={'100%'}
                 />
