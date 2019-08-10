@@ -27,3 +27,7 @@ export function useHover() {
 
     return [ ref, isHovered ];
 }
+
+export function Hooked({ hook, children }) {
+    return children(hook())
+}
