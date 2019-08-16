@@ -14,24 +14,31 @@ export function useHover() {
     const [ isHovered, setIsHovered ] = useState(false);
     const ref = useRef(null);
 
-    function handleMouseOver() {
-        setIsHovered(true);
-    }
-    function handleMouseOut() {
-        setIsHovered(false);
+    function handleMouseMove({ pageX, pageY }) {
+        if (ref.current) {
+            const { pageXOffset, pageYOffset } = window;
+            let { top, bottom, left, right } = ref.current.getBoundingClientRect();
+
+            top = top + pageYOffset;
+            bottom = bottom + pageYOffset;
+            left = left + pageXOffset;
+            right = right + pageXOffset;
+
+            if (pageX <= right && pageX >= left && pageY <= bottom && pageY >= top) {
+                setIsHovered(true);
+            } else {
+                setIsHovered(false);
+            }
+        }
     }
 
     useEffect(() => {
-        const node = ref.current;
-
-        if (node) {
-            node.addEventListener('mouseover', handleMouseOver);
-            node.addEventListener('mouseout', handleMouseOut);
+        if (ref.current) {
+            window.addEventListener('mousemove', handleMouseMove);
         }
 
         return () => {
-            node.removeEventListener('mouseover', handleMouseOver);
-            node.removeEventListener('mouseout', handleMouseOut);
+            window.removeEventListener('mousemove', handleMouseMove)
         }
     }, [ref.current]);
 
