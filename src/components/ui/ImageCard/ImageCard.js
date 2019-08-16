@@ -32,9 +32,10 @@ class ImageCard extends React.Component {
             <Hooked hook={useHover}>
                 {([ ref, isHovered ]) => {
                     const hoverCls = isHovered ? ['show', 'slide-in-top', 'slide-in-bottom'] : ['', '', ''];
+                    const defaultWidth = 'auto';
                     const width = validateObjNestedFields(this.imageRef, 'current')
-                        ? this.imageRef.current.getBoundingClientRect().width
-                        : 'auto';
+                        ? this.imageRef.current.getBoundingClientRect().width || defaultWidth
+                        : defaultWidth;
 
                     return (
                         <div
