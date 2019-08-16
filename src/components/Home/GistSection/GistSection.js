@@ -30,6 +30,11 @@ class GistSection extends React.Component {
                     image: 'automatic_investing.jpg',
                     title: 'Automatic Investing',
                     description: 'Automates investing into funds with varying frequencies and contribution amounts'
+                },
+                {
+                    image: 'edge_panel_widget.png',
+                    title: 'Edge Panel',
+                    description: 'Android widget for edge-devices to display a user\'s stock watch lists'
                 }
             ]
         }
