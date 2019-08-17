@@ -58,6 +58,16 @@ $body-bg: $lighter;
   margin-right: 5%;
 }
 
+.absolute-center {
+  position: absolute;
+  margin: auto;
+  height: fit-content;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 .segment-bar {
   background: $primary;
   height: 5px;
