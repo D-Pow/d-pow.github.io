@@ -6,7 +6,10 @@ class Shape extends React.Component {
     constructor(props) {
         super(props);
         this.state = { imageSrc: '' };
-        loadImage(this.props.image).then(imageSrc => this.setState({ imageSrc }));
+
+        if (this.props.image) {
+            loadImage(this.props.image).then(imageSrc => this.setState({ imageSrc }));
+        }
     }
 
     getPointsFromRadius() {
@@ -27,11 +30,13 @@ class Shape extends React.Component {
     }
 
     renderPolygon() {
+        const polygonPoints =  this.getPointsFromRadius();
+
         // plain polygon
         if (!this.props.image) {
             return (
                 <polygon
-                    points={this.getPointsFromRadius()}
+                    points={polygonPoints}
                     fill={this.props.fill}
                     transform={`rotate(${this.props.rotation}, 50, 50)`}
                 />
@@ -48,7 +53,7 @@ class Shape extends React.Component {
                         clipPathUnits={'userSpaceOnUse'}
                     >
                         <polygon
-                            points={this.getPointsFromRadius()}
+                            points={polygonPoints}
                             transform={`rotate(${this.props.rotation}, 50, 50)`}
                         />
                     </clipPath>
