@@ -46,7 +46,23 @@ class GistSection extends React.Component {
             ]
         },
         projects: {
-            imageCards: []
+            imageCards: [
+                {
+                    image: 'atoms_of_confusion.jpg',
+                    title: <Link className={'text-light'} href={LINKS.AtomsOfConfusion}>Atoms of Confusion</Link>,
+                    description: 'Research to understand fundamental causes of source code misunderstandings'
+                },
+                {
+                    image: 'peptide_nmr.jpg',
+                    title: <Link className={'text-light'} href={LINKS.AnticancerPeptides}>Anti-cancer Polypeptides</Link>,
+                    description: 'Research to develop polypeptides which destroy tumors upon proteolysis'
+                },
+                {
+                    image: 'tardigrade.jpg',
+                    title: <Link className={'text-light'} href={LINKS.TardigradeStratification}>Tardigrade Stratification</Link>,
+                    description: 'Research demonstrating tardigrade distributions and populations at various altitudes'
+                }
+            ]
         }
     };
 
