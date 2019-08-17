@@ -30,6 +30,7 @@ class ImageCard extends React.Component {
         // Mobile browsers between phone and tablet look strange when using the media query for xs/sm
         // so force all mobile browsers to use the mobile view
         const marginCls = isMobileBrowser() ? ['mt-10p mb-5p', 'mx-5p'] : ['m-5', 'm-3'];
+        const Title = isMobileBrowser() ? 'h4' : 'h3';
 
         return (
             <Hooked hook={useHover}>
@@ -46,9 +47,9 @@ class ImageCard extends React.Component {
                             ref={ref}
                             style={{ width }}
                         >
-                            <h3 className={`${marginCls[0]} ${animationCls} ${hoverCls[1]}`}>
+                            <Title className={`${marginCls[0]} ${animationCls} ${hoverCls[1]}`}>
                                 {title}
-                            </h3>
+                            </Title>
                             <p className={`${marginCls[1]} ${animationCls} ${hoverCls[2]}`}>
                                 {description}
                             </p>
