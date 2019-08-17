@@ -32,6 +32,11 @@ class GistSection extends React.Component {
                     description: 'Automates investing into funds with varying frequencies and contribution amounts'
                 },
                 {
+                    image: 'premarket_modal.png',
+                    title: 'Pre-market Dashboard',
+                    description: 'Analyzes the health of internal systems before the markets open'
+                },
+                {
                     image: 'edge_panel_widget.png',
                     title: 'Edge Panel',
                     description: 'Android widget for edge-devices to display a user\'s stock watch lists'
