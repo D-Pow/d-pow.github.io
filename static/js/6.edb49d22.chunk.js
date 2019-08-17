@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{40:function(o,p,n){o.exports=n.p+"static/assets/Example-of-LinkedIn-cover-photo-c8f4bf8a.png"}}]);

@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[10],{44:function(s,e,o){s.exports=o.p+"static/assets/react_logo-ee7cd8ed.svg"}}]);
