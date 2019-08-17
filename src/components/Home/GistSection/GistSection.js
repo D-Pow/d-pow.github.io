@@ -100,13 +100,13 @@ class GistSection extends React.Component {
                     <h1 className={'p-5 mb-5 bg-light'}>Productions</h1>
                 </ScrollToShow>
                 <div className={'container'}>
-                    <div className={'row'}>
+                    <div className={'row mb-5'}>
                         <ImageCard.SameHeightProvider>
                             <ScrollToShow addClasses={'flip-y show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.5}>
                                 {this.pageText.productions.imageCards.map((props, index) => (
                                     // Nest in div.col so ImageCard's ScrollToShow animation pertains only to image and not containing div
-                                    <div className={'col-sm-6 mb-5'} key={index}>
-                                        <ImageCard {...props} />
+                                    <div className={'col-sm-6 p-0'} key={index}>
+                                        <ImageCard imageCls={'w-100'} {...props} />
                                     </div>
                                 ))}
                             </ScrollToShow>
