@@ -27,7 +27,7 @@ function App(props) {
         <div className="App text-center">
             <Router>
                 <React.Fragment>
-                    <Header navRoutes={routes} />
+                    {/*<Header navRoutes={routes} />*/}
                     {renderedRoutes}
                     <Footer />
                 </React.Fragment>
