@@ -40,7 +40,7 @@ export async function loadImage(image, base64 = false) {
         } catch(error) {} // default return handles error case
     }
 
-    throw new Error(`Image at ${image} was not found`);
+    throw new Error(`${image} was not found`);
 }
 
 /**
