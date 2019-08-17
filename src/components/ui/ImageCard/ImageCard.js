@@ -75,8 +75,8 @@ class ImageCard extends React.Component {
 ImageCard.propTypes = {
     className: PropTypes.string,
     image: PropTypes.string,
-    title: PropTypes.string,
-    description: PropTypes.string,
+    title: PropTypes.node,
+    description: PropTypes.node,
     aria: PropTypes.object
 };
 
