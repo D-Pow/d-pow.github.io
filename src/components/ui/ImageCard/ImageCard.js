@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Image from 'components/ui/Image';
 import { useHover, Hooked } from 'utils/Hooks';
 import ContextFactory from 'utils/Context';
-import { validateObjNestedFields } from 'utils/Functions';
+import { isMobileBrowser, validateObjNestedFields } from 'utils/Functions';
 
 const defaultContextValue = 'auto';
 const ImageCardSizeContext = ContextFactory(defaultContextValue);
@@ -27,6 +27,9 @@ class ImageCard extends React.Component {
         const { title, description } = this.props;
         const positionCls = 'position-absolute fixed-top h-100';
         const animationCls = 'duration-5 linear';
+        // Mobile browsers between phone and tablet look strange when using the media query for xs/sm
+        // so force all mobile browsers to use the mobile view
+        const marginCls = isMobileBrowser() ? ['mt-10p mb-5p', 'mx-5p'] : ['m-5', 'm-3'];
 
         return (
             <Hooked hook={useHover}>
@@ -43,10 +46,10 @@ class ImageCard extends React.Component {
                             ref={ref}
                             style={{ width }}
                         >
-                            <h3 className={`m-5 ${animationCls} ${hoverCls[1]}`}>
+                            <h3 className={`${marginCls[0]} ${animationCls} ${hoverCls[1]}`}>
                                 {title}
                             </h3>
-                            <p className={`p-3 ${animationCls} ${hoverCls[2]}`}>
+                            <p className={`${marginCls[1]} ${animationCls} ${hoverCls[2]}`}>
                                 {description}
                             </p>
                         </div>

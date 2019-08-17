@@ -45,6 +45,19 @@ $body-bg: $lighter;
   margin: auto;
 }
 
+.mt-10p {
+  margin-top: 10%;
+}
+
+.mb-5p {
+  margin-bottom: 5%;
+}
+
+.mx-5p {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
 @import "~bootstrap/scss/bootstrap";
 
 :export {
