@@ -19,29 +19,21 @@ const routes = [
     }
 ];
 
-function Routes(props) {
+function App(props) {
     const renderedRoutes = routes.map(routeAria => (
         <Route key={routeAria.path} {...routeAria} />
     ));
     return (
-        <Router>
-            <React.Fragment>
-                <Header navRoutes={routes} />
-                {renderedRoutes}
-                <Footer />
-            </React.Fragment>
-        </Router>
+        <div className="App text-center">
+            <Router>
+                <React.Fragment>
+                    <Header navRoutes={routes} />
+                    {renderedRoutes}
+                    <Footer />
+                </React.Fragment>
+            </Router>
+        </div>
     );
-}
-
-class App extends React.Component {
-    render() {
-        return (
-            <div className="App text-center">
-                <Routes />
-            </div>
-        );
-    }
 }
 
 export default App;
