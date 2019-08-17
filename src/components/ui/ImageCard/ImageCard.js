@@ -65,7 +65,12 @@ class ImageCard extends React.Component {
             <div className={this.props.className} ref={this.parentDivRef} {...this.props.aria}>
                 {/* Obey parent's padding with `position: relative` */}
                 <div className={'position-relative w-100'} style={{ height: `${this.context.value}px`, overflow: 'hidden' }}>
-                    <Image image={this.props.image} onLoad={this.updateContextHeight} aria={{ ref: this.imageRef }} />
+                    <Image
+                        className={this.props.imageCls}
+                        image={this.props.image}
+                        onLoad={this.updateContextHeight}
+                        aria={{ ref: this.imageRef }}
+                    />
                     {this.renderHoverContent()}
                 </div>
             </div>
@@ -76,6 +81,7 @@ class ImageCard extends React.Component {
 ImageCard.propTypes = {
     className: PropTypes.string,
     image: PropTypes.string,
+    imageCls: PropTypes.string,
     title: PropTypes.node,
     description: PropTypes.node,
     smallTextMargins: PropTypes.bool,
@@ -85,6 +91,7 @@ ImageCard.propTypes = {
 ImageCard.defaultProps = {
     className: '',
     image: '',
+    imageCls: '',
     title: '',
     description: '',
     smallTextMargins: false,
