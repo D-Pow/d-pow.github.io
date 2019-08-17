@@ -24,9 +24,9 @@ function Routes(props) {
         <Route key={routeAria.path} {...routeAria} />
     ));
     return (
-        <Router basename={props.basedir}>
+        <Router>
             <React.Fragment>
-                <Header basedir={props.basedir} navRoutes={routes} />
+                <Header navRoutes={routes} />
                 {renderedRoutes}
                 <Footer />
             </React.Fragment>
