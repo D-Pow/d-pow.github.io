@@ -47,7 +47,7 @@ class GistSection extends React.Component {
             ]
         },
         projects: {
-            imageCards: [
+            infoCards: [
                 {
                     image: 'atoms_of_confusion.jpg',
                     title: <Link className={'text-primary'} href={LINKS.AtomsOfConfusion}>Atoms of Confusion</Link>,
@@ -126,7 +126,7 @@ class GistSection extends React.Component {
                 <div className={'container'}>
                     <div className={'row'}>
                         <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.32}>
-                            {this.pageText.projects.imageCards.map((props, index) => (
+                            {this.pageText.projects.infoCards.map((props, index) => (
                                 <div className={'col-sm-4 mb-5'} key={index}>
                                     <InfoCard {...props} />
                                 </div>
