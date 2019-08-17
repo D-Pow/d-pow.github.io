@@ -24,12 +24,12 @@ class ImageCard extends React.Component {
     };
 
     renderHoverContent() {
-        const { title, description } = this.props;
+        const { title, description, smallTextMargins } = this.props;
         const positionCls = 'position-absolute fixed-top h-100';
         const animationCls = 'duration-5 linear';
         // Mobile browsers between phone and tablet look strange when using the media query for xs/sm
         // so force all mobile browsers to use the mobile view
-        const marginCls = isMobileBrowser() ? ['mt-10p mb-5p', 'mx-5p'] : ['m-5', 'm-3'];
+        const marginCls = isMobileBrowser() || smallTextMargins ? ['mt-10p mb-5p ml-1', 'mx-5p'] : ['m-5', 'm-3'];
         const Title = isMobileBrowser() ? 'h4' : 'h3';
 
         return (
@@ -78,6 +78,7 @@ ImageCard.propTypes = {
     image: PropTypes.string,
     title: PropTypes.node,
     description: PropTypes.node,
+    smallTextMargins: PropTypes.bool,
     aria: PropTypes.object
 };
 
@@ -86,6 +87,7 @@ ImageCard.defaultProps = {
     image: '',
     title: '',
     description: '',
+    smallTextMargins: false,
     aria: {}
 };
 
