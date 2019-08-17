@@ -104,6 +104,10 @@ export function randomNumber(min, max) {
     return (Math.random() * (max - min)) + min;
 }
 
+export function getThemeColors() {
+    return parseScssMap(themeColors);
+}
+
 export function randomColor(colorsToAvoid, onlyColors = null) {
     let forbiddenColors;
     if (colorsToAvoid == null) {
@@ -114,7 +118,7 @@ export function randomColor(colorsToAvoid, onlyColors = null) {
         forbiddenColors = colorsToAvoid;
     }
 
-    const themeColorsObj = parseScssMap(themeColors); // e.g. { primary: "#ffffff" }
+    const themeColorsObj = getThemeColors(); // e.g. { primary: "#ffffff" }
     const themeColorNames = Object.keys(themeColorsObj);
     const validColors = onlyColors ? onlyColors : COLORS.concat(themeColorNames);
 
