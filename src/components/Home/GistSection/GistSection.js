@@ -2,6 +2,7 @@ import React from 'react';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import SectionCard from 'components/ui/SectionCard';
 import ImageCard from 'components/ui/ImageCard';
+import InfoCard from 'components/ui/InfoCard';
 import Shape from 'components/ui/Shape';
 import Link from 'components/ui/Link';
 import { LINKS } from 'utils/Constants';
@@ -49,17 +50,17 @@ class GistSection extends React.Component {
             imageCards: [
                 {
                     image: 'atoms_of_confusion.jpg',
-                    title: <Link className={'text-light'} href={LINKS.AtomsOfConfusion}>Atoms of Confusion</Link>,
+                    title: <Link className={'text-primary'} href={LINKS.AtomsOfConfusion}>Atoms of Confusion</Link>,
                     description: 'Research to understand fundamental causes of source code misunderstandings'
                 },
                 {
                     image: 'peptide_nmr.jpg',
-                    title: <Link className={'text-light'} href={LINKS.AnticancerPeptides}>Anti-cancer Polypeptides</Link>,
+                    title: <Link className={'text-primary'} href={LINKS.AnticancerPeptides}>Anti-cancer Polypeptides</Link>,
                     description: 'Research to develop polypeptides which destroy tumors upon proteolysis'
                 },
                 {
                     image: 'tardigrade.jpg',
-                    title: <Link className={'text-light'} href={LINKS.TardigradeStratification}>Tardigrade Stratification</Link>,
+                    title: <Link className={'text-primary'} href={LINKS.TardigradeStratification}>Tardigrade Stratification</Link>,
                     description: 'Research demonstrating tardigrade distributions and populations at various altitudes'
                 }
             ]
@@ -126,8 +127,8 @@ class GistSection extends React.Component {
                     <div className={'row'}>
                         <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.32}>
                             {this.pageText.projects.imageCards.map((props, index) => (
-                                <div className={'col-sm-4 mb-5 p-0'} key={index}>
-                                    <ImageCard smallTextMargins={true} {...props} />
+                                <div className={'col-sm-4 mb-5'} key={index}>
+                                    <InfoCard {...props} />
                                 </div>
                             ))}
                         </ScrollToShow>
