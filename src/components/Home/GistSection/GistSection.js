@@ -3,7 +3,9 @@ import ScrollToShow from 'components/ui/ScrollToShow';
 import SectionCard from 'components/ui/SectionCard';
 import ImageCard from 'components/ui/ImageCard';
 import Shape from 'components/ui/Shape';
-import { ETRADE_LINK, ETRADE_MUTUAL_FUNDS_LINK } from 'utils/CommonRenders';
+import Link from 'components/ui/Link';
+import { LINKS } from 'utils/Constants';
+import { ETRADE_LINK } from 'utils/CommonRenders';
 
 class GistSection extends React.Component {
     pageText = {
@@ -11,8 +13,8 @@ class GistSection extends React.Component {
             title: 'Full-stack software engineer',
             description: (
                 <React.Fragment>
-                    I build platforms at {ETRADE_LINK} for creating {ETRADE_MUTUAL_FUNDS_LINK} investment plans.
-                    I have a passion for good coding practices, both for humans (readability, design patterns) and
+                    I build platforms at {ETRADE_LINK} for creating <Link href={LINKS.MutualFundsHome}>Mutual Fund/ETF</Link>
+                    investment plans. I have a passion for good coding practices, both for humans (readability, design patterns) and
                     computers (efficiency). Enjoying my work is all about learning new things, making meaningful
                     contributions, and collaborating with my teammates, because it's the people who make the workplace
                     worthwhile.
@@ -23,12 +25,12 @@ class GistSection extends React.Component {
             imageCards: [
                 {
                     image: 'prebuilt_portfolios.jpg',
-                    title: 'Prebuilt Portfolios',
+                    title: <Link className={'text-light'} href={LINKS.PrebuiltPortfolios}>Prebuilt Portfolios</Link>,
                     description: 'Selections of mutual funds to fit individual investment styles without needing to invest research time'
                 },
                 {
                     image: 'automatic_investing.jpg',
-                    title: 'Automatic Investing',
+                    title: <Link className={'text-light'} href={LINKS.AutomaticInvesting}>Automatic Investing</Link>,
                     description: 'Automates investing into funds with varying frequencies and contribution amounts'
                 },
                 {
@@ -38,7 +40,7 @@ class GistSection extends React.Component {
                 },
                 {
                     image: 'edge_panel_widget.png',
-                    title: 'Edge Panel',
+                    title: <Link className={'text-light'} href={LINKS.EtradeAndroidApp}>Edge Panel</Link>,
                     description: 'Android widget for edge-devices to display a user\'s stock watch lists'
                 }
             ]
