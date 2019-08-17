@@ -58,6 +58,11 @@ $body-bg: $lighter;
   margin-right: 5%;
 }
 
+.segment-bar {
+  background: $primary;
+  height: 5px;
+}
+
 @import "~bootstrap/scss/bootstrap";
 
 :export {
