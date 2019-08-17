@@ -44,6 +44,9 @@ class GistSection extends React.Component {
                     description: 'Android widget for edge-devices to display a user\'s stock watch lists'
                 }
             ]
+        },
+        projects: {
+            imageCards: []
         }
     };
 
@@ -99,19 +102,28 @@ class GistSection extends React.Component {
 
     renderProjectsSection() {
         return (
-            <h1 className={'p-5 mb-5'}>Projects</h1>
+            <React.Fragment>
+                <ScrollToShow addClasses={'show'} distributeClasses={'fade-in duration-20'}>
+                    <h1 className={'p-5 mb-5 bg-light'}>Projects and Publications</h1>
+                </ScrollToShow>
+                <div className={'container'}>
+                    <div className={'row'}>
+                        <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.32}>
+                            {this.pageText.projects.imageCards.map((props, index) => (
+                                <div className={'col-sm-4 mb-5 p-0'} key={index}>
+                                    <ImageCard smallTextMargins={true} {...props} />
+                                </div>
+                            ))}
+                        </ScrollToShow>
+                    </div>
+                </div>
+            </React.Fragment>
         );
     }
 
     renderPastimesSection() {
         return (
             <h1 className={'p-5 mb-5'}>Pastimes</h1>
-        );
-    }
-
-    renderPublicationsSection() {
-        return (
-            <h1 className={'p-5 mb-5'}>Publications</h1>
         );
     }
 
@@ -128,7 +140,6 @@ class GistSection extends React.Component {
                 {this.renderProductionsSection()}
                 {this.renderProjectsSection()}
                 {this.renderPastimesSection()}
-                {this.renderPublicationsSection()}
                 {this.renderPersonalContactSection()}
             </React.Fragment>
         );
