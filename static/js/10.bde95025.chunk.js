@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[10],{354:function(o,p,s){o.exports=s.p+"static/assets/atoms_of_confusion_notCropped-c846634e.jpg"}}]);

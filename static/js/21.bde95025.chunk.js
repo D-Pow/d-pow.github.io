@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[21],{365:function(p,s,o){p.exports=o.p+"static/assets/tardigrade - Copy-377cbdf5.jpg"}}]);
