@@ -3,12 +3,12 @@ import ScrollToShow from 'components/ui/ScrollToShow';
 import SectionCard from 'components/ui/SectionCard';
 import ImageCard from 'components/ui/ImageCard';
 import InfoCard from 'components/ui/InfoCard';
+import HoverTranslate from 'components/ui/HoverTranslate';
 import Shape from 'components/ui/Shape';
 import Link from 'components/ui/Link';
 import { LINKS } from 'utils/Constants';
 import { getThemeColors } from 'utils/Functions';
 import { ETRADE_LINK } from 'utils/CommonRenders';
-import HoverTranslate from 'components/ui/HoverTranslate';
 
 class GistSection extends React.Component {
     pageText = {
