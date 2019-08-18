@@ -145,13 +145,24 @@ class GistSection extends React.Component {
                 </ScrollToShow>
                 <div className={'container'}>
                     <div className={'row'}>
-                        <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.32}>
-                            {this.pageText.projects.infoCards.map((props, index) => (
-                                <div className={'col-sm-4 mb-5 p-2 hover-expand hover-shadow-sm'} key={index}>
-                                    <InfoCard {...props} />
-                                </div>
-                            ))}
-                        </ScrollToShow>
+                        <div className={'d-block d-sm-none'}>
+                            <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated duration-15'}>
+                                {this.pageText.projects.infoCards.map((props, index) => (
+                                    <div className={'col-sm-4 mb-5 p-2 hover-expand hover-shadow-sm'} key={index}>
+                                        <InfoCard {...props} />
+                                    </div>
+                                ))}
+                            </ScrollToShow>
+                        </div>
+                        <div className={'d-none d-sm-flex'}>
+                            <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.32}>
+                                {this.pageText.projects.infoCards.map((props, index) => (
+                                    <div className={'col-sm-4 mb-5 p-2 hover-expand hover-shadow-sm'} key={index}>
+                                        <InfoCard {...props} />
+                                    </div>
+                                ))}
+                            </ScrollToShow>
+                        </div>
                     </div>
                 </div>
             </React.Fragment>
