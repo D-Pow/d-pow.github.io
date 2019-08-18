@@ -6,7 +6,9 @@ import InfoCard from 'components/ui/InfoCard';
 import Shape from 'components/ui/Shape';
 import Link from 'components/ui/Link';
 import { LINKS } from 'utils/Constants';
+import { getThemeColors } from 'utils/Functions';
 import { ETRADE_LINK } from 'utils/CommonRenders';
+import HoverTranslate from 'components/ui/HoverTranslate';
 
 class GistSection extends React.Component {
     pageText = {
@@ -64,6 +66,18 @@ class GistSection extends React.Component {
                     description: 'Research demonstrating tardigrade distributions and populations at various altitudes'
                 }
             ]
+        },
+        pastimes: {
+            hoverTranslate: {
+                english: {
+                    title: 'Japanese',
+                    description: 'I have been learning Japanese for a little over a year. It\'s a lot of fun!'
+                },
+                japanese: {
+                    title: '日本語',
+                    description: 'ちょっと 一年 以上 日本語 を 学んで います。楽しい です よ！'
+                }
+            }
         }
     };
 
@@ -139,8 +153,31 @@ class GistSection extends React.Component {
     }
 
     renderPastimesSection() {
+        const themeColors = getThemeColors();
+        const { hoverTranslate: { english, japanese }, otherPastimes } = this.pageText.pastimes;
+
         return (
-            <h1 className={'p-5 mb-5'}>Pastimes</h1>
+            <React.Fragment>
+                <ScrollToShow addClasses={'show'} distributeClasses={'fade-in duration-20'}>
+                    <h1 className={'p-5 mb-5 bg-light'}>Pastimes</h1>
+                </ScrollToShow>
+                <div className={'container'}>
+                    <div className={'row mb-5'}>
+                        <div className={'col-sm-6'}>
+                            <ScrollToShow addClasses={'slide-in-bottom show'} distributeClasses={'animated duration-15'}>
+                                <div>
+                                    <Shape sides={8} fill={themeColors.primary} />
+                                    <HoverTranslate
+                                        className={'text-light'}
+                                        english={english}
+                                        japanese={japanese}
+                                    />
+                                </div>
+                            </ScrollToShow>
+                        </div>
+                    </div>
+                </div>
+            </React.Fragment>
         );
     }
 
