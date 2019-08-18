@@ -79,10 +79,10 @@ class GistSection extends React.Component {
                 }
             },
             otherPastimes: [
-                <h3>This profile website</h3>,
-                <React.Fragment><h3>Android Sync</h3><p>(iMessage remake)</p></React.Fragment>,
-                <h3>Rock climbing</h3>,
-                <h3>Playing guitar</h3>
+                <h4>This profile website</h4>,
+                <React.Fragment><h4>Android Sync</h4><p>(iMessage remake)</p></React.Fragment>,
+                <h4>Rock climbing</h4>,
+                <h4>Playing guitar</h4>
             ]
         }
     };
