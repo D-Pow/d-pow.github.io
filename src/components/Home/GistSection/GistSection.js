@@ -77,7 +77,13 @@ class GistSection extends React.Component {
                     title: '日本語',
                     description: 'ちょっと 一年 以上 日本語 を 学んで います。楽しい です よ！'
                 }
-            }
+            },
+            otherPastimes: [
+                <h3>This profile website</h3>,
+                <React.Fragment><h3>Android Sync</h3><p>(iMessage remake)</p></React.Fragment>,
+                <h3>Rock climbing</h3>,
+                <h3>Playing guitar</h3>
+            ]
         }
     };
 
@@ -163,7 +169,7 @@ class GistSection extends React.Component {
                 </ScrollToShow>
                 <div className={'container'}>
                     <div className={'row mb-5'}>
-                        <div className={'col-sm-6'}>
+                        <div className={'col-sm-6 mb-4'}>
                             <ScrollToShow addClasses={'slide-in-bottom show'} distributeClasses={'animated duration-15'}>
                                 <div>
                                     <Shape sides={8} fill={themeColors.primary} />
@@ -174,6 +180,25 @@ class GistSection extends React.Component {
                                     />
                                 </div>
                             </ScrollToShow>
+                        </div>
+                        <div className={'col-sm-6'}>
+                            <div className={'row'}>
+                                <ScrollToShow addClasses={'slide-in-bottom show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.5}>
+                                    {otherPastimes.map((project, index) => {
+                                        const sides = 7 - index; // decrease each entry by 1, starting from Japanese at 8
+                                        const rotation = (sides % 2) * -90;
+
+                                        return (
+                                            <div className={'col-sm-6'} key={index}>
+                                                <Shape sides={sides} fill={themeColors.primary} rotation={rotation} />
+                                                <div className={'absolute-center text-light mx-5'}>
+                                                    {project}
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </ScrollToShow>
+                            </div>
                         </div>
                     </div>
                 </div>
