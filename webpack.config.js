@@ -155,8 +155,7 @@ module.exports = {
             maxSize: 240000, // split very large output files into smaller chunks
             minSize: 100000, // prevent splitting of small files
             chunks: 'all' // removes repeated code from generated chunks
-        },
-        runtimeChunk: true
+        }
     },
     performance: {
         hints: false // disable "entrypoint size limit" warning
