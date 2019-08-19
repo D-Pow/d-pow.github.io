@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function Modal({ title, children, footer, show, onClose }) {
+function Modal({ title, children, footer, useGridForChildren, useGridForFooter, show, onClose }) {
     const [ hideMomentarily, setHideMomentarily ] = useState(false);
 
     const handleClose = () => {
@@ -43,12 +43,16 @@ function Modal({ title, children, footer, show, onClose }) {
                     </div>
 
                     <div className={'modal-body'}>
-                        {children}
+                        <div className={useGridForChildren ? 'container-fluid' : ''}>
+                            {children}
+                        </div>
                     </div>
 
                     {footer && (
                         <div className={'modal-footer'}>
-                            {footer}
+                            <div className={useGridForFooter ? 'container-fluid' : ''}>
+                                {footer}
+                            </div>
                         </div>
                     )}
 
@@ -62,6 +66,8 @@ Modal.propTypes = {
     title: PropTypes.string,
     children: PropTypes.node,
     footer: PropTypes.node,
+    useGridForChildren: PropTypes.bool,
+    useGridForFooter: PropTypes.bool,
     show: PropTypes.bool,
     onClose: PropTypes.func
 };
@@ -70,6 +76,8 @@ Modal.defaultProps = {
     title: '',
     children: '',
     footer: '',
+    useGridForChildren: true,
+    useGridForFooter: false,
     show: false,
     onClose: () => {}
 };
