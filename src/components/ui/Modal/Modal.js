@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useKeyboardEvent, useClickPath } from 'utils/Hooks';
-import { elementIsInClickPath } from 'utils/Functions';
+import { useRootClose } from 'utils/Hooks';
 
 function Modal({ title, children, footer, useGridForChildren, useGridForFooter, show, onClose }) {
     const [ hideMomentarily, setHideMomentarily ] = useState(false);
-    const [ keyDown, setKeyDown ] = useKeyboardEvent();
-    const [ clickPath, setClickPath ] = useClickPath();
+    const [ rootWasClosed, resetRootClosed ] = useRootClose(
+        { attribute: 'class', value: 'modal-content' },
+        { attribute: 'class', value: 'modal fade' }
+    );
 
     const handleClose = () => {
         // The fade-(in|out) animation relies on the modal being rendered at full screen width/height and then
@@ -24,15 +25,9 @@ function Modal({ title, children, footer, useGridForChildren, useGridForFooter, 
         }, 500);
     };
 
-    const pressedEscape = keyDown === 'Escape';
-    const clickedOnModalContent = elementIsInClickPath({ attribute: 'class', value: 'modal-content' }, clickPath);
-    const clickedOnModalBackdrop = elementIsInClickPath({ attribute: 'class', value: 'modal fade' }, clickPath);
-    const userCancelledModal = pressedEscape || (clickedOnModalBackdrop && !clickedOnModalContent);
-
-    if (userCancelledModal) {
+    if (rootWasClosed) {
         // reset keyDown/clickPath so that previous values aren't used if the modal is closed and then re-opened
-        setKeyDown(null);
-        setClickPath([]);
+        resetRootClosed();
 
         if (show) {
             handleClose();
