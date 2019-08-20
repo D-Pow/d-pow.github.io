@@ -102,8 +102,8 @@ class ScrollToShow extends React.Component {
      * The returned element will contain the appropriate classes from props.addClasses
      * and props.distributeClasses, as well as an attached ref.
      *
-     * @param child {Node} Child either of type HTML element or React component
-     * @param index {number} Index of child in this.props.children
+     * @param {Node} child - Child either of type HTML element or React component
+     * @param {number} index - Index of child in this.props.children
      * @returns {Node} HTML element with attached ref
      */
     asHtmlElement = (child, index) => {

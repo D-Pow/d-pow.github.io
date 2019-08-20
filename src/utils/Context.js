@@ -10,7 +10,7 @@ import { UseContext } from 'utils/Hooks';
  * Context follows the format:
  * { value: {anything}, setValue: {function} }
  *
- * @param defaultValue {*} Default value for Context.value to hold
+ * @param {*} defaultValue - Default value for Context.value to hold
  * @returns {{Context: Object, Provider: {React.Component} }} The newly-created Context and Value
  */
 export default function ContextFactory(defaultValue = null) {

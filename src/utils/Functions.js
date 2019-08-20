@@ -100,7 +100,7 @@ export function elementIsInClickPath(attribute, value, clickPath) {
 /**
  * Parses a map into a JS object. Every value for any key will be a string
  *
- * @param scssMapStr {string} - String imported from a .scss file
+ * @param {string} scssMapStr - String imported from a .scss file
  * @returns {Object} - The parsed SCSS object
  */
 export function parseScssMap(scssMapStr) {
