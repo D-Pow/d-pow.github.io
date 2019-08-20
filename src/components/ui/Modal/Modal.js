@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useKeyboardEvent } from 'utils/Hooks';
+import { useKeyboardEvent, useClickPath } from 'utils/Hooks';
+import { elementIsInClickPath } from 'utils/Functions';
 
 function Modal({ title, children, footer, useGridForChildren, useGridForFooter, show, onClose }) {
     const [ hideMomentarily, setHideMomentarily ] = useState(false);
@@ -26,6 +27,19 @@ function Modal({ title, children, footer, useGridForChildren, useGridForFooter, 
     if (keyDown === 'Escape') {
         // reset keyDown so that previous "Escape" keyDown value isn't used if the modal is closed and then re-opened
         setKeyDown(null);
+
+        if (show) {
+            handleClose();
+        }
+    }
+
+    const [ clickPath, setClickPath ] = useClickPath();
+
+    const clickedOnModalContent = elementIsInClickPath('class', 'modal-content', clickPath);
+    const clickedOnModalBackdrop = elementIsInClickPath('class', 'modal fade', clickPath);
+
+    if (clickedOnModalBackdrop && !clickedOnModalContent) {
+        setClickPath([]);
 
         if (show) {
             handleClose();
