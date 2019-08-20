@@ -45,6 +45,28 @@ export function useHover() {
     return [ ref, isHovered ];
 }
 
+export function useWindowEvent(eventType, eventField, initialValue = null) {
+    const [ value, setValue ] = useState(initialValue);
+
+    function handleEvent(event) {
+        setValue(event[eventField]);
+    }
+
+    useEffect(() => {
+        window.addEventListener(eventType, handleEvent);
+
+        return () => {
+            window.removeEventListener(eventType, handleEvent);
+        };
+    }, []);
+
+    return [ value, setValue ];
+}
+
+export function useKeyboardEvent(type = 'down') {
+    return useWindowEvent(`key${type}`, 'key');
+}
+
 export function Hooked({ hook, children }) {
     return children(hook())
 }
