@@ -25,8 +25,8 @@ function Modal({ title, children, footer, useGridForChildren, useGridForFooter, 
     };
 
     const pressedEscape = keyDown === 'Escape';
-    const clickedOnModalContent = elementIsInClickPath('class', 'modal-content', clickPath);
-    const clickedOnModalBackdrop = elementIsInClickPath('class', 'modal fade', clickPath);
+    const clickedOnModalContent = elementIsInClickPath({ attribute: 'class', value: 'modal-content' }, clickPath);
+    const clickedOnModalBackdrop = elementIsInClickPath({ attribute: 'class', value: 'modal fade' }, clickPath);
     const userCancelledModal = pressedEscape || (clickedOnModalBackdrop && !clickedOnModalContent);
 
     if (userCancelledModal) {
