@@ -67,6 +67,10 @@ export function useKeyboardEvent(type = 'down') {
     return useWindowEvent(`key${type}`, 'key');
 }
 
+export function useClickPath() {
+    return useWindowEvent('click', 'path', []);
+}
+
 export function Hooked({ hook, children }) {
     return children(hook())
 }
