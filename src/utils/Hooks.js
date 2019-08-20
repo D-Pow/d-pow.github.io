@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { elementIsInClickPath } from 'utils/Functions';
 
 export function UseContext({ Context, defaultValue = null, children }) {
     const [ value, setValue ] = useState(defaultValue);
@@ -69,6 +70,31 @@ export function useKeyboardEvent(type = 'down') {
 
 export function useClickPath() {
     return useWindowEvent('click', 'path', []);
+}
+
+/**
+ * A root-close hook that triggers closing an element based on if the user clicks outside the bounds
+ * of the acceptable element or if they press the "Escape" key
+ *
+ * @param {ElementProps} acceptableElement - Element that marks the bounds of what is acceptable to click on
+ * @param {ElementProps} closeElement - Element that marks the bounds of what should trigger the root close
+ * @returns {[boolean, function]} - If the user triggered the root close and the function to reset the trigger
+ */
+export function useRootClose(acceptableElement, closeElement) {
+    const [ keyDown, setKeyDown ] = useKeyboardEvent();
+    const [ clickPath, setClickPath ] = useClickPath();
+
+    const pressedEscape = keyDown === 'Escape';
+    const clickedOnElementWithinBounds = elementIsInClickPath(acceptableElement, clickPath);
+    const clickedOnElementOutsideBounds = elementIsInClickPath(closeElement, clickPath);
+    const rootWasClosed = pressedEscape || (clickedOnElementOutsideBounds && !clickedOnElementWithinBounds);
+
+    const resetRootClosed = () => {
+        setKeyDown(null);
+        setClickPath([]);
+    };
+
+    return [ rootWasClosed, resetRootClosed ];
 }
 
 export function Hooked({ hook, children }) {
