@@ -5,6 +5,8 @@ import { elementIsInClickPath } from 'utils/Functions';
 
 function Modal({ title, children, footer, useGridForChildren, useGridForFooter, show, onClose }) {
     const [ hideMomentarily, setHideMomentarily ] = useState(false);
+    const [ keyDown, setKeyDown ] = useKeyboardEvent();
+    const [ clickPath, setClickPath ] = useClickPath();
 
     const handleClose = () => {
         // The fade-(in|out) animation relies on the modal being rendered at full screen width/height and then
@@ -22,23 +24,14 @@ function Modal({ title, children, footer, useGridForChildren, useGridForFooter, 
         }, 500);
     };
 
-    const [ keyDown, setKeyDown ] = useKeyboardEvent();
-
-    if (keyDown === 'Escape') {
-        // reset keyDown so that previous "Escape" keyDown value isn't used if the modal is closed and then re-opened
-        setKeyDown(null);
-
-        if (show) {
-            handleClose();
-        }
-    }
-
-    const [ clickPath, setClickPath ] = useClickPath();
-
+    const pressedEscape = keyDown === 'Escape';
     const clickedOnModalContent = elementIsInClickPath('class', 'modal-content', clickPath);
     const clickedOnModalBackdrop = elementIsInClickPath('class', 'modal fade', clickPath);
+    const userCancelledModal = pressedEscape || (clickedOnModalBackdrop && !clickedOnModalContent);
 
-    if (clickedOnModalBackdrop && !clickedOnModalContent) {
+    if (userCancelledModal) {
+        // reset keyDown/clickPath so that previous values aren't used if the modal is closed and then re-opened
+        setKeyDown(null);
         setClickPath([]);
 
         if (show) {
