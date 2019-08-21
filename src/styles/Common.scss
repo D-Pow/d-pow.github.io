@@ -73,6 +73,10 @@ $body-bg: $lighter;
   height: 5px;
 }
 
+input.text-white::placeholder, textarea.text-white::placeholder {
+  color: white;
+}
+
 @import "~bootstrap/scss/bootstrap";
 
 :export {
