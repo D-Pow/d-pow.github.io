@@ -52,12 +52,18 @@ class ContactModal extends React.Component {
             : email.empty;
         const messageError = this.validateText(messageInput) ? '' : message;
 
+        const formIsValid = (nameError + emailError + messageError) === '';
+
         this.setState({
             nameError,
             emailError,
             messageError,
-            hasSubmitted: (nameError + emailError + messageError) === ''
+            hasSubmitted: formIsValid
         });
+
+        if (formIsValid) {
+            this.submitForm();
+        }
     };
 
     handleCloseModal = () => {
@@ -80,6 +86,20 @@ class ContactModal extends React.Component {
 
     validateEmail(value) {
         return EMAIL_REGEX.test(value);
+    }
+
+    submitForm() {
+        const { nameInput, emailInput, messageInput } = this.state;
+        const formData = new FormData();
+
+        formData.append('name', nameInput);
+        formData.append('email', emailInput);
+        formData.append('message', messageInput);
+
+        fetch('https://formspree.io/djp460@nyu.edu', {
+            method: 'POST',
+            body: formData
+        });
     }
 
     renderErrorMessage(errorText) {
