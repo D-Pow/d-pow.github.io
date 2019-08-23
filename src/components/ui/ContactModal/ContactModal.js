@@ -35,7 +35,10 @@ class ContactModal extends React.Component {
 
     handleTyping = field => {
         return event => {
-            this.setState({ [`${field}Input`]: event.target.value });
+            this.setState({
+                [`${field}Input`]: event.target.value,
+                [`${field}Error`]: ''
+            });
         }
     };
 
