@@ -13,7 +13,7 @@ function PersonalContact(props) {
     const animationCls = 'animated duration-5';
     const animationShowCls = 'flip-x show';
     const headerCls = `border border-primary border-medium rounded margin-center p-4 width-fit ${animationCls} ${isHovered ? '' : animationShowCls}`;
-    const btnCls = `btn btn-primary ${animationCls} ${isHovered ? animationShowCls : ''}`;
+    const btnCls = `btn btn-primary px-4 py-3 ${animationCls} ${isHovered ? animationShowCls : ''}`;
 
     return (
         <div className={'mb-5'}>
@@ -30,7 +30,7 @@ function PersonalContact(props) {
                             </h5>
                         </div>
                         <div className={'absolute-center'}>
-                            <button className={btnCls} onClick={showContactModal}>Contact me!</button>
+                            <button className={btnCls} onClick={showContactModal}><h5 className={'margin-clear'}>Contact me!</h5></button>
                         </div>
                     </div>
                 </div>
