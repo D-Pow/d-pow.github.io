@@ -58,6 +58,12 @@ class ContactModal extends React.Component {
     };
 
     handleCloseModal = () => {
+        this.setState({
+            nameError: '',
+            emailError: '',
+            messageError: ''
+        });
+
         if (this.state.hasSubmitted) {
             this.setState({ hasClosedAfterSubmitting: true });
         }
