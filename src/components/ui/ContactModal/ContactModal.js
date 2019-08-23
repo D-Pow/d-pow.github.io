@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/ui/Modal';
+import { EMAIL_REGEX } from 'utils/Constants';
 
 class ContactModal extends React.Component {
     pageText = {
@@ -9,6 +10,14 @@ class ContactModal extends React.Component {
                 name: 'Name',
                 email: 'Email',
                 message: 'What\'s on your mind?'
+            },
+            error: {
+                name: 'Wait, what\'s your name again?',
+                email: {
+                    empty: 'Come on, don\'t be shy',
+                    invalid: 'Hmm, I don\'t seem to recognize that email format. Try again?'
+                },
+                message: 'Please add a message (even if it\'s short)'
             }
         }
     };
@@ -18,7 +27,10 @@ class ContactModal extends React.Component {
         hasClosedAfterSubmitting: false,
         nameInput: '',
         emailInput: '',
-        messageInput: ''
+        messageInput: '',
+        nameError: '',
+        emailError: '',
+        messageError: ''
     };
 
     handleTyping = field => {
@@ -28,7 +40,21 @@ class ContactModal extends React.Component {
     };
 
     handleSubmit = () => {
-        this.setState({ hasSubmitted: true });
+        const { name, email, message } = this.pageText.inputs.error;
+        const { nameInput, emailInput, messageInput } = this.state;
+
+        const nameError = this.validateText(nameInput) ? '' : name;
+        const emailError = emailInput
+            ? (this.validateEmail(emailInput) ? '' : email.invalid)
+            : email.empty;
+        const messageError = this.validateText(messageInput) ? '' : message;
+
+        this.setState({
+            nameError,
+            emailError,
+            messageError,
+            hasSubmitted: (nameError + emailError + messageError) === ''
+        });
     };
 
     handleCloseModal = () => {
@@ -39,8 +65,21 @@ class ContactModal extends React.Component {
         this.props.handleClose();
     };
 
+    validateText(value) {
+        return /[a-zA-Z0-9,./\\;:'"_\-!@#$%^&*+=]+/.test(value);
+    }
+
+    validateEmail(value) {
+        return EMAIL_REGEX.test(value);
+    }
+
+    renderErrorMessage(errorText) {
+        return errorText ? <div className={'invalid-feedback d-inline'}>{errorText}</div> : '';
+    }
+
     render() {
         const { placeholder } = this.pageText.inputs;
+        const { nameError, emailError, messageError } = this.state;
         let modalBody;
 
         if (this.state.hasClosedAfterSubmitting) {
@@ -57,9 +96,18 @@ class ContactModal extends React.Component {
         } else {
             modalBody = (
                 <div className={'form-group'}>
-                    <input className={'form-control bg-secondary mb-2 text-white'} type={'text'} placeholder={placeholder.name} value={this.state.nameInput} onChange={this.handleTyping('name')} />
-                    <input className={'form-control bg-secondary mb-2 text-white'} type={'email'} placeholder={placeholder.email} value={this.state.emailInput} onChange={this.handleTyping('email')} />
-                    <textarea className={'form-control bg-secondary text-white'} rows={3} placeholder={placeholder.message} value={this.state.messageInput} onChange={this.handleTyping('message')} />
+                    <div className={'form-row mb-2'}>
+                        <input className={'form-control bg-secondary text-white'} type={'text'} placeholder={placeholder.name} value={this.state.nameInput} onChange={this.handleTyping('name')} />
+                        {this.renderErrorMessage(nameError)}
+                    </div>
+                    <div className={'form-row mb-2'}>
+                        <input className={'form-control bg-secondary text-white'} type={'email'} placeholder={placeholder.email} value={this.state.emailInput} onChange={this.handleTyping('email')} />
+                        {this.renderErrorMessage(emailError)}
+                    </div>
+                    <div className={'form-row'}>
+                        <textarea className={'form-control bg-secondary text-white'} rows={3} placeholder={placeholder.message} value={this.state.messageInput} onChange={this.handleTyping('message')} />
+                        {this.renderErrorMessage(messageError)}
+                    </div>
                 </div>
             );
         }
