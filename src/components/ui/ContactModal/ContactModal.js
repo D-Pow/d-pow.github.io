@@ -3,6 +3,16 @@ import PropTypes from 'prop-types';
 import Modal from 'components/ui/Modal';
 
 class ContactModal extends React.Component {
+    pageText = {
+        inputs: {
+            placeholder: {
+                name: 'Name',
+                email: 'Email',
+                message: 'What\'s on your mind?'
+            }
+        }
+    };
+
     state = {
         hasSubmitted: false,
         hasClosedAfterSubmitting: false,
@@ -30,6 +40,7 @@ class ContactModal extends React.Component {
     };
 
     render() {
+        const { placeholder } = this.pageText.inputs;
         let modalBody;
 
         if (this.state.hasClosedAfterSubmitting) {
@@ -46,9 +57,9 @@ class ContactModal extends React.Component {
         } else {
             modalBody = (
                 <div className={'form-group'}>
-                    <input className={'form-control bg-secondary mb-2 text-white'} type={'text'} placeholder={'Name'} value={this.state.nameInput} onChange={this.handleTyping('name')} />
-                    <input className={'form-control bg-secondary mb-2 text-white'} type={'email'} placeholder={'Email'} value={this.state.emailInput} onChange={this.handleTyping('email')} />
-                    <textarea className={'form-control bg-secondary text-white'} rows={3} placeholder={'What\'s on your mind?'} value={this.state.messageInput} onChange={this.handleTyping('message')} />
+                    <input className={'form-control bg-secondary mb-2 text-white'} type={'text'} placeholder={placeholder.name} value={this.state.nameInput} onChange={this.handleTyping('name')} />
+                    <input className={'form-control bg-secondary mb-2 text-white'} type={'email'} placeholder={placeholder.email} value={this.state.emailInput} onChange={this.handleTyping('email')} />
+                    <textarea className={'form-control bg-secondary text-white'} rows={3} placeholder={placeholder.message} value={this.state.messageInput} onChange={this.handleTyping('message')} />
                 </div>
             );
         }
