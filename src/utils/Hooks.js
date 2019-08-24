@@ -46,11 +46,11 @@ export function useHover() {
     return [ ref, isHovered ];
 }
 
-export function useWindowEvent(eventType, eventField, initialValue = null) {
+export function useWindowEvent(eventType, eventField = null, initialValue = null) {
     const [ value, setValue ] = useState(initialValue);
 
     function handleEvent(event) {
-        setValue(event[eventField]);
+        setValue(eventField ? event[eventField] : event);
     }
 
     useEffect(() => {
