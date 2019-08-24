@@ -58,6 +58,12 @@ module.exports = {
                         }
                     },
                     'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: () => require('postcss-preset-env')
+                        }
+                    },
                     'sass-loader'
                 ]
             },
@@ -70,7 +76,13 @@ module.exports = {
                             hmr: process.env.NODE_ENV === 'development',
                         }
                     },
-                    'css-loader'
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: () => require('postcss-preset-env')
+                        }
+                    }
                 ]
             },
             {
