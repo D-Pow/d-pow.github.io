@@ -107,6 +107,7 @@ module.exports = {
         // contentBase: path.join(__dirname, outputPaths.prod),
         port: 3000,
         stats: 'minimal',  // silence superfluous webpack-dev-server "emitted" output
+        open: true, // open browser window upon build
         // publicPath: `http://localhost:3000/${outputPaths.prod}`,
         // hotOnly: true,
         historyApiFallback: true // For React Router
