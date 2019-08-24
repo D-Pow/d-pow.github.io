@@ -73,6 +73,34 @@ export function validateObjNestedFields(obj, ...nestedFields) {
 }
 
 /**
+ * Gets the path from the clicked element to the root.
+ *
+ * @param {Object} event - Click Event
+ * @returns {[HTMLElement]} - Path from clicked element to the root, including `document` and `window`
+ */
+export function getClickPath(event) {
+    if (!event || (Array.isArray(event) && event.length === 0)) {
+        return [];
+    }
+    if (event.path) {
+        return event.path;
+    }
+
+    // support for browsers without clickEvent.path
+    const clickPath = [];
+    let element = event.target;
+
+    while (element) {
+        clickPath.push(element);
+        element = element.parentElement;
+    }
+
+    clickPath.push(...[document, window]);
+
+    return clickPath;
+}
+
+/**
  * HTML element properties object used in searching for an element
  *
  * @global

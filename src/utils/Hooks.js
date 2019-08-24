@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { elementIsInClickPath } from 'utils/Functions';
+import { elementIsInClickPath, getClickPath } from 'utils/Functions';
 
 export function UseContext({ Context, defaultValue = null, children }) {
     const [ value, setValue ] = useState(defaultValue);
@@ -68,8 +68,16 @@ export function useKeyboardEvent(type = 'down') {
     return useWindowEvent(`key${type}`, 'key');
 }
 
+/**
+ * Get a hook state array containing the path from the clicked element to the root.
+ *
+ * @returns {[ [HTMLElement] | function ]} - The click path and setter function for said path
+ */
 export function useClickPath() {
-    return useWindowEvent('click', 'path', []);
+    const [ event, setEvent ] = useWindowEvent('click');
+    const clickPath = getClickPath(event);
+
+    return [ clickPath, setEvent ]; // setEvent will be used as setClickPath
 }
 
 /**
