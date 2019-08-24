@@ -21,20 +21,22 @@ function PersonalContact(props) {
                 <h1 className={'p-5 mb-5 bg-light'}>Personal Contact</h1>
             </ScrollToShow>
 
-            <div className={'container'}>
-                <div className={'row justify-content-sm-center'}>
-                    <div className={'col-sm-6 my-5'}>
-                        <div className={'absolute-center'}>
-                            <h5 className={headerCls} ref={hoverRef}>
-                                Interested in finding out more?
-                            </h5>
-                        </div>
-                        <div className={'absolute-center'}>
-                            <button className={btnCls} onClick={showContactModal}><h5 className={'margin-clear'}>Contact me!</h5></button>
+            <ScrollToShow addClasses={'show'} distributeClasses={'fade-in duration-20'}>
+                <div className={'container'}>
+                    <div className={'row justify-content-sm-center'}>
+                        <div className={'col-sm-6 my-5'}>
+                            <div className={'absolute-center'}>
+                                <h5 className={headerCls} ref={hoverRef}>
+                                    Interested in finding out more?
+                                </h5>
+                            </div>
+                            <div className={'absolute-center'}>
+                                <button className={btnCls} onClick={showContactModal}><h5 className={'margin-clear'}>Contact me!</h5></button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </ScrollToShow>
 
             <ContactModal show={showModal} handleClose={handleCloseModal} />
         </div>
