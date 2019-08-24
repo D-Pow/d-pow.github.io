@@ -12,7 +12,7 @@ function PersonalContact(props) {
 
     const animationCls = 'animated duration-5';
     const animationShowCls = 'flip-x show';
-    const headerCls = `border border-primary border-medium rounded margin-center p-4 width-fit ${animationCls} ${isHovered ? '' : animationShowCls}`;
+    const headerCls = `border border-primary border-medium rounded mx-auto p-4 width-fit ${animationCls} ${isHovered ? '' : animationShowCls}`;
     const btnCls = `btn btn-primary px-4 py-3 ${animationCls} ${isHovered ? animationShowCls : ''}`;
 
     return (
