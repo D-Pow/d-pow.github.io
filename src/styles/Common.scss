@@ -67,6 +67,9 @@ $body-bg: $lighter;
 }
 
 .absolute-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   margin: auto;
   height: fit-content;
