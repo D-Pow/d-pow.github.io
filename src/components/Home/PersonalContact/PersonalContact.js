@@ -1,19 +1,47 @@
 import React, { useState } from 'react';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import ContactModal from 'components/ui/ContactModal';
-import { useHover } from 'utils/Hooks';
+import Image from 'components/ui/Image';
+import Link from 'components/ui/Link';
+import { LINKS } from 'utils/Constants';
+import { useDistributeClasses } from 'utils/Hooks';
 
 function PersonalContact(props) {
     const [ showModal, setShowModal ] = useState(false);
-    const [ hoverRef, isHovered ] = useHover();
 
     const showContactModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
 
+    const contactMethods = [
+        <Link href={LINKS.LinkedIn}><Image className={'w-25 mb-4'} image={'linkedin_logo.svg'} /></Link>,
+        <Link href={LINKS.GitHub}><Image className={'w-25 mb-4'} image={'github_logo.svg'} /></Link>,
+        <button className={'btn btn-primary px-4 py-3 mx-auto'} onClick={showContactModal}>
+            <h5 className={'margin-clear'}>Contact me!</h5>
+        </button>
+    ];
+
+    const [ shownChildren, triggerShowChildren ] = useDistributeClasses(contactMethods.length, 250);
+
+    const handleShowContactLinksClick = () => {
+        triggerShowChildren();
+    };
+
+    const clicked = shownChildren.some(shouldShow => shouldShow); // if clicked, at least one child will be true
     const animationCls = 'animated duration-5';
     const animationShowCls = 'flip-x show';
-    const headerCls = `border border-primary border-medium rounded mx-auto p-4 width-fit ${animationCls} ${isHovered ? '' : animationShowCls}`;
-    const btnCls = `btn btn-primary px-4 py-3 ${animationCls} ${isHovered ? animationShowCls : ''}`;
+    const hideCls = 'd-none';
+    const headerCls = `border border-primary border-medium rounded mx-auto p-4 width-fit  ${animationCls} ${clicked ? hideCls : animationShowCls}`;
+    const contactLinkCls = index => `${animationCls} ${shownChildren[index] ? animationShowCls : hideCls}`;
+
+    const renderedContactMethods = contactMethods.map((renderedContactMethod, index) => {
+        return (
+            <div className={contactLinkCls(index)} key={index}>
+                <div className={'row'}>
+                    {renderedContactMethod}
+                </div>
+            </div>
+        );
+    });
 
     return (
         <div className={'mb-5'}>
@@ -25,13 +53,11 @@ function PersonalContact(props) {
                 <div className={'container'}>
                     <div className={'row justify-content-sm-center'}>
                         <div className={'col-sm-6 my-5'}>
-                            <div className={'absolute-center'}>
-                                <h5 className={headerCls} ref={hoverRef}>
-                                    Interested in finding out more?
-                                </h5>
-                            </div>
-                            <div className={'absolute-center'}>
-                                <button className={btnCls} onClick={showContactModal}><h5 className={'margin-clear'}>Contact me!</h5></button>
+                            <h5 className={headerCls} onClick={handleShowContactLinksClick}>
+                                Interested in finding out more?
+                            </h5>
+                            <div>
+                                {renderedContactMethods}
                             </div>
                         </div>
                     </div>
