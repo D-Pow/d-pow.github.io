@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useReducer, useEffect, useRef } from 'react';
 import { elementIsInClickPath, getClickPath } from 'utils/Functions';
 
 export function UseContext({ Context, defaultValue = null, children }) {
@@ -103,6 +103,37 @@ export function useRootClose(acceptableElement, closeElement) {
     };
 
     return [ rootWasClosed, resetRootClosed ];
+}
+
+export function useDistributeClasses(numChildren, intervalTimeMs) {
+    const updateShownChildrenReducer = (prevShownChildren, index) => {
+        const shownChildren = [...prevShownChildren];
+        shownChildren[index] = true;
+        return shownChildren;
+    };
+
+    const origState = Array.from({ length: numChildren }).fill(false);
+
+    const [ shownChildren, dispatchShowChild ] = useReducer(updateShownChildrenReducer, origState);
+    const [ shouldShowChildren, setShouldShowChildren ] = useState(false);
+    const [ timeoutTriggered, setTimeoutTriggered ] = useState(false);
+
+    if (shouldShowChildren && !timeoutTriggered) {
+        setTimeoutTriggered(true);
+        for (let i = 0; i < numChildren; i++) {
+            const timeToShow = intervalTimeMs*i;
+
+            setTimeout(() => {
+                dispatchShowChild(i);
+            }, timeToShow);
+        }
+    }
+
+    const triggerShowChildren = () => {
+        setShouldShowChildren(true);
+    };
+
+    return [ shownChildren, triggerShowChildren ];
 }
 
 export function Hooked({ hook, children }) {
