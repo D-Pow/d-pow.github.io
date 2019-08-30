@@ -1,3 +1,5 @@
+@import "../Common";
+
 .hover-shadow-sm:hover {
     box-shadow: 0 0 0.5rem 0.5rem rgba(0, 0, 0, 0.15) !important;
     border-radius: 0.25rem !important;
@@ -12,4 +14,11 @@
 
 .hover-expand:hover {
     transform: scale(1.05);
+}
+
+
+
+.hover-invert-bg-light:hover {
+    @extend .bg-primary;
+    @extend .text-white;
 }
