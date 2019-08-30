@@ -3,3 +3,13 @@
     border-radius: 0.25rem !important;
     z-index: 100;
 }
+
+
+
+.hover-expand {
+    transition: transform 0.3s !important;
+}
+
+.hover-expand:hover {
+    transform: scale(1.05);
+}
