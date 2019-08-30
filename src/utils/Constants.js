@@ -29,6 +29,8 @@ export const MOBILE_BROWSER_REGEX = /(android|bb\d+|meego).+mobile|avantgo|bada\
 export const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 export const LINKS = {
+    LinkedIn: 'https://www.linkedin.com/in/devon-powell/',
+    GitHub: 'https://github.com/D-Pow',
     MutualFundsHome: 'https://us.etrade.com/what-we-offer/investment-choices/mutual-funds',
     PrebuiltPortfolios: 'https://us.etrade.com/etx/wm/prebuiltmutualfundportfolios',
     AutomaticInvesting: 'https://us.etrade.com/etx/wm/automaticinvesting',
