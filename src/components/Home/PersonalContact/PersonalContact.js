@@ -30,7 +30,8 @@ function PersonalContact(props) {
     const animationCls = 'animated duration-5';
     const animationShowCls = 'flip-x show';
     const hideCls = 'd-none';
-    const headerCls = `border border-primary border-medium rounded mx-auto p-4 width-fit hover-invert-bg-light ${animationCls} ${clicked ? hideCls : animationShowCls}`;
+    const headerStyleCls = 'border border-primary border-medium rounded mx-auto p-4 width-fit hover-invert-bg-light';
+    const headerCls = `${headerStyleCls} ${animationCls} ${clicked ? hideCls : animationShowCls}`;
     const contactLinkCls = index => `${animationCls} ${shownChildren[index] ? animationShowCls : hideCls}`;
 
     const renderedContactMethods = contactMethods.map((renderedContactMethod, index) => {
