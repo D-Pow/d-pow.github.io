@@ -120,6 +120,7 @@ module.exports = {
         port: 3000,
         stats: 'minimal',  // silence superfluous webpack-dev-server "emitted" output
         open: true, // open browser window upon build
+        hot: true, // for `module.hot` hot-reloading block in index.js
         // publicPath: `http://localhost:3000/${outputPaths.prod}`,
         // hotOnly: true,
         historyApiFallback: true // For React Router
