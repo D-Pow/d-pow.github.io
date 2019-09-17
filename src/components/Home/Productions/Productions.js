@@ -39,12 +39,18 @@ function Productions(props) {
                 <div className={'row mb-5'}>
                     <ImageCard.SameHeightProvider>
                         <ScrollToShow addClasses={'flip-y show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.5}>
-                            {pageText.imageCards.map((props, index) => (
+                            {pageText.imageCards.map((props, index) => {
+                                const cls = 'col-sm-6 p-0';
+                                // Center if odd number of items and last item
+                                const centerCls = index % 2 === 0 && index === pageText.imageCards.length - 1 ? 'mx-auto' : '';
+
                                 // Nest in div.col so ImageCard's ScrollToShow animation pertains only to image and not containing div
-                                <div className={'col-sm-6 p-0'} key={index}>
-                                    <ImageCard imageCls={'w-100'} {...props} />
-                                </div>
-                            ))}
+                                return (
+                                    <div className={`${cls} ${centerCls}`} key={index}>
+                                        <ImageCard imageCls={'w-100'} {...props} />
+                                    </div>
+                                );
+                            })}
                         </ScrollToShow>
                     </ImageCard.SameHeightProvider>
                 </div>
