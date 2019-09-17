@@ -38,7 +38,9 @@ function PersonalContact(props) {
         return (
             <div className={contactLinkCls(index)} key={index}>
                 <div className={'row'}>
-                    {renderedContactMethod}
+                    <div className={'col mx-auto'}>
+                        {renderedContactMethod}
+                    </div>
                 </div>
             </div>
         );
