@@ -17,8 +17,8 @@ function Pastimes(props) {
             }
         },
         otherPastimes: [
-            <h4>This profile website</h4>,
-            <div><h4>Android Sync</h4><p>(iMessage remake)</p></div>,
+            <h4>Various open-source projects</h4>,
+            <h4>Cooking</h4>,
             <h4>Rock climbing</h4>,
             <h4>Playing guitar</h4>
         ]
