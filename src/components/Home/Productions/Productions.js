@@ -52,6 +52,11 @@ function Productions(props) {
                                 // Nest in div.col so ImageCard's ScrollToShow animation pertains only to image and not containing div
                                 return (
                                     <div className={`${cls} ${centerCls}`} key={index}>
+                                        {index !== 0 && (
+                                            <div className={'d-block d-sm-none py-2'}>
+                                                <div className={'segment-bar bg-dark'} />
+                                            </div>
+                                        )}
                                         <ImageCard imageCls={'w-100'} {...props} />
                                     </div>
                                 );
