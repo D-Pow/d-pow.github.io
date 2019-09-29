@@ -105,8 +105,8 @@ export function useRootClose(acceptableElement, closeElement) {
     return [ rootWasClosed, resetRootClosed ];
 }
 
-export function useDistributeClasses(numChildren, intervalTimeMs) {
-    const updateShownChildrenReducer = (prevShownChildren, index) => {
+export function useTimedArrayToggle(numChildren, intervalTimeMs) {
+    const toggleArrayEntryReducer = (prevShownChildren, index) => {
         const shownChildren = [...prevShownChildren];
         shownChildren[index] = true;
         return shownChildren;
@@ -114,26 +114,26 @@ export function useDistributeClasses(numChildren, intervalTimeMs) {
 
     const origState = Array.from({ length: numChildren }).fill(false);
 
-    const [ shownChildren, dispatchShowChild ] = useReducer(updateShownChildrenReducer, origState);
-    const [ shouldShowChildren, setShouldShowChildren ] = useState(false);
+    const [ toggledEntries, dispatchToggleEntry ] = useReducer(toggleArrayEntryReducer, origState);
+    const [ shouldToggleEntries, setShouldToggleEntries ] = useState(false);
     const [ timeoutTriggered, setTimeoutTriggered ] = useState(false);
 
-    if (shouldShowChildren && !timeoutTriggered) {
+    if (shouldToggleEntries && !timeoutTriggered) {
         setTimeoutTriggered(true);
         for (let i = 0; i < numChildren; i++) {
             const timeToShow = intervalTimeMs*i;
 
             setTimeout(() => {
-                dispatchShowChild(i);
+                dispatchToggleEntry(i);
             }, timeToShow);
         }
     }
 
-    const triggerShowChildren = () => {
-        setShouldShowChildren(true);
+    const triggerArrayToggle = () => {
+        setShouldToggleEntries(true);
     };
 
-    return [ shownChildren, triggerShowChildren ];
+    return [ toggledEntries, triggerArrayToggle ];
 }
 
 export function Hooked({ hook, children }) {

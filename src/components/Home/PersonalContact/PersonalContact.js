@@ -4,7 +4,7 @@ import ContactModal from 'components/ui/ContactModal';
 import Image from 'components/ui/Image';
 import Link from 'components/ui/Link';
 import { LINKS } from 'utils/Constants';
-import { useDistributeClasses } from 'utils/Hooks';
+import { useTimedArrayToggle } from 'utils/Hooks';
 
 function PersonalContact(props) {
     const [ showModal, setShowModal ] = useState(false);
@@ -20,7 +20,7 @@ function PersonalContact(props) {
         </button>
     ];
 
-    const [ shownChildren, triggerShowChildren ] = useDistributeClasses(contactMethods.length, 250);
+    const [ shownChildren, triggerShowChildren ] = useTimedArrayToggle(contactMethods.length, 250);
 
     const handleShowContactLinksClick = () => {
         triggerShowChildren();
