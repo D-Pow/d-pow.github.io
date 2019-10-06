@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/ui/Modal';
-import { EMAIL_REGEX } from 'utils/Constants';
+import { CONTACT_FORM_URL, EMAIL_REGEX } from 'utils/Constants';
 
 class ContactModal extends React.Component {
     pageText = {
@@ -96,7 +96,7 @@ class ContactModal extends React.Component {
         formData.append('email', emailInput);
         formData.append('message', messageInput);
 
-        fetch('https://formspree.io/xkdoqyjm', {
+        fetch(CONTACT_FORM_URL, {
             method: 'POST',
             headers: {
                 Accept: 'application/json'
