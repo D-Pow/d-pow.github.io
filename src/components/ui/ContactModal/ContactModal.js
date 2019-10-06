@@ -43,23 +43,7 @@ class ContactModal extends React.Component {
     };
 
     handleSubmit = () => {
-        const { name, email, message } = this.pageText.inputs.error;
-        const { nameInput, emailInput, messageInput } = this.state;
-
-        const nameError = this.validateText(nameInput) ? '' : name;
-        const emailError = emailInput
-            ? (this.validateEmail(emailInput) ? '' : email.invalid)
-            : email.empty;
-        const messageError = this.validateText(messageInput) ? '' : message;
-
-        const formIsValid = (nameError + emailError + messageError) === '';
-
-        this.setState({
-            nameError,
-            emailError,
-            messageError,
-            hasSubmitted: formIsValid
-        });
+        const formIsValid = this.validateForm();
 
         if (formIsValid) {
             this.submitForm();
@@ -79,6 +63,25 @@ class ContactModal extends React.Component {
 
         this.props.handleClose();
     };
+
+    validateForm() {
+        const { name, email, message } = this.pageText.inputs.error;
+        const { nameInput, emailInput, messageInput } = this.state;
+
+        const nameError = this.validateText(nameInput) ? '' : name;
+        const emailError = emailInput
+            ? (this.validateEmail(emailInput) ? '' : email.invalid)
+            : email.empty;
+        const messageError = this.validateText(messageInput) ? '' : message;
+
+        this.setState({
+            nameError,
+            emailError,
+            messageError
+        });
+
+        return (nameError + emailError + messageError) === '';
+    }
 
     validateText(value) {
         return /[a-zA-Z0-9,./\\;:'"_\-!@#$%^&*+=]+/.test(value);
