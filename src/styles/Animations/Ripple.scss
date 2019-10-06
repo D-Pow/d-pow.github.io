@@ -1,0 +1,54 @@
+$transformTransitionTime: 1.5s;
+$opacityTransitionTime: 2s;
+$innerRippleDelay: 0.3s;
+
+// TODO force animation to finish even if mouse leaves: https://stackoverflow.com/questions/7694323/css3-animation-on-hover-force-entire-animation
+// TODO integrate with standard Animation.scss coding style (i.e. using 'animated' and 'show' classes)
+
+.ripple {
+    transform: translate3d(0, 0, 0);
+}
+
+// First, reset ripple circle(s) to be size (0, 0) before it is shown
+// causing it to appear to grow in `.ripple:(before|after)`
+.ripple::before, .ripple::after {
+    // Make pseudo-selector content visible without adding any text
+    content: "";
+    // Put circle on top of element
+    position: absolute;
+    // Positioning of 'position: absolute;' element
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    // Make circle of size 0 (so it can grow later)
+    transform: scale(0, 0);
+    // Give it a starting opacity (which will fade later)
+    opacity: .3;
+    // Do not let user see the reset transition by setting time to 0
+    transition: 0s;
+}
+
+// Then, show ripple upon hover (done after resetting to size (0, 0))
+.ripple:hover::before, .ripple:hover::after {
+    // `radial-gradient(shape, color percent-size, ..., color percent-size)`
+    // `percent-size` is how big that color should be
+    // The colors passed first will be more inner to the circle than the latter
+    // Make rings by having colored circles nested between transparent circles
+    background-image: radial-gradient(circle, transparent 20%, $info 40%, $info 60%, transparent 65%);
+    // Scale circle size to what it should be at the end of the transition (x, y)
+    transform: scale(2, 2);
+    // Hide until transition
+    opacity: 0;
+}
+
+.ripple::before {
+    // transform (size) and opacity transition times
+    transition: transform $transformTransitionTime ease, opacity $opacityTransitionTime ease;
+}
+
+.ripple::after {
+    transition: transform $transformTransitionTime ease, opacity $opacityTransitionTime ease;
+    // Stagger the appearance of the two (::before and ::after) rings to mimic a "ripple" effect
+    transition-delay: $innerRippleDelay;
+}
