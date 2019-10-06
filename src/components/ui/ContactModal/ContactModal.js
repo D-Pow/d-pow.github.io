@@ -18,7 +18,8 @@ class ContactModal extends React.Component {
                     empty: 'Come on, don\'t be shy',
                     invalid: 'Hmm, I don\'t seem to recognize that email format. Try again?'
                 },
-                message: 'Please add a message (even if it\'s short)'
+                message: 'Please add a message (even if it\'s short)',
+                form: 'Oops, something went wrong. Could you try again?'
             }
         }
     };
@@ -32,14 +33,16 @@ class ContactModal extends React.Component {
         messageInput: '',
         nameError: '',
         emailError: '',
-        messageError: ''
+        messageError: '',
+        formError: ''
     };
 
     handleTyping = field => {
         return event => {
             this.setState({
                 [`${field}Input`]: event.target.value,
-                [`${field}Error`]: ''
+                [`${field}Error`]: '',
+                formError: ''
             });
         }
     };
@@ -56,7 +59,8 @@ class ContactModal extends React.Component {
         this.setState({
             nameError: '',
             emailError: '',
-            messageError: ''
+            messageError: '',
+            formError: ''
         });
 
         if (this.state.hasSubmitted) {
@@ -114,7 +118,9 @@ class ContactModal extends React.Component {
         this.setState({ isLoading: false });
 
         if (response.ok) {
-            this.setState({ hasSubmitted: true });
+            this.setState({ hasSubmitted: true, formError: '' });
+        } else {
+            this.setState({ formError: this.pageText.inputs.error.form });
         }
     }
 
@@ -124,7 +130,7 @@ class ContactModal extends React.Component {
 
     render() {
         const { placeholder } = this.pageText.inputs;
-        const { nameError, emailError, messageError } = this.state;
+        const { nameError, emailError, messageError, formError } = this.state;
         let modalBody;
 
         if (this.state.hasClosedAfterSubmitting) {
@@ -159,6 +165,9 @@ class ContactModal extends React.Component {
 
         const modalFooter = this.state.hasSubmitted ? '' : (
             <div className={'text-center'}>
+                <div className={'form-row mb-2'}>
+                    {this.renderErrorMessage(formError)}
+                </div>
                 <button className={'btn btn-primary'} onClick={this.handleSubmit}>
                     {this.state.isLoading ? (
                         <Spinner show={true} />
