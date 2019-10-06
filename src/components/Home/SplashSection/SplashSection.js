@@ -1,6 +1,6 @@
 import React from 'react';
-import FullPageTriangles from 'components/ui/FullPageTriangles';
 import 'styles/SplashSection.scss';
+import { Hooked, useHover } from 'utils/Hooks';
 
 class SplashSection extends React.Component {
     pageText = {
@@ -20,7 +20,32 @@ class SplashSection extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <FullPageTriangles numRows={8} />
+                <div className={'bg-dark'} style={{height: '100vh'}}>
+                    <br/>
+                    {Array.from({ length: 5 }).map((nul, i) => {
+                        return (
+                            <div className="row" key={i}>
+                                {Array.from({ length: 5 }).map((nul2, j) => (
+                                    <React.Fragment key={j}>
+                                        <div
+                                            className={'margin-center ripple'}
+                                            style={{ width: '80px', height: '80px', background: 'transparent' }}
+                                        />
+                                    {/*<Hooked hook={useHover}>*/}
+                                    {/*    {([ ref, isHovered ]) => (*/}
+                                    {/*        <div*/}
+                                    {/*            className={`margin-center ripple ${isHovered ? 'active' : ''}`}*/}
+                                    {/*            style={{ width: '80px', height: '80px', background: 'transparent' }}*/}
+                                    {/*            ref={ref}*/}
+                                    {/*        />*/}
+                                    {/*    )}*/}
+                                    {/*</Hooked>*/}
+                                    </React.Fragment>
+                                ))}
+                            </div>
+                        );
+                    })}
+                </div>
                 {this.renderWelcomeText()}
             </React.Fragment>
         );
