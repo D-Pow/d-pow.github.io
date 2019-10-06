@@ -96,8 +96,11 @@ class ContactModal extends React.Component {
         formData.append('email', emailInput);
         formData.append('message', messageInput);
 
-        fetch('https://formspree.io/djp460@nyu.edu', {
+        fetch('https://formspree.io/xkdoqyjm', {
             method: 'POST',
+            headers: {
+                Accept: 'application/json'
+            },
             body: formData
         });
     }
