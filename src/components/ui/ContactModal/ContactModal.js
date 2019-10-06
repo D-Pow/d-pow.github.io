@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/ui/Modal';
+import Spinner from 'components/ui/Spinner';
 import { CONTACT_FORM_URL, EMAIL_REGEX } from 'utils/Constants';
 
 class ContactModal extends React.Component {
@@ -25,6 +26,7 @@ class ContactModal extends React.Component {
     state = {
         hasSubmitted: false,
         hasClosedAfterSubmitting: false,
+        isLoading: false,
         nameInput: '',
         emailInput: '',
         messageInput: '',
@@ -91,7 +93,9 @@ class ContactModal extends React.Component {
         return EMAIL_REGEX.test(value);
     }
 
-    submitForm() {
+    async submitForm() {
+        this.setState({ isLoading: true });
+
         const { nameInput, emailInput, messageInput } = this.state;
         const formData = new FormData();
 
@@ -99,13 +103,19 @@ class ContactModal extends React.Component {
         formData.append('email', emailInput);
         formData.append('message', messageInput);
 
-        fetch(CONTACT_FORM_URL, {
+        const response = await fetch(CONTACT_FORM_URL, {
             method: 'POST',
             headers: {
                 Accept: 'application/json'
             },
             body: formData
         });
+
+        this.setState({ isLoading: false });
+
+        if (response.ok) {
+            this.setState({ hasSubmitted: true });
+        }
     }
 
     renderErrorMessage(errorText) {
@@ -149,7 +159,11 @@ class ContactModal extends React.Component {
 
         const modalFooter = this.state.hasSubmitted ? '' : (
             <div className={'text-center'}>
-                <button className={'btn btn-primary'} onClick={this.handleSubmit}>Send</button>
+                <button className={'btn btn-primary'} onClick={this.handleSubmit}>
+                    {this.state.isLoading ? (
+                        <Spinner show={true} />
+                    ) : 'Send'}
+                </button>
             </div>
         );
 
