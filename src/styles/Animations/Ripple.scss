@@ -1,6 +1,10 @@
+@import "../Common";
+
 $transformTransitionTime: 1.5s;
 $opacityTransitionTime: 2s;
 $innerRippleDelay: 0.3s;
+
+$maxAnimationTime: max($transformTransitionTime, $opacityTransitionTime) + $innerRippleDelay;
 
 // TODO force animation to finish even if mouse leaves: https://stackoverflow.com/questions/7694323/css3-animation-on-hover-force-entire-animation
 // TODO integrate with standard Animation.scss coding style (i.e. using 'animated' and 'show' classes)
@@ -51,4 +55,8 @@ $innerRippleDelay: 0.3s;
     transition: transform $transformTransitionTime ease, opacity $opacityTransitionTime ease;
     // Stagger the appearance of the two (::before and ::after) rings to mimic a "ripple" effect
     transition-delay: $innerRippleDelay;
+}
+
+:export {
+    rippleAnimationTime: $maxAnimationTime;
 }
