@@ -41,12 +41,7 @@ module.exports = {
                 test: jsRegex,
                 exclude: /node_modules/,
                 include: /src/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        babelrc: true
-                    }
-                }
+                use: 'babel-loader'
             },
             {
                 test: sassRegex,
