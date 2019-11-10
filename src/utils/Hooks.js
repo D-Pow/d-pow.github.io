@@ -46,17 +46,36 @@ export function useHover() {
     return [ ref, isHovered ];
 }
 
-export function useWindowEvent(eventType, { eventField = null, initialValue = null, handleEvent = null } = {}) {
-    const [ value, setValue ] = useState(initialValue);
+/**
+ * Custom state handler function for useWindowEvent()
+ *
+ * @callback handleWindowEvent
+ * @param {*} prevState - Previous state
+ * @param {function} setState - setState() React function
+ * @param {*} newEvent - New event from window
+ */
+/**
+ * Adds an event listener to the window and returns the associated eventState/setEventState fields.
+ * Optional configurations include using a nested event field for state, setting the initial state,
+ * and using a custom event handler instead of the standard setEventState(newEventState).
+ *
+ * @param {string} eventType - Type of event, passed to `window.addEventListener(eventType, ...)`
+ * @param {string} [nestedEventField=null] - Nested event field to use as state instead of the event itself
+ * @param {*} [initialEventState=null] - Initial state to use in event listener
+ * @param {handleWindowEvent} [handleEvent=null] - Custom event handler to use instead of standard setEventState
+ * @returns {[ *, function ]} - event state and respective setState function
+ */
+export function useWindowEvent(eventType, { nestedEventField = null, initialEventState = null, handleEvent = null } = {}) {
+    const [ eventState, setEventState ] = useState(initialEventState);
     const isUsingOwnEventHandler = typeof handleEvent === typeof (() => {});
 
     function eventListener(event) {
-        const newEventState = eventField ? event[eventField] : event;
+        const newEventState = nestedEventField ? event[nestedEventField] : event;
 
         if (isUsingOwnEventHandler) {
-            handleEvent(value, setValue, newEventState);
+            handleEvent(eventState, setEventState, newEventState);
         } else {
-            setValue(newEventState);
+            setEventState(newEventState);
         }
     }
 
@@ -68,11 +87,11 @@ export function useWindowEvent(eventType, { eventField = null, initialValue = nu
         };
     }, []);
 
-    return [ value, setValue ];
+    return [ eventState, setEventState ];
 }
 
 export function useKeyboardEvent(type = 'down') {
-    return useWindowEvent(`key${type}`, { eventField: 'key' });
+    return useWindowEvent(`key${type}`, { nestedEventField: 'key' });
 }
 
 /**
