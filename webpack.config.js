@@ -131,7 +131,8 @@ module.exports = {
             filename: './index.html'
         }),
         // replaces %PUBLIC_URL% in index.html with env entry
-        // new InterpolateHtmlPlugin(publicEnv),    // not needed since PUBLIC_URL isn't used in index.html anymore
+        /* new InterpolateHtmlPlugin(publicEnv),    // not needed since PUBLIC_URL isn't used in index.html anymore
+         */
         // splits CSS out from the rest of the code
         new MiniCssExtractPlugin({
             filename: `static/css/[name].[contenthash:8].css`,
