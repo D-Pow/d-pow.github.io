@@ -5,7 +5,7 @@ import { useHover } from 'utils/Hooks';
 import ContextFactory from 'utils/Context';
 import { isMobileBrowser, validateObjNestedFields } from 'utils/Functions';
 
-function ImageCard({ className, image, imageCls, title, description, smallTextMargins, aria }) {
+function ImageCard({ className, image, imageCls, title, description, aria }) {
     const parentDivRef = React.createRef();
     const imageRef = React.createRef();
     const [ hoverRef, isHovered ] = useHover();
@@ -23,7 +23,7 @@ function ImageCard({ className, image, imageCls, title, description, smallTextMa
         const animationCls = 'duration-5 linear';
         // Mobile browsers between phone and tablet look strange when using the media query for xs/sm
         // so force all mobile browsers to use the mobile view
-        const marginCls = isMobileBrowser() || smallTextMargins ? ['mt-10p mb-5p ml-1', 'mx-5p'] : ['m-5', 'm-3'];
+        const marginCls = isMobileBrowser() ? ['mt-10p mb-5p ml-1', 'mx-5p'] : ['m-5', 'm-3'];
         const Title = isMobileBrowser() ? 'h4' : 'h3';
         const hoverCls = isHovered ? ['show', 'slide-in-top', 'slide-in-bottom'] : ['', '', ''];
         const defaultWidth = 'auto';
@@ -79,7 +79,6 @@ ImageCard.propTypes = {
     imageCls: PropTypes.string,
     title: PropTypes.node,
     description: PropTypes.node,
-    smallTextMargins: PropTypes.bool,
     aria: PropTypes.object
 };
 
@@ -89,7 +88,6 @@ ImageCard.defaultProps = {
     imageCls: '',
     title: '',
     description: '',
-    smallTextMargins: false,
     aria: {}
 };
 
