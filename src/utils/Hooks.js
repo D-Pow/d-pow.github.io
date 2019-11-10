@@ -168,6 +168,19 @@ export function useTimedArrayToggle(numChildren, intervalTimeMs) {
     return [ toggledEntries, triggerArrayToggle ];
 }
 
+/**
+ * @callback hookedChildRenderer
+ * @param {(*|Array<*>)} hookReturnVal - Value returned from useMyHook()
+ * @returns {React.Component} - Children to render using hookReturnVal
+ */
+/**
+ * Component used when class components want to use hooks.
+ *
+ * @param {Object} props - Props for returned React.Component
+ * @param {function} props.hook - Hook to use within class component
+ * @param {hookedChildRenderer} props.children - Function that uses value from hook() to render children; passed as React.Component.props
+ * @returns {React.Component} - Children rendered using the hook() return values
+ */
 export function Hooked({ hook, children }) {
     return children(hook())
 }
