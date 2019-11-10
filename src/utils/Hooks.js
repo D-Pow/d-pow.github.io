@@ -63,9 +63,18 @@ export function useHover() {
  * @param {string} [nestedEventField=null] - Nested event field to use as state instead of the event itself
  * @param {*} [initialEventState=null] - Initial state to use in event listener
  * @param {handleWindowEvent} [handleEvent=null] - Custom event handler to use instead of standard setEventState
+ * @param {Array<*>} [useEffectInputs=[]] - useEffect optimization inputs: `useEffect(func, useEffectInputs)`
  * @returns {[ *, function ]} - event state and respective setState function
  */
-export function useWindowEvent(eventType, { nestedEventField = null, initialEventState = null, handleEvent = null } = {}) {
+export function useWindowEvent(
+    eventType,
+    {
+        nestedEventField = null,
+        initialEventState = null,
+        handleEvent = null,
+        useEffectInputs = []
+    } = {}
+) {
     const [ eventState, setEventState ] = useState(initialEventState);
     const isUsingOwnEventHandler = typeof handleEvent === typeof (() => {});
 
@@ -85,7 +94,7 @@ export function useWindowEvent(eventType, { nestedEventField = null, initialEven
         return () => {
             window.removeEventListener(eventType, eventListener);
         };
-    }, []);
+    }, useEffectInputs);
 
     return [ eventState, setEventState ];
 }
