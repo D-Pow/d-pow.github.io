@@ -12,10 +12,11 @@ export function UseContext({ Context, defaultValue = null, children }) {
 }
 
 export function useHover() {
-    const [ isHovered, setIsHovered ] = useState(false);
     const ref = useRef(null);
 
-    function handleMouseMove({ pageX, pageY }) {
+    function handleMouseMove(prevIsHovered, setIsHovered, newEvent) {
+        const { pageX, pageY } = newEvent;
+
         if (ref.current) {
             const { pageXOffset, pageYOffset } = window;
             let { top, bottom, left, right } = ref.current.getBoundingClientRect();
@@ -33,15 +34,11 @@ export function useHover() {
         }
     }
 
-    useEffect(() => {
-        if (ref.current) {
-            window.addEventListener('mousemove', handleMouseMove);
-        }
-
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove)
-        }
-    }, [ref.current]);
+    const [ isHovered ] = useWindowEvent('mousemove', {
+        initialEventState: false,
+        handleEvent: handleMouseMove,
+        useEffectInputs: [ref.current]
+    });
 
     return [ ref, isHovered ];
 }
