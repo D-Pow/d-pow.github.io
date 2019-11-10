@@ -122,6 +122,27 @@ export function useRootClose(acceptableElement, closeElement) {
     return [ rootWasClosed, resetRootClosed ];
 }
 
+export function useWindowResize() {
+    const initialState = {
+        width: window.innerWidth,
+        height: window.innerHeight
+    };
+
+    function handleResize(prevState, setState) {
+        setState({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+    }
+
+    const [ windowSize, setWindowSize ] = useWindowEvent('resize', {
+        initialEventState: initialState,
+        handleEvent: handleResize
+    });
+
+    return [ windowSize, setWindowSize ];
+}
+
 export function useHover() {
     const ref = useRef(null);
 
