@@ -46,18 +46,25 @@ export function useHover() {
     return [ ref, isHovered ];
 }
 
-export function useWindowEvent(eventType, { eventField = null, initialValue = null } = {}) {
+export function useWindowEvent(eventType, { eventField = null, initialValue = null, handleEvent = null } = {}) {
     const [ value, setValue ] = useState(initialValue);
+    const isUsingOwnEventHandler = typeof handleEvent === typeof (() => {});
 
-    function handleEvent(event) {
-        setValue(eventField ? event[eventField] : event);
+    function eventListener(event) {
+        const newEventState = eventField ? event[eventField] : event;
+
+        if (isUsingOwnEventHandler) {
+            handleEvent(value, setValue, newEventState);
+        } else {
+            setValue(newEventState);
+        }
     }
 
     useEffect(() => {
-        window.addEventListener(eventType, handleEvent);
+        window.addEventListener(eventType, eventListener);
 
         return () => {
-            window.removeEventListener(eventType, handleEvent);
+            window.removeEventListener(eventType, eventListener);
         };
     }, []);
 
