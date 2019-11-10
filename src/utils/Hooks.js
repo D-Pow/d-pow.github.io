@@ -1,6 +1,23 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react';
 import { elementIsInClickPath, getClickPath } from 'utils/Functions';
 
+/**
+ * @callback hookedChildRenderer
+ * @param {(*|Array<*>)} hookReturnVal - Value returned from useMyHook()
+ * @returns {React.Component} - Children to render using hookReturnVal
+ */
+/**
+ * Component used when class components want to use hooks.
+ *
+ * @param {Object} props - Props for returned React.Component
+ * @param {function} props.hook - Hook to use within class component
+ * @param {hookedChildRenderer} props.children - Function that uses value from hook() to render children; passed as React.Component.props
+ * @returns {React.Component} - Children rendered using the hook() return values
+ */
+export function Hooked({ hook, children }) {
+    return children(hook())
+}
+
 export function UseContext({ Context, defaultValue = null, children }) {
     const [ value, setValue ] = useState(defaultValue);
 
@@ -9,38 +26,6 @@ export function UseContext({ Context, defaultValue = null, children }) {
             {children}
         </Context.Provider>
     );
-}
-
-export function useHover() {
-    const ref = useRef(null);
-
-    function handleMouseMove(prevIsHovered, setIsHovered, newEvent) {
-        const { pageX, pageY } = newEvent;
-
-        if (ref.current) {
-            const { pageXOffset, pageYOffset } = window;
-            let { top, bottom, left, right } = ref.current.getBoundingClientRect();
-
-            top = top + pageYOffset;
-            bottom = bottom + pageYOffset;
-            left = left + pageXOffset;
-            right = right + pageXOffset;
-
-            if (pageX <= right && pageX >= left && pageY <= bottom && pageY >= top) {
-                setIsHovered(true);
-            } else {
-                setIsHovered(false);
-            }
-        }
-    }
-
-    const [ isHovered ] = useWindowEvent('mousemove', {
-        initialEventState: false,
-        handleEvent: handleMouseMove,
-        useEffectInputs: [ref.current]
-    });
-
-    return [ ref, isHovered ];
 }
 
 /**
@@ -137,6 +122,38 @@ export function useRootClose(acceptableElement, closeElement) {
     return [ rootWasClosed, resetRootClosed ];
 }
 
+export function useHover() {
+    const ref = useRef(null);
+
+    function handleMouseMove(prevIsHovered, setIsHovered, newEvent) {
+        const { pageX, pageY } = newEvent;
+
+        if (ref.current) {
+            const { pageXOffset, pageYOffset } = window;
+            let { top, bottom, left, right } = ref.current.getBoundingClientRect();
+
+            top = top + pageYOffset;
+            bottom = bottom + pageYOffset;
+            left = left + pageXOffset;
+            right = right + pageXOffset;
+
+            if (pageX <= right && pageX >= left && pageY <= bottom && pageY >= top) {
+                setIsHovered(true);
+            } else {
+                setIsHovered(false);
+            }
+        }
+    }
+
+    const [ isHovered ] = useWindowEvent('mousemove', {
+        initialEventState: false,
+        handleEvent: handleMouseMove,
+        useEffectInputs: [ref.current]
+    });
+
+    return [ ref, isHovered ];
+}
+
 export function useTimedArrayToggle(numChildren, intervalTimeMs) {
     const toggleArrayEntryReducer = (prevShownChildren, index) => {
         const shownChildren = [...prevShownChildren];
@@ -166,21 +183,4 @@ export function useTimedArrayToggle(numChildren, intervalTimeMs) {
     };
 
     return [ toggledEntries, triggerArrayToggle ];
-}
-
-/**
- * @callback hookedChildRenderer
- * @param {(*|Array<*>)} hookReturnVal - Value returned from useMyHook()
- * @returns {React.Component} - Children to render using hookReturnVal
- */
-/**
- * Component used when class components want to use hooks.
- *
- * @param {Object} props - Props for returned React.Component
- * @param {function} props.hook - Hook to use within class component
- * @param {hookedChildRenderer} props.children - Function that uses value from hook() to render children; passed as React.Component.props
- * @returns {React.Component} - Children rendered using the hook() return values
- */
-export function Hooked({ hook, children }) {
-    return children(hook())
 }
