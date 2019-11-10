@@ -9,17 +9,17 @@ const defaultContextValue = 'auto';
 const ImageCardSizeContext = ContextFactory(defaultContextValue);
 
 class ImageCard extends React.Component {
-    static contextType = ImageCardSizeContext.Context;
+    static SameHeightConsumer = ImageCardSizeContext.Consumer;
     static SameHeightProvider = ImageCardSizeContext.Provider;
 
     parentDivRef = React.createRef();
     imageRef = React.createRef();
 
-    updateContextHeight = () => {
+    updateContextHeight = (value, setValue) => {
         const { height } = this.parentDivRef.current.getBoundingClientRect();
 
-        if (this.context.value === defaultContextValue || this.context.value > height) {
-            this.context.setValue(height);
+        if (value === defaultContextValue || value > height) {
+            setValue(height);
         }
     };
 
@@ -62,18 +62,22 @@ class ImageCard extends React.Component {
 
     render() {
         return (
-            <div className={this.props.className} ref={this.parentDivRef} {...this.props.aria}>
-                {/* Obey parent's padding with `position: relative` */}
-                <div className={'position-relative w-100'} style={{ height: `${this.context.value}px`, overflow: 'hidden' }}>
-                    <Image
-                        className={this.props.imageCls}
-                        image={this.props.image}
-                        onLoad={this.updateContextHeight}
-                        aria={{ ref: this.imageRef }}
-                    />
-                    {this.renderHoverContent()}
-                </div>
-            </div>
+            <ImageCard.SameHeightConsumer>
+                {({ value, setValue }) => (
+                    <div className={this.props.className} ref={this.parentDivRef} {...this.props.aria}>
+                        {/* Obey parent's padding with `position: relative` */}
+                        <div className={'position-relative w-100'} style={{ height: `${value}px`, overflow: 'hidden' }}>
+                            <Image
+                                className={this.props.imageCls}
+                                image={this.props.image}
+                                onLoad={() => this.updateContextHeight(value, setValue)}
+                                aria={{ ref: this.imageRef }}
+                            />
+                            {this.renderHoverContent()}
+                        </div>
+                    </div>
+                )}
+            </ImageCard.SameHeightConsumer>
         );
     }
 }
