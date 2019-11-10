@@ -34,6 +34,8 @@ const cssRegex = /\.css$/;
 const sassRegex = /\.scss$/;
 const assetRegex = /\.(png|gif|jpe?g|svg|ico|pdf|tex)$/;
 
+const hotReloading = process.env.NODE_ENV === 'development';
+
 module.exports = {
     module: {
         rules: [
@@ -49,7 +51,7 @@ module.exports = {
                     {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
-                            hmr: process.env.NODE_ENV === 'development',
+                            hmr: hotReloading,
                         }
                     },
                     'css-loader',
@@ -68,7 +70,7 @@ module.exports = {
                     {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
-                            hmr: process.env.NODE_ENV === 'development',
+                            hmr: hotReloading,
                         }
                     },
                     'css-loader',
@@ -106,7 +108,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, outputPath), // set specific output path for github global user .io domain
-        // publicPath: 'outputPath',  // appends ${outputPath} to <script> src tags; not needed since CRA-stripping
+        // publicPath: 'outputPath',  // appends ${outputPath} to <script> src tags; not needed after CRA-stripping
         filename: `static/js/[name].[hash:8].bundle.js`,
         chunkFilename: `static/js/[name].[hash:8].chunk.js`
     },
@@ -115,9 +117,8 @@ module.exports = {
         port: 3000,
         stats: 'minimal',  // silence superfluous webpack-dev-server "emitted" output
         open: true, // open browser window upon build
-        hot: true, // for `module.hot` hot-reloading block in index.js
+        hot: hotReloading, // for `module.hot` hot-reloading block in index.js
         // publicPath: `http://localhost:3000/${outputPaths.prod}`,
-        // hotOnly: true,
         historyApiFallback: true // For React Router
     },
     stats: { modules: false, children: false }, // clean up npm output
