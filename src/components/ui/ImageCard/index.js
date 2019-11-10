@@ -1,3 +1,4 @@
 import ImageCard from './ImageCard';
+import SameHeightImageCard from './SameHeightImageCard';
 
-export default ImageCard;
+export { ImageCard as default, SameHeightImageCard };

@@ -1,6 +1,6 @@
 import React from 'react';
 import ScrollToShow from 'components/ui/ScrollToShow';
-import ImageCard from 'components/ui/ImageCard';
+import { SameHeightImageCard } from 'components/ui/ImageCard';
 import Link from 'components/ui/Link';
 import { LINKS } from 'utils/Constants';
 
@@ -42,7 +42,7 @@ function Productions(props) {
             </ScrollToShow>
             <div className={'container'}>
                 <div className={'row mb-5'}>
-                    <ImageCard.SameHeightProvider>
+                    <SameHeightImageCard.Provider>
                         <ScrollToShow addClasses={'flip-y show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.5}>
                             {pageText.imageCards.map((imageCardProps, index) => {
                                 const cls = 'col-sm-6 p-0';
@@ -57,12 +57,12 @@ function Productions(props) {
                                                 <div className={'segment-bar bg-dark'} />
                                             </div>
                                         )}
-                                        <ImageCard imageCls={'w-100'} {...imageCardProps} />
+                                        <SameHeightImageCard imageCls={'w-100'} {...imageCardProps} />
                                     </div>
                                 );
                             })}
                         </ScrollToShow>
-                    </ImageCard.SameHeightProvider>
+                    </SameHeightImageCard.Provider>
                 </div>
             </div>
         </React.Fragment>

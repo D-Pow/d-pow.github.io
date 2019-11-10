@@ -2,21 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'components/ui/Image';
 import { useHover } from 'utils/Hooks';
-import ContextFactory from 'utils/Context';
 import { isMobileBrowser, validateObjNestedFields } from 'utils/Functions';
 
-function ImageCard({ className, image, imageCls, title, description, aria }) {
-    const parentDivRef = React.createRef();
+function ImageCard({ className, image, imageCls, imageStyle, title, description, aria, onLoad }) {
     const imageRef = React.createRef();
     const [ hoverRef, isHovered ] = useHover();
-
-    function updateContextHeight(contextImgHeight, setContextImgHeight) {
-        const { height } = parentDivRef.current.getBoundingClientRect();
-
-        if (contextImgHeight === defaultContextImgHeight || contextImgHeight > height) {
-            setContextImgHeight(height);
-        }
-    }
 
     function renderHoverContent() {
         const positionCls = 'position-absolute fixed-top h-100';
@@ -48,47 +38,41 @@ function ImageCard({ className, image, imageCls, title, description, aria }) {
     }
 
     return (
-        <ImageCard.SameHeightConsumer>
-            {({ value: contextImgHeight, setValue: setContextImgHeight }) => (
-                <div className={className} ref={parentDivRef} {...aria}>
-                    {/* Obey parent's padding with `position: relative` */}
-                    <div className={'position-relative w-100'} style={{ height: `${contextImgHeight}px`, overflow: 'hidden' }}>
-                        <Image
-                            className={imageCls}
-                            image={image}
-                            onLoad={() => updateContextHeight(contextImgHeight, setContextImgHeight)}
-                            aria={{ ref: imageRef }}
-                        />
-                        {renderHoverContent()}
-                    </div>
-                </div>
-            )}
-        </ImageCard.SameHeightConsumer>
+        <div className={className} {...aria}>
+            {/* Obey parent's padding with `position: relative` */}
+            <div className={'position-relative w-100'} style={imageStyle}>
+                <Image
+                    className={imageCls}
+                    image={image}
+                    onLoad={onLoad}
+                    aria={{ ref: imageRef }}
+                />
+                {renderHoverContent()}
+            </div>
+        </div>
     );
 }
-
-const defaultContextImgHeight = 'auto';
-const ImageCardSizeContext = ContextFactory(defaultContextImgHeight);
-
-ImageCard.SameHeightConsumer = ImageCardSizeContext.Consumer;
-ImageCard.SameHeightProvider = ImageCardSizeContext.Provider;
 
 ImageCard.propTypes = {
     className: PropTypes.string,
     image: PropTypes.string,
     imageCls: PropTypes.string,
+    imageStyle: PropTypes.object,
     title: PropTypes.node,
     description: PropTypes.node,
-    aria: PropTypes.object
+    aria: PropTypes.object,
+    onLoad: PropTypes.func
 };
 
 ImageCard.defaultProps = {
     className: '',
     image: '',
     imageCls: '',
+    imageStyle: {},
     title: '',
     description: '',
-    aria: {}
+    aria: {},
+    onLoad: () => {}
 };
 
 export default ImageCard;
