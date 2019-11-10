@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ImageCard from './ImageCard';
 import ContextFactory from 'utils/Context';
 import { validateObjNestedFields } from 'utils/Functions';
 
 const defaultContextImgHeight = 'auto';
 const ImageCardSizeContext = ContextFactory(defaultContextImgHeight);
-const { Provider, Consumer } = ImageCardSizeContext;
+const { Provider, Context } = ImageCardSizeContext;
 
 function SameHeightImageCard(imageCardProps) {
     const parentDivRef = React.createRef();
+    const { value: contextImgHeight, setValue: setContextImgHeight } = useContext(Context);
 
-    function updateContextHeight(contextImgHeight, setContextImgHeight) {
+    function updateContextHeight() {
         if (validateObjNestedFields(parentDivRef, 'current')) {
             const { height } = parentDivRef.current.getBoundingClientRect();
 
@@ -21,16 +22,12 @@ function SameHeightImageCard(imageCardProps) {
     }
 
     return (
-        <Consumer>
-            {({ value: contextImgHeight, setValue: setContextImgHeight }) => (
-                <ImageCard
-                    {...imageCardProps}
-                    aria={{ ref: parentDivRef }}
-                    imageStyle={{ height: `${contextImgHeight}px`, overflow: 'hidden' }}
-                    onLoad={() => updateContextHeight(contextImgHeight, setContextImgHeight)}
-                />
-            )}
-        </Consumer>
+        <ImageCard
+            {...imageCardProps}
+            aria={{ ref: parentDivRef }}
+            imageStyle={{ height: `${contextImgHeight}px`, overflow: 'hidden' }}
+            onLoad={updateContextHeight}
+        />
     );
 }
 
