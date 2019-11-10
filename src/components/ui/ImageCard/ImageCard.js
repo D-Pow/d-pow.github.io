@@ -5,8 +5,8 @@ import { useHover, Hooked } from 'utils/Hooks';
 import ContextFactory from 'utils/Context';
 import { isMobileBrowser, validateObjNestedFields } from 'utils/Functions';
 
-const defaultContextValue = 'auto';
-const ImageCardSizeContext = ContextFactory(defaultContextValue);
+const defaultContextImgHeight = 'auto';
+const ImageCardSizeContext = ContextFactory(defaultContextImgHeight);
 
 class ImageCard extends React.Component {
     static SameHeightConsumer = ImageCardSizeContext.Consumer;
@@ -15,11 +15,11 @@ class ImageCard extends React.Component {
     parentDivRef = React.createRef();
     imageRef = React.createRef();
 
-    updateContextHeight = (value, setValue) => {
+    updateContextHeight = (contextImgHeight, setContextImgHeight) => {
         const { height } = this.parentDivRef.current.getBoundingClientRect();
 
-        if (value === defaultContextValue || value > height) {
-            setValue(height);
+        if (contextImgHeight === defaultContextImgHeight || contextImgHeight > height) {
+            setContextImgHeight(height);
         }
     };
 
@@ -63,14 +63,14 @@ class ImageCard extends React.Component {
     render() {
         return (
             <ImageCard.SameHeightConsumer>
-                {({ value, setValue }) => (
+                {({ value: contextImgHeight, setValue: setContextImgHeight }) => (
                     <div className={this.props.className} ref={this.parentDivRef} {...this.props.aria}>
                         {/* Obey parent's padding with `position: relative` */}
-                        <div className={'position-relative w-100'} style={{ height: `${value}px`, overflow: 'hidden' }}>
+                        <div className={'position-relative w-100'} style={{ height: `${contextImgHeight}px`, overflow: 'hidden' }}>
                             <Image
                                 className={this.props.imageCls}
                                 image={this.props.image}
-                                onLoad={() => this.updateContextHeight(value, setValue)}
+                                onLoad={() => this.updateContextHeight(contextImgHeight, setContextImgHeight)}
                                 aria={{ ref: this.imageRef }}
                             />
                             {this.renderHoverContent()}
