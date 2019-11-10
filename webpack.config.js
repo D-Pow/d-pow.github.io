@@ -108,17 +108,14 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, outputPath), // set specific output path for github global user .io domain
-        // publicPath: 'outputPath',  // appends ${outputPath} to <script> src tags; not needed after CRA-stripping
         filename: `static/js/[name].[hash:8].bundle.js`,
         chunkFilename: `static/js/[name].[hash:8].chunk.js`
     },
     devServer: {
-        // contentBase: path.join(__dirname, outputPaths.prod),
         port: 3000,
         stats: 'minimal',  // silence superfluous webpack-dev-server "emitted" output
         open: true, // open browser window upon build
         hot: hotReloading, // for `module.hot` hot-reloading block in index.js
-        // publicPath: `http://localhost:3000/${outputPaths.prod}`,
         historyApiFallback: true // For React Router
     },
     stats: { modules: false, children: false }, // clean up npm output
