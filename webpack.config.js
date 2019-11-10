@@ -34,6 +34,8 @@ const cssRegex = /\.css$/;
 const sassRegex = /\.scss$/;
 const assetRegex = /\.(png|gif|jpe?g|svg|ico|pdf|tex)$/;
 
+const hotReloading = process.env.NODE_ENV === 'development';
+
 module.exports = {
     module: {
         rules: [
@@ -41,12 +43,7 @@ module.exports = {
                 test: jsRegex,
                 exclude: /node_modules/,
                 include: /src/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        babelrc: true
-                    }
-                }
+                use: 'babel-loader'
             },
             {
                 test: sassRegex,
@@ -54,7 +51,7 @@ module.exports = {
                     {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
-                            hmr: process.env.NODE_ENV === 'development',
+                            hmr: hotReloading,
                         }
                     },
                     'css-loader',
@@ -73,7 +70,7 @@ module.exports = {
                     {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
-                            hmr: process.env.NODE_ENV === 'development',
+                            hmr: hotReloading,
                         }
                     },
                     'css-loader',
@@ -111,18 +108,14 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, outputPath), // set specific output path for github global user .io domain
-        // publicPath: 'outputPath',  // appends ${outputPath} to <script> src tags; not needed since CRA-stripping
         filename: `static/js/[name].[hash:8].bundle.js`,
         chunkFilename: `static/js/[name].[hash:8].chunk.js`
     },
     devServer: {
-        // contentBase: path.join(__dirname, outputPaths.prod),
         port: 3000,
         stats: 'minimal',  // silence superfluous webpack-dev-server "emitted" output
         open: true, // open browser window upon build
-        hot: true, // for `module.hot` hot-reloading block in index.js
-        // publicPath: `http://localhost:3000/${outputPaths.prod}`,
-        // hotOnly: true,
+        hot: hotReloading, // for `module.hot` hot-reloading block in index.js
         historyApiFallback: true // For React Router
     },
     stats: { modules: false, children: false }, // clean up npm output
@@ -135,7 +128,8 @@ module.exports = {
             filename: './index.html'
         }),
         // replaces %PUBLIC_URL% in index.html with env entry
-        // new InterpolateHtmlPlugin(publicEnv),    // not needed since PUBLIC_URL isn't used in index.html anymore
+        /* new InterpolateHtmlPlugin(publicEnv),    // not needed since PUBLIC_URL isn't used in index.html anymore
+         */
         // splits CSS out from the rest of the code
         new MiniCssExtractPlugin({
             filename: `static/css/[name].[contenthash:8].css`,

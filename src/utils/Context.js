@@ -2,25 +2,32 @@ import React from 'react';
 import { UseContext } from 'utils/Hooks';
 
 /**
- * Creates both a Context and Provider for components to use.
+ * Creates a new Context and returns both the related Consumer and Provider for component use.
+ * Creates a new Context each time this function is called so repeated calls don't have to worry
+ * about stepping on each other's toes.
  *
- * Creates a new Context each time this function is called so repeated
- * calls don't have to worry about stepping on each other's toes.
+ * The context created uses both a `value` field and `setValue` function so the consuming components
+ * can update the context's state.
  *
- * Context follows the format:
- * { value: {anything}, setValue: {function} }
+ * Consumer takes a function as children:
+ * <Consumer>
+ *     {({ value, setValue }) => (
+ *         {children}
+ *     )}
+ * </Consumer
  *
- * @param {*} defaultValue - Default value for Context.value to hold
- * @returns {{Context: Object, Provider: {React.Component} }} The newly-created Context and Value
+ * @param {*} defaultValue - Default value for the context
+ * @returns {{Consumer: React.Component, Provider: React.Component, Context: Object }} - The newly-created Context-related objects
  */
 export default function ContextFactory(defaultValue = null) {
     const Context = React.createContext({
-        value: defaultValue,
-        setValue: () => {}
+        contextState: defaultValue,
+        setContextState: () => {}
     });
     const Provider = props => (
         <UseContext Context={Context} defaultValue={defaultValue} {...props} />
     );
+    const { Consumer } = Context;
 
-    return { Context, Provider };
+    return { Consumer, Provider, Context };
 };

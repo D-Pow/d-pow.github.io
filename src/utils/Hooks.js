@@ -1,71 +1,88 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react';
 import { elementIsInClickPath, getClickPath } from 'utils/Functions';
 
+/**
+ * @callback hookedChildRenderer
+ * @param {(*|Array<*>)} hookReturnVal - Value returned from useMyHook()
+ * @returns {React.Component} - Children to render using hookReturnVal
+ */
+/**
+ * Component used when class components want to use hooks.
+ *
+ * @param {Object} props - Props for returned React.Component
+ * @param {function} props.hook - Hook to use within class component
+ * @param {hookedChildRenderer} props.children - Function that uses value from hook() to render children; passed as React.Component.props
+ * @returns {React.Component} - Children rendered using the hook() return values
+ */
+export function Hooked({ hook, children }) {
+    return children(hook())
+}
+
 export function UseContext({ Context, defaultValue = null, children }) {
-    const [ value, setValue ] = useState(defaultValue);
+    const [ contextState, setContextState ] = useState(defaultValue);
 
     return (
-        <Context.Provider value={{ value, setValue }}>
+        <Context.Provider value={{ contextState, setContextState }}>
             {children}
         </Context.Provider>
     );
 }
 
-export function useHover() {
-    const [ isHovered, setIsHovered ] = useState(false);
-    const ref = useRef(null);
+/**
+ * Custom state handler function for useWindowEvent()
+ *
+ * @callback handleWindowEvent
+ * @param {*} prevState - Previous state
+ * @param {function} setState - setState() React function
+ * @param {*} newEvent - New event from window
+ */
+/**
+ * Adds an event listener to the window and returns the associated eventState/setEventState fields.
+ * Optional configurations include using a nested event field for state, setting the initial state,
+ * and using a custom event handler instead of the standard setEventState(newEventState).
+ *
+ * @param {string} eventType - Type of event, passed to `window.addEventListener(eventType, ...)`
+ * @param {string} [nestedEventField=null] - Nested event field to use as state instead of the event itself
+ * @param {*} [initialEventState=null] - Initial state to use in event listener
+ * @param {handleWindowEvent} [handleEvent=null] - Custom event handler to use instead of standard setEventState
+ * @param {Array<*>} [useEffectInputs=[]] - useEffect optimization inputs: `useEffect(func, useEffectInputs)`
+ * @returns {[ *, function ]} - event state and respective setState function
+ */
+export function useWindowEvent(
+    eventType,
+    {
+        nestedEventField = null,
+        initialEventState = null,
+        handleEvent = null,
+        useEffectInputs = []
+    } = {}
+) {
+    const [ eventState, setEventState ] = useState(initialEventState);
+    const isUsingOwnEventHandler = typeof handleEvent === typeof (() => {});
 
-    function handleMouseMove({ pageX, pageY }) {
-        if (ref.current) {
-            const { pageXOffset, pageYOffset } = window;
-            let { top, bottom, left, right } = ref.current.getBoundingClientRect();
+    function eventListener(event) {
+        const newEventState = nestedEventField ? event[nestedEventField] : event;
 
-            top = top + pageYOffset;
-            bottom = bottom + pageYOffset;
-            left = left + pageXOffset;
-            right = right + pageXOffset;
-
-            if (pageX <= right && pageX >= left && pageY <= bottom && pageY >= top) {
-                setIsHovered(true);
-            } else {
-                setIsHovered(false);
-            }
+        if (isUsingOwnEventHandler) {
+            handleEvent(eventState, setEventState, newEventState);
+        } else {
+            setEventState(newEventState);
         }
     }
 
     useEffect(() => {
-        if (ref.current) {
-            window.addEventListener('mousemove', handleMouseMove);
-        }
+        window.addEventListener(eventType, eventListener);
 
         return () => {
-            window.removeEventListener('mousemove', handleMouseMove)
-        }
-    }, [ref.current]);
-
-    return [ ref, isHovered ];
-}
-
-export function useWindowEvent(eventType, eventField = null, initialValue = null) {
-    const [ value, setValue ] = useState(initialValue);
-
-    function handleEvent(event) {
-        setValue(eventField ? event[eventField] : event);
-    }
-
-    useEffect(() => {
-        window.addEventListener(eventType, handleEvent);
-
-        return () => {
-            window.removeEventListener(eventType, handleEvent);
+            window.removeEventListener(eventType, eventListener);
         };
-    }, []);
+    }, useEffectInputs);
 
-    return [ value, setValue ];
+    return [ eventState, setEventState ];
 }
 
 export function useKeyboardEvent(type = 'down') {
-    return useWindowEvent(`key${type}`, 'key');
+    return useWindowEvent(`key${type}`, { nestedEventField: 'key' });
 }
 
 /**
@@ -105,6 +122,59 @@ export function useRootClose(acceptableElement, closeElement) {
     return [ rootWasClosed, resetRootClosed ];
 }
 
+export function useWindowResize() {
+    const initialState = {
+        width: window.innerWidth,
+        height: window.innerHeight
+    };
+
+    function handleResize(prevState, setState) {
+        setState({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+    }
+
+    const [ windowSize, setWindowSize ] = useWindowEvent('resize', {
+        initialEventState: initialState,
+        handleEvent: handleResize
+    });
+
+    return [ windowSize, setWindowSize ];
+}
+
+export function useHover() {
+    const ref = useRef(null);
+
+    function handleMouseMove(prevIsHovered, setIsHovered, newEvent) {
+        const { pageX, pageY } = newEvent;
+
+        if (ref.current) {
+            const { pageXOffset, pageYOffset } = window;
+            let { top, bottom, left, right } = ref.current.getBoundingClientRect();
+
+            top = top + pageYOffset;
+            bottom = bottom + pageYOffset;
+            left = left + pageXOffset;
+            right = right + pageXOffset;
+
+            if (pageX <= right && pageX >= left && pageY <= bottom && pageY >= top) {
+                setIsHovered(true);
+            } else {
+                setIsHovered(false);
+            }
+        }
+    }
+
+    const [ isHovered ] = useWindowEvent('mousemove', {
+        initialEventState: false,
+        handleEvent: handleMouseMove,
+        useEffectInputs: [ref.current]
+    });
+
+    return [ ref, isHovered ];
+}
+
 export function useTimedArrayToggle(numChildren, intervalTimeMs) {
     const toggleArrayEntryReducer = (prevShownChildren, index) => {
         const shownChildren = [...prevShownChildren];
@@ -134,8 +204,4 @@ export function useTimedArrayToggle(numChildren, intervalTimeMs) {
     };
 
     return [ toggledEntries, triggerArrayToggle ];
-}
-
-export function Hooked({ hook, children }) {
-    return children(hook())
 }
