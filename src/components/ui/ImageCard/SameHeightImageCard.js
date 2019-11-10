@@ -9,7 +9,7 @@ const { Provider, Context } = ImageCardSizeContext;
 
 function SameHeightImageCard(imageCardProps) {
     const parentDivRef = React.createRef();
-    const { value: contextImgHeight, setValue: setContextImgHeight } = useContext(Context);
+    const { contextState: contextImgHeight, setContextState: setContextImgHeight } = useContext(Context);
 
     function updateContextHeight() {
         if (validateObjNestedFields(parentDivRef, 'current')) {

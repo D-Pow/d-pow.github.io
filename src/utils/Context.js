@@ -21,8 +21,8 @@ import { UseContext } from 'utils/Hooks';
  */
 export default function ContextFactory(defaultValue = null) {
     const Context = React.createContext({
-        value: defaultValue,
-        setValue: () => {}
+        contextState: defaultValue,
+        setContextState: () => {}
     });
     const Provider = props => (
         <UseContext Context={Context} defaultValue={defaultValue} {...props} />

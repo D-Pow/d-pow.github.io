@@ -19,10 +19,10 @@ export function Hooked({ hook, children }) {
 }
 
 export function UseContext({ Context, defaultValue = null, children }) {
-    const [ value, setValue ] = useState(defaultValue);
+    const [ contextState, setContextState ] = useState(defaultValue);
 
     return (
-        <Context.Provider value={{ value, setValue }}>
+        <Context.Provider value={{ contextState, setContextState }}>
             {children}
         </Context.Provider>
     );
