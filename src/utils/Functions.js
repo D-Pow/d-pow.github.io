@@ -82,6 +82,7 @@ export function getClickPath(event) {
     if (!event || (Array.isArray(event) && event.length === 0)) {
         return [];
     }
+
     if (event.path) {
         return event.path;
     }
@@ -95,7 +96,7 @@ export function getClickPath(event) {
         element = element.parentElement;
     }
 
-    clickPath.push(...[document, window]);
+    clickPath.push(document, window);
 
     return clickPath;
 }
