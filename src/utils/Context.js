@@ -11,7 +11,7 @@ import { UseContext } from 'utils/Hooks';
  * { value: {anything}, setValue: {function} }
  *
  * @param {*} defaultValue - Default value for Context.value to hold
- * @returns {{Context: Object, Provider: {React.Component} }} The newly-created Context and Value
+ * @returns {{Context: Object, Provider: React.Component }} The newly-created Context and Value
  */
 export default function ContextFactory(defaultValue = null) {
     const Context = React.createContext({
