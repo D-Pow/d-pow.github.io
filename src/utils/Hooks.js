@@ -124,12 +124,14 @@ export function useRootClose(acceptableElement, closeElement) {
 
 export function useWindowResize() {
     const initialState = {
+        wasResized: false,
         width: window.innerWidth,
         height: window.innerHeight
     };
 
     function handleResize(prevState, setState) {
         setState({
+            wasResized: true,
             width: window.innerWidth,
             height: window.innerHeight
         });
@@ -140,7 +142,14 @@ export function useWindowResize() {
         handleEvent: handleResize
     });
 
-    return [ windowSize, setWindowSize ];
+    function resetWasSized() {
+        setWindowSize(prevState => ({
+            ...prevState,
+            wasResized: false
+        }))
+    }
+
+    return { windowSize, setWindowSize, resetWasSized };
 }
 
 export function useHover() {
