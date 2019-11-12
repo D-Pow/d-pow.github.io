@@ -11,7 +11,7 @@ self.addEventListener('install', event => {
       .then(function(cache) {
         console.log('Opened cache');
         return cache.addAll(urlsToCache);
-      }).then(self.skipWaiting()) //required!
+      }).then(self.skipWaiting()) // needed to force new service workers to overwrite old ones
   );
 });
 
