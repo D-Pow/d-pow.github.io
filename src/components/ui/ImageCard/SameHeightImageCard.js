@@ -11,7 +11,7 @@ function SameHeightImageCard(imageCardProps) {
     const parentDivRef = React.createRef();
     const { contextState: contextImgHeight, setContextState: setContextImgHeight } = useContext(Context);
 
-    function updateContextHeight() {
+    function shrinkContextHeightToSmallestImage() {
         if (validateObjNestedFields(parentDivRef, 'current')) {
             const { height } = parentDivRef.current.getBoundingClientRect();
 
@@ -26,7 +26,7 @@ function SameHeightImageCard(imageCardProps) {
             {...imageCardProps}
             aria={{ ref: parentDivRef }}
             imageStyle={{ height: `${contextImgHeight}px`, overflow: 'hidden' }}
-            onLoad={updateContextHeight}
+            onLoad={shrinkContextHeightToSmallestImage}
         />
     );
 }
