@@ -34,6 +34,8 @@ export function childIsReactElement(child) {
 export async function loadImage(image, base64 = false) {
     if (image != null && image !== '') {
         try {
+            // Imported modules are cached after the first load
+            // so no need to memoize
             const module = await import(`assets/${image}`);
             const imageSrc = module.default;
 
