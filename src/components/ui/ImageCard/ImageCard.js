@@ -27,10 +27,10 @@ function ImageCard({ className, image, imageCls, imageStyle, title, description,
                 ref={hoverRef}
                 style={{ width }}
             >
-                <Title className={`${marginCls[0]} ${animationCls} ${hoverCls[1]}`}>
+                <Title className={`${marginCls[0]} ${animationCls} ${hoverCls[1]} font-size-4vh`}>
                     {title}
                 </Title>
-                <p className={`${marginCls[1]} ${animationCls} ${hoverCls[2]}`}>
+                <p className={`${marginCls[1]} ${animationCls} ${hoverCls[2]} font-size-2-5vh`}>
                     {description}
                 </p>
             </div>
