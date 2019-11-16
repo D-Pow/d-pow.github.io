@@ -137,19 +137,19 @@ export function useWindowResize() {
         });
     }
 
-    const [ windowSize, setWindowSize ] = useWindowEvent('resize', {
+    const [ windowSizeState, setWindowSizeState ] = useWindowEvent('resize', {
         initialEventState: initialState,
         handleEvent: handleResize
     });
 
     function resetWasSized() {
-        setWindowSize(prevState => ({
+        setWindowSizeState(prevState => ({
             ...prevState,
             wasResized: false
         }))
     }
 
-    return { windowSize, setWindowSize, resetWasSized };
+    return { windowSizeState, setWindowSizeState, resetWasSized };
 }
 
 export function useHover() {
