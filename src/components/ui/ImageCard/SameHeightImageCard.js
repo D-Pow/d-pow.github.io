@@ -8,12 +8,15 @@ const ImageCardSizeContext = ContextFactory(defaultContextImgHeight);
 const { Provider, Context } = ImageCardSizeContext;
 
 function SameHeightImageCard(imageCardProps) {
-    const parentDivRef = React.createRef();
+    const imageRef = React.createRef();
     const { contextState: contextImgHeight, setContextState: setContextImgHeight } = useContext(Context);
 
     function shrinkContextHeightToSmallestImage() {
-        if (validateObjNestedFields(parentDivRef, 'current')) {
-            const { height } = parentDivRef.current.getBoundingClientRect();
+        const imageMounted = validateObjNestedFields(imageRef, 'current');
+
+        if (imageMounted) {
+            const imageElement = imageRef.current;
+            const { height } = imageElement.getBoundingClientRect();
 
             if (contextImgHeight === defaultContextImgHeight || contextImgHeight > height) {
                 setContextImgHeight(height);
@@ -24,7 +27,7 @@ function SameHeightImageCard(imageCardProps) {
     return (
         <ImageCard
             {...imageCardProps}
-            aria={{ ref: parentDivRef }}
+            imageRef={imageRef}
             imageStyle={{ height: `${contextImgHeight}px`, overflow: 'hidden' }}
             onLoad={shrinkContextHeightToSmallestImage}
         />
