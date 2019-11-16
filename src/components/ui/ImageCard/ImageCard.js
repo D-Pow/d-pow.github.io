@@ -44,7 +44,7 @@ function ImageCard({ className, image, imageCls, imageStyle, title, description,
                 <Image
                     className={imageCls}
                     image={image}
-                    onLoad={onLoad}
+                    onLoad={() => onLoad(imageRef.current)}
                     aria={{ ref: imageRef }}
                 />
                 {renderHoverContent()}
