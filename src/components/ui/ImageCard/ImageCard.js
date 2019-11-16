@@ -4,8 +4,9 @@ import Image from 'components/ui/Image';
 import { useHover } from 'utils/Hooks';
 import { isMobileBrowser } from 'utils/Functions';
 
-function ImageCard({ className, image, imageCls, imageRef, imageStyle, title, description, aria, onLoad }) {
-    imageRef = imageRef || React.createRef();
+function ImageCard({ className, image, imageCls, imageStyle, imageAria, title, description, aria, onLoad }) {
+    const { ref, ...restOfImageAria } = imageAria;
+    const imageRef = ref || React.createRef();
     const [ hoverRef, isHovered ] = useHover();
 
     function renderHoverContent() {
@@ -40,7 +41,7 @@ function ImageCard({ className, image, imageCls, imageRef, imageStyle, title, de
                     className={imageCls}
                     image={image}
                     onLoad={onLoad}
-                    aria={{ ref: imageRef }}
+                    aria={{ ref: imageRef, ...restOfImageAria }}
                 />
                 {renderHoverContent()}
             </div>
@@ -52,8 +53,8 @@ ImageCard.propTypes = {
     className: PropTypes.string,
     image: PropTypes.string,
     imageCls: PropTypes.string,
-    imageRef: PropTypes.object,
     imageStyle: PropTypes.object,
+    imageAria: PropTypes.object,
     title: PropTypes.node,
     description: PropTypes.node,
     aria: PropTypes.object,
@@ -65,6 +66,7 @@ ImageCard.defaultProps = {
     image: '',
     imageCls: '',
     imageStyle: {},
+    imageAria: {},
     title: '',
     description: '',
     aria: {},

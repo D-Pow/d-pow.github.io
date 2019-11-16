@@ -27,8 +27,8 @@ function SameHeightImageCard(imageCardProps) {
     return (
         <ImageCard
             {...imageCardProps}
-            imageRef={imageRef}
             imageStyle={{ height: `${contextImgHeight}px`, overflow: 'hidden' }}
+            imageAria={{ ref: imageRef }}
             onLoad={shrinkContextHeightToSmallestImage}
         />
     );
