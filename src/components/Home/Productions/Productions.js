@@ -10,7 +10,7 @@ function Productions(props) {
             {
                 image: 'prebuilt_portfolios.jpg',
                 title: <Link className={'text-light'} href={LINKS.PrebuiltPortfolios}>Prebuilt Portfolios</Link>,
-                description: 'Selections of mutual funds to fit individual investment styles without needing to invest research time'
+                description: 'Selections of mutual funds to fit individual investment styles'
             },
             {
                 image: 'automatic_investing.jpg',
