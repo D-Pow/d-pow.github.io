@@ -6,7 +6,7 @@ export function isMobileBrowser() {
 }
 
 export function childIsOfType(child, component) {
-    return child.type === component;
+    return (child.type === component) || (getChildName(child) === component);
 }
 
 export function getChildName(child) {
