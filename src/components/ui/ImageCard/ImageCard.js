@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'components/ui/Image';
 import { useHover } from 'utils/Hooks';
-import { isMobileBrowser, validateObjNestedFields } from 'utils/Functions';
+import { isMobileBrowser } from 'utils/Functions';
 
 function ImageCard({ className, image, imageCls, imageStyle, title, description, aria, onLoad }) {
     const imageRef = React.createRef();
@@ -16,16 +16,11 @@ function ImageCard({ className, image, imageCls, imageStyle, title, description,
         const marginCls = isMobileBrowser() ? ['mt-10p mb-5p ml-1', 'mx-5p'] : ['mt-5 mb-3', 'm-3'];
         const Title = isMobileBrowser() ? 'h4' : 'h3';
         const hoverCls = isHovered ? ['show', 'slide-in-top', 'slide-in-bottom'] : ['', '', ''];
-        const defaultWidth = 'auto';
-        const width = validateObjNestedFields(imageRef, 'current')
-            ? imageRef.current.getBoundingClientRect().width
-            : defaultWidth;
 
         return (
             <div
                 className={`bg-primary margin-center animated fade-in text-light ${positionCls} ${animationCls} ${hoverCls[0]}`}
                 ref={hoverRef}
-                style={{ width }}
             >
                 <Title className={`${marginCls[0]} ${animationCls} ${hoverCls[1]} font-size-4vh`}>
                     {title}
@@ -40,7 +35,7 @@ function ImageCard({ className, image, imageCls, imageStyle, title, description,
     return (
         <div className={className} {...aria}>
             {/* Obey parent's padding with `position: relative` */}
-            <div className={'position-relative w-100'} style={imageStyle}>
+            <div className={'position-relative width-fit'} style={imageStyle}>
                 <Image
                     className={imageCls}
                     image={image}
