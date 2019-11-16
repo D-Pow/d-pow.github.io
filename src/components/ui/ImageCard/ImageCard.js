@@ -13,7 +13,7 @@ function ImageCard({ className, image, imageCls, imageStyle, title, description,
         const animationCls = 'duration-5 linear';
         // Mobile browsers between phone and tablet look strange when using the media query for xs/sm
         // so force all mobile browsers to use the mobile view
-        const marginCls = isMobileBrowser() ? ['mt-10p mb-5p ml-1', 'mx-5p'] : ['m-5', 'm-3'];
+        const marginCls = isMobileBrowser() ? ['mt-10p mb-5p ml-1', 'mx-5p'] : ['mt-5 mb-3', 'm-3'];
         const Title = isMobileBrowser() ? 'h4' : 'h3';
         const hoverCls = isHovered ? ['show', 'slide-in-top', 'slide-in-bottom'] : ['', '', ''];
         const defaultWidth = 'auto';
