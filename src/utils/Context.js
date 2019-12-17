@@ -1,5 +1,4 @@
-import React from 'react';
-import { UseContext } from 'utils/Hooks';
+import React, { useState } from 'react';
 
 /**
  * Creates a new Context and returns both the Consumer, Provider, and Context for component use.
@@ -50,9 +49,14 @@ import { UseContext } from 'utils/Hooks';
  */
 export default function ContextFactory(defaultValue = null) {
     const Context = React.createContext();
-    const Provider = props => (
-        <UseContext Context={Context} defaultValue={defaultValue} {...props} />
-    );
+
+    const Provider = props => {
+        const [ contextState, setContextState ] = useState(defaultValue);
+
+        return (
+            <Context.Provider value={{ contextState, setContextState }} {...props} />
+        );
+    };
 
     return { Consumer: Context.Consumer, Provider, Context };
 }

@@ -18,16 +18,6 @@ export function Hooked({ hook, children }) {
     return children(hook())
 }
 
-export function UseContext({ Context, defaultValue = null, children, ...props }) {
-    const [ contextState, setContextState ] = useState(defaultValue);
-
-    return (
-        <Context.Provider value={{ contextState, setContextState }} {...props}>
-            {children}
-        </Context.Provider>
-    );
-}
-
 /**
  * Custom state handler function for useWindowEvent()
  *
