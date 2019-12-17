@@ -56,7 +56,7 @@ function Productions(props) {
                                                 <div className={'segment-bar bg-dark'} />
                                             </div>
                                         )}
-                                        <SameHeightImageCard imageCls={'w-100'} {...imageCardProps} />
+                                        <SameHeightImageCard widthFit={'w-100'} {...imageCardProps} />
                                     </div>
                                 );
                             })}
