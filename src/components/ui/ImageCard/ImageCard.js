@@ -4,7 +4,20 @@ import Image from 'components/ui/Image';
 import { useHover } from 'utils/Hooks';
 import { isMobileBrowser } from 'utils/Functions';
 
-function ImageCard({ centerInWrapper, className, image, imageCls, imageStyle, imageAria, title, description, aria, onLoad }) {
+function ImageCard(props) {
+    const {
+        centerInWrapper,
+        className,
+        image,
+        imageCls,
+        imageStyle,
+        imageAria,
+        title,
+        description,
+        aria,
+        widthFit,
+        onLoad
+    } = props;
     const { ref, ...restOfImageAria } = imageAria;
     const imageRef = ref || React.createRef();
     const [ hoverRef, isHovered ] = useHover();
@@ -36,13 +49,13 @@ function ImageCard({ centerInWrapper, className, image, imageCls, imageStyle, im
     // Obey parent's padding with `position-relative`
     // Fill as much of the space as possible with `width-fit`
     // Center image within wrapper (in the event the image is smaller than wrapper) with `margin-center`
-    const wrapperCls = `position-relative width-fit ${centerInWrapper ? 'margin-center' : ''}`;
+    const wrapperCls = `position-relative ${widthFit} ${centerInWrapper ? 'margin-center' : ''}`;
 
     return (
         <div className={className} {...aria}>
             <div className={wrapperCls} style={imageStyle}>
                 <Image
-                    className={imageCls}
+                    className={`w-100 ${imageCls}`}
                     image={image}
                     onLoad={onLoad}
                     aria={{ ref: imageRef, ...restOfImageAria }}
@@ -52,6 +65,11 @@ function ImageCard({ centerInWrapper, className, image, imageCls, imageStyle, im
         </div>
     );
 }
+
+ImageCard.WidthFits = {
+    FIT: 'width-fit',
+    STRETCH: 'w-100'
+};
 
 ImageCard.propTypes = {
     centerInWrapper: PropTypes.bool,
@@ -63,6 +81,7 @@ ImageCard.propTypes = {
     title: PropTypes.node,
     description: PropTypes.node,
     aria: PropTypes.object,
+    widthFit: PropTypes.oneOf(Object.values(ImageCard.WidthFits)),
     onLoad: PropTypes.func
 };
 
@@ -76,6 +95,7 @@ ImageCard.defaultProps = {
     title: '',
     description: '',
     aria: {},
+    widthFit: ImageCard.WidthFits.FIT,
     onLoad: () => {}
 };
 
