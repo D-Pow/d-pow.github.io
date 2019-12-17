@@ -49,14 +49,10 @@ import { UseContext } from 'utils/Hooks';
  * @returns {{Consumer: React.Component, Provider: React.Component, Context: Object }} - The newly-created Context-related objects
  */
 export default function ContextFactory(defaultValue = null) {
-    const Context = React.createContext({
-        contextState: defaultValue,
-        setContextState: () => {}
-    });
+    const Context = React.createContext();
     const Provider = props => (
         <UseContext Context={Context} defaultValue={defaultValue} {...props} />
     );
-    const { Consumer } = Context;
 
-    return { Consumer, Provider, Context };
-};
+    return { Consumer: Context.Consumer, Provider, Context };
+}
