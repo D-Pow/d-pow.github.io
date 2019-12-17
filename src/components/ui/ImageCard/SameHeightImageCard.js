@@ -7,7 +7,7 @@ const defaultContextImgHeight = 'auto';
 const ImageCardSizeContext = ContextFactory(defaultContextImgHeight);
 const { Provider, Context } = ImageCardSizeContext;
 
-function SameHeightImageCard(imageCardProps) {
+function SameHeightImageCard({ imageAria, imageStyle, onLoad, ...imageCardProps }) {
     const imageRef = React.createRef();
     const { contextState: contextImgHeight, setContextState: setContextImgHeight } = useContext(Context);
 
@@ -24,12 +24,20 @@ function SameHeightImageCard(imageCardProps) {
         }
     }
 
+    const handleOnLoad = e => {
+        if (typeof onLoad === typeof (() => {})) {
+            onLoad(e);
+        }
+
+        shrinkContextHeightToSmallestImage(e);
+    };
+
     return (
         <ImageCard
             {...imageCardProps}
-            imageStyle={{ height: `${contextImgHeight}px`, overflow: 'hidden' }}
-            imageAria={{ ref: imageRef }}
-            onLoad={shrinkContextHeightToSmallestImage}
+            imageStyle={{ height: `${contextImgHeight}px`, overflow: 'hidden', ...imageStyle }}
+            imageAria={{ ref: imageRef, ...imageAria }}
+            onLoad={handleOnLoad}
         />
     );
 }
