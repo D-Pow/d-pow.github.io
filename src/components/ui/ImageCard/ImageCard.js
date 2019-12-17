@@ -4,7 +4,7 @@ import Image from 'components/ui/Image';
 import { useHover } from 'utils/Hooks';
 import { isMobileBrowser } from 'utils/Functions';
 
-function ImageCard({ className, image, imageCls, imageStyle, imageAria, title, description, aria, onLoad }) {
+function ImageCard({ centerInWrapper, className, image, imageCls, imageStyle, imageAria, title, description, aria, onLoad }) {
     const { ref, ...restOfImageAria } = imageAria;
     const imageRef = ref || React.createRef();
     const [ hoverRef, isHovered ] = useHover();
@@ -33,10 +33,14 @@ function ImageCard({ className, image, imageCls, imageStyle, imageAria, title, d
         );
     }
 
+    // Obey parent's padding with `position-relative`
+    // Fill as much of the space as possible with `width-fit`
+    // Center image within wrapper (in the event the image is smaller than wrapper) with `margin-center`
+    const wrapperCls = `position-relative width-fit ${centerInWrapper ? 'margin-center' : ''}`;
+
     return (
         <div className={className} {...aria}>
-            {/* Obey parent's padding with `position: relative` */}
-            <div className={'position-relative width-fit'} style={imageStyle}>
+            <div className={wrapperCls} style={imageStyle}>
                 <Image
                     className={imageCls}
                     image={image}
@@ -50,6 +54,7 @@ function ImageCard({ className, image, imageCls, imageStyle, imageAria, title, d
 }
 
 ImageCard.propTypes = {
+    centerInWrapper: PropTypes.bool,
     className: PropTypes.string,
     image: PropTypes.string,
     imageCls: PropTypes.string,
@@ -62,6 +67,7 @@ ImageCard.propTypes = {
 };
 
 ImageCard.defaultProps = {
+    centerInWrapper: true,
     className: '',
     image: '',
     imageCls: '',
