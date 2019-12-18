@@ -17,7 +17,7 @@ function Pastimes(props) {
             }
         },
         otherPastimes: [
-            'Various open-source projects',
+            'Open-source projects',
             'Cooking',
             'Rock climbing',
             'Playing guitar'
