@@ -10,6 +10,7 @@
 
 .hover-expand {
     transition: transform 0.3s !important;
+    animation-fill-mode: none !important;
 }
 
 .hover-expand:hover {
