@@ -17,10 +17,10 @@ function Pastimes(props) {
             }
         },
         otherPastimes: [
-            <h4>Various open-source projects</h4>,
-            <h4>Cooking</h4>,
-            <h4>Rock climbing</h4>,
-            <h4>Playing guitar</h4>
+            'Open-source projects',
+            'Cooking',
+            'Rock climbing',
+            'Playing guitar'
         ]
     };
     const themeColors = getThemeColors();
@@ -51,12 +51,12 @@ function Pastimes(props) {
                                 {otherPastimes.map((project, index) => {
                                     const sides = 7 - index; // decrease each entry by 1, starting from Japanese at 8
                                     const rotation = (sides % 2) * -90;
-
+                                    // TODO find out how to make text fit on ipad and other views between browser and mobile
                                     return (
                                         <div className={'col-sm-6'} key={index}>
                                             <Shape sides={sides} fill={themeColors.primary} rotation={rotation} />
                                             <div className={'absolute-center text-light mx-5'}>
-                                                {project}
+                                                <h3 className={'font-size-3vh'}>{project}</h3>
                                             </div>
                                         </div>
                                     );

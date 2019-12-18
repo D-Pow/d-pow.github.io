@@ -10,7 +10,7 @@ function Productions(props) {
             {
                 image: 'prebuilt_portfolios.jpg',
                 title: <Link className={'text-light'} href={LINKS.PrebuiltPortfolios}>Prebuilt Portfolios</Link>,
-                description: 'Selections of mutual funds to fit individual investment styles without needing to invest research time'
+                description: 'Selections of mutual funds to fit individual investment styles'
             },
             {
                 image: 'automatic_investing.jpg',
@@ -45,19 +45,18 @@ function Productions(props) {
                     <SameHeightImageCard.Provider>
                         <ScrollToShow addClasses={'flip-y show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.5}>
                             {pageText.imageCards.map((imageCardProps, index) => {
-                                const cls = 'col-sm-6 p-0';
                                 // Center if odd number of items and last item
                                 const centerCls = index % 2 === 0 && index === pageText.imageCards.length - 1 ? 'mx-auto' : '';
 
                                 // Nest in div.col so ImageCard's ScrollToShow animation pertains only to image and not containing div
                                 return (
-                                    <div className={`${cls} ${centerCls}`} key={index}>
+                                    <div className={`col-sm-6 p-0 ${centerCls}`} key={index}>
                                         {index !== 0 && (
                                             <div className={'d-block d-sm-none py-2'}>
                                                 <div className={'segment-bar bg-dark'} />
                                             </div>
                                         )}
-                                        <SameHeightImageCard imageCls={'w-100'} {...imageCardProps} />
+                                        <SameHeightImageCard widthFit={'w-100'} {...imageCardProps} />
                                     </div>
                                 );
                             })}

@@ -34,7 +34,7 @@ const cssRegex = /\.css$/;
 const sassRegex = /\.scss$/;
 const assetRegex = /\.(png|gif|jpe?g|svg|ico|pdf|tex)$/;
 
-const hotReloading = process.env.NODE_ENV === 'development';
+const hotReloading = false; // process.env.NODE_ENV === 'development';
 
 module.exports = {
     module: {

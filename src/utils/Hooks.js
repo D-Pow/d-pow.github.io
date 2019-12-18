@@ -18,16 +18,6 @@ export function Hooked({ hook, children }) {
     return children(hook())
 }
 
-export function UseContext({ Context, defaultValue = null, children }) {
-    const [ contextState, setContextState ] = useState(defaultValue);
-
-    return (
-        <Context.Provider value={{ contextState, setContextState }}>
-            {children}
-        </Context.Provider>
-    );
-}
-
 /**
  * Custom state handler function for useWindowEvent()
  *
@@ -124,23 +114,32 @@ export function useRootClose(acceptableElement, closeElement) {
 
 export function useWindowResize() {
     const initialState = {
+        wasResized: false,
         width: window.innerWidth,
         height: window.innerHeight
     };
 
     function handleResize(prevState, setState) {
         setState({
+            wasResized: true,
             width: window.innerWidth,
             height: window.innerHeight
         });
     }
 
-    const [ windowSize, setWindowSize ] = useWindowEvent('resize', {
+    const [ windowSizeState, setWindowSizeState ] = useWindowEvent('resize', {
         initialEventState: initialState,
         handleEvent: handleResize
     });
 
-    return [ windowSize, setWindowSize ];
+    function resetWasSized() {
+        setWindowSizeState(prevState => ({
+            ...prevState,
+            wasResized: false
+        }))
+    }
+
+    return { windowSizeState, setWindowSizeState, resetWasSized };
 }
 
 export function useHover() {
