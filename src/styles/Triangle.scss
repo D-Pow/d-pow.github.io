@@ -12,7 +12,6 @@ $upsideDownTrigHeight: ($height / 3);
   border-left: $baseHalved solid transparent;
   border-right: $baseHalved solid transparent;
   border-bottom: $height solid;
-  animation-iteration-count: infinite;
   margin-left: -$baseHalved;
   opacity: 0.95;
 }

@@ -81,6 +81,7 @@ class FullPageTriangles extends React.Component {
 
         const renderedTriangleMatrix = triangleColorMatrix.map((row, rowIndex) => row.map((col, colIndex) => (
             <Triangle
+                className={'animation-infinite'}
                 color={col}
                 height={this.triangleHeight}
                 key={`${rowIndex}-${colIndex}`}
