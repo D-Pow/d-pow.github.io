@@ -7,6 +7,7 @@ import { randomNumber } from 'utils/Functions';
 class Triangle extends React.Component {
     render() {
         const {
+            className,
             upsideDown,
             color,
             height
@@ -18,7 +19,8 @@ class Triangle extends React.Component {
         let borderHeightField = 'borderBottomWidth';
         let originHeight = `${height * 2/3}px`; // deal with uneven border widths by offsetting rotation origin
         const classNames = [
-            'triangle'
+            'triangle',
+            className
         ];
         if (upsideDown) {
             borderColorField = 'borderTopColor';
@@ -48,6 +50,7 @@ class Triangle extends React.Component {
 }
 
 Triangle.propTypes = {
+    className: PropTypes.string,
     color: PropTypes.string,
     spinDelay: PropTypes.number,
     animationDuration: PropTypes.number,
