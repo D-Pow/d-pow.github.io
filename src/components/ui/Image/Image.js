@@ -12,7 +12,7 @@ class Image extends React.Component {
     render() {
         return (
             <img
-                className={`${this.props.fillParent ? 'img-fluid' : ''} ${this.props.className}`}
+                className={`${this.props.fluidImage ? 'img-fluid' : ''} ${this.props.className}`}
                 src={this.state.imageSrc}
                 alt={this.props.image}
                 onLoad={this.props.onLoad}
@@ -25,7 +25,7 @@ class Image extends React.Component {
 Image.propTypes = {
     className: PropTypes.string,
     image: PropTypes.string,
-    fillParent: PropTypes.bool,
+    fluidImage: PropTypes.bool,
     onLoad: PropTypes.func,
     aria: PropTypes.object
 };
@@ -33,7 +33,7 @@ Image.propTypes = {
 Image.defaultProps = {
     className: '',
     image: '',
-    fillParent: true,
+    fluidImage: true,
     onLoad: () => {},
     aria: {}
 };
