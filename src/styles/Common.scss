@@ -55,6 +55,11 @@ $body-bg: $lighter;
   overflow: hidden;
 }
 
+.full-screen {
+  height: 100vh;
+  width: 100vw;
+}
+
 .mt-10p {
   margin-top: 10%;
 }
