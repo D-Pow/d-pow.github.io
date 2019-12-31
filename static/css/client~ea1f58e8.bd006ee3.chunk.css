@@ -323,6 +323,13 @@
 .margin-clear {
   margin: 0; }
 
+.overflow-hidden {
+  overflow: hidden; }
+
+.full-screen {
+  height: 100vh;
+  width: 100vw; }
+
 .mt-10p {
   margin-top: 10%; }
 
@@ -8136,4 +8143,12 @@ a.text-lighter:hover, a.text-lighter:focus {
   .table .thead-dark th {
     color: inherit;
     border-color: #dee2e6; } }
+
+.triangle-section {
+  line-height: 0;
+  white-space: nowrap; }
+
+.bg-dark-fadeout {
+  background: rgba(40, 40, 40, 0.9);
+  box-shadow: 0 0 20px 15px rgba(40, 40, 40, 0.9) !important; }
 
