@@ -92,7 +92,7 @@ class FullPageTriangles extends React.Component {
         return (
             <div className={'triangle-section bg-white'}>
                 {renderedTriangleMatrix.map((row, i) => (
-                    <div className={'triangle-row'} key={i}>
+                    <div className={'overflow-hidden'} key={i}>
                         {row}
                     </div>
                 ))}
