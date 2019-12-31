@@ -1,9 +1,6 @@
 import React from 'react';
-import FullPageTriangles from 'components/ui/FullPageTriangles';
-import { Hooked, useHover } from 'utils/Hooks';
-import { asNumber } from 'utils/Functions';
+import Image from 'components/ui/Image';
 import 'styles/SplashSection.scss';
-import { rippleAnimationTime } from 'styles/Animations/Ripple.scss';
 
 class SplashSection extends React.Component {
     pageText = {
@@ -20,42 +17,17 @@ class SplashSection extends React.Component {
         );
     }
 
-    renderX() {
-        return <FullPageTriangles />
-    }
-
     render() {
         return (
-            <React.Fragment>
-                <div className={'bg-dark'} style={{height: '100vh'}}>
-                    <br/>
-                    {Array.from({ length: 8 }).map((nul, i) => {
-                        return (
-                            <div className="row" key={i}>
-                                {Array.from({ length: i % 2 === 0 ? 6 : 5 }).map((nul2, j) => (
-                                    <React.Fragment key={j}>
-                                        <div
-                                            className={'margin-center ripple'}
-                                            style={{ width: '80px', height: '80px', background: 'transparent' }}
-                                        />
-                                    {/*<Hooked hook={useHover}>*/}
-                                    {/*    {([ ref, isHovered ]) => (*/}
-                                    {/*        <div*/}
-                                    {/*            className={`margin-center ripple ${isHovered ? 'active' : ''}`}*/}
-                                    {/*            style={{ width: '80px', height: '80px', background: 'transparent' }}*/}
-                                    {/*            ref={ref}*/}
-                                    {/*        />*/}
-                                    {/*    )}*/}
-                                    {/*</Hooked>*/}
-                                    </React.Fragment>
-                                ))}
-                            </div>
-                        );
-                    })}
-                </div>
+            <div className={'overflow-hidden'}>
+                <Image
+                    className={'full-screen'}
+                    image={'blue_horizon.svg'}
+                    fluidImage={false}
+                />
                 {this.renderWelcomeText()}
-            </React.Fragment>
-        );
+            </div>
+        )
     }
 }
 
