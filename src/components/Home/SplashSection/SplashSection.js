@@ -13,7 +13,7 @@ function SplashSection() {
         <div className={'container'}>
             <div className={'row justify-content-center'}>
                 <div className={'col-sm-10'}>
-                    <div className={'bg-dark-fadeout rounded m-auto py-2 px-3'} style={{ width: '80%' }}>
+                    <div className={'bg-dark-fadeout rounded w-80 m-auto py-2 px-3'}>
                         <h1 className={`text-white ${textSize}`}>
                             <DisabledTextBoldOnMobile>
                                 {pageText.welcomeTitle}

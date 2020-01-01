@@ -61,6 +61,12 @@ $container-max-widths: (
   width: fit-content;
 }
 
+@for $percentage from 0 through 100 {
+  .w-#{$percentage} {
+    width: $percentage + 0%;
+  }
+}
+
 .margin-center {
   margin: auto;
 }
