@@ -23,7 +23,10 @@ function ImageCard(props) {
     const [ hoverRef, isHovered ] = useHover();
 
     function renderHoverContent() {
-        const positionCls = 'position-absolute fixed-top h-100';
+        const textWrapperColorCls = 'bg-primary text-light';
+        const textWrapperPositionCls = 'position-absolute margin-center fixed-top h-100';
+        const textWrapperAnimationCls = 'animated fade-in';
+        const textWrapperCls = `${textWrapperColorCls} ${textWrapperPositionCls} ${textWrapperAnimationCls}`;
         const animationCls = 'duration-5 linear';
         // Mobile browsers between phone and tablet look strange when using the media query for xs/sm
         // so force all mobile browsers to use the mobile view
@@ -33,7 +36,7 @@ function ImageCard(props) {
 
         return (
             <div
-                className={`bg-primary margin-center animated fade-in text-light ${positionCls} ${animationCls} ${hoverCls[0]}`}
+                className={`${textWrapperCls} ${animationCls} ${hoverCls[0]}`}
                 ref={hoverRef}
             >
                 <Title className={`${marginCls[0]} ${animationCls} ${hoverCls[1]} font-size-4vh`}>
