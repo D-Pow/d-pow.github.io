@@ -30,7 +30,8 @@ function Productions(props) {
             {
                 image: 'mock_requests.png',
                 title: <Link className={'text-light'} href={LINKS.MockRequests}>MockRequests</Link>,
-                description: 'Open-source front-end network mocking system'
+                description: 'Open-source front-end network mocking system',
+                className: 'bg-grey'
             }
         ]
     };
