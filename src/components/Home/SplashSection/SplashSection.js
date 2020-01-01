@@ -8,15 +8,16 @@ function SplashSection() {
         welcomeTitle: "Hey there, I'm Devon!"
     };
     const textSize = isMobileBrowser() ? 'display-5' : 'display-4';
+    const DisabledTextBoldOnMobile = isMobileBrowser() ? React.Fragment : 'strong';
     const renderedTextOnShadow = (
         <div className={'container'}>
             <div className={'row justify-content-center'}>
                 <div className={'col-sm-10'}>
                     <div className={'bg-dark-fadeout rounded m-auto py-2 px-3'} style={{ width: '80%' }}>
                         <h1 className={`text-white ${textSize}`}>
-                            <strong>
+                            <DisabledTextBoldOnMobile>
                                 {pageText.welcomeTitle}
-                            </strong>
+                            </DisabledTextBoldOnMobile>
                         </h1>
                     </div>
                 </div>
