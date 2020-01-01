@@ -8,6 +8,7 @@ $tertiary: #190061;
 $light: rgb(225, 224, 224);
 $lighter: rgb(241, 240, 240);
 $dark: #282828;
+$grey: #e8e8e8;
 
 $theme-colors: (
     "primary": $primary,
@@ -15,7 +16,8 @@ $theme-colors: (
     "tertiary": $tertiary,
     "light": $light,
     "lighter": $lighter,
-    "dark": $dark
+    "dark": $dark,
+    "grey": $grey
 );
 
 $body-bg: $lighter;
