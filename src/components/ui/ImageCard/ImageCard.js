@@ -35,7 +35,7 @@ function ImageCard(props) {
         ].join(' ');
 
         const animationCls = 'duration-5 linear';
-        const Title = isMobileBrowser() ? 'h4' : 'h3';
+        const Title = isMobileBrowser(true) ? 'h4' : 'h3';
         const hoverCls = isHovered ? ['show', 'slide-in-top', 'slide-in-bottom'] : ['', '', ''];
 
         return (
