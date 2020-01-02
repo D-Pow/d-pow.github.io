@@ -3,6 +3,7 @@ import ScrollToShow from 'components/ui/ScrollToShow';
 import InfoCard from 'components/ui/InfoCard';
 import Link from 'components/ui/Link';
 import { LINKS } from 'utils/Constants';
+import { isMobileBrowser } from 'utils/Functions';
 
 function Projects(props) {
     const pageText = {
@@ -28,8 +29,9 @@ function Projects(props) {
         addClasses: 'slide-in-left show',
         distributeClasses: 'animated duration-15'
     };
+    const infoCardWrapperHoverCls = isMobileBrowser() ? '' : 'hover-expand hover-shadow-sm';
     const projectInfoCardEntries = pageText.infoCards.map((props, index) => (
-        <div className={'col-sm-4 mb-5 p-2 hover-expand hover-shadow-sm'} key={index}>
+        <div className={`col-sm-4 mb-5 p-2 ${infoCardWrapperHoverCls}`} key={index}>
             <InfoCard {...props} />
         </div>
     ));
