@@ -24,6 +24,15 @@ function Projects(props) {
             }
         ]
     };
+    const projectEntriesScrollToShowClassProps = {
+        addClasses: 'slide-in-left show',
+        distributeClasses: 'animated duration-15'
+    };
+    const projectInfoCardEntries = pageText.infoCards.map((props, index) => (
+        <div className={'col-sm-4 mb-5 p-2 hover-expand hover-shadow-sm'} key={index}>
+            <InfoCard {...props} />
+        </div>
+    ));
 
     return (
         <React.Fragment>
@@ -33,21 +42,13 @@ function Projects(props) {
             <div className={'container'}>
                 <div className={'row'}>
                     <div className={'d-block d-sm-none'}>
-                        <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated duration-15'}>
-                            {pageText.infoCards.map((props, index) => (
-                                <div className={'col-sm-4 mb-5 p-2 hover-expand hover-shadow-sm'} key={index}>
-                                    <InfoCard {...props} />
-                                </div>
-                            ))}
+                        <ScrollToShow {...projectEntriesScrollToShowClassProps}>
+                            {projectInfoCardEntries}
                         </ScrollToShow>
                     </div>
                     <div className={'d-none d-sm-flex'}>
-                        <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.32}>
-                            {pageText.infoCards.map((props, index) => (
-                                <div className={'col-sm-4 mb-5 p-2 hover-expand hover-shadow-sm'} key={index}>
-                                    <InfoCard {...props} />
-                                </div>
-                            ))}
+                        <ScrollToShow {...projectEntriesScrollToShowClassProps} distributeSimultaneously={0.32}>
+                            {projectInfoCardEntries}
                         </ScrollToShow>
                     </div>
                 </div>
