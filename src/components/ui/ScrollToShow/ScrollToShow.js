@@ -25,8 +25,12 @@ class ScrollToShow extends React.Component {
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
+        this.removeScrollEventListener();
     }
+
+    removeScrollEventListener = () => {
+        window.removeEventListener('scroll', this.handleScroll);
+    };
 
     handleScroll = () => {
         const { distributeSimultaneously } = this.props;
@@ -52,13 +56,26 @@ class ScrollToShow extends React.Component {
         }
     };
 
-    toggleChild = (index) => {
+    toggleChild = index => {
         const newShownChildren = [...this.state.shownChildren];
         newShownChildren[index] = true;
         this.setState({
             shownChildren: newShownChildren
         });
+        this.cleanupEventListener();
     };
+
+    /**
+     * If all children have been shown, remove the event listener since it's no
+     * longer needed.
+     */
+    cleanupEventListener() {
+        const allChildrenShown = this.state.shownChildren.every(isShown => isShown);
+
+        if (allChildrenShown) {
+            this.removeScrollEventListener();
+        }
+    }
 
     shouldMakeChildShow(index) {
         const shouldShowChild = this.shouldBeShown(index);
@@ -80,7 +97,7 @@ class ScrollToShow extends React.Component {
         return element.getBoundingClientRect().top - Number(getComputedStyle(element).marginTop.replace(/[^\d.]/g, ''));
     }
 
-    getClassNames = (index) => {
+    getClassNames = index => {
         const { addClasses, distributeClasses } = this.props;
         let classes = [];
 
