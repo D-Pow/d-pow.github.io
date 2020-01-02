@@ -94,6 +94,7 @@ class Shape extends React.Component {
             <div className={this.props.className} {...this.props.aria}>
                 <svg viewBox={`${x} ${y} ${width} ${height}`}>
                     {this.renderPolygon()}
+                    {this.props.additionalSvgChildren}
                 </svg>
             </div>
         );
@@ -105,6 +106,10 @@ Shape.propTypes = {
     image: PropTypes.string,
     fill: PropTypes.string,
     sides: PropTypes.number,
+    additionalSvgChildren: PropTypes.oneOfType([
+        PropTypes.node,
+        PropTypes.arrayOf([ PropTypes.node ])
+    ]),
 
     // degrees of rotation of shape
     rotation: PropTypes.number,
