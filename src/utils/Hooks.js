@@ -1,5 +1,5 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react';
-import { elementIsInClickPath, getClickPath } from 'utils/Functions';
+import { asNumber, elementIsInClickPath, getClickPath } from 'utils/Functions';
 
 /**
  * @callback hookedChildRenderer
@@ -203,4 +203,38 @@ export function useTimedArrayToggle(numChildren, intervalTimeMs) {
     };
 
     return [ toggledEntries, triggerArrayToggle ];
+}
+
+export function useDynamicFontSizeShrinking(originalConstrainingRef = { current: document.body }) {
+    const constrainingElem = useRef(null);
+    const toResizeElem = useRef(null);
+    const originalFontSizePx = getComputedStyle(originalConstrainingRef.current).fontSize;
+    const [ fontSizePx, setFontSizePx ] = useState(originalFontSizePx);
+    const { windowSizeState, resetWasSized } = useWindowResize();
+
+    useEffect(() => {
+        if (constrainingElem.current && toResizeElem.current) {
+            const constrainingStyles = getComputedStyle(constrainingElem.current);
+            const toResizeStyles = getComputedStyle(toResizeElem.current);
+            const constrainingHeight = asNumber(constrainingStyles.height);
+            const constrainingWidth = asNumber(constrainingStyles.width);
+            const toResizeHeight = asNumber(toResizeStyles.height);
+            const toResizeWidth = asNumber(toResizeStyles.width);
+            const shouldShrink = (toResizeHeight > constrainingHeight) || (toResizeWidth > constrainingWidth);
+
+            if (shouldShrink) {
+                const heightRatio = constrainingHeight / toResizeHeight;
+                const widthRatio = constrainingWidth / toResizeWidth;
+                const ratioWithBiggestDiscrepancy = (heightRatio < widthRatio) ? heightRatio : widthRatio;
+                const currentFontSize = asNumber(toResizeStyles.fontSize);
+                const newFontSize = `${ratioWithBiggestDiscrepancy*currentFontSize}px`;
+
+                setFontSizePx(newFontSize);
+            }
+
+            resetWasSized();
+        }
+    }, [ constrainingElem.current, toResizeElem.current, windowSizeState.wasResized ]);
+
+    return [ constrainingElem, toResizeElem, fontSizePx ];
 }
