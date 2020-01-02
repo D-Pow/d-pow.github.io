@@ -1,8 +1,10 @@
-import { COLORS, MOBILE_BROWSER_REGEX } from './Constants';
+import { COLORS, MOBILE_BROWSER_REGEX, MOBILE_OR_TABLET_REGEX } from './Constants';
 import { themeColors } from 'styles/Common.scss';
 
-export function isMobileBrowser() {
-    return MOBILE_BROWSER_REGEX.test(navigator.userAgent || navigator.vendor || window.opera);
+export function isMobileBrowser(includeTablets = false) {
+    const regex = includeTablets ? MOBILE_OR_TABLET_REGEX : MOBILE_BROWSER_REGEX;
+
+    return regex.test(navigator.userAgent || navigator.vendor || window.opera);
 }
 
 /**
