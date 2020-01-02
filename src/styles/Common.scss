@@ -112,6 +112,10 @@ $container-max-widths: (
   right: 0;
 }
 
+.align-content-evenly {
+  align-content: space-evenly !important;
+}
+
 .segment-bar {
   background: $primary;
   height: 5px;

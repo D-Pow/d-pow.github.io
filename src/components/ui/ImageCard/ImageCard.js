@@ -25,12 +25,16 @@ function ImageCard(props) {
     function renderHoverContent() {
         const textWrapperColorCls = 'bg-primary text-light';
         const textWrapperPositionCls = 'position-absolute margin-center fixed-top h-100';
+        const textWrapperChildrenPositioningCls = 'd-flex align-content-evenly flex-wrap';
         const textWrapperAnimationCls = 'animated fade-in';
-        const textWrapperCls = `${textWrapperColorCls} ${textWrapperPositionCls} ${textWrapperAnimationCls}`;
+        const textWrapperCls = [
+            textWrapperColorCls,
+            textWrapperPositionCls,
+            textWrapperChildrenPositioningCls,
+            textWrapperAnimationCls
+        ].join(' ');
+
         const animationCls = 'duration-5 linear';
-        // Mobile browsers between phone and tablet look strange when using the media query for xs/sm
-        // so force all mobile browsers to use the mobile view
-        const marginCls = isMobileBrowser() ? ['mt-10p mb-5p ml-1', 'mx-5p'] : ['mt-5 mb-3', 'm-3'];
         const Title = isMobileBrowser() ? 'h4' : 'h3';
         const hoverCls = isHovered ? ['show', 'slide-in-top', 'slide-in-bottom'] : ['', '', ''];
 
@@ -39,10 +43,10 @@ function ImageCard(props) {
                 className={`${textWrapperCls} ${animationCls} ${hoverCls[0]}`}
                 ref={hoverRef}
             >
-                <Title className={`${marginCls[0]} ${animationCls} ${hoverCls[1]} font-size-4vh`}>
+                <Title className={`mx-auto mt-3 ${animationCls} ${hoverCls[1]} font-size-4vh`}>
                     {title}
                 </Title>
-                <p className={`${marginCls[1]} ${animationCls} ${hoverCls[2]} font-size-2-5vh`}>
+                <p className={`mx-auto ${animationCls} ${hoverCls[2]} font-size-2-5vh`}>
                     {description}
                 </p>
             </div>
