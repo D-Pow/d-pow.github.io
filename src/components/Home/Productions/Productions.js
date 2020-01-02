@@ -15,7 +15,7 @@ function Productions(props) {
             {
                 image: 'automatic_investing.jpg',
                 title: <Link className={'text-light'} href={LINKS.AutomaticInvesting}>Automatic Investing</Link>,
-                description: 'Automates investing into funds with varying frequencies and contribution amounts'
+                description: 'Automates fund investments with varying frequencies and contribution amounts'
             },
             {
                 image: 'premarket_modal.png',
