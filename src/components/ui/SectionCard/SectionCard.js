@@ -6,7 +6,7 @@ class SectionCard extends React.Component {
 
     static renderDefaultTextContent(title, description) {
         return (
-            <div className={`margin-center ${SectionCard.colSize}`}>
+            <div className={`m-auto ${SectionCard.colSize}`}>
                 <h3 className={'p-2'}>{title}</h3>
                 <div className={'lead'}>{description}</div>
             </div>
@@ -16,7 +16,7 @@ class SectionCard extends React.Component {
     renderDesktop() {
         const renderedMain = this.props.mainContent;
         const renderedChildren = (
-            <div className={`margin-center ${SectionCard.colSize}`}>
+            <div className={`m-auto ${SectionCard.colSize}`}>
                 {this.props.children}
             </div>
         );
@@ -35,8 +35,10 @@ class SectionCard extends React.Component {
     renderMobile() {
         return (
             <div className={`d-block d-sm-none ${this.props.className}`}>
-                <div className={'row margin-center mb-4'}>
-                    {this.props.mainContent}
+                <div className={'row mb-4'}>
+                    <div className={'m-auto'}>
+                        {this.props.mainContent}
+                    </div>
                 </div>
                 <div>
                     {this.props.children}

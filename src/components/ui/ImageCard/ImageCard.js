@@ -24,7 +24,7 @@ function ImageCard(props) {
 
     function renderHoverContent() {
         const textWrapperColorCls = 'bg-primary text-light';
-        const textWrapperPositionCls = 'position-absolute margin-center fixed-top h-100';
+        const textWrapperPositionCls = 'position-absolute m-auto fixed-top h-100';
         const textWrapperChildrenPositioningCls = 'd-flex align-content-evenly flex-wrap';
         const textWrapperAnimationCls = 'animated fade-in';
         const textWrapperCls = [
@@ -57,8 +57,8 @@ function ImageCard(props) {
 
     // Obey parent's padding with `position-relative`
     // Fill as much of the space as possible with `width-fit`
-    // Center image within wrapper (in the event the image is smaller than wrapper) with `margin-center`
-    const wrapperCls = `position-relative ${widthFit} ${centerInWrapper ? 'margin-center' : ''}`;
+    // Center image within wrapper (in the event the image is smaller than wrapper) with `m-auto`
+    const wrapperCls = `position-relative ${widthFit} ${centerInWrapper ? 'm-auto' : ''}`;
 
     return (
         <div className={className} {...aria}>
