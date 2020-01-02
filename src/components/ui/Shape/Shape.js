@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import { loadImage } from 'utils/Functions';
 
 class Shape extends React.Component {
+    svgDimensions = {
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 100
+    };
+
     constructor(props) {
         super(props);
         this.state = { imageSrc: '' };
@@ -12,15 +19,24 @@ class Shape extends React.Component {
         }
     }
 
+    get middleCoordinates() {
+        return {
+            x: (this.svgDimensions.x + this.svgDimensions.width) / 2,
+            y: (this.svgDimensions.y + this.svgDimensions.height) / 2
+        };
+    }
+
     getPointsFromRadius() {
         const { sides } = this.props;
-        const radius = 50; // viewBox has size of 100 so distance to whatever side-length measure we're using is half that
+        // viewBox has size of 100 so distance to whatever side-length measure we're using is half that
+        const radius = (this.middleCoordinates.x + this.middleCoordinates.y) / 2;
         const angleBetweenVertices = 2 * Math.PI / sides;
         const points = [];
 
         for (let vertex = 0; vertex < sides; vertex++) {
             const angleFromRightMostVertex = angleBetweenVertices * vertex;
-            const x = (Math.cos(angleFromRightMostVertex) * radius) + radius; // start at point (radius, radius), not (0, 0)
+            // start at point (radius, radius), not (0, 0), and work our way around the polygon counterclockwise
+            const x = (Math.cos(angleFromRightMostVertex) * radius) + radius;
             const y = (Math.sin(angleFromRightMostVertex) * radius) + radius;
 
             points.push([Math.round(x), Math.round(y)]);
@@ -31,6 +47,7 @@ class Shape extends React.Component {
 
     renderPolygon() {
         const polygonPoints =  this.getPointsFromRadius();
+        const { x, y } = this.middleCoordinates;
 
         // plain polygon
         if (!this.props.image) {
@@ -38,7 +55,7 @@ class Shape extends React.Component {
                 <polygon
                     points={polygonPoints}
                     fill={this.props.fill}
-                    transform={`rotate(${this.props.rotation}, 50, 50)`}
+                    transform={`rotate(${this.props.rotation}, ${x}, ${y})`}
                 />
             );
         }
@@ -54,7 +71,7 @@ class Shape extends React.Component {
                     >
                         <polygon
                             points={polygonPoints}
-                            transform={`rotate(${this.props.rotation}, 50, 50)`}
+                            transform={`rotate(${this.props.rotation}, ${x}, ${y})`}
                         />
                     </clipPath>
                 </defs>
@@ -71,9 +88,11 @@ class Shape extends React.Component {
     }
 
     render() {
+        const { x, y, width, height } = this.svgDimensions;
+
         return (
             <div className={this.props.className} {...this.props.aria}>
-                <svg viewBox={'0 0 100 100'}>
+                <svg viewBox={`${x} ${y} ${width} ${height}`}>
                     {this.renderPolygon()}
                 </svg>
             </div>
