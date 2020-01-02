@@ -46,9 +46,11 @@ function ImageCard(props) {
                 <Title className={`mx-auto mt-3 ${animationCls} ${hoverCls[1]} font-size-4vh`}>
                     {title}
                 </Title>
-                <p className={`mx-auto ${animationCls} ${hoverCls[2]} font-size-2-5vh`}>
-                    {description}
-                </p>
+                <div className={`mx-auto ${animationCls} ${hoverCls[2]} font-size-2-5vh`}>
+                    <p className={'mx-3'}>
+                        {description}
+                    </p>
+                </div>
             </div>
         );
     }
