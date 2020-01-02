@@ -2,7 +2,7 @@ import React from 'react';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import Shape from 'components/ui/Shape';
 import HoverTranslate from 'components/ui/HoverTranslate';
-import { getThemeColors } from 'utils/Functions';
+import { getThemeColors, isMobileBrowser } from 'utils/Functions';
 
 function Pastimes(props) {
     const pageText = {
@@ -12,7 +12,11 @@ function Pastimes(props) {
                 description: 'I have been learning Japanese for a little over a year. It\'s a lot of fun!'
             },
             japanese: {
-                title: '日本語',
+                title: (
+                    <div className={isMobileBrowser(true) ? 'underline-extra-space' : ''}>
+                        日本語
+                    </div>
+                ),
                 description: 'ちょっと 一年 以上 日本語 を 学んで います。楽しい です よ！'
             }
         },
