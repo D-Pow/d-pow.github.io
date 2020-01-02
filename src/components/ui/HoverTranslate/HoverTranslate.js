@@ -30,12 +30,12 @@ HoverTranslate.propTypes = {
     className: PropTypes.string,
     animationCls: PropTypes.string,
     english: PropTypes.shape({
-        title: PropTypes.string,
-        description: PropTypes.string
+        title: PropTypes.node,
+        description: PropTypes.node
     }),
     japanese: PropTypes.shape({
-        title: PropTypes.string,
-        description: PropTypes.string
+        title: PropTypes.node,
+        description: PropTypes.node
     })
 };
 
