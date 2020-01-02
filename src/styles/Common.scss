@@ -112,6 +112,15 @@ $container-max-widths: (
   align-content: space-evenly !important;
 }
 
+.underline {
+  text-decoration: underline;
+
+  &-extra-space {
+    @extend .underline;
+    text-underline-position: under;
+  }
+}
+
 .segment-bar {
   background: $primary;
   height: 5px;
