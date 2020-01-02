@@ -87,6 +87,44 @@ class Shape extends React.Component {
         );
     }
 
+    /**
+     * Renders text content in the center of the SVG polygon shape.
+     * This is more favorable than using `position: absolute;` HTML
+     * elements placed on top of <Shape/> because the contained text
+     * will automatically resize based on the size of the SVG shape.
+     *
+     * @returns {(null|Node)}
+     */
+    renderText() {
+        if (!this.props.text) {
+            return null;
+        }
+
+        const textContainerSizeRatio = 0.8;
+        // center text container by dividing by 2 so there's equal space before and after the text container
+        const textContainerPositionRatio = (1 - textContainerSizeRatio) / 2;
+        const x = this.svgDimensions.width * textContainerPositionRatio;
+        const y = this.svgDimensions.height * textContainerPositionRatio;
+        const width = this.svgDimensions.width * textContainerSizeRatio;
+        const height = this.svgDimensions.height * textContainerSizeRatio;
+
+        /**
+         * Since SVG doesn't support text-wrapping by default, use `foreignObject`
+         * with nested `div`s to allow text-wrapping.
+         * Also, center the text content by setting div wrapper's display to flex, making
+         * it the same height as the SVG, and then using a child div with `margin: auto;`
+         */
+        return (
+            <foreignObject x={x} y={y} width={width} height={height}>
+                <div className={`text-center d-flex h-100 w-100 ${this.props.textCls}`}>
+                    <div className={'m-auto'}>
+                        {this.props.text}
+                    </div>
+                </div>
+            </foreignObject>
+        );
+    }
+
     render() {
         const { x, y, width, height } = this.svgDimensions;
 
@@ -94,6 +132,7 @@ class Shape extends React.Component {
             <div className={this.props.className} {...this.props.aria}>
                 <svg viewBox={`${x} ${y} ${width} ${height}`}>
                     {this.renderPolygon()}
+                    {this.renderText()}
                     {this.props.additionalSvgChildren}
                 </svg>
             </div>
@@ -105,6 +144,8 @@ Shape.propTypes = {
     className: PropTypes.string,
     image: PropTypes.string,
     fill: PropTypes.string,
+    text: PropTypes.node,
+    textCls: PropTypes.string,
     sides: PropTypes.number,
     additionalSvgChildren: PropTypes.oneOfType([
         PropTypes.node,
@@ -120,6 +161,7 @@ Shape.defaultProps = {
     className: '',
     image: '',
     fill: '',
+    textCls: '',
     sides: 6,
     rotation: 0,
     aria: {}
