@@ -26,7 +26,7 @@ function ImageCard(props) {
         const textWrapperColorCls = 'bg-primary text-light';
         const textWrapperPositionCls = 'position-absolute m-auto fixed-top h-100';
         const textWrapperChildrenPositioningCls = 'd-flex align-content-evenly flex-wrap';
-        const textWrapperAnimationCls = 'animated fade-in';
+        const textWrapperAnimationCls = 'animated fade';
         const textWrapperCls = [
             textWrapperColorCls,
             textWrapperPositionCls,

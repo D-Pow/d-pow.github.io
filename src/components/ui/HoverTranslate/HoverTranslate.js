@@ -41,7 +41,7 @@ HoverTranslate.propTypes = {
 
 HoverTranslate.defaultProps = {
     className: '',
-    animationCls: 'fade-in duration-5',
+    animationCls: 'animated fade duration-5',
     english: { title: '', description: '' },
     japanese: { title: '', description: '' }
 };

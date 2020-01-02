@@ -19,7 +19,7 @@
 }
 
 @for $time from 1 through 20 {
-    $duration: $time / 10 *1s;
+    $duration: $time/10 * 1s;
     .duration-#{$time} {
         animation-duration: $duration;
         transition-duration: $duration;
