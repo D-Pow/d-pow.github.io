@@ -55,13 +55,16 @@ function Pastimes(props) {
                                 {otherPastimes.map((project, index) => {
                                     const sides = 7 - index; // decrease each entry by 1, starting from Japanese at 8
                                     const rotation = (sides % 2) * -90;
-                                    // TODO find out how to make text fit on ipad and other views between browser and mobile
+
                                     return (
                                         <div className={'col-sm-6'} key={index}>
-                                            <Shape sides={sides} fill={themeColors.primary} rotation={rotation} />
-                                            <div className={'absolute-center text-light mx-5'}>
-                                                <h3 className={'font-size-3vh'}>{project}</h3>
-                                            </div>
+                                            <Shape
+                                                text={project}
+                                                textCls={'text-light'}
+                                                sides={sides}
+                                                fill={themeColors.primary}
+                                                rotation={rotation}
+                                            />
                                         </div>
                                     );
                                 })}
