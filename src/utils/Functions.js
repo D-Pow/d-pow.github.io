@@ -161,6 +161,10 @@ export function elementIsInClickPath({ attribute, value }, clickPath) {
     return elementIsInPath
 }
 
+export function resetWindowScroll() {
+    window.scrollTo(0, 0);
+}
+
 /**
  * Parses a map into a JS object. Every value for any key will be a string
  *

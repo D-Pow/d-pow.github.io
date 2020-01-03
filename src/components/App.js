@@ -6,6 +6,7 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 import SpinnerAtom from 'components/ui/SpinnerAtom';
 import AppContext from 'utils/AppContext';
+import { resetWindowScroll } from 'utils/Functions';
 
 const routes = [
     {
@@ -39,6 +40,14 @@ function App() {
             }, 1750);
         }
     }, [imagesStillLoading]);
+
+    useEffect(() => {
+        window.addEventListener('unload', resetWindowScroll);
+
+        return () => {
+            window.removeEventListener('unload', resetWindowScroll);
+        }
+    }, []);
 
     return (
         <div className="App text-center">
