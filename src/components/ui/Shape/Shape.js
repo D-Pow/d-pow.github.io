@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { loadImage } from 'utils/Functions';
+import { importImageAsync } from 'utils/Functions';
 import { Hooked, useDynamicFontSizeShrinking } from 'utils/Hooks';
 
 class Shape extends React.Component {
@@ -16,7 +16,7 @@ class Shape extends React.Component {
         this.state = { imageSrc: '' };
 
         if (this.props.image) {
-            loadImage(this.props.image).then(imageSrc => this.setState({ imageSrc }));
+            importImageAsync(this.props.image).then(imageSrc => this.setState({ imageSrc }));
         }
     }
 

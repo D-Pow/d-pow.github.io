@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { loadImage } from 'utils/Functions';
+import { importImageAsync } from 'utils/Functions';
 
 class Image extends React.Component {
     constructor(props) {
         super(props);
         this.state = { imageSrc: '' };
-        loadImage(this.props.image).then(imageSrc => this.setState({ imageSrc }));
+        importImageAsync(this.props.image).then(imageSrc => this.setState({ imageSrc }));
     }
 
     render() {

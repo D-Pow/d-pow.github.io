@@ -33,11 +33,19 @@ export function childIsReactElement(child) {
     return typeof child.type === 'function';
 }
 
-export async function loadImage(image, base64 = false) {
+/**
+ * Asynchronously imports the specified image from the 'assets/' folder.
+ * Optionally returns the resolved image data encoded with Base64.
+ * Since this uses dynamic imports, images are cached, so multiple calls
+ * for the same asset don't need to be memoized.
+ *
+ * @param {string} image - Image file name under 'assets/'
+ * @param {boolean} [base64=false] - Return base64-encoded image data instead of image src path
+ * @returns {Promise<string>} - Path of the image (base64=false) or Base64-encoded image data (base64=true)
+ */
+export async function importImageAsync(image, base64 = false) {
     if (image != null && image !== '') {
         try {
-            // Imported modules are cached after the first load
-            // so no need to memoize
             const module = await import(`assets/${image}`);
             const imageSrc = module.default;
 
@@ -55,7 +63,7 @@ export async function loadImage(image, base64 = false) {
             }
 
             return imageSrc;
-        } catch(error) {} // default return handles error case
+        } catch(error) {} // default return below handles error case
     }
 
     throw new Error(`${image} was not found`);
