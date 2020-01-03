@@ -19,10 +19,11 @@ const routes = [
     }
 ];
 
-function App(props) {
+function App() {
     const renderedRoutes = routes.map(routeAria => (
         <Route key={routeAria.path} {...routeAria} />
     ));
+
     return (
         <div className="App text-center">
             <Router>

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'styles/index.scss';
 import App from 'components/App';
 import registerServiceWorker from './registerServiceWorker';
+import 'styles/index.scss';
 
 const rootDiv = document.getElementById('root');
 
@@ -10,6 +10,7 @@ ReactDOM.render(
     <App />,
     rootDiv
 );
+
 registerServiceWorker();
 
 // hot reloading
