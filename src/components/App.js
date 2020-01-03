@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import Home from 'components/Home';
 import About from 'components/About';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import SpinnerAtom from 'components/ui/SpinnerAtom';
+import AppContext from 'utils/AppContext';
 
 const routes = [
     {
@@ -23,6 +25,10 @@ function App() {
     const renderedRoutes = routes.map(routeAria => (
         <Route key={routeAria.path} {...routeAria} />
     ));
+    const { contextState: { imagesRequested, imagesLoaded }} = useContext(AppContext.Context);
+    const imagesHaveBeenRequested = imagesRequested > 0;
+    const imagesHaveFinishedLoading = imagesLoaded === imagesRequested;
+    const imagesStillLoading = !imagesHaveBeenRequested || !imagesHaveFinishedLoading;
 
     return (
         <div className="App text-center">
@@ -33,6 +39,7 @@ function App() {
                     <Footer />
                 </React.Fragment>
             </Router>
+            <SpinnerAtom show={imagesStillLoading} />
         </div>
     );
 }
