@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import Home from 'components/Home';
 import About from 'components/About';
@@ -22,6 +22,7 @@ const routes = [
 ];
 
 function App() {
+    const [ showSpinnerLonger, setShowSpinnerLonger ] = useState(true);
     const renderedRoutes = routes.map(routeAria => (
         <Route key={routeAria.path} {...routeAria} />
     ));
@@ -29,6 +30,15 @@ function App() {
     const imagesHaveBeenRequested = imagesRequested > 0;
     const imagesHaveFinishedLoading = imagesLoaded === imagesRequested;
     const imagesStillLoading = !imagesHaveBeenRequested || !imagesHaveFinishedLoading;
+    const showSpinner = imagesStillLoading || showSpinnerLonger;
+
+    useEffect(() => {
+        if (!imagesStillLoading) {
+            setTimeout(() => {
+                setShowSpinnerLonger(false);
+            }, 1750);
+        }
+    }, [imagesStillLoading]);
 
     return (
         <div className="App text-center">
@@ -39,7 +49,7 @@ function App() {
                     <Footer />
                 </React.Fragment>
             </Router>
-            <SpinnerAtom show={imagesStillLoading} />
+            <SpinnerAtom show={showSpinner} />
         </div>
     );
 }
