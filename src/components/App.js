@@ -35,7 +35,6 @@ function App() {
     useEffect(() => {
         if (!imagesStillLoading) {
             setTimeout(() => {
-                window.scrollTo(0, 0);
                 setShowSpinnerLonger(false);
             }, 1750);
         }
@@ -50,7 +49,7 @@ function App() {
                     <Footer />
                 </React.Fragment>
             </Router>
-            <SpinnerAtom show={showSpinner} />
+            <SpinnerAtom show={showSpinner} preventScrolling={true} />
         </div>
     );
 }
