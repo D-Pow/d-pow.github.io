@@ -3,12 +3,28 @@ import PropTypes from 'prop-types';
 import AtomSpinner from './AtomSpinner';
 
 function SpinnerAtom({ className, fullScreen, show }) {
-    if (!show) {
-        return <React.Fragment />;
+    const classes = [
+        'bg-dark',
+        'absolute-center',
+        'animated',
+        'fade',
+        'duration-8'
+    ];
+
+    if (fullScreen) {
+        classes.push('full-screen');
+    }
+
+    if (className) {
+        classes.push(className);
+    }
+
+    if (show) {
+        classes.push('show');
     }
 
     return (
-        <div className={`bg-dark absolute-center ${fullScreen ? 'full-screen' : ''} ${className}`}>
+        <div className={classes.join(' ')}>
             <div className={'m-auto'}>
                 <AtomSpinner />
             </div>
