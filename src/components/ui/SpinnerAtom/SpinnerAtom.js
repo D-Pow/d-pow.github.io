@@ -6,6 +6,7 @@ function SpinnerAtom({ className, fullScreen, show }) {
     const classes = [
         'bg-dark',
         'absolute-center',
+        'position-fixed',
         'animated',
         'fade',
         'duration-8'

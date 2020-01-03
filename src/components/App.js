@@ -35,6 +35,7 @@ function App() {
     useEffect(() => {
         if (!imagesStillLoading) {
             setTimeout(() => {
+                window.scrollTo(0, 0);
                 setShowSpinnerLonger(false);
             }, 1750);
         }
