@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { importImageAsync } from 'utils/Functions';
 
-class Image extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { imageSrc: '' };
-        importImageAsync(this.props.image).then(imageSrc => this.setState({ imageSrc }));
+function Image(props) {
+    const [ imageSrc, setImageSrc ] = useState('');
+
+    async function loadImageSrc() {
+        const imageSrc = await importImageAsync(props.image);
+
+        setImageSrc(imageSrc);
     }
 
-    render() {
-        return (
-            <img
-                className={`${this.props.fluidImage ? 'img-fluid' : ''} ${this.props.className}`}
-                src={this.state.imageSrc}
-                alt={this.props.image}
-                onLoad={this.props.onLoad}
-                {...this.props.aria}
-            />
-        );
-    }
+    useEffect(() => {
+        loadImageSrc();
+    }, [props.image]);
+
+    return (
+        <img
+            className={`${props.fluidImage ? 'img-fluid' : ''} ${props.className}`}
+            src={imageSrc}
+            alt={props.image}
+            onLoad={props.onLoad}
+            {...props.aria}
+        />
+    );
 }
 
 Image.propTypes = {
