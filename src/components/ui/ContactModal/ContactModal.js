@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/ui/Modal';
-import Spinner from 'components/ui/Spinner';
+import SpinnerCircle from 'components/ui/SpinnerCircle';
 import { CONTACT_FORM_URL, EMAIL_REGEX } from 'utils/Constants';
 
 class ContactModal extends React.Component {
@@ -170,7 +170,7 @@ class ContactModal extends React.Component {
                 </div>
                 <button className={'btn btn-primary'} onClick={this.handleSubmit}>
                     {this.state.isLoading ? (
-                        <Spinner show={true} />
+                        <SpinnerCircle show={true} />
                     ) : 'Send'}
                 </button>
             </div>
