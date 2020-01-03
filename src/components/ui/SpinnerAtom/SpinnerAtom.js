@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Image from 'components/ui/Image';
+import AtomSpinner from './AtomSpinner';
 
 function SpinnerAtom({ className, fullScreen, show }) {
     if (!show) {
@@ -8,11 +8,10 @@ function SpinnerAtom({ className, fullScreen, show }) {
     }
 
     return (
-        <div className={`bg-dark d-flex ${className} ${fullScreen ? 'full-screen' : ''}`}>
-            <Image
-                className={'m-auto'}
-                image={'atom_spinner.svg'}
-            />
+        <div className={`bg-dark absolute-center ${fullScreen ? 'full-screen' : ''} ${className}`}>
+            <div className={'m-auto'}>
+                <AtomSpinner />
+            </div>
         </div>
     );
 }
