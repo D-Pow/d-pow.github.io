@@ -1,0 +1,22 @@
+$triangleBaseLength: 100px;
+$triangleHeight: 86px;
+$triangleBaseLengthHalved: ($triangleBaseLength / 2);
+$triangleHeightToCenter: ($triangleHeight * 2 / 3);
+$upsideDownTriangleHeightToCenter: ($triangleHeight / 3);
+
+.triangle {
+  display: inline-block;
+  background: transparent;
+  width: 0px;
+  height: 0px;
+  border-left: $triangleBaseLengthHalved solid transparent;
+  border-right: $triangleBaseLengthHalved solid transparent;
+  border-bottom: $triangleHeight solid;
+  margin-left: -$triangleBaseLengthHalved;
+  opacity: 0.95;
+}
+
+.triangle.upside-down {
+  border-top: $triangleHeight solid;
+  border-bottom: 0px;
+}

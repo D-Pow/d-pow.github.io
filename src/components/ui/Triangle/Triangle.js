@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'styles/Triangle.scss';
-import { spinDurationMin, spinDurationMax } from 'styles/Animation.scss';
 import { randomNumber } from 'utils/Functions';
+import { spinDurationMin, spinDurationMax } from 'styles/Animation.scss';
 
 class Triangle extends React.Component {
     render() {
