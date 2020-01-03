@@ -46,7 +46,7 @@ function App() {
 
         return () => {
             window.removeEventListener('unload', resetWindowScroll);
-        }
+        };
     }, []);
 
     return (

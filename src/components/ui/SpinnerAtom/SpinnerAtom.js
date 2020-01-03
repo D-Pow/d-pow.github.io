@@ -37,7 +37,7 @@ function SpinnerAtom({ className, fullScreen, show, preventScrolling }) {
 
         return () => {
             window.removeEventListener('scroll', resetWindowScroll);
-        }
+        };
     }, [show, preventScrolling]);
 
     return (
