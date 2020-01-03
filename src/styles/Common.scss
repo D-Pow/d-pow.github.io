@@ -78,8 +78,8 @@ $container-max-widths: (
 }
 
 .full-screen {
-  height: 100vh;
-  width: 100vw;
+  height: 100vh !important;
+  width: 100vw !important;
 }
 
 .mt-10p {
