@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { loadImage } from 'utils/Functions';
+import { Hooked, useDynamicFontSizeShrinking } from 'utils/Hooks';
 
 class Shape extends React.Component {
     svgDimensions = {
@@ -116,11 +117,15 @@ class Shape extends React.Component {
          */
         return (
             <foreignObject x={x} y={y} width={width} height={height}>
-                <div className={`text-center d-flex h-100 w-100 ${this.props.textCls}`}>
-                    <div className={'m-auto'}>
-                        {this.props.text}
-                    </div>
-                </div>
+                <Hooked hook={useDynamicFontSizeShrinking}>
+                    {([ constrainingElem, toResizeElem, fontSizePx ]) => (
+                        <div className={`text-center d-flex h-100 w-100 ${this.props.textCls}`} ref={constrainingElem}>
+                            <div className={'m-auto'} ref={toResizeElem} style={{ fontSize: fontSizePx }}>
+                                {this.props.text}
+                            </div>
+                        </div>
+                    )}
+                </Hooked>
             </foreignObject>
         );
     }
