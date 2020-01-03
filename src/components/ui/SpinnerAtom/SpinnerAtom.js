@@ -4,7 +4,7 @@ import Image from 'components/ui/Image';
 
 function SpinnerAtom({ className, fullScreen, show }) {
     if (!show) {
-        return null;
+        return <React.Fragment />;
     }
 
     return (
