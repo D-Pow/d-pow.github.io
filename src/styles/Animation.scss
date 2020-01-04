@@ -22,7 +22,7 @@
     $duration: $time/10 * 1s;
     .duration-#{$time} {
         animation-duration: $duration !important;
-        transition-duration: $duration !important;
+        transition-duration: $duration;
     }
 }
 
