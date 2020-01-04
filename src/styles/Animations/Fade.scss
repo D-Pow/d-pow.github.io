@@ -1,3 +1,18 @@
 .fade {
     transition: opacity 1s;
 }
+
+@keyframes fadeOutAndDisappear {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.fade-out-disappear:not(.show) {
+    animation: fadeOutAndDisappear 1s ease;
+    animation-fill-mode: forwards;
+}
