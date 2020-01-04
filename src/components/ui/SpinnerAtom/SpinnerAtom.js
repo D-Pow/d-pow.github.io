@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AtomSpinner from './AtomSpinner';
 import { resetWindowScroll } from 'utils/Functions';
 
-function SpinnerAtom({ className, fullScreen, show, preventScrolling }) {
+function SpinnerAtom({ className, fullScreen, show, preventScrolling, useSvg }) {
     const classes = [
         'bg-dark',
         'absolute-center',
@@ -43,7 +43,7 @@ function SpinnerAtom({ className, fullScreen, show, preventScrolling }) {
     return (
         <div className={classes.join(' ')}>
             <div className={'m-auto'}>
-                <AtomSpinner />
+                <AtomSpinner svg={useSvg} />
             </div>
         </div>
     );
@@ -53,14 +53,16 @@ SpinnerAtom.propTypes = {
     className: PropTypes.string,
     fullScreen: PropTypes.bool,
     show: PropTypes.bool,
-    preventScrolling: PropTypes.bool
+    preventScrolling: PropTypes.bool,
+    useSvg: PropTypes.bool
 };
 
 SpinnerAtom.defaultProps = {
     className: '',
     fullScreen: true,
     show: false,
-    preventScrolling: false
+    preventScrolling: false,
+    useSvg: false
 };
 
 export default SpinnerAtom;

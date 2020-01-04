@@ -1,0 +1,83 @@
+@import '../Shapes';
+
+$atomContainerSize: 200px;
+$electronSize: 36px;
+$atomOrbitPathWidth: 60px;
+$atomOrbitPathHeight: 140px;
+$atomOrbitPathBorderWidth: 6px;
+
+.atom-container {
+    width: $atomContainerSize;
+    height: $atomContainerSize;
+}
+
+.atom-orbit-path {
+    @extend .circle;
+    position: absolute;
+    width: $atomOrbitPathWidth;
+    height: $atomOrbitPathHeight;
+    border: $atomOrbitPathBorderWidth solid white;
+}
+
+// The path the electrons are nested in.
+// The `z-index` property doesn't work properly to
+// set nested electrons on top of their parent's sibling
+// orbit paths so nest electrons in an invisible path instead
+// that has the same styling for dimensions, rotation, position, etc.
+.atom-orbit-path-invisible {
+    @extend .atom-orbit-path;
+    border: none;
+}
+
+.atom-electron {
+    @extend .circle;
+    position: absolute;
+    width: $electronSize;
+    height: $electronSize;
+}
+
+$halfElectronSize: $electronSize / 2;
+$halfBorderWidth: $atomOrbitPathBorderWidth / 2;
+
+@keyframes atomElectronOrbit {
+    0% {
+        top: calc(0% - #{$halfElectronSize} - #{$halfBorderWidth});
+        left: calc(50% - #{$halfElectronSize});
+    }
+    10% {
+        top: calc(20% - #{$halfElectronSize} - #{$halfBorderWidth});
+        left: calc(75% - #{$halfElectronSize} + #{$halfBorderWidth});
+    }
+    25% {
+        top: calc(50% - #{$halfElectronSize});
+        left: calc(100% - #{$halfElectronSize} - #{$halfBorderWidth});
+    }
+    40% {
+        top: calc(80% - #{$halfElectronSize} - #{$halfBorderWidth});
+        left: calc(75% - #{$halfElectronSize} + #{$halfBorderWidth});
+    }
+    50% {
+        top: calc(100% - #{$halfElectronSize} + #{$halfBorderWidth});
+        left: calc(50% - #{$halfElectronSize});
+    }
+    60% {
+        top: calc(80% - #{$halfElectronSize} - #{$halfBorderWidth});
+        left: calc(25% - #{$halfElectronSize} - #{$halfBorderWidth});
+    }
+    75% {
+        top: calc(50% - #{$halfElectronSize});
+        left: calc(0% - #{$halfElectronSize} + #{$halfBorderWidth});
+    }
+    90% {
+        top: calc(20% - #{$halfElectronSize} - #{$halfBorderWidth});
+        left: calc(25% - #{$halfElectronSize} - #{$halfBorderWidth});
+    }
+    100% {
+        top: calc(0% - #{$halfElectronSize} - #{$halfBorderWidth});
+        left: calc(50% - #{$halfElectronSize});
+    }
+}
+
+.atom-electron-orbit {
+    animation: atomElectronOrbit 1s linear infinite;
+}
