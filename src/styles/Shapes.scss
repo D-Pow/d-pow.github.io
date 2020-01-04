@@ -20,3 +20,7 @@ $upsideDownTriangleHeightToCenter: ($triangleHeight / 3);
   border-top: $triangleHeight solid;
   border-bottom: 0px;
 }
+
+.circle {
+  border-radius: 50%;
+}
