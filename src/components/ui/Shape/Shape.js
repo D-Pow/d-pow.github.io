@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { importImageAsync } from 'utils/Functions';
+import { importImageAsync, asNumber, isMobileBrowser } from 'utils/Functions';
 import { Hooked, useDynamicFontSizeShrinking } from 'utils/Hooks';
 
 class Shape extends React.Component {
@@ -120,7 +120,13 @@ class Shape extends React.Component {
                 <Hooked hook={useDynamicFontSizeShrinking}>
                     {([ constrainingElem, toResizeElem, fontSizePx ]) => (
                         <div className={`text-center d-flex h-100 w-100 ${this.props.textCls}`} ref={constrainingElem}>
-                            <div className={'m-auto'} ref={toResizeElem} style={{ fontSize: fontSizePx }}>
+                            <div
+                                className={'m-auto'}
+                                ref={toResizeElem}
+                                style={{
+                                    fontSize: isMobileBrowser() ? `${asNumber(fontSizePx) - 4}px` : fontSizePx
+                                }}
+                            >
                                 {this.props.text}
                             </div>
                         </div>
