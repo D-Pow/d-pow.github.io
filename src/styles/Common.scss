@@ -63,9 +63,19 @@ $container-max-widths: (
   width: fit-content;
 }
 
-@for $percentage from 0 through 100 {
-  .w-#{$percentage} {
-    width: $percentage + 0%;
+@for $int from 0 through 200 {
+  .w-#{$int} {
+    width: $int + 0%;
+  }
+  .w-#{$int}px {
+    width: $int + 0px;
+  }
+
+  .h-#{$int} {
+    height: $int + 0%;
+  }
+  .h-#{$int}px {
+    height: $int + 0px;
   }
 }
 
