@@ -9,7 +9,7 @@ function SpinnerAtom({ className, fullScreen, show, preventScrolling }) {
         'absolute-center',
         'position-fixed',
         'animated',
-        'fade',
+        'fade-out-disappear',
         'duration-8'
     ];
 
