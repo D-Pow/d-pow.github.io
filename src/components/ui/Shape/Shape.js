@@ -109,6 +109,27 @@ class Shape extends React.Component {
         const width = this.svgDimensions.width * textContainerSizeRatio;
         const height = this.svgDimensions.height * textContainerSizeRatio;
 
+        const slightlySmallerThanLargestPossibleFontSize = (
+            fontSizePxStr,
+            {
+                reduceByPx = 4,
+                onlyOnMobile,
+                onlyAtLength
+            } = {}
+        ) => {
+            let reduceFontSize = true;
+
+            if (onlyOnMobile) {
+                reduceFontSize = reduceFontSize && isMobileBrowser();
+            }
+
+            if (typeof onlyAtLength === typeof 0) {
+                reduceFontSize = reduceFontSize && this.props.text.length >= onlyAtLength;
+            }
+
+            return reduceFontSize ? `${asNumber(fontSizePxStr) - reduceByPx}px` : fontSizePxStr;
+        };
+
         /**
          * Since SVG doesn't support text-wrapping by default, use `foreignObject`
          * with nested `div`s to allow text-wrapping.
@@ -124,7 +145,7 @@ class Shape extends React.Component {
                                 className={'m-auto'}
                                 ref={toResizeElem}
                                 style={{
-                                    fontSize: isMobileBrowser() ? `${asNumber(fontSizePx) - 4}px` : fontSizePx
+                                    fontSize: slightlySmallerThanLargestPossibleFontSize(fontSizePx)
                                 }}
                             >
                                 {this.props.text}
