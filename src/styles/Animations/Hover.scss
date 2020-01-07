@@ -1,9 +1,9 @@
 @import "../Common";
 
-.hover-shadow-sm:hover {
-    box-shadow: 0 0 0.5rem 0.5rem rgba(0, 0, 0, 0.15) !important;
-    border-radius: 0.25rem !important;
-    z-index: 100;
+.hover-shadow-sm {
+    &:hover {
+        @extend .box-shadow-sm;
+    }
 }
 
 
