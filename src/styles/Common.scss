@@ -2,13 +2,13 @@
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
-$primary: #3800ff;
-$secondary: #2800b0;
-$tertiary: #190061;
+$primary: rgb(56, 0, 255);
+$secondary: rgb(40, 0, 176);
+$tertiary: rgb(25, 0, 97);
 $light: rgb(225, 224, 224);
 $lighter: rgb(241, 240, 240);
-$dark: #282828;
-$grey: #e8e8e8;
+$dark: rgb(40, 40, 40);
+$grey: rgb(232, 232, 232);
 
 $theme-colors: (
     "primary": $primary,
