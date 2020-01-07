@@ -44,6 +44,7 @@ function SameHeightImageCard({ imageAria, imageStyle, onLoad, ...imageCardProps 
 
 SameHeightImageCard.Provider = Provider;
 
+SameHeightImageCard.WidthFits = ImageCard.WidthFits;
 SameHeightImageCard.propTypes = ImageCard.propTypes;
 SameHeightImageCard.defaultProps = ImageCard.defaultProps;
 
