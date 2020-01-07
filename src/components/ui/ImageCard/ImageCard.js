@@ -8,6 +8,7 @@ function ImageCard(props) {
     const {
         centerInWrapper,
         className,
+        wrapperCls,
         image,
         imageCls,
         imageStyle,
@@ -59,11 +60,12 @@ function ImageCard(props) {
     // Obey parent's padding with `position-relative`
     // Fill as much of the space as possible with `width-fit`
     // Center image within wrapper (in the event the image is smaller than wrapper) with `m-auto`
-    const wrapperCls = `position-relative ${widthFit} ${centerInWrapper ? 'm-auto' : ''}`;
+    const centerCls = centerInWrapper ? 'm-auto' : '';
+    const containerCls = `position-relative ${widthFit} ${centerCls} ${mobileBoxShadowCls} ${className}`;
 
     return (
-        <div className={className} {...aria}>
-            <div className={wrapperCls} style={imageStyle}>
+        <div className={wrapperCls} {...aria}>
+            <div className={containerCls} style={imageStyle}>
                 <Image
                     className={`w-100 ${imageCls}`}
                     image={image}
@@ -84,6 +86,7 @@ ImageCard.WidthFits = {
 ImageCard.propTypes = {
     centerInWrapper: PropTypes.bool,
     className: PropTypes.string,
+    wrapperCls: PropTypes.string,
     image: PropTypes.string,
     imageCls: PropTypes.string,
     imageStyle: PropTypes.object,
@@ -98,6 +101,7 @@ ImageCard.propTypes = {
 ImageCard.defaultProps = {
     centerInWrapper: true,
     className: '',
+    wrapperCls: '',
     image: '',
     imageCls: '',
     imageStyle: {},
