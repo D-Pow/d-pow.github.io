@@ -61,7 +61,9 @@ function ImageCard(props) {
     // Fill as much of the space as possible with `width-fit`
     // Center image within wrapper (in the event the image is smaller than wrapper) with `m-auto`
     const centerCls = centerInWrapper ? 'm-auto' : '';
-    const containerCls = `position-relative ${widthFit} ${centerCls} ${mobileBoxShadowCls} ${className}`;
+    const mobileShadowAndBorderCls = isMobileBrowser() ? 'box-shadow-sm border border-medium border-primary-opacity-4' : '';
+    const width = isMobileBrowser() ? ImageCard.WidthFits.DYNAMIC_MOBILE : widthFit;
+    const containerCls = `position-relative ${width} ${centerCls} ${mobileShadowAndBorderCls} ${className}`;
 
     return (
         <div className={wrapperCls} {...aria}>
@@ -80,7 +82,8 @@ function ImageCard(props) {
 
 ImageCard.WidthFits = {
     FIT: 'width-fit',
-    STRETCH: 'w-100'
+    STRETCH: 'w-100',
+    DYNAMIC_MOBILE: 'w-90'
 };
 
 ImageCard.propTypes = {
