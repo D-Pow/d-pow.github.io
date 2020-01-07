@@ -138,6 +138,15 @@ $container-max-widths: (
 
 .border.border-medium {
   border-width: 0.2rem !important;
+
+  @each $colorName, $color in $theme-colors {
+    @for $opacity from 0 through 9 {
+      $opacityVal: $opacity/10;
+      &.border-#{$colorName}-opacity-#{$opacity} {
+        border-color: rgba($color, $opacityVal) !important;
+      }
+    }
+  }
 }
 
 input.text-white::placeholder, textarea.text-white::placeholder {
