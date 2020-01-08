@@ -13,7 +13,7 @@ function Pastimes(props) {
             },
             japanese: {
                 title: (
-                    <div className={isMobileBrowser(true) ? 'underline-extra-space' : ''}>
+                    <div className={isMobileBrowser({ includeTablets: true }) ? 'underline-extra-space' : ''}>
                         日本語
                     </div>
                 ),

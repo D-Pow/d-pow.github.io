@@ -18,7 +18,7 @@ class FullPageTriangles extends React.Component {
     componentDidMount() {
         this.updateTriangleColorMatrix();
 
-        if (!isMobileBrowser(true)) {
+        if (!isMobileBrowser({ includeTablets: true })) {
             window.addEventListener('resize', this.handleResize);
         }
     }
