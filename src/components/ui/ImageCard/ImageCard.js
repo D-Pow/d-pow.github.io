@@ -61,8 +61,11 @@ function ImageCard(props) {
     // Fill as much of the space as possible with `width-fit`
     // Center image within wrapper (in the event the image is smaller than wrapper) with `m-auto`
     const centerCls = centerInWrapper ? 'm-auto' : '';
-    const mobileShadowAndBorderCls = isMobileBrowser() ? 'box-shadow-sm border border-medium border-primary-opacity-4' : '';
-    const width = isMobileBrowser() ? ImageCard.WidthFits.DYNAMIC_MOBILE : widthFit;
+    const isMobileBrowserWithXsScreen = isMobileBrowser({ onlyXsScreenSizes: true });
+    const mobileShadowAndBorderCls = isMobileBrowserWithXsScreen
+        ? 'box-shadow-sm border border-medium border-primary-opacity-4'
+        : '';
+    const width = isMobileBrowserWithXsScreen ? ImageCard.WidthFits.DYNAMIC_MOBILE : widthFit;
     const containerCls = `position-relative ${width} ${centerCls} ${mobileShadowAndBorderCls} ${className}`;
 
     return (
