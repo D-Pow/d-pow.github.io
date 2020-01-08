@@ -1,5 +1,5 @@
 import { COLORS, MOBILE_BROWSER_REGEX, MOBILE_OR_TABLET_REGEX } from './Constants';
-import { themeColors } from 'styles/Common.scss';
+import { themeColors, gridBreakpoints } from 'styles/Common.scss';
 
 export function isMobileBrowser(includeTablets = false) {
     const regex = includeTablets ? MOBILE_OR_TABLET_REGEX : MOBILE_BROWSER_REGEX;
@@ -186,6 +186,20 @@ export function parseScssMap(scssMapStr) {
 
 export function getThemeColors() {
     return parseScssMap(themeColors);
+}
+
+export function getGridBreakpoints(parsePxStrToNum = true) {
+    const mapWithPxInStr = parseScssMap(gridBreakpoints);
+
+    if (parsePxStrToNum) {
+        return Object.keys(mapWithPxInStr).reduce((valsAsNum, breakpointName) => {
+            valsAsNum[breakpointName] = asNumber(mapWithPxInStr[breakpointName]);
+
+            return valsAsNum;
+        }, {});
+    }
+
+    return mapWithPxInStr;
 }
 
 export function asNumber(str) {
