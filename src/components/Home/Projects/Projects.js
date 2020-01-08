@@ -29,7 +29,7 @@ function Projects(props) {
         addClasses: 'slide-in-left show',
         distributeClasses: 'animated duration-15'
     };
-    const infoCardWrapperHoverCls = isMobileBrowser() ? '' : 'hover-expand hover-shadow-sm';
+    const infoCardWrapperHoverCls = isMobileBrowser({ onlyXsScreenSizes: true }) ? '' : 'hover-expand hover-shadow-sm';
     const projectInfoCardEntries = pageText.infoCards.map((props, index) => (
         <div className={`col-sm-4 mb-5 p-2 ${infoCardWrapperHoverCls}`} key={index}>
             <InfoCard {...props} />
