@@ -172,14 +172,20 @@ export function resetWindowScroll() {
  * @returns {Object} - The parsed SCSS object
  */
 export function parseScssMap(scssMapStr) {
-    return JSON.parse(scssMapStr
-        .replace('(', '{')
-        .replace(')', '}')
-        // JSON values: colon + space, bunch of word characters followed by a comma or bracket
-        .replace(/: ([^,}]+)([,}])/g, ': "$1"$2')
-        // JSON keys: space or bracket as first character, not already a string, anything not colon or space (rules out JSON values), ended by colon
-        .replace(/([\s{])(?!")([^:\s]+)+:/g, '$1"$2":')
+    return JSON.parse(
+        scssMapStr
+            .replace('(', '{')
+            .replace(')', '}')
+            // JSON values: colon + space, bunch of word characters followed by a comma or bracket
+            .replace(/: ([^,}]+)([,}])/g, ': "$1"$2')
+            // JSON keys: space or bracket as first character, not already a string, anything not colon or
+            // space (rules out JSON values), ended by colon
+            .replace(/([\s{])(?!")([^:\s]+)+:/g, '$1"$2":')
     );
+}
+
+export function getThemeColors() {
+    return parseScssMap(themeColors);
 }
 
 export function asNumber(str) {
@@ -199,10 +205,6 @@ export function randomNumber(min, max) {
     }
 
     return (Math.random() * (max - min)) + min;
-}
-
-export function getThemeColors() {
-    return parseScssMap(themeColors);
 }
 
 export function randomColor(colorsToAvoid, onlyColors = null) {
