@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { importImageAsync, asNumber, isMobileBrowser } from 'utils/Functions';
+import { importImageAsync, asNumber, isMobileBrowser, attemptParseObjLiteral } from 'utils/Functions';
 import { Hooked, useDynamicFontSizeShrinking } from 'utils/Hooks';
 
 class Shape extends React.Component {
@@ -10,6 +10,7 @@ class Shape extends React.Component {
         width: 100,
         height: 100
     };
+    svgRef = React.createRef();
 
     foreignObjectSizeRatio = 0.8;
     foreignObjectPositionRatio = (1 - this.foreignObjectSizeRatio) / 2; // center x/y position by dividing by 2
@@ -27,6 +28,14 @@ class Shape extends React.Component {
         if (this.props.image) {
             importImageAsync(this.props.image).then(imageSrc => this.setState({ imageSrc }));
         }
+    }
+
+    get svgBoundingClientRect() {
+        if (this.svgRef.current) {
+            return attemptParseObjLiteral(this.svgRef.current.getBoundingClientRect());
+        }
+
+        return {};
     }
 
     get middleCoordinates() {
@@ -189,7 +198,7 @@ class Shape extends React.Component {
 
         return (
             <div className={this.props.className} {...this.props.aria}>
-                <svg viewBox={`${x} ${y} ${width} ${height}`}>
+                <svg viewBox={`${x} ${y} ${width} ${height}`} ref={this.svgRef}>
                     {this.renderPolygon()}
                     {this.renderHtmlChildren()}
                     {this.props.svgChildren}
