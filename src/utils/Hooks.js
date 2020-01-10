@@ -142,20 +142,40 @@ export function useWindowResize() {
     return { windowSizeState, setWindowSizeState, resetWasSized };
 }
 
-export function useHover() {
-    const ref = useRef(null);
+/**
+ * Determines if the mouse is hovering over an element using JavaScript.
+ * Useful for the times where JavaScript calculations need to be done,
+ * where CSS `:hover` classes aren't enough.
+ *
+ * Optionally, `overrideBoundingClientRect` will allow the use of a different
+ * `getBoundingClientRect()` object instead of the one from the returned React.ref.
+ * This field will generally only be useful if you need to know if an element inside
+ * an SVG is hovered over because `svgElement.getBoundingClientRect()` will return
+ * a rect relative to the SVG, not the window. In this case, manual bounding-rect
+ * calculations will need to be done on the SVG element to convert it from the SVG's
+ * viewport to the window's.
+ *
+ * @param {Object} [overrideBoundingClientRect=null] - Optional `getBoundingClientRect()` result to use instead of the returned ref
+ * @returns {[React.ref, boolean]} - The ref to attach to the element watching for a hover and the respective `isHovered` value
+ */
+export function useHover(overrideBoundingClientRect) {
+    const ref = useRef(overrideBoundingClientRect);
 
     function handleMouseMove(prevIsHovered, setIsHovered, newEvent) {
         const { pageX, pageY } = newEvent;
 
         if (ref.current) {
             const { pageXOffset, pageYOffset } = window;
-            let { top, bottom, left, right } = ref.current.getBoundingClientRect();
+            let { top, bottom, left, right } = overrideBoundingClientRect || ref.current.getBoundingClientRect();
 
-            top = top + pageYOffset;
-            bottom = bottom + pageYOffset;
-            left = left + pageXOffset;
-            right = right + pageXOffset;
+            // If using a specific bounding client rect, it will be generated from
+            // an SVG, which will take the `page(X|Y)Offset` into account automatically
+            if (!overrideBoundingClientRect) {
+                top = top + pageYOffset;
+                bottom = bottom + pageYOffset;
+                left = left + pageXOffset;
+                right = right + pageXOffset;
+            }
 
             if (pageX <= right && pageX >= left && pageY <= bottom && pageY >= top) {
                 setIsHovered(true);
