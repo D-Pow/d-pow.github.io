@@ -109,14 +109,8 @@ class Shape extends React.Component {
         const width = this.svgDimensions.width * textContainerSizeRatio;
         const height = this.svgDimensions.height * textContainerSizeRatio;
 
-        const slightlySmallerThanLargestPossibleFontSize = (
-            fontSizePxStr,
-            {
-                reduceByPx = 4,
-                onlyOnMobile,
-                onlyAtLength
-            } = {}
-        ) => {
+        const slightlySmallerThanLargestPossibleFontSize = (fontSizePxStr) => {
+            const { reduceByPx, onlyOnMobile, onlyAtLength } = this.props.textFontReductionOptions;
             let reduceFontSize = true;
 
             if (onlyOnMobile) {
@@ -178,6 +172,11 @@ Shape.propTypes = {
     fill: PropTypes.string,
     text: PropTypes.node,
     textCls: PropTypes.string,
+    textFontReductionOptions: PropTypes.shape({
+        reduceByPx: PropTypes.number,
+        onlyOnMobile: PropTypes.bool,
+        onlyAtLength: PropTypes.number
+    }),
     sides: PropTypes.number,
     additionalSvgChildren: PropTypes.oneOfType([
         PropTypes.node,
@@ -194,6 +193,9 @@ Shape.defaultProps = {
     image: '',
     fill: '',
     textCls: '',
+    textFontReductionOptions: {
+        reduceByPx: 4
+    },
     sides: 6,
     rotation: 0,
     aria: {}
