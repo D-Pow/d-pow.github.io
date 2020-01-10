@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHover } from 'utils/Hooks';
 
-function HoverTranslate({ className, animationCls, english, japanese }) {
-    const [ ref, isHovered ] = useHover();
+function HoverTranslate({ className, animationCls, english, japanese, passedRef, boundingClientRectForHover }) {
+    const [ ref, isHovered ] = useHover(boundingClientRectForHover);
 
     const renderText = ({ title, description }, show) => (
         <div className={`${animationCls} ${show ? 'show' : ''}`}>
@@ -16,7 +16,7 @@ function HoverTranslate({ className, animationCls, english, japanese }) {
     // so that the hover boundary is larger
     return (
         <div className={className}>
-            <div className={'absolute-center'}>
+            <div className={'absolute-center'} ref={passedRef}>
                 {renderText(english, isHovered)}
             </div>
             <div className={'absolute-center'} ref={ref}>
@@ -36,7 +36,9 @@ HoverTranslate.propTypes = {
     japanese: PropTypes.shape({
         title: PropTypes.node,
         description: PropTypes.node
-    })
+    }),
+    passedRef: PropTypes.object,
+    boundingClientRectForHover: PropTypes.object
 };
 
 HoverTranslate.defaultProps = {
