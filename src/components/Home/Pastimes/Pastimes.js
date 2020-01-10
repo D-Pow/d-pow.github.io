@@ -61,6 +61,10 @@ function Pastimes(props) {
                                             <Shape
                                                 htmlChildren={project}
                                                 htmlChildrenWrapperCls={'text-light'}
+                                                htmlChildrenFontReductionOptions={{
+                                                    // reduce by number of pastimes to shrink how much space they take up
+                                                    reduceByPx: pageText.otherPastimes.length
+                                                }}
                                                 sides={sides}
                                                 fill={themeColors.primary}
                                                 rotation={rotation}
