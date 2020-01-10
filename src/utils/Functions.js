@@ -121,6 +121,20 @@ export function validateObjNestedFields(obj, ...nestedFields) {
 }
 
 /**
+ * Attempts to parse an object into a vanilla JavaScript object literal.
+ *
+ * @param {*} obj - Any type of object
+ * @returns {(Object|*)} - Vanilla JavaScript object literal or original object on failure
+ */
+export function attemptParseObjLiteral(obj) {
+    try {
+        return JSON.parse(JSON.stringify(obj));
+    } catch {
+        return obj;
+    }
+}
+
+/**
  * Gets the path from the clicked element to the root.
  *
  * @param {Object} event - Click Event
