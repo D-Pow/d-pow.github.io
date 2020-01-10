@@ -141,7 +141,7 @@ class Shape extends React.Component {
             return reduceFontSize ? `${asNumber(fontSizePxStr) - reduceByPx}px` : fontSizePxStr;
         };
 
-        const TextWrapper = ({ constrainingElem, fontSizePx, children, toResizeElem }) => (
+        const TextWrapper = ({ constrainingElem, fontSizePx, toResizeElem, children }) => (
             <div className={`text-center d-flex h-100 w-100 ${htmlChildrenWrapperCls}`} ref={constrainingElem}>
                 <div
                     className={'m-auto'}
