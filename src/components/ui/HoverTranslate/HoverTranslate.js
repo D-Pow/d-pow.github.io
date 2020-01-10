@@ -7,8 +7,8 @@ function HoverTranslate({ className, animationCls, english, japanese, passedRef,
 
     const renderText = ({ title, description }, show) => (
         <div className={`${animationCls} ${show ? 'show' : ''}`}>
-            <h1>{title}</h1>
-            <h4 className={'mx-5 mb-3'}>{description}</h4>
+            <h1 className={'font-size-2-5em'}>{title}</h1>
+            <h4 className={'font-size-1-5em'}>{description}</h4>
         </div>
     );
 
