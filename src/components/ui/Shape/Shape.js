@@ -11,6 +11,15 @@ class Shape extends React.Component {
         height: 100
     };
 
+    foreignObjectSizeRatio = 0.8;
+    foreignObjectPositionRatio = (1 - this.foreignObjectSizeRatio) / 2; // center x/y position by dividing by 2
+    foreignObjectDimensions = {
+        x: Math.round(this.svgDimensions.width * this.foreignObjectPositionRatio), // remove infinite repeating decimals by rounding
+        y: Math.round(this.svgDimensions.height * this.foreignObjectPositionRatio),
+        width: this.svgDimensions.width * this.foreignObjectSizeRatio,
+        height: this.svgDimensions.height * this.foreignObjectSizeRatio
+    };
+
     constructor(props) {
         super(props);
         this.state = { imageSrc: '' };
@@ -116,13 +125,7 @@ class Shape extends React.Component {
             return null;
         }
 
-        const textContainerSizeRatio = 0.8;
-        // center text container by dividing by 2 so there's equal space before and after the text container
-        const textContainerPositionRatio = (1 - textContainerSizeRatio) / 2;
-        const x = Math.round(this.svgDimensions.width * textContainerPositionRatio);  // remove infinite repeating decimals
-        const y = Math.round(this.svgDimensions.height * textContainerPositionRatio);
-        const width = this.svgDimensions.width * textContainerSizeRatio;
-        const height = this.svgDimensions.height * textContainerSizeRatio;
+        const { x, y, width, height } = this.foreignObjectDimensions;
 
         const slightlySmallerThanLargestPossibleFontSize = (fontSizePxStr) => {
             let reduceFontSize = true;
