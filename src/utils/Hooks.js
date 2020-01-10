@@ -14,8 +14,8 @@ import { asNumber, elementIsInClickPath, getClickPath } from 'utils/Functions';
  * @param {hookedChildRenderer} props.children - Function that uses value from hook() to render children; passed as React.Component.props
  * @returns {React.Component} - Children rendered using the hook() return values
  */
-export function Hooked({ hook, children }) {
-    return children(hook())
+export function Hooked({ hook, hookArgs, children }) {
+    return children(hook(hookArgs))
 }
 
 /**
