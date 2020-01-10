@@ -37,7 +37,7 @@ function ImageCard(props) {
 
         const animationCls = 'duration-5 linear';
         const Title = isMobileBrowser({ includeTablets: true }) ? 'h4' : 'h3';
-        const titleSizeCls = `font-size-${isMobileBrowser({ includeTablets: true }) ? 3 : 4}vh`;
+        const titleSizeCls = `font-size-${isMobileBrowser({ includeTablets: true }) ? '1-5' : '2'}em`;
         const hoverCls = isHovered ? ['show', 'slide-in-top', 'slide-in-bottom'] : ['', '', ''];
 
         return (
@@ -48,7 +48,7 @@ function ImageCard(props) {
                 <Title className={`mx-auto mt-3 ${animationCls} ${hoverCls[1]} ${titleSizeCls}`}>
                     {title}
                 </Title>
-                <div className={`mx-auto ${animationCls} ${hoverCls[2]} font-size-2-5vh`}>
+                <div className={`mx-auto ${animationCls} ${hoverCls[2]} font-size-1em`}>
                     <p className={'mx-3'}>
                         {description}
                     </p>
