@@ -255,3 +255,37 @@ export function useDynamicFontSizeShrinking(originalConstrainingRef = { current:
 
     return [ constrainingElem, toResizeElem, fontSizePx ];
 }
+
+/**
+ * Causes a function to run after an animation/transition ends.
+ * Useful for running logic after said animation, e.g. setting
+ * `display: none;` after the element has faded out so that the
+ * animation plays but then the element doesn't take up space after
+ * it fades out.
+ *
+ * @param {function} afterAnimationFn - Function to run after the animation/transition ends
+ * @returns {React.ref} - Ref to attach to the element whose animation/transition end will require listening to
+ */
+export function useAfterAnimation(afterAnimationFn = () => {}) {
+    const animationRef = useRef(null);
+
+    function handleAfterAnimation(...args) {
+        afterAnimationFn(...args);
+    }
+
+    useEffect(() => {
+        if (animationRef.current) {
+            animationRef.current.addEventListener('transitionend', handleAfterAnimation);
+            animationRef.current.addEventListener('animationend', handleAfterAnimation);
+            animationRef.current.addEventListener('webkitAnimationEnd', handleAfterAnimation);
+        }
+
+        return () => {
+            animationRef.current.removeEventListener('transitionend', handleAfterAnimation);
+            animationRef.current.removeEventListener('animationend', handleAfterAnimation);
+            animationRef.current.removeEventListener('webkitAnimationEnd', handleAfterAnimation);
+        }
+    }, [ animationRef.current ]);
+
+    return animationRef;
+}
