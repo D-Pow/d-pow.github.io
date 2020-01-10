@@ -38,6 +38,40 @@ class Shape extends React.Component {
         return {};
     }
 
+    /**
+     * Since SVGs have their own viewport, the results from the nested `foreignObject.getBoundingClientRect()`
+     * will be relative to the SVG viewport. Thus, translate them here from SVG viewport to window viewport.
+     *
+     * To do this, take the SVG bounding client rect (which is relative to the window) and use the nested
+     * foreignObject-to-SVG dimension ratios to calculate the pixel offsets by hand.
+     *
+     * @returns {Object} - Translated bounding client rects relative to window instead of SVG
+     */
+    get foreignObjectBoundingClientRectInWindow() {
+        if (this.svgRef.current) {
+            const { foreignObjectSizeRatio, foreignObjectDimensions, svgBoundingClientRect } = this;
+
+            const dy = svgBoundingClientRect.height / foreignObjectDimensions.y;
+            const dx = svgBoundingClientRect.width / foreignObjectDimensions.x;
+
+            const width = foreignObjectSizeRatio * svgBoundingClientRect.width;
+            const height = foreignObjectSizeRatio * svgBoundingClientRect.height;
+
+            return {
+                x: svgBoundingClientRect.x + dx,
+                y: svgBoundingClientRect.y + dy,
+                width,
+                height,
+                top: svgBoundingClientRect.top + dy,
+                left: svgBoundingClientRect.left + dx,
+                bottom: svgBoundingClientRect.top + dy + height,
+                right: svgBoundingClientRect.left + dx + width
+            };
+        }
+
+        return {};
+    }
+
     get middleCoordinates() {
         return {
             x: (this.svgDimensions.x + this.svgDimensions.width) / 2,
@@ -177,7 +211,7 @@ class Shape extends React.Component {
                         if (typeof htmlChildren === typeof (() => {})) {
                             return (
                                 <TextWrapper constrainingElem={constrainingElem} fontSizePx={fontSizePx}>
-                                    {htmlChildren(toResizeElem)}
+                                    {htmlChildren(toResizeElem, this.foreignObjectBoundingClientRectInWindow)}
                                 </TextWrapper>
                             );
                         }
@@ -215,7 +249,7 @@ Shape.propTypes = {
     sides: PropTypes.number,
     htmlChildren: PropTypes.oneOfType([
         PropTypes.node,
-        PropTypes.func
+        PropTypes.func // (resizeTextRef, foreignObjectBoundingClientRectInWindow) => (React.Component)
     ]),
     htmlChildrenWrapperCls: PropTypes.string,
     htmlChildrenFontReductionOptions: PropTypes.shape({
