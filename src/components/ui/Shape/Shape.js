@@ -273,7 +273,7 @@ Shape.defaultProps = {
     fill: '',
     htmlChildrenWrapperCls: '',
     htmlChildrenFontReductionOptions: {
-        reduceByPx: 4
+        reduceByPx: 0
     },
     sides: 6,
     rotation: 0,
