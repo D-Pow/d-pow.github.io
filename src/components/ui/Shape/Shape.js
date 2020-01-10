@@ -89,15 +89,30 @@ class Shape extends React.Component {
     }
 
     /**
-     * Renders text content in the center of the SVG polygon shape.
+     * Renders optional HTML content in the center of the SVG polygon.
+     * Nested inside a `foreignObject` that takes up 80% of the width/height
+     * of the SVG itself so that the HTML content doesn't go outside the
+     * SVG shape's borders.
+     *
      * This is more favorable than using `position: absolute;` HTML
-     * elements placed on top of <Shape/> because the contained text
-     * will automatically resize based on the size of the SVG shape.
+     * elements placed on top of <Shape/> because any text passed through
+     * this prop will automatically resize its font-size based on the size
+     * of the whole SVG.
      *
      * @returns {(null|Node)}
      */
-    renderText() {
-        if (!this.props.text) {
+    renderHtmlChildren() {
+        const {
+            htmlChildren,
+            htmlChildrenWrapperCls,
+            htmlChildrenFontReductionOptions: {
+                reduceByPx,
+                onlyOnMobile,
+                onlyAtLength
+            }
+        } = this.props;
+
+        if (!htmlChildren) {
             return null;
         }
 
@@ -110,7 +125,6 @@ class Shape extends React.Component {
         const height = this.svgDimensions.height * textContainerSizeRatio;
 
         const slightlySmallerThanLargestPossibleFontSize = (fontSizePxStr) => {
-            const { reduceByPx, onlyOnMobile, onlyAtLength } = this.props.textFontReductionOptions;
             let reduceFontSize = true;
 
             if (onlyOnMobile) {
@@ -118,14 +132,14 @@ class Shape extends React.Component {
             }
 
             if (typeof onlyAtLength === typeof 0) {
-                reduceFontSize = reduceFontSize && (typeof this.props.text === typeof '') && this.props.text.length >= onlyAtLength;
+                reduceFontSize = reduceFontSize && (typeof htmlChildren === typeof '') && htmlChildren.length >= onlyAtLength;
             }
 
             return reduceFontSize ? `${asNumber(fontSizePxStr) - reduceByPx}px` : fontSizePxStr;
         };
 
         const TextWrapper = ({ constrainingElem, fontSizePx, children, toResizeElem }) => (
-            <div className={`text-center d-flex h-100 w-100 ${this.props.textCls}`} ref={constrainingElem}>
+            <div className={`text-center d-flex h-100 w-100 ${htmlChildrenWrapperCls}`} ref={constrainingElem}>
                 <div
                     className={'m-auto'}
                     ref={toResizeElem}
@@ -148,17 +162,17 @@ class Shape extends React.Component {
             <foreignObject x={x} y={y} width={width} height={height}>
                 <Hooked hook={useDynamicFontSizeShrinking}>
                     {([ constrainingElem, toResizeElem, fontSizePx ]) => {
-                        if (typeof this.props.text === typeof (() => {})) {
+                        if (typeof htmlChildren === typeof (() => {})) {
                             return (
                                 <TextWrapper constrainingElem={constrainingElem} fontSizePx={fontSizePx}>
-                                    {this.props.text(toResizeElem)}
+                                    {htmlChildren(toResizeElem)}
                                 </TextWrapper>
                             );
                         }
 
                         return (
                             <TextWrapper constrainingElem={constrainingElem} fontSizePx={fontSizePx} toResizeElem={toResizeElem}>
-                                {this.props.text}
+                                {htmlChildren}
                             </TextWrapper>
                         );
                     }}
@@ -174,7 +188,7 @@ class Shape extends React.Component {
             <div className={this.props.className} {...this.props.aria}>
                 <svg viewBox={`${x} ${y} ${width} ${height}`}>
                     {this.renderPolygon()}
-                    {this.renderText()}
+                    {this.renderHtmlChildren()}
                     {this.props.svgChildren}
                 </svg>
             </div>
@@ -187,12 +201,12 @@ Shape.propTypes = {
     image: PropTypes.string,
     fill: PropTypes.string,
     sides: PropTypes.number,
-    text: PropTypes.oneOfType([
+    htmlChildren: PropTypes.oneOfType([
         PropTypes.node,
         PropTypes.func
     ]),
-    textCls: PropTypes.string,
-    textFontReductionOptions: PropTypes.shape({
+    htmlChildrenWrapperCls: PropTypes.string,
+    htmlChildrenFontReductionOptions: PropTypes.shape({
         reduceByPx: PropTypes.number,
         onlyOnMobile: PropTypes.bool,
         onlyAtLength: PropTypes.number
@@ -211,8 +225,8 @@ Shape.defaultProps = {
     className: '',
     image: '',
     fill: '',
-    textCls: '',
-    textFontReductionOptions: {
+    htmlChildrenWrapperCls: '',
+    htmlChildrenFontReductionOptions: {
         reduceByPx: 4
     },
     sides: 6,

@@ -59,8 +59,8 @@ function Pastimes(props) {
                                     return (
                                         <div className={'col-sm-6'} key={index}>
                                             <Shape
-                                                text={project}
-                                                textCls={'text-light'}
+                                                htmlChildren={project}
+                                                htmlChildrenWrapperCls={'text-light'}
                                                 sides={sides}
                                                 fill={themeColors.primary}
                                                 rotation={rotation}
