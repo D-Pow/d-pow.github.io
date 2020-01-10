@@ -104,8 +104,8 @@ class Shape extends React.Component {
         const textContainerSizeRatio = 0.8;
         // center text container by dividing by 2 so there's equal space before and after the text container
         const textContainerPositionRatio = (1 - textContainerSizeRatio) / 2;
-        const x = this.svgDimensions.width * textContainerPositionRatio;
-        const y = this.svgDimensions.height * textContainerPositionRatio;
+        const x = Math.round(this.svgDimensions.width * textContainerPositionRatio);  // remove infinite repeating decimals
+        const y = Math.round(this.svgDimensions.height * textContainerPositionRatio);
         const width = this.svgDimensions.width * textContainerSizeRatio;
         const height = this.svgDimensions.height * textContainerSizeRatio;
 
