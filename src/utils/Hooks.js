@@ -223,18 +223,15 @@ export function useDynamicFontSizeShrinking(originalConstrainingRef = { current:
             const shouldShrink = (toResizeHeight > constrainingHeight) || (toResizeWidth > constrainingWidth);
 
             if (shouldShrink) {
-                const heightRatio = constrainingHeight / toResizeHeight;
-                const widthRatio = constrainingWidth / toResizeWidth;
-                const ratioWithBiggestDiscrepancy = (heightRatio < widthRatio) ? heightRatio : widthRatio;
                 const currentFontSize = asNumber(toResizeStyles.fontSize);
-                const newFontSize = `${ratioWithBiggestDiscrepancy*currentFontSize}px`;
+                const newFontSize = `${currentFontSize - 1}px`;
 
                 setFontSizePx(newFontSize);
             }
 
             resetWasSized();
         }
-    }, [ constrainingElem.current, toResizeElem.current, windowSizeState.wasResized ]);
+    }, [ constrainingElem.current, toResizeElem.current, windowSizeState.wasResized, fontSizePx ]);
 
     return [ constrainingElem, toResizeElem, fontSizePx ];
 }
