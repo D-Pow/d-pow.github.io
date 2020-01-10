@@ -118,11 +118,25 @@ class Shape extends React.Component {
             }
 
             if (typeof onlyAtLength === typeof 0) {
-                reduceFontSize = reduceFontSize && this.props.text.length >= onlyAtLength;
+                reduceFontSize = reduceFontSize && (typeof this.props.text === typeof '') && this.props.text.length >= onlyAtLength;
             }
 
             return reduceFontSize ? `${asNumber(fontSizePxStr) - reduceByPx}px` : fontSizePxStr;
         };
+
+        const TextWrapper = ({ constrainingElem, fontSizePx, children, toResizeElem }) => (
+            <div className={`text-center d-flex h-100 w-100 ${this.props.textCls}`} ref={constrainingElem}>
+                <div
+                    className={'m-auto'}
+                    ref={toResizeElem}
+                    style={{
+                        fontSize: slightlySmallerThanLargestPossibleFontSize(fontSizePx)
+                    }}
+                >
+                    {children}
+                </div>
+            </div>
+        );
 
         /**
          * Since SVG doesn't support text-wrapping by default, use `foreignObject`
@@ -133,19 +147,21 @@ class Shape extends React.Component {
         return (
             <foreignObject x={x} y={y} width={width} height={height}>
                 <Hooked hook={useDynamicFontSizeShrinking}>
-                    {([ constrainingElem, toResizeElem, fontSizePx ]) => (
-                        <div className={`text-center d-flex h-100 w-100 ${this.props.textCls}`} ref={constrainingElem}>
-                            <div
-                                className={'m-auto'}
-                                ref={toResizeElem}
-                                style={{
-                                    fontSize: slightlySmallerThanLargestPossibleFontSize(fontSizePx)
-                                }}
-                            >
+                    {([ constrainingElem, toResizeElem, fontSizePx ]) => {
+                        if (typeof this.props.text === typeof (() => {})) {
+                            return (
+                                <TextWrapper constrainingElem={constrainingElem} fontSizePx={fontSizePx}>
+                                    {this.props.text(toResizeElem)}
+                                </TextWrapper>
+                            );
+                        }
+
+                        return (
+                            <TextWrapper constrainingElem={constrainingElem} fontSizePx={fontSizePx} toResizeElem={toResizeElem}>
                                 {this.props.text}
-                            </div>
-                        </div>
-                    )}
+                            </TextWrapper>
+                        );
+                    }}
                 </Hooked>
             </foreignObject>
         );
@@ -159,7 +175,7 @@ class Shape extends React.Component {
                 <svg viewBox={`${x} ${y} ${width} ${height}`}>
                     {this.renderPolygon()}
                     {this.renderText()}
-                    {this.props.additionalSvgChildren}
+                    {this.props.svgChildren}
                 </svg>
             </div>
         );
@@ -170,15 +186,18 @@ Shape.propTypes = {
     className: PropTypes.string,
     image: PropTypes.string,
     fill: PropTypes.string,
-    text: PropTypes.node,
+    sides: PropTypes.number,
+    text: PropTypes.oneOfType([
+        PropTypes.node,
+        PropTypes.func
+    ]),
     textCls: PropTypes.string,
     textFontReductionOptions: PropTypes.shape({
         reduceByPx: PropTypes.number,
         onlyOnMobile: PropTypes.bool,
         onlyAtLength: PropTypes.number
     }),
-    sides: PropTypes.number,
-    additionalSvgChildren: PropTypes.oneOfType([
+    svgChildren: PropTypes.oneOfType([
         PropTypes.node,
         PropTypes.arrayOf([ PropTypes.node ])
     ]),
