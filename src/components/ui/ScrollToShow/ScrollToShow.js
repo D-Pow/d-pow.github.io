@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SHOW_ELEMENT_SCROLL_THRESHOLD } from 'utils/Constants';
-import { childIsReactElement } from 'utils/Functions';
+import { asNumber, childIsReactElement } from 'utils/Functions';
 
 class ScrollToShow extends React.Component {
     constructor(props) {
@@ -94,7 +94,7 @@ class ScrollToShow extends React.Component {
     }
 
     getTotalOffsetTop(element) {
-        return element.getBoundingClientRect().top - Number(getComputedStyle(element).marginTop.replace(/[^\d.]/g, ''));
+        return element.getBoundingClientRect().top - asNumber(getComputedStyle(element).marginTop);
     }
 
     getClassNames = index => {
