@@ -40,11 +40,20 @@ function Pastimes(props) {
                     <div className={'col-sm-6 mb-4'}>
                         <ScrollToShow addClasses={'slide-in-bottom show'} distributeClasses={'animated duration-15'}>
                             <div>
-                                <Shape sides={8} fill={themeColors.primary} />
-                                <HoverTranslate
-                                    className={'text-light'}
-                                    english={english}
-                                    japanese={japanese}
+                                <Shape
+                                    sides={8}
+                                    fill={themeColors.primary}
+                                    htmlChildrenFontReductionOptions={{ reduceByPx: 1 }} // only 1 HoverTranslate present
+                                    htmlChildren={(resizeTextRef, foreignObjectBoundingClientRectInWindow) => (
+                                        <HoverTranslate
+                                            className={'text-light'}
+                                            animationCls={'animated fade duration-5'}
+                                            english={english}
+                                            japanese={japanese}
+                                            passedRef={resizeTextRef}
+                                            boundingClientRectForHover={foreignObjectBoundingClientRectInWindow}
+                                        />
+                                    )}
                                 />
                             </div>
                         </ScrollToShow>
