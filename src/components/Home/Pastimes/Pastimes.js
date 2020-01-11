@@ -47,7 +47,6 @@ function Pastimes(props) {
                                     htmlChildren={(resizeTextRef, foreignObjectBoundingClientRectInWindow) => (
                                         <HoverTranslate
                                             className={'text-light'}
-                                            animationCls={'animated fade duration-5'}
                                             english={english}
                                             japanese={japanese}
                                             passedRef={resizeTextRef}
