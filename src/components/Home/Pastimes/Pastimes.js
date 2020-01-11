@@ -2,7 +2,7 @@ import React from 'react';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import Shape from 'components/ui/Shape';
 import HoverTranslate from 'components/ui/HoverTranslate';
-import { getThemeColors, isMobileBrowser } from 'utils/Functions';
+import { getThemeColors, isMobileBrowser, isSafariBrowser } from 'utils/Functions';
 
 function Pastimes(props) {
     const pageText = {
@@ -30,6 +30,42 @@ function Pastimes(props) {
     const themeColors = getThemeColors();
     const { hoverTranslate: { english, japanese }, otherPastimes } = pageText;
 
+    // Safari doesn't correctly consider `foreignObject` as an SVG rendering root
+    // so use the old way of manually positioning HoverTranslate over Shape but
+    // only in Safari (see: https://bugs.webkit.org/show_bug.cgi?id=165516).
+    // Add 'mx-4' to `animationCls` to add margins to the divs that are nested
+    // inside the `div.absolute-center` elements and a font-size of 14px since
+    // that's what is rendered on all other browsers.
+    const renderedHoverTranslateInShape = isSafariBrowser() ? (
+        <React.Fragment>
+            <Shape sides={8} fill={themeColors.primary} />
+            <HoverTranslate
+                className={'text-light'}
+                animationCls={'animated fade duration-5 mx-4'}
+                english={english}
+                japanese={japanese}
+                aria={{
+                    style: { fontSize: '14px' }
+                }}
+            />
+        </React.Fragment>
+    ) : (
+        <Shape
+            sides={8}
+            fill={themeColors.primary}
+            htmlChildrenFontReductionOptions={{ reduceByPx: 1 }} // only 1 HoverTranslate present
+            htmlChildren={(resizeTextRef, foreignObjectBoundingClientRectInWindow) => (
+                <HoverTranslate
+                    className={'text-light'}
+                    english={english}
+                    japanese={japanese}
+                    passedRef={resizeTextRef}
+                    boundingClientRectForHover={foreignObjectBoundingClientRectInWindow}
+                />
+            )}
+        />
+    );
+
     return (
         <React.Fragment>
             <ScrollToShow addClasses={'show'} distributeClasses={'animated fade duration-20'}>
@@ -40,20 +76,7 @@ function Pastimes(props) {
                     <div className={'col-sm-6 mb-4'}>
                         <ScrollToShow addClasses={'slide-in-bottom show'} distributeClasses={'animated duration-15'}>
                             <div>
-                                <Shape
-                                    sides={8}
-                                    fill={themeColors.primary}
-                                    htmlChildrenFontReductionOptions={{ reduceByPx: 1 }} // only 1 HoverTranslate present
-                                    htmlChildren={(resizeTextRef, foreignObjectBoundingClientRectInWindow) => (
-                                        <HoverTranslate
-                                            className={'text-light'}
-                                            english={english}
-                                            japanese={japanese}
-                                            passedRef={resizeTextRef}
-                                            boundingClientRectForHover={foreignObjectBoundingClientRectInWindow}
-                                        />
-                                    )}
-                                />
+                                {renderedHoverTranslateInShape}
                             </div>
                         </ScrollToShow>
                     </div>
