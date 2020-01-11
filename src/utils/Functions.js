@@ -29,6 +29,10 @@ export function isMobileBrowser({ includeTablets = false, onlyXsScreenSizes = fa
     return isMobileBrowser;
 }
 
+export function isSafariBrowser() {
+    return window.safari != null || navigator.vendor.toLocaleLowerCase().includes('apple');
+}
+
 /**
  * Gets the string representation of a single React node
 
