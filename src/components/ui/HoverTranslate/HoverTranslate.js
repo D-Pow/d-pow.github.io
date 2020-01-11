@@ -5,8 +5,8 @@ import { useHover } from 'utils/Hooks';
 function HoverTranslate({ className, animationCls, english, japanese, passedRef, boundingClientRectForHover }) {
     const [ ref, isHovered ] = useHover(boundingClientRectForHover);
 
-    const renderText = ({ title, description }, show) => (
-        <div className={`${animationCls} ${show ? 'show' : ''}`}>
+    const renderText = ({ title, description }, show, ref) => (
+        <div className={`${animationCls} ${show ? 'show' : ''}`} ref={ref}>
             <h1 className={'font-size-2-5em'}>{title}</h1>
             <h4 className={'font-size-1-5em'}>{description}</h4>
         </div>
@@ -16,8 +16,8 @@ function HoverTranslate({ className, animationCls, english, japanese, passedRef,
     // so that the hover boundary is larger
     return (
         <div className={className}>
-            <div className={'absolute-center'} ref={passedRef}>
-                {renderText(english, isHovered)}
+            <div className={'absolute-center'}>
+                {renderText(english, isHovered, passedRef)}
             </div>
             <div className={'absolute-center'} ref={ref}>
                 {renderText(japanese, !isHovered)}
