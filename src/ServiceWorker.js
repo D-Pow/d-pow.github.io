@@ -15,15 +15,17 @@ self.addEventListener('install', event => {
 
 self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request).then(function(response) {
-            // Cache hit - return response
-            if (response) {
-                console.log(`Fetched ${response.url}`)
-                return response;
-            } else {
-                console.log(`Could not fetch ${event.request.url}`);
-                return fetch(event.request);
-            }
+        caches.open(CACHE_NAME).then(function(cache) {
+            return cache.match(event.request).then(function(response) {
+                // Cache hit - return response
+                if (response) {
+                    console.log(`Fetched ${response.url}`)
+                    return response;
+                } else {
+                    console.log(`Could not fetch ${event.request.url}`);
+                    return fetch(event.request);
+                }
+            });
         })
     );
 });
