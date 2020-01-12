@@ -23,19 +23,36 @@ class Shape extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { imageSrc: '' };
+        this.state = {
+            imageSrc: '',
+            svgBoundingClientRect: {}
+        };
 
         if (this.props.image) {
             importImageAsync(this.props.image).then(imageSrc => this.setState({ imageSrc }));
         }
     }
 
-    get svgBoundingClientRect() {
+    updateSvgBoundingClientRect() {
+        this.setState({
+            svgBoundingClientRect: attemptParseObjLiteral(this.svgRef.current.getBoundingClientRect())
+        });
+    }
+
+    handleScroll = () => {
+        this.updateSvgBoundingClientRect();
+    };
+
+    componentDidMount() {
         if (this.svgRef.current) {
-            return attemptParseObjLiteral(this.svgRef.current.getBoundingClientRect());
+            this.updateSvgBoundingClientRect();
         }
 
-        return {};
+        window.addEventListener('scroll', this.handleScroll);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
     }
 
     /**
@@ -49,7 +66,7 @@ class Shape extends React.Component {
      */
     get foreignObjectBoundingClientRectInWindow() {
         if (this.svgRef.current) {
-            const { foreignObjectSizeRatio, foreignObjectDimensions, svgBoundingClientRect } = this;
+            const { foreignObjectSizeRatio, foreignObjectDimensions, state: { svgBoundingClientRect }} = this;
 
             const dy = svgBoundingClientRect.height / foreignObjectDimensions.y;
             const dx = svgBoundingClientRect.width / foreignObjectDimensions.x;

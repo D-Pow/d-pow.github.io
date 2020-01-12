@@ -168,14 +168,10 @@ export function useHover(overrideBoundingClientRect) {
             const { pageXOffset, pageYOffset } = window;
             let { top, bottom, left, right } = overrideBoundingClientRect || ref.current.getBoundingClientRect();
 
-            // If using a specific bounding client rect, it will be generated from
-            // an SVG, which will take the `page(X|Y)Offset` into account automatically
-            if (!overrideBoundingClientRect) {
-                top = top + pageYOffset;
-                bottom = bottom + pageYOffset;
-                left = left + pageXOffset;
-                right = right + pageXOffset;
-            }
+            top = top + pageYOffset;
+            bottom = bottom + pageYOffset;
+            left = left + pageXOffset;
+            right = right + pageXOffset;
 
             if (pageX <= right && pageX >= left && pageY <= bottom && pageY >= top) {
                 setIsHovered(true);
