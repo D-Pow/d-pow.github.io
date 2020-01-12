@@ -151,7 +151,7 @@ module.exports = {
             },
             {
                 from: 'src/assets/favicon.ico',
-                to: 'static/assets/[name].[ext]'
+                to: '[name].[ext]'
             }
         ])
     ],
