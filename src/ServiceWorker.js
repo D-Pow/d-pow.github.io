@@ -1,4 +1,3 @@
-// Purpose: Open cache, cache desired files, and confirm success
 var CACHE_NAME = 'cache-v1.0.0';
 var urlsToCache = []; // filenames change in each build (via appended filename hashes), so they can't be predicted here
 
@@ -47,14 +46,14 @@ self.addEventListener('fetch', event => {
                              * TODO clear old cache content of hashed files when new version available
                              * So as to not take up infinite storage space on the user's device
                              */
-                            try {
-                                cache.put(event.request, fetchResponse.clone());
-                            } catch(e) {
-                                console.log('Could not cache response. Failed with error:', e)
-                            }
+                            cache.put(event.request, fetchResponse.clone()).catch(function(fetchError) {
+                                console.log('Could not cache url:', url, 'Failed with error:', fetchError);
+                            });
                         }
 
                         return fetchResponse;
+                    }).catch(function(fetchError) {
+                        console.log('Could not fetch url:', url, 'Failed with fetch error:', fetchError);
                     });
                 }
             });
