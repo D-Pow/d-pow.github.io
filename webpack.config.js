@@ -6,11 +6,12 @@ const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const outputPaths = {
+const buildOutputPaths = {
     dev: '',
     prod: 'website'
 };
-const outputPath = process.env.NODE_ENV === 'production' ? outputPaths.prod : outputPaths.dev;
+const buildOutputPath = process.env.NODE_ENV === 'production' ? buildOutputPaths.prod : buildOutputPaths.dev;
+const publicUrl = 'static';
 
 const env = dotenv.config({
     path: './.env'
@@ -20,7 +21,7 @@ process.env = {
     ...process.env,
     ...env,
     NODE_ENV: process.env.NODE_ENV || 'development',
-    PUBLIC_URL: outputPath
+    PUBLIC_URL: publicUrl
 };
 
 const publicEnv = {
@@ -88,7 +89,7 @@ module.exports = {
                     {
                         loader: 'file-loader',
                         options: {
-                            name: `static/assets/[name]-[hash:8].[ext]`
+                            name: `${publicUrl}/assets/[name]-[hash:8].[ext]`
                         }
                     }
                 ]
@@ -107,9 +108,9 @@ module.exports = {
         vendor: ['react', 'react-dom', 'react-router-dom', 'prop-types']
     },
     output: {
-        path: path.resolve(__dirname, outputPath), // set specific output path for github global user .io domain
-        filename: `static/js/[name].[hash:8].bundle.js`,
-        chunkFilename: `static/js/[name].[hash:8].chunk.js`
+        path: path.resolve(__dirname, buildOutputPath), // output path for webpack build on machine, not relative paths for index.html
+        filename: `${publicUrl}/js/[name].[hash:8].bundle.js`,
+        chunkFilename: `${publicUrl}/js/[name].[hash:8].chunk.js`
     },
     devServer: {
         port: 3000,
@@ -132,8 +133,8 @@ module.exports = {
          */
         // splits CSS out from the rest of the code
         new MiniCssExtractPlugin({
-            filename: `static/css/[name].[contenthash:8].css`,
-            chunkFilename: `static/css/[name].[contenthash:8].chunk.css`
+            filename: `${publicUrl}/css/[name].[contenthash:8].css`,
+            chunkFilename: `${publicUrl}/css/[name].[contenthash:8].chunk.css`
         }),
         // manually copies files from src to dest
         new CopyWebpackPlugin([
