@@ -1,8 +1,6 @@
 // Purpose: Open cache, cache desired files, and confirm success
 var CACHE_NAME = 'cache-v1.0.0';
-var urlsToCache = [
-    '/',
-];
+var urlsToCache = [];
 
 self.addEventListener('install', event => {
     // Perform install steps
