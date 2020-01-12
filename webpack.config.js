@@ -12,6 +12,7 @@ const buildOutputPaths = {
 };
 const buildOutputPath = process.env.NODE_ENV === 'production' ? buildOutputPaths.prod : buildOutputPaths.dev;
 const publicUrl = 'static';
+const title = 'Devon Powell';
 
 const env = dotenv.config({
     path: './.env'
@@ -125,12 +126,14 @@ module.exports = {
         new webpack.DefinePlugin({ 'process.env': JSON.stringify(publicEnv) }),
         // injects tags like <script> into index.html
         new HtmlWebpackPlugin({
+            title,
             template: './src/index.html',
-            filename: './index.html'
+            meta: {
+                'theme-color': '#3800FF'
+            }
         }),
         // replaces %PUBLIC_URL% in index.html with env entry
-        /* new InterpolateHtmlPlugin(publicEnv),    // not needed since PUBLIC_URL isn't used in index.html anymore
-         */
+        new InterpolateHtmlPlugin(publicEnv),
         // splits CSS out from the rest of the code
         new MiniCssExtractPlugin({
             filename: `${publicUrl}/css/[name].[contenthash:8].css`,
