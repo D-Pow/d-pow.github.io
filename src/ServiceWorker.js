@@ -1,28 +1,53 @@
 var CACHE_NAME = 'cache-v1.0.0';
 var urlsToCache = []; // filenames change in each build (via appended filename hashes), so they can't be predicted here
 
-self.addEventListener('install', event => {
+function removeOldCaches() {
+    return caches.keys()
+        .then(function(cacheNames) {
+            return Promise.all(
+                cacheNames.filter(function(cacheName) {
+                    return cacheName !== CACHE_NAME;
+                }).map(function(cacheName) {
+                    console.log('Outdated cache', cacheName, 'will be removed');
+                    return caches.delete(cacheName);
+                })
+            );
+        });
+}
+
+function fetchAndCache(event, cache) {
+    return fetch(event.request)
+        .then(function(fetchResponse) {
+            cache.put(event.request, fetchResponse.clone()).catch(function(cacheError) {
+                console.log('Could not cache url:', event.request.url, 'Failed with error:', cacheError);
+            });
+
+            return fetchResponse;
+        })
+        .catch(function(fetchError) {
+            console.log('Could not fetch url:', event.request.url, 'Failed with fetch error:', fetchError);
+        });
+}
+
+self.addEventListener('install', function(event) {
     // Perform install steps
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(function(cache) {
                 console.log('Opened cache');
                 return cache.addAll(urlsToCache);
-            }).then(self.skipWaiting()) // needed to force new service workers to overwrite old ones
+            })
+            .then(function() {
+                return self.skipWaiting(); // needed to force new service workers to overwrite old ones
+            })
     );
 });
 
-function fetchAndCache(event, cache) {
-    return fetch(event.request).then(function(fetchResponse) {
-        cache.put(event.request, fetchResponse.clone()).catch(function(cacheError) {
-            console.log('Could not cache url:', event.request.url, 'Failed with error:', cacheError);
-        });
-
-        return fetchResponse;
-    }).catch(function(fetchError) {
-        console.log('Could not fetch url:', event.request.url, 'Failed with fetch error:', fetchError);
-    });
-}
+self.addEventListener('activate', function(event) {
+    event.waitUntil(
+        removeOldCaches()
+    );
+});
 
 self.addEventListener('fetch', event => {
     event.respondWith(
@@ -30,11 +55,6 @@ self.addEventListener('fetch', event => {
             return cache.match(event.request).then(function(response) {
                 var url = event.request.url;
                 var isIndexHtml = url[url.length-1] === '/' || url.split('/').pop() === 'index.html';
-
-                /**
-                 * TODO clear old cache content of hashed files when new version available
-                 * So as to not take up infinite storage space on the user's device
-                 */
 
                 if (response) { // Cache hit - return response served from ServiceWorker
                     if (isIndexHtml) {
