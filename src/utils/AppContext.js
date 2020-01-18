@@ -1,4 +1,4 @@
-import ContextFactory from 'utils/Context';
+import ContextFactory from 'utils/ContextFactory';
 
 const initialState = {
     imagesRequested: 0,
