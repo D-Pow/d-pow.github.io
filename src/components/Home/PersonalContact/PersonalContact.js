@@ -49,7 +49,7 @@ function PersonalContact(props) {
     return (
         <div className={'mb-5'}>
             <ScrollToShow addClasses={'show'} distributeClasses={'animated fade duration-20'} distributeSimultaneously={0.5}>
-                <h1 className={'p-5 mb-5 bg-light'}>Personal Contact</h1>
+                <h1 className={'p-5'}>Personal Contact</h1>
                 <div className={'container'}>
                     <div className={'row justify-content-sm-center'}>
                         <div className={'col-sm-6 my-5'}>

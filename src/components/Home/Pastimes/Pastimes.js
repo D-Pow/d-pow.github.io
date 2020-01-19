@@ -67,9 +67,9 @@ function Pastimes(props) {
     );
 
     return (
-        <React.Fragment>
+        <div className={'bg-light w-100 pb-5'}>
             <ScrollToShow addClasses={'show'} distributeClasses={'animated fade duration-20'}>
-                <h1 className={'p-5 mb-5 bg-light'}>Pastimes</h1>
+                <h1 className={'p-5'}>Pastimes</h1>
             </ScrollToShow>
             <div className={'container'}>
                 <div className={'row mb-5'}>
@@ -108,7 +108,7 @@ function Pastimes(props) {
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 

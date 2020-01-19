@@ -24,7 +24,7 @@ function GistSection(props) {
     return (
         <React.Fragment>
             <ScrollToShow addClasses={'show'} distributeClasses={'animated fade duration-20'}>
-                <h1 className={'p-5 mb-5 bg-light'}>The gist...</h1>
+                <h1 className={'p-5'}>The gist...</h1>
             </ScrollToShow>
             <div className={'container'}>
                 <SectionCard

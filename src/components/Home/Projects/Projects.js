@@ -39,7 +39,7 @@ function Projects(props) {
     return (
         <React.Fragment>
             <ScrollToShow addClasses={'show'} distributeClasses={'animated fade duration-20'}>
-                <h1 className={'p-5 mb-5 bg-light'}>Projects and Publications</h1>
+                <h1 className={'p-5'}>Projects and Publications</h1>
             </ScrollToShow>
             <div className={'container'}>
                 <div className={'row'}>

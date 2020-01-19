@@ -31,18 +31,18 @@ function Productions(props) {
                 image: 'mock_requests.png',
                 title: <Link className={'text-light'} href={LINKS.MockRequests}>MockRequests</Link>,
                 description: 'Open-source front-end network mocking system',
-                className: 'bg-grey'
+                className: 'bg-lighter'
             }
         ]
     };
 
     return (
-        <React.Fragment>
+        <div className={'bg-light w-100 pb-5'}>
             <ScrollToShow addClasses={'show'} distributeClasses={'animated fade duration-20'}>
-                <h1 className={'p-5 mb-5 bg-light'}>Productions</h1>
+                <h1 className={'p-5'}>Productions</h1>
             </ScrollToShow>
             <div className={'container'}>
-                <div className={'row mb-5'}>
+                <div className={'row'}>
                     <SameHeightImageCard.Provider>
                         <ScrollToShow addClasses={'flip-y show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.5}>
                             {pageText.imageCards.map((imageCardProps, index) => {
@@ -68,7 +68,7 @@ function Productions(props) {
                     </SameHeightImageCard.Provider>
                 </div>
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 

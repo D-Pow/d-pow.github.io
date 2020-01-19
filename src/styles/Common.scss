@@ -6,7 +6,8 @@ $primary: rgb(56, 0, 255);
 $secondary: rgb(40, 0, 176);
 $tertiary: rgb(25, 0, 97);
 $light: rgb(225, 224, 224);
-$lighter: rgb(241, 240, 240);
+$lighter: rgb(237, 236, 236);
+$lightest: rgb(241, 240, 240);
 $dark: rgb(40, 40, 40);
 $grey: rgb(232, 232, 232);
 
@@ -16,11 +17,12 @@ $theme-colors: (
     "tertiary": $tertiary,
     "light": $light,
     "lighter": $lighter,
+    "lightest": $lightest,
     "dark": $dark,
     "grey": $grey
 );
 
-$body-bg: $lighter;
+$body-bg: $lightest;
 
 // Copy Bootstrap's grid breakpoints and max-widths here in order
 // to add an extra .container `xxl` breakpoint for very large monitors
