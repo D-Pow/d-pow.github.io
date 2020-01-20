@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import SectionCard from 'components/ui/SectionCard';
 import Shape from 'components/ui/Shape';
@@ -23,7 +24,7 @@ function GistSection(props) {
 
     return (
         <React.Fragment>
-            <ScrollToShow addClasses={'show'} distributeClasses={'animated fade duration-20'}>
+            <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
                 <h1 className={'p-5'}>The gist...</h1>
             </ScrollToShow>
             <div className={'container'}>
@@ -43,5 +44,13 @@ function GistSection(props) {
         </React.Fragment>
     );
 }
+
+GistSection.propTypes = {
+    titleAnimationCls: PropTypes.string
+};
+
+GistSection.defaultProps = {
+    titleAnimationCls: ''
+};
 
 export default GistSection;

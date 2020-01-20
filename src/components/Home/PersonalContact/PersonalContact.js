@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import ContactModal from 'components/ui/ContactModal';
 import Image from 'components/ui/Image';
@@ -48,7 +49,7 @@ function PersonalContact(props) {
 
     return (
         <div className={'mb-5'}>
-            <ScrollToShow addClasses={'show'} distributeClasses={'animated fade duration-20'} distributeSimultaneously={0.5}>
+            <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls} distributeSimultaneously={0.5}>
                 <h1 className={'p-5'}>Personal Contact</h1>
                 <div className={'container'}>
                     <div className={'row justify-content-sm-center'}>
@@ -68,5 +69,13 @@ function PersonalContact(props) {
         </div>
     );
 }
+
+PersonalContact.propTypes = {
+    titleAnimationCls: PropTypes.string
+};
+
+PersonalContact.defaultProps = {
+    titleAnimationCls: ''
+};
 
 export default PersonalContact;

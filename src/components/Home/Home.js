@@ -7,14 +7,16 @@ import Pastimes from 'components/Home/Pastimes';
 import PersonalContact from 'components/Home/PersonalContact';
 
 function Home(props) {
+    const titleDisplayAnimationCls = 'animated fade duration-20';
+
     return (
         <React.Fragment>
-            <SplashSection />
-            <GistSection />
-            <Productions />
-            <Projects />
-            <Pastimes />
-            <PersonalContact />
+            <SplashSection titleAnimationCls={titleDisplayAnimationCls} />
+            <GistSection titleAnimationCls={titleDisplayAnimationCls} />
+            <Productions titleAnimationCls={titleDisplayAnimationCls} />
+            <Projects titleAnimationCls={titleDisplayAnimationCls} />
+            <Pastimes titleAnimationCls={titleDisplayAnimationCls} />
+            <PersonalContact titleAnimationCls={titleDisplayAnimationCls} />
         </React.Fragment>
     );
 }

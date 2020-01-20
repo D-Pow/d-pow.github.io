@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import Shape from 'components/ui/Shape';
 import HoverTranslate from 'components/ui/HoverTranslate';
@@ -68,7 +69,7 @@ function Pastimes(props) {
 
     return (
         <div className={'bg-light w-100 pb-5'}>
-            <ScrollToShow addClasses={'show'} distributeClasses={'animated fade duration-20'}>
+            <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
                 <h1 className={'p-5'}>Pastimes</h1>
             </ScrollToShow>
             <div className={'container'}>
@@ -111,5 +112,13 @@ function Pastimes(props) {
         </div>
     );
 }
+
+Pastimes.propTypes = {
+    titleAnimationCls: PropTypes.string
+};
+
+Pastimes.defaultProps = {
+    titleAnimationCls: ''
+};
 
 export default Pastimes;

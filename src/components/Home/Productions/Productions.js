@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import { SameHeightImageCard } from 'components/ui/ImageCard';
 import Link from 'components/ui/Link';
@@ -38,7 +39,7 @@ function Productions(props) {
 
     return (
         <div className={'bg-light w-100 pb-5'}>
-            <ScrollToShow addClasses={'show'} distributeClasses={'animated fade duration-20'}>
+            <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
                 <h1 className={'p-5'}>Productions</h1>
             </ScrollToShow>
             <div className={'container'}>
@@ -71,5 +72,13 @@ function Productions(props) {
         </div>
     );
 }
+
+Productions.propTypes = {
+    titleAnimationCls: PropTypes.string
+};
+
+Productions.defaultProps = {
+    titleAnimationCls: ''
+};
 
 export default Productions;

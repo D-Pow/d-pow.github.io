@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import InfoCard from 'components/ui/InfoCard';
 import Link from 'components/ui/Link';
@@ -38,7 +39,7 @@ function Projects(props) {
 
     return (
         <React.Fragment>
-            <ScrollToShow addClasses={'show'} distributeClasses={'animated fade duration-20'}>
+            <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
                 <h1 className={'p-5'}>Projects and Publications</h1>
             </ScrollToShow>
             <div className={'container'}>
@@ -58,5 +59,13 @@ function Projects(props) {
         </React.Fragment>
     );
 }
+
+Projects.propTypes = {
+    titleAnimationCls: PropTypes.string
+};
+
+Projects.defaultProps = {
+    titleAnimationCls: ''
+};
 
 export default Projects;
