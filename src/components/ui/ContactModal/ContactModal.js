@@ -19,7 +19,8 @@ class ContactModal extends React.Component {
                     invalid: 'Hmm, I don\'t seem to recognize that email format. Try again?'
                 },
                 message: 'Please add a message (even if it\'s short)',
-                form: 'Oops, something went wrong. Could you try again?'
+                formGeneric: 'Oops, something went wrong. Could you try again?',
+                formNetwork: 'There was a network error. Are you sure you have an internet connection?'
             }
         }
     };
@@ -108,13 +109,15 @@ class ContactModal extends React.Component {
         formData.append('email', emailInput);
         formData.append('message', messageInput);
 
-        const handleAfterSubmit = success => {
+        const handleAfterSubmit = (success, networkError = false) => {
             this.setState({ isLoading: false });
 
             if (success) {
                 this.setState({ hasSubmitted: true, formError: '' });
+            } else if (networkError) {
+                this.setState({ formError: this.pageText.inputs.error.formNetwork });
             } else {
-                this.setState({ formError: this.pageText.inputs.error.form });
+                this.setState({ formError: this.pageText.inputs.error.formGeneric });
             }
         };
 
@@ -130,7 +133,7 @@ class ContactModal extends React.Component {
 
             handleAfterSubmit(response.ok && responseBody.ok);
         } catch(networkError) {
-            handleAfterSubmit(false);
+            handleAfterSubmit(false, true);
         }
     }
 
