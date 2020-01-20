@@ -190,14 +190,22 @@ export function useHover(overrideBoundingClientRect) {
     return [ ref, isHovered ];
 }
 
-export function useTimedArrayToggle(numChildren, intervalTimeMs) {
-    const toggleArrayEntryReducer = (prevShownChildren, index) => {
-        const shownChildren = [...prevShownChildren];
-        shownChildren[index] = true;
-        return shownChildren;
+/**
+ * Returns an array of false booleans that will toggle to true one after another
+ * according to the specified `intervalTimeMs`.
+ *
+ * @param {number} arrayLength - How many entries should be in the toggle array
+ * @param {number} intervalTimeMs - How much time should pass before toggling the next entry
+ * @returns {[ boolean[], Function ]} - An array of booleans to toggle and a function to initiate array toggling
+ */
+export function useTimedArrayToggle(arrayLength, intervalTimeMs) {
+    const toggleArrayEntryReducer = (prevArray, index) => {
+        const toggledEntries = [...prevArray];
+        toggledEntries[index] = true;
+        return toggledEntries;
     };
 
-    const origState = Array.from({ length: numChildren }).fill(false);
+    const origState = Array.from({ length: arrayLength }).fill(false);
 
     const [ toggledEntries, dispatchToggleEntry ] = useReducer(toggleArrayEntryReducer, origState);
     const [ shouldToggleEntries, setShouldToggleEntries ] = useState(false);
@@ -205,7 +213,7 @@ export function useTimedArrayToggle(numChildren, intervalTimeMs) {
 
     if (shouldToggleEntries && !timeoutTriggered) {
         setTimeoutTriggered(true);
-        for (let i = 0; i < numChildren; i++) {
+        for (let i = 0; i < arrayLength; i++) {
             const timeToShow = intervalTimeMs*i;
 
             setTimeout(() => {
