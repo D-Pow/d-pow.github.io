@@ -74,6 +74,26 @@ class ScrollToShow extends React.Component {
 
         if (allChildrenShown) {
             this.removeScrollEventListener();
+
+            const hasAllChildrenShownHandler = typeof this.props.onAllChildrenShown === typeof (() => {});
+
+            if (hasAllChildrenShownHandler) {
+                const durationTimeCssClass = new RegExp('(?<=duration-)\\d+');
+                const distributeDurationTimeMatch = this.props.distributeClasses.match(durationTimeCssClass);
+
+                if (distributeDurationTimeMatch) {
+                    // Parent passed in an animation-duration class, so
+                    // call the callback function once the last child finishes its animation.
+                    // .duration-XX is (XX time in seconds)/10 so convert to milliseconds
+                    const timeToDelayCallingCallback = Number(distributeDurationTimeMatch[0]) * 100;
+
+                    setTimeout(() => {
+                        this.props.onAllChildrenShown();
+                    }, timeToDelayCallingCallback);
+                } else {
+                    this.props.onAllChildrenShown();
+                }
+            }
         }
     }
 
@@ -172,7 +192,10 @@ ScrollToShow.propTypes = {
     distributeSimultaneously: PropTypes.number,
 
     // Percentage of the way down the screen the user needs to scroll in order to activate appending addClasses
-    threshold: PropTypes.number
+    threshold: PropTypes.number,
+
+    // Function to call after all children have been shown
+    onAllChildrenShown: PropTypes.func
 };
 
 ScrollToShow.defaultProps = {
