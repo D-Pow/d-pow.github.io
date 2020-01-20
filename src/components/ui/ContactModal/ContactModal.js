@@ -108,20 +108,28 @@ class ContactModal extends React.Component {
         formData.append('email', emailInput);
         formData.append('message', messageInput);
 
-        const response = await fetch(CONTACT_FORM_URL, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json'
-            },
-            body: formData
-        });
+        const handleAfterSubmit = success => {
+            this.setState({ isLoading: false });
 
-        this.setState({ isLoading: false });
+            if (success) {
+                this.setState({ hasSubmitted: true, formError: '' });
+            } else {
+                this.setState({ formError: this.pageText.inputs.error.form });
+            }
+        };
 
-        if (response.ok) {
-            this.setState({ hasSubmitted: true, formError: '' });
-        } else {
-            this.setState({ formError: this.pageText.inputs.error.form });
+        try {
+            const response = await fetch(CONTACT_FORM_URL, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json'
+                },
+                body: formData
+            });
+
+            handleAfterSubmit(response.ok);
+        } catch(networkError) {
+            handleAfterSubmit(false);
         }
     }
 
