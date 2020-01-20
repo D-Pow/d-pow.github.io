@@ -13,57 +13,69 @@ function PersonalContact(props) {
     const showContactModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
 
-    const contactMethods = [
-        <Link href={LINKS.LinkedIn}><Image className={'w-25 mb-4'} image={'linkedin_logo.svg'} /></Link>,
-        <Link href={LINKS.GitHub}><Image className={'w-25 mb-4'} image={'github_logo.svg'} /></Link>,
-        <button className={'btn btn-primary px-4 py-3 mx-auto'} onClick={showContactModal}>
-            <h5 className={'margin-clear'}>Contact me!</h5>
-        </button>
+    const contactLinks = [
+        <Link href={LINKS.LinkedIn}>
+            <Image className={'w-60 mb-4'} image={'linkedin_logo.svg'} />
+        </Link>,
+        <Link href={LINKS.GitHub}>
+            <Image className={'w-60 mb-4'} image={'github_logo.svg'} />
+        </Link>
     ];
 
-    const [ shownChildren, triggerShowChildren ] = useTimedArrayToggle(contactMethods.length, 250);
+    const numChildrenToFlip = contactLinks.length + 1; // include 'contact me' modal-opening button
+    const modalButtonShownChildrenIndex = contactLinks.length; // button will be last child to flip in timed array toggle
+    const [ shownChildren, triggerShowChildren ] = useTimedArrayToggle(numChildrenToFlip, 250);
 
-    const handleShowContactLinksClick = () => {
+    const handleAfterTitleAnimation = () => { // show children after the title has displayed
         triggerShowChildren();
     };
 
-    const clicked = shownChildren.some(shouldShow => shouldShow); // if clicked, at least one child will be true
-    const animationCls = 'animated duration-5';
-    const animationShowCls = 'flip-x show';
-    const hideCls = 'd-none';
-    const headerStyleCls = 'border border-primary border-medium rounded mx-auto p-4 width-fit hover-invert-bg-light';
-    const headerCls = `${headerStyleCls} ${animationCls} ${clicked ? hideCls : animationShowCls}`;
-    const contactLinkCls = index => `${animationCls} ${shownChildren[index] ? animationShowCls : hideCls}`;
+    const getContactMethodCls = index => `animated duration-5 ${shownChildren[index] ? 'flip-x show' : ''}`;
 
-    const renderedContactMethods = contactMethods.map((renderedContactMethod, index) => {
+    const renderedContactLinks = contactLinks.map((renderedContactLink, shownChildrenIndex) => {
         return (
-            <div className={contactLinkCls(index)} key={index}>
-                <div className={'row'}>
-                    <div className={'col mx-auto'}>
-                        {renderedContactMethod}
-                    </div>
+            <div className={'col'} key={shownChildrenIndex}>
+                <div className={getContactMethodCls(shownChildrenIndex)}>
+                    {renderedContactLink}
                 </div>
             </div>
         );
     });
+    const renderedModalButton = (
+        <div className={`col ${getContactMethodCls(modalButtonShownChildrenIndex)}`}>
+            <button
+                className={'btn border border-primary border-medium rounded p-4 hover-invert-bg-light duration-3'}
+                onClick={showContactModal}
+            >
+                <h5 className={'margin-clear'}>
+                    Interested in finding out more? Contact me!
+                </h5>
+            </button>
+        </div>
+    );
 
     return (
         <div className={'mb-5'}>
-            <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls} distributeSimultaneously={0.5}>
+            <ScrollToShow
+                addClasses={'show'}
+                distributeClasses={props.titleAnimationCls}
+                onAllChildrenShown={handleAfterTitleAnimation}
+            >
                 <h1 className={'p-5'}>Personal Contact</h1>
-                <div className={'container'}>
-                    <div className={'row justify-content-sm-center'}>
-                        <div className={'col-sm-6 mb-5'}>
-                            <h5 className={headerCls} onClick={handleShowContactLinksClick}>
-                                Interested in finding out more?
-                            </h5>
-                            <div>
-                                {renderedContactMethods}
-                            </div>
+            </ScrollToShow>
+
+            <div className={'container'}>
+                <div className={'row justify-content-sm-center'}>
+                    <div className={'col-sm-6 mb-5'}>
+                        <div className={'row mb-4'}>
+                            {renderedContactLinks}
+                        </div>
+                        <div className={'row'}>
+                            {renderedModalButton}
                         </div>
                     </div>
                 </div>
-            </ScrollToShow>
+            </div>
 
             <ContactModal show={showModal} handleClose={handleCloseModal} />
         </div>
