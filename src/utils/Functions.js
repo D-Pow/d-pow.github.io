@@ -250,12 +250,12 @@ export function getGridBreakpoints(parsePxStrToNum = true) {
  * @returns {(boolean|number)} - The duration time in ms or false if .duration-XX not found in className
  */
 export function getDurationTimeMsFromClassName(className) {
-    const durationTimeCssClass = new RegExp('(?<=duration-)\\d+');
+    const durationTimeCssClass = new RegExp('(duration-)(\\d+)');
     const durationTimeMatch = className.match(durationTimeCssClass);
 
     if (durationTimeMatch) {
         // .duration-XX is (XX * 0.1 seconds) so the milliseconds value is XX/10*1000
-        return Number(durationTimeMatch[0]) * 100;
+        return Number(durationTimeMatch[2]) * 100;
     } else {
         return false;
     }
