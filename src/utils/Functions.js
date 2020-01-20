@@ -34,6 +34,27 @@ export function isSafariBrowser() {
 }
 
 /**
+ * Determines if the browser is made from Microsoft. Automatically includes IE but selectively includes Edge.
+ *
+ * @param {boolean} includeEdge - If Edge should be included in the calculation
+ * @returns {boolean} - If the browser is IE (or optionally Edge)
+ */
+export function isMicrosoftBrowser(includeEdge = true) {
+    const userAgents = [
+        'trident',  // IE 11
+        'msie'      // IE < 11
+    ];
+
+    if (includeEdge) {
+        userAgents.push('edge');
+    }
+
+    const browserRegex = `(${userAgents.join('|')})`;
+
+    return Boolean(navigator.userAgent.toLowerCase().match(new RegExp(browserRegex)));
+}
+
+/**
  * Gets the string representation of a single React node
 
  * @param {Node} child - Child whose name will be retrieved
