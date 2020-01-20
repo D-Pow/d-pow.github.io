@@ -77,7 +77,7 @@ function PersonalContact(props) {
                 </div>
             </div>
 
-            <ContactModal show={showModal} handleClose={handleCloseModal} />
+            <ContactModal show={showModal} onClose={handleCloseModal} />
         </div>
     );
 }

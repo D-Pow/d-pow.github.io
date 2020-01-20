@@ -67,7 +67,7 @@ class ContactModal extends React.Component {
             this.setState({ hasClosedAfterSubmitting: true });
         }
 
-        this.props.handleClose();
+        this.props.onClose();
     };
 
     validateForm() {
@@ -192,12 +192,12 @@ class ContactModal extends React.Component {
 
 ContactModal.propTypes = {
     show: PropTypes.bool,
-    handleClose: PropTypes.func
+    onClose: PropTypes.func
 };
 
 ContactModal.defaultProps = {
     show: false,
-    handleClose: () => {}
+    onClose: () => {}
 };
 
 export default ContactModal;
