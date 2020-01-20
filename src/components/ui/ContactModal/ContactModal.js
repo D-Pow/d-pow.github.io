@@ -90,7 +90,8 @@ class ContactModal extends React.Component {
     }
 
     validateText(value) {
-        return /[a-zA-Z0-9,./\\?;:'"!@#$%^&*+=_\-()<>\[\]{}|]+/.test(value);
+        // return /[a-zA-Z0-9,./\\?;:'"!@#$%^&*+=_\-()<>\[\]{}|]+/.test(value);
+        return value.length > 0;
     }
 
     validateEmail(value) {
