@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { importImageAsync } from 'utils/Functions';
-import AppContext from 'utils/AppContext';
+import AppContext, { AppContextFields } from 'utils/AppContext';
 
 function Image(props) {
     const [ imageSrc, setImageSrc ] = useState('');
@@ -20,7 +20,7 @@ function Image(props) {
 
     function incrementAppContextField(finishedLoading = false) {
         if (props.updateAppContext) {
-            const contextField = finishedLoading ? 'imagesLoaded' : 'imagesRequested';
+            const contextField = finishedLoading ? AppContextFields.LOADED : AppContextFields.REQUESTED;
 
             setContextState(prevState => ({
                 ...prevState,

@@ -1,8 +1,12 @@
 import ContextFactory from 'utils/ContextFactory';
 
+export const AppContextFields = {
+    REQUESTED: 'imagesRequested',
+    LOADED: 'imagesLoaded'
+};
 const initialState = {
-    imagesRequested: 0,
-    imagesLoaded: 0,
+    [AppContextFields.REQUESTED]: 0,
+    [AppContextFields.LOADED]: 0,
 };
 const AppContext = ContextFactory(initialState);
 
