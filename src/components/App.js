@@ -6,7 +6,8 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 import SpinnerAtom from 'components/ui/SpinnerAtom';
 import AppContext from 'utils/AppContext';
-import { resetWindowScroll } from 'utils/Functions';
+import { isMicrosoftBrowser, resetWindowScroll } from 'utils/Functions';
+import IncompatibleBrowserFallback from 'components/IncompatibleBrowserFallback';
 
 const routes = [
     {
@@ -23,6 +24,10 @@ const routes = [
 ];
 
 function App() {
+    if (isMicrosoftBrowser()) {
+        return <IncompatibleBrowserFallback />
+    }
+
     const [ showSpinnerLonger, setShowSpinnerLonger ] = useState(true);
     const renderedRoutes = routes.map(routeAria => (
         <Route key={routeAria.path} {...routeAria} />
