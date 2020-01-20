@@ -52,7 +52,7 @@ function PersonalContact(props) {
                 <h1 className={'p-5'}>Personal Contact</h1>
                 <div className={'container'}>
                     <div className={'row justify-content-sm-center'}>
-                        <div className={'col-sm-6 my-5'}>
+                        <div className={'col-sm-6 mb-5'}>
                             <h5 className={headerCls} onClick={handleShowContactLinksClick}>
                                 Interested in finding out more?
                             </h5>
