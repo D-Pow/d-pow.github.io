@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SHOW_ELEMENT_SCROLL_THRESHOLD } from 'utils/Constants';
-import { asNumber, childIsReactElement } from 'utils/Functions';
+import { asNumber, childIsReactElement, getDurationTimeMsFromClassName } from 'utils/Functions';
 
 class ScrollToShow extends React.Component {
     constructor(props) {
@@ -78,15 +78,11 @@ class ScrollToShow extends React.Component {
             const hasAllChildrenShownHandler = typeof this.props.onAllChildrenShown === typeof (() => {});
 
             if (hasAllChildrenShownHandler) {
-                const durationTimeCssClass = new RegExp('(?<=duration-)\\d+');
-                const distributeDurationTimeMatch = this.props.distributeClasses.match(durationTimeCssClass);
+                const timeToDelayCallingCallback = getDurationTimeMsFromClassName(this.props.distributeClasses);
 
-                if (distributeDurationTimeMatch) {
+                if (timeToDelayCallingCallback) {
                     // Parent passed in an animation-duration class, so
                     // call the callback function once the last child finishes its animation.
-                    // .duration-XX is (XX time in seconds)/10 so convert to milliseconds
-                    const timeToDelayCallingCallback = Number(distributeDurationTimeMatch[0]) * 100;
-
                     setTimeout(() => {
                         this.props.onAllChildrenShown();
                     }, timeToDelayCallingCallback);

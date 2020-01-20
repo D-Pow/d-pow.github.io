@@ -242,6 +242,25 @@ export function getGridBreakpoints(parsePxStrToNum = true) {
     return mapWithPxInStr;
 }
 
+/**
+ * Gets the animation duration time in milliseconds from the CSS className string
+ * containing .duration-XX
+ *
+ * @param {string} className - CSS className to search for .duration-XX
+ * @returns {(boolean|number)} - The duration time in ms or false if .duration-XX not found in className
+ */
+export function getDurationTimeMsFromClassName(className) {
+    const durationTimeCssClass = new RegExp('(?<=duration-)\\d+');
+    const durationTimeMatch = className.match(durationTimeCssClass);
+
+    if (durationTimeMatch) {
+        // .duration-XX is (XX * 0.1 seconds) so the milliseconds value is XX/10*1000
+        return Number(durationTimeMatch[0]) * 100;
+    } else {
+        return false;
+    }
+}
+
 export function asNumber(str) {
     return Number(str.replace(/[^\d.]/g, ''));
 }
