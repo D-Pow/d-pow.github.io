@@ -7,7 +7,7 @@ import Pastimes from 'components/Home/Pastimes';
 import PersonalContact from 'components/Home/PersonalContact';
 
 function Home(props) {
-    const titleDisplayAnimationCls = 'animated fade duration-20';
+    const titleDisplayAnimationCls = 'animated fade duration-10';
 
     return (
         <React.Fragment>
