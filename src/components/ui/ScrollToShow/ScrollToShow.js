@@ -36,27 +36,27 @@ class ScrollToShow extends React.Component {
         const { distributeSimultaneously } = this.props;
 
         if (distributeSimultaneously != null) {
-            if (this.shouldMakeChildShow(0)) {
-                this.toggleChild(0);
+            if (this.shouldToggleChildShown(0)) {
+                this.toggleChildIsShown(0);
 
                 for (let i = 1; i < this.state.childRefs.length; i++) {
                     const timeToShow = distributeSimultaneously*1000*i;
 
                     setTimeout(() => {
-                        this.toggleChild(i);
+                        this.toggleChildIsShown(i);
                     }, timeToShow);
                 }
             }
         } else {
             for (let i = 0; i < this.state.childRefs.length; i++) {
-                if (this.shouldMakeChildShow(i)) {
-                    this.toggleChild(i);
+                if (this.shouldToggleChildShown(i)) {
+                    this.toggleChildIsShown(i);
                 }
             }
         }
     };
 
-    toggleChild = index => {
+    toggleChildIsShown = index => {
         const newShownChildren = [...this.state.shownChildren];
         newShownChildren[index] = true;
         this.setState({
@@ -77,14 +77,14 @@ class ScrollToShow extends React.Component {
         }
     }
 
-    shouldMakeChildShow(index) {
-        const shouldShowChild = this.shouldBeShown(index);
+    shouldToggleChildShown(index) {
+        const shouldShowChild = this.shouldChildBeShown(index);
         const isShown = this.state.shownChildren[index];
 
         return shouldShowChild && !isShown;
     }
 
-    shouldBeShown(index) {
+    shouldChildBeShown(index) {
         if (index >= this.state.childRefs.length) {
             return false;
         }
