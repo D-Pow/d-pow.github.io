@@ -43,12 +43,16 @@ class Shape extends React.Component {
         this.updateSvgBoundingClientRect();
     };
 
-    componentDidMount() {
-        if (this.svgRef.current) {
-            this.updateSvgBoundingClientRect();
-        }
+    get isUsingHtmlChildrenWithCustomResizeElem() {
+        return typeof this.props.htmlChildren === typeof (() => {});
+    }
 
-        window.addEventListener('scroll', this.handleScroll);
+    componentDidMount() {
+        if (this.svgRef.current && this.isUsingHtmlChildrenWithCustomResizeElem) {
+            this.updateSvgBoundingClientRect();
+
+            window.addEventListener('scroll', this.handleScroll);
+        }
     }
 
     componentWillUnmount() {
@@ -65,7 +69,7 @@ class Shape extends React.Component {
      * @returns {Object} - Translated bounding client rects relative to window instead of SVG
      */
     get foreignObjectBoundingClientRectInWindow() {
-        if (this.svgRef.current) {
+        if (this.svgRef.current && this.isUsingHtmlChildrenWithCustomResizeElem) {
             const { foreignObjectSizeRatio, foreignObjectDimensions, state: { svgBoundingClientRect }} = this;
 
             const dy = svgBoundingClientRect.height / foreignObjectDimensions.y;
@@ -225,7 +229,7 @@ class Shape extends React.Component {
             <foreignObject x={x} y={y} width={width} height={height}>
                 <Hooked hook={useDynamicFontSizeShrinking}>
                     {([ constrainingElem, toResizeElem, fontSizePx ]) => {
-                        if (typeof htmlChildren === typeof (() => {})) {
+                        if (this.isUsingHtmlChildrenWithCustomResizeElem) {
                             return (
                                 <TextWrapper constrainingElem={constrainingElem} fontSizePx={fontSizePx}>
                                     {htmlChildren(toResizeElem, this.foreignObjectBoundingClientRectInWindow)}
