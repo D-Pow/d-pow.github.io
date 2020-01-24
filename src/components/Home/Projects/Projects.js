@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import InfoCard from 'components/ui/InfoCard';
@@ -7,7 +7,6 @@ import { LINKS } from 'utils/Constants';
 import { isMobileBrowser } from 'utils/Functions';
 
 function Projects(props) {
-    const [ animationDuration, setAnimationDuration ] = useState('duration-15');
     const pageText = {
         infoCards: [
             {
@@ -27,12 +26,11 @@ function Projects(props) {
             }
         ]
     };
-    const isMobile = isMobileBrowser({ onlyXsScreenSizes: true });
     const projectEntriesScrollToShowClassProps = {
         addClasses: 'slide-in-left show',
-        distributeClasses: 'animated ' + animationDuration
+        distributeClasses: 'animated duration-15'
     };
-    const infoCardWrapperHoverCls = isMobile ? '' : 'hover-expand hover-shadow-sm';
+    const infoCardWrapperHoverCls = isMobileBrowser({ onlyXsScreenSizes: true }) ? '' : 'hover-expand hover-shadow-sm';
     const projectInfoCardEntries = pageText.infoCards.map((props, index) => (
         <div className={`col-sm-4 mb-5 p-2 ${infoCardWrapperHoverCls}`} key={index}>
             <InfoCard {...props} />
@@ -52,23 +50,7 @@ function Projects(props) {
                         </ScrollToShow>
                     </div>
                     <div className={'d-none d-sm-flex'}>
-                        <ScrollToShow
-                            {...projectEntriesScrollToShowClassProps}
-                            distributeSimultaneously={0.32}
-                            onAllChildrenShown={() => {
-                                if (!isMobile) {
-                                    // Two animations (.slide-in-left and .hover-expand) are attached to each InfoCard
-                                    // but the prolonged .duration-XX class is only desired for the .slide-in-left
-                                    // animation.
-                                    // Thus, unset .duration-XX so that the default .hover-expand CSS class
-                                    // sets the transition-duration.
-                                    // Only do it on mobile because .d-none still renders the components, just
-                                    // with `display: none;` and we don't want to remove .duration-XX after
-                                    // rendering components that aren't seen.
-                                    setAnimationDuration('');
-                                }
-                            }}
-                        >
+                        <ScrollToShow {...projectEntriesScrollToShowClassProps} distributeSimultaneously={0.32}>
                             {projectInfoCardEntries}
                         </ScrollToShow>
                     </div>

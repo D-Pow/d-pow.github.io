@@ -8,8 +8,24 @@
 
 
 .hover-expand {
-    transition: transform 0.3s;
+    transition: transform;
     animation-fill-mode: none !important; // force element to go back to normal after :hover ends (for Safari bug)
+
+    /**
+     * `&#{&}` doubles specificity.
+     *
+     * In commit f50c19a8, it was explained that mixing the animation/duration classes
+     * (.slide-in-left, .duration-XX) in `Projects -> div InfoCard` caused this transition
+     * to be delayed, and it was fixed using state.
+     * However, this causes unexpected results in the following cases:
+     *   1) The user hovers over the item while it's still moving
+     *   2) Firefox tends to render the last InfoCard twice when changing the state var, causing it to jump
+     * Thus, force the .hover-expand transition to be 0.3s here even though it's bad practice to get around
+     * these edge cases.
+     */
+    &#{&} {
+        transition-duration: 0.3s !important;
+    }
 }
 
 .hover-expand:hover {
