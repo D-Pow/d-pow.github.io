@@ -8,8 +8,8 @@
 
 
 .hover-expand {
-    transition: transform 0.3s !important;
-    animation-fill-mode: none !important;
+    transition: transform 0.3s;
+    animation-fill-mode: none !important; // force element to go back to normal after :hover ends (for Safari bug)
 }
 
 .hover-expand:hover {
