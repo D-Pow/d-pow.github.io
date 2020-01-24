@@ -237,11 +237,11 @@ export function parseScssMap(scssMapStr) {
         scssMapStr
             .replace('(', '{')
             .replace(')', '}')
-            // JSON values: colon + space, bunch of word characters followed by a comma or bracket
-            .replace(/: ([^,}]+)([,}])/g, ': "$1"$2')
-            // JSON keys: space or bracket as first character, not already a string, anything not colon or
+            // JSON values: convert any collection of word characters followed by a comma or bracket to a string
+            .replace(/: ?([^,}]+)([,}])/g, ': "$1"$2')
+            // JSON keys: space/bracket/comma as first character, not already a string, anything not colon or
             // space (rules out JSON values), ended by colon
-            .replace(/([\s{])(?!")([^:\s]+)+:/g, '$1"$2":')
+            .replace(/([\s{,])(?!")([^:\s]+)+:/g, '$1"$2":')
     );
 }
 
