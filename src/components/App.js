@@ -1,13 +1,32 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
-import Home from 'components/Home';
-import About from 'components/About';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
 import SpinnerAtom from 'components/ui/SpinnerAtom';
 import AppContext from 'utils/AppContext';
 import { isMicrosoftBrowser, resetWindowScroll } from 'utils/Functions';
 import IncompatibleBrowserFallback from 'components/IncompatibleBrowserFallback';
+
+/**
+ * Lazy-load components so the Spinner is prioritized, loaded quickly, and unblocked from animating.
+ * This speeds up the initial page load for the user.
+ *
+ * Split import() and lazy() calls from each other so that component-loading is initiated immediately
+ * instead of waiting to load until they are in view. This has the net effect of allowing the Spinner
+ * to load first, but then loading the rest of the components as soon as the Spinner is rendered.
+ * If the promise were nested inside the lazy() call instead, then e.g. the About component wouldn't
+ * be loaded until the user traverses to /about.
+ */
+
+const homeImportPromise = import('components/Home');
+const Home = React.lazy(() => homeImportPromise);
+
+const aboutImportPromise = import('components/About');
+const About = React.lazy(() => aboutImportPromise);
+
+const headerImportPromise = import('components/Header');
+const Header = React.lazy(() => headerImportPromise);
+
+const footerImportPromise = import('components/Footer');
+const Footer = React.lazy(() => footerImportPromise);
 
 const routes = [
     {
@@ -56,14 +75,18 @@ function App() {
 
     return (
         <div className="App text-center">
-            <Router>
-                <React.Fragment>
-                    {/*<Header navRoutes={routes} />*/}
-                    {renderedRoutes}
-                    <Footer />
-                </React.Fragment>
-            </Router>
-            <SpinnerAtom show={showSpinner} preventScrolling={true} />
+            <React.Suspense
+                fallback={<SpinnerAtom show={true} preventScrolling={true} />}
+            >
+                <Router>
+                    <React.Fragment>
+                        {/*<Header navRoutes={routes} />*/}
+                        {renderedRoutes}
+                        <Footer />
+                    </React.Fragment>
+                </Router>
+                <SpinnerAtom show={showSpinner} preventScrolling={true} />
+            </React.Suspense>
         </div>
     );
 }
