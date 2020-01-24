@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import { useHover } from 'utils/Hooks';
 
 function HoverTranslate({ className, animationCls, english, japanese, passedRef, boundingClientRectForHover, aria }) {
+    // Since the absolute-positioned divs cover one another, the :hover only gets applied to the element rendered
+    // on top (the latter of the div.absolute-center). Thus, a set of .hover-(show|hide) CSS classes won't work
+    // unless the CSS uses sibling selectors for show/hide. Until that is added, simply use the useHover() hook
+    // to determine if the elements are hovered or not
+    // TODO convert to CSS instead of JS scroll handler
     const [ ref, isHovered ] = useHover(boundingClientRectForHover);
 
     const renderText = ({ title, description }, show, ref) => (
