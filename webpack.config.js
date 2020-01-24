@@ -147,10 +147,7 @@ module.exports = {
                     name: 'vendor',
                     chunks: 'all'
                 }
-            },
-            maxSize: 240000, // split very large output files into smaller chunks
-            minSize: 100000, // prevent splitting of small files
-            chunks: 'all' // removes repeated code from generated chunks
+            }
         }
     },
     performance: {
