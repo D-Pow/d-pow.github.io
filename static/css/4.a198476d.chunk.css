@@ -1,0 +1,1 @@
+.header{position:fixed;top:0;right:0;-webkit-transition:all .5s ease-out;transition:all .5s ease-out;z-index:1035}.header.header-hidden{top:-100px;visibility:hidden}

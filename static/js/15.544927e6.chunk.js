@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[15],{352:function(o,s,c){o.exports=c.p+"static/assets/favicon-991ec5ea.ico"}}]);
