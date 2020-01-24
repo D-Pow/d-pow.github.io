@@ -33,8 +33,7 @@ const publicEnv = {
 };
 
 const jsRegex = /\.jsx?$/;
-const cssRegex = /\.css$/;
-const sassRegex = /\.scss$/;
+const scssRegex = /\.s?css$/;
 const assetRegex = /\.(png|gif|jpe?g|svg|ico|pdf|tex)$/;
 
 const hotReloading = false; // process.env.NODE_ENV === 'development';
@@ -49,7 +48,7 @@ module.exports = {
                 use: 'babel-loader'
             },
             {
-                test: sassRegex,
+                test: scssRegex,
                 use: [
                     {
                         loader: MiniCssExtractPlugin.loader,
@@ -65,24 +64,6 @@ module.exports = {
                         }
                     },
                     'sass-loader'
-                ]
-            },
-            {
-                test: cssRegex,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            hmr: hotReloading,
-                        }
-                    },
-                    'css-loader',
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins: () => require('postcss-preset-env')
-                        }
-                    }
                 ]
             },
             {
