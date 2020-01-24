@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
@@ -138,7 +139,7 @@ module.exports = {
         ])
     ],
     optimization: {
-        minimizer: [ new OptimizeCSSAssetsPlugin() ],
+        minimizer: [ new TerserJSPlugin(), new OptimizeCSSAssetsPlugin() ],
         splitChunks: {
             cacheGroups: {
                 vendor: { // split node_modules (as vendor) from src (as client)
