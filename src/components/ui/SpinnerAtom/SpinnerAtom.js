@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AtomSpinner from './AtomSpinner';
-import { resetWindowScroll } from 'utils/Functions';
+import { getDurationTimeMsFromClassName, resetWindowScroll } from 'utils/Functions';
 
 function SpinnerAtom({ className, fullScreen, show, preventScrolling, useSvg }) {
+    const [ showMomentarily, setShowMomentarily ] = useState(false);
     const classes = [
         'bg-dark',
         'absolute-center',
@@ -25,6 +26,9 @@ function SpinnerAtom({ className, fullScreen, show, preventScrolling, useSvg }) 
         classes.push('show');
     }
 
+    const cls = classes.join(' ');
+    const fadeOutDelay = getDurationTimeMsFromClassName(cls) + 200; // slightly longer time than .duration-XX class
+
     useEffect(() => {
         /**
          * Don't add scroll handler if not shown.
@@ -42,13 +46,34 @@ function SpinnerAtom({ className, fullScreen, show, preventScrolling, useSvg }) 
         };
     }, [show, preventScrolling]);
 
-    return (
-        <div className={classes.join(' ')}>
+    useEffect(() => {
+        /**
+         * Similar to how <Modal/> waits for a bit before removing the .show
+         * class so that the fade-out animation can play, wait a bit before
+         * removing the spinner so its fade-out animation can play.
+         * Afterwards, don't render the spinner at all so that its animation
+         * doesn't take up browser resources while hidden.
+         */
+        const wasJustClosed = !show && showMomentarily;
+
+        if (show) {
+            setShowMomentarily(true); // reset wait-for-fade-out flag
+        }
+
+        if (wasJustClosed) {
+            setTimeout(() => {
+                setShowMomentarily(false);
+            }, fadeOutDelay);
+        }
+    }, [show, fadeOutDelay]);
+
+    return (show || showMomentarily) ? (
+        <div className={cls}>
             <div className={'m-auto'}>
                 <AtomSpinner svg={useSvg} />
             </div>
         </div>
-    );
+    ) : null;
 }
 
 SpinnerAtom.propTypes = {
