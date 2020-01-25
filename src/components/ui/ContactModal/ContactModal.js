@@ -129,7 +129,7 @@ class ContactModal extends React.Component {
                 },
                 body: formData
             });
-            const responseBody = await response.json(); // Check valid response from Formspree's API
+            const responseBody = await response.json(); // Check valid response from FormSpree's API
 
             handleAfterSubmit(response.ok && responseBody.ok);
         } catch(networkError) {

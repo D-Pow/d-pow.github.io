@@ -45,4 +45,5 @@ export const LINKS = {
     EtradeIcon: 'https://cdn.etrade.net/1/19042220580.0/aempros/etc/designs/responsive-etrade/pagemeta/images/favicon-16x16.png'
 };
 
+// Submit contact requests to FormSpree so bots can't scan for my email address
 export const CONTACT_FORM_URL = 'https://formspree.io/xkdoqyjm';
