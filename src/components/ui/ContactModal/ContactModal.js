@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'components/ui/Modal';
 import SpinnerCircle from 'components/ui/SpinnerCircle';
 import { CONTACT_FORM_URL, EMAIL_REGEX } from 'utils/Constants';
+import { EASTER_EGG } from 'utils/CommonRenders';
 
 class ContactModal extends React.Component {
     pageText = {
@@ -148,7 +149,10 @@ class ContactModal extends React.Component {
 
         if (this.state.hasClosedAfterSubmitting) {
             modalBody = (
-                <h6>Didn't you already contact me?</h6>
+                <React.Fragment>
+                    <h6>Didn't you already contact me?</h6>
+                    {EASTER_EGG}
+                </React.Fragment>
             );
         } else if (this.state.hasSubmitted) {
             modalBody = (
