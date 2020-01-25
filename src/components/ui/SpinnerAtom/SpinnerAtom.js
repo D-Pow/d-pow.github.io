@@ -26,11 +26,13 @@ function SpinnerAtom({ className, fullScreen, show, preventScrolling, useSvg }) 
     }
 
     useEffect(() => {
-        // Don't add scroll handler if not shown.
-        // React calls cleanup functions upon both component unmount
-        // and component re-render. Thus, the re-render from changing
-        // the `show` prop will cause the cleanup function to be called,
-        // removing the scroll handler.
+        /**
+         * Don't add scroll handler if not shown.
+         * React calls cleanup functions upon both component unmount
+         * and component re-render. Thus, the re-render from changing
+         * the `show` prop will cause the cleanup function to be called,
+         * removing the scroll handler.
+         */
         if (show && preventScrolling) {
             window.addEventListener('scroll', resetWindowScroll);
         }
