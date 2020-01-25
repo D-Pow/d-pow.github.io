@@ -1,24 +1,14 @@
 import React from 'react';
-import Image from 'components/ui/Image';
+import { EASTER_EGG } from 'utils/CommonRenders';
 import 'styles/Footer.scss';
 
-class Footer extends React.Component {
-    renderReactLogo() {
-        return (
-            <span>
-                <h4 className={'footer-title'}>Made with React 16</h4>
-                <Image className={'react-logo'} image={'react_logo.svg'} fluidImage={false} />
-            </span>
-        );
-    }
-
-    render() {
-        return (
-            <footer className={'footer-container w-100'}>
-                {this.renderReactLogo()}
-            </footer>
-        );
-    }
+function Footer(props) {
+    return (
+        <footer className={'footer-container w-100'}>
+            <div className={'footer-title'}>There are 3 easter eggs on this site.</div>
+            <div className={'footer-title'}>Can you find them all? {EASTER_EGG}</div>
+        </footer>
+    );
 }
 
 export default Footer;

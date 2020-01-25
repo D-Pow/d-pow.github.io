@@ -1,7 +1,8 @@
 @import "Common";
 
 .footer-title {
-    display: inline;
+    @extend h5;
+    display: block;
     color: $text-muted;
 }
 
