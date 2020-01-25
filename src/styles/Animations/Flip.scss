@@ -1,8 +1,9 @@
-$rotationAmount: 90deg;
+$halfRotation: 90deg;
+$fullRotation: 2 * $halfRotation;
 
 @keyframes flipX {
     0% {
-        transform: rotateX($rotationAmount);
+        transform: rotateX($halfRotation);
         opacity: 0;
     }
     100% {
@@ -13,7 +14,29 @@ $rotationAmount: 90deg;
 
 @keyframes flipY {
     0% {
-        transform: rotateY($rotationAmount);
+        transform: rotateY($halfRotation);
+        opacity: 0;
+    }
+    100% {
+        transform: rotateY(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes flipXFull {
+    0% {
+        transform: rotateX($fullRotation);
+        opacity: 0;
+    }
+    100% {
+        transform: rotateX(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes flipYFull {
+    0% {
+        transform: rotateY($fullRotation);
         opacity: 0;
     }
     100% {
@@ -28,4 +51,12 @@ $rotationAmount: 90deg;
 
 .flip-y {
     animation: flipY 1s ease;
+}
+
+.flip-x-full {
+    animation: flipXFull 1s ease;
+}
+
+.flip-y-full {
+    animation: flipYFull 1s ease;
 }
