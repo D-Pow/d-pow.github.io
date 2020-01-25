@@ -31,6 +31,7 @@ export const MOBILE_OR_TABLET_REGEX = new RegExp(mobileBrowserRegexBase.replace(
 export const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 export const LINKS = {
+    SrcCode: 'https://github.com/D-Pow/website',
     LinkedIn: 'https://www.linkedin.com/in/devon-powell/',
     GitHub: 'https://github.com/D-Pow',
     MutualFundsHome: 'https://us.etrade.com/what-we-offer/investment-choices/mutual-funds',
