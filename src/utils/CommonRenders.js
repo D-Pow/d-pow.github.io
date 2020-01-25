@@ -9,3 +9,7 @@ export const ETRADE_LINK = (
         E-Trade
     </Link>
 );
+
+export const EASTER_EGG = (
+    <h4 className={'d-inline-block margin-clear'}>🐣</h4>
+);
