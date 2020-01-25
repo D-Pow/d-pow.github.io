@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import Shape from 'components/ui/Shape';
 import HoverTranslate from 'components/ui/HoverTranslate';
 import { getThemeColors, isMobileBrowser, isSafariBrowser } from 'utils/Functions';
+import { EASTER_EGG } from 'utils/CommonRenders';
 
 function Pastimes(props) {
+    const [ showEasterEgg, setShowEasterEgg ] = useState(false);
     const pageText = {
         hoverTranslate: {
             english: {
@@ -23,9 +25,9 @@ function Pastimes(props) {
         },
         otherPastimes: [
             'Open-source projects',
-            'Cooking',
-            'Rock climbing',
-            'Playing guitar'
+            !showEasterEgg ? 'Cooking' : 'I just throw stuff in a pot and hope it tastes okay',
+            !showEasterEgg ? 'Rock climbing' : 'Well... at least I used to go',
+            !showEasterEgg ? 'Playing guitar' : 'Kind of, here and there'
         ]
     };
     const themeColors = getThemeColors();
@@ -70,7 +72,17 @@ function Pastimes(props) {
     return (
         <div className={'bg-light w-100 pb-5'}>
             <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
-                <h1 className={'p-5'}>Pastimes</h1>
+                <div className={'p-5'}>
+                    <h1 className={'d-inline-block'} onClick={() => setShowEasterEgg(!showEasterEgg)}>
+                        Pastimes
+                    </h1>
+                    {showEasterEgg && (
+                        <React.Fragment>
+                            {' '}
+                            {EASTER_EGG}
+                        </React.Fragment>
+                    )}
+                </div>
             </ScrollToShow>
             <div className={'container'}>
                 <div className={'row mb-5'}>
