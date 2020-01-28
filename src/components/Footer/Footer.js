@@ -31,7 +31,7 @@ function Footer(props) {
     );
 
     return (
-        <footer className={'footer-container w-100'}>
+        <footer className={'bg-light py-3 w-100'}>
             {renderedPrompt}
             {renderedSrcCode}
         </footer>
