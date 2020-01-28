@@ -6,19 +6,8 @@
     color: $dark;
 }
 
-.react-logo {
-    vertical-align: top;
-    animation: logo-spin infinite 10s linear;
-    height: 30px;
-}
-
 .footer-container {
     background-color: $light;
     padding-top: 15px;
     padding-bottom: 15px;
-}
-
-@keyframes logo-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
 }
