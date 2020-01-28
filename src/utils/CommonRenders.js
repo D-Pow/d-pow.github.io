@@ -14,6 +14,8 @@ export const ETRADE_LINK = (
     </Link>
 );
 
-export const EASTER_EGG = (
-    <h4 className={'d-inline-block margin-clear'}>🐣</h4>
-);
+export function EasterEgg({ className = '', ...props }) {
+    return (
+        <h4 className={`d-inline-block margin-clear ${className}`} {...props}>🐣</h4>
+    );
+}

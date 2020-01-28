@@ -4,7 +4,7 @@ import ScrollToShow from 'components/ui/ScrollToShow';
 import Shape from 'components/ui/Shape';
 import HoverTranslate from 'components/ui/HoverTranslate';
 import { getThemeColors, isMobileBrowser, isSafariBrowser } from 'utils/Functions';
-import { EASTER_EGG } from 'utils/CommonRenders';
+import { EasterEgg } from 'utils/CommonRenders';
 
 function Pastimes(props) {
     const [ showEasterEgg, setShowEasterEgg ] = useState(false);
@@ -79,7 +79,7 @@ function Pastimes(props) {
                     {showEasterEgg && (
                         <React.Fragment>
                             {' '}
-                            {EASTER_EGG}
+                            <EasterEgg />
                         </React.Fragment>
                     )}
                 </div>
