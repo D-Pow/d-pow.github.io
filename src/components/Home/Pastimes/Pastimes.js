@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import ScrollToShow from 'components/ui/ScrollToShow';
 import Shape from 'components/ui/Shape';
 import HoverTranslate from 'components/ui/HoverTranslate';
+import FlipCard from 'components/ui/FlipCard';
 import { getThemeColors, isMobileBrowser, isSafariBrowser } from 'utils/Functions';
+import { useTimedArrayToggle } from 'utils/Hooks';
 import { EasterEgg } from 'utils/CommonRenders';
 
 function Pastimes(props) {
@@ -24,14 +26,30 @@ function Pastimes(props) {
             }
         },
         otherPastimes: [
-            'Open-source projects',
-            !showEasterEgg ? 'Cooking' : 'I just throw stuff in a pot and hope it tastes okay',
-            !showEasterEgg ? 'Rock climbing' : 'Well... at least I used to go',
-            !showEasterEgg ? 'Playing guitar' : 'Kind of, here and there'
+            {
+                showDefault: 'Open-source projects',
+                showWithEasterEgg: 'You should check out MockRequests'
+            },
+            {
+                showDefault: 'Cooking',
+                showWithEasterEgg: 'I just throw stuff in a pot and hope it tastes okay'
+            },
+            {
+                showDefault: 'Rock climbing',
+                showWithEasterEgg: 'Well... at least I used to go'
+            },
+            {
+                showDefault: 'Playing guitar',
+                showWithEasterEgg: 'Kind of, here and there'
+            },
         ]
     };
     const themeColors = getThemeColors();
-    const { hoverTranslate: { english, japanese }, otherPastimes } = pageText;
+    const [ otherPastimesToggleArray, triggerToggleArray ] = useTimedArrayToggle(
+        pageText.otherPastimes.length,
+        400,
+        true
+    );
 
     // Safari doesn't correctly consider `foreignObject` as an SVG rendering root
     // so use the old way of manually positioning HoverTranslate over Shape but
@@ -45,8 +63,8 @@ function Pastimes(props) {
             <HoverTranslate
                 className={'text-light'}
                 animationCls={'animated fade duration-5 mx-4'}
-                english={english}
-                japanese={japanese}
+                english={pageText.hoverTranslate.english}
+                japanese={pageText.hoverTranslate.japanese}
                 aria={{
                     style: { fontSize: '14px' }
                 }}
@@ -60,11 +78,74 @@ function Pastimes(props) {
             htmlChildren={(resizeTextRef, foreignObjectBoundingClientRectInWindow) => (
                 <HoverTranslate
                     className={'text-light'}
-                    english={english}
-                    japanese={japanese}
+                    english={pageText.hoverTranslate.english}
+                    japanese={pageText.hoverTranslate.japanese}
                     passedRef={resizeTextRef}
                     boundingClientRectForHover={foreignObjectBoundingClientRectInWindow}
                 />
+            )}
+        />
+    );
+    const TextInShape = ({ textToRender, index }) => {
+        const sides = 7 - index; // decrease each entry by 1, starting from Japanese at 8
+        const rotation = (sides % 2) * -90;
+
+        return (
+            <Shape
+                htmlChildren={textToRender}
+                htmlChildrenWrapperCls={'text-light'}
+                htmlChildrenFontReductionOptions={{
+                    // reduce by number of pastimes to shrink how much space they take up
+                    reduceByPx: pageText.otherPastimes.length
+                }}
+                sides={sides}
+                fill={themeColors.primary}
+                rotation={rotation}
+            />
+        );
+    };
+    const renderedOtherPastimes = (
+        pageText.otherPastimes.map((pastimeTextFields, index) => {
+            const axis = index % 2 === 0 ? FlipCard.AXES.X : FlipCard.AXES.Y;
+
+            return (
+                <div className={'col-sm-6'} key={index}>
+                    <FlipCard
+                        axis={axis}
+                        durationCls={'duration-8'}
+                        isFlipped={otherPastimesToggleArray[index]}
+                        showDefault={<TextInShape textToRender={pastimeTextFields.showDefault} index={index} />}
+                        showOnClick={<TextInShape textToRender={pastimeTextFields.showWithEasterEgg} index={index} />}
+                    />
+                </div>
+            );
+        })
+    );
+
+    const triggerEasterEggAnimation = () => {
+        const finishedAnimating = otherPastimesToggleArray.every(isToggled => isToggled === otherPastimesToggleArray[0]);
+
+        if (finishedAnimating) { // prevent clicking the title while the array is still toggling at the set interval
+            setShowEasterEgg(!showEasterEgg);
+            triggerToggleArray();
+        }
+    };
+    const renderedTitleText = (
+        <h1 className={'d-inline-block'} onClick={triggerEasterEggAnimation}>
+            Pastimes
+        </h1>
+    );
+    const renderedTitle = (
+        <FlipCard
+            className={'p-5'}
+            isFlipped={showEasterEgg}
+            showDefault={renderedTitleText}
+            showOnClick={(
+                <React.Fragment>
+                    {renderedTitleText}
+                    {' '}
+                    <EasterEgg />
+                </React.Fragment>
             )}
         />
     );
@@ -72,17 +153,7 @@ function Pastimes(props) {
     return (
         <div className={'bg-light w-100 pb-5'}>
             <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
-                <div className={'p-5'}>
-                    <h1 className={'d-inline-block'} onClick={() => setShowEasterEgg(!showEasterEgg)}>
-                        Pastimes
-                    </h1>
-                    {showEasterEgg && (
-                        <React.Fragment>
-                            {' '}
-                            <EasterEgg />
-                        </React.Fragment>
-                    )}
-                </div>
+                {renderedTitle}
             </ScrollToShow>
             <div className={'container'}>
                 <div className={'row mb-5'}>
@@ -96,26 +167,7 @@ function Pastimes(props) {
                     <div className={'col-sm-6'}>
                         <div className={'row'}>
                             <ScrollToShow addClasses={'slide-in-bottom show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.5}>
-                                {otherPastimes.map((project, index) => {
-                                    const sides = 7 - index; // decrease each entry by 1, starting from Japanese at 8
-                                    const rotation = (sides % 2) * -90;
-
-                                    return (
-                                        <div className={'col-sm-6'} key={index}>
-                                            <Shape
-                                                htmlChildren={project}
-                                                htmlChildrenWrapperCls={'text-light'}
-                                                htmlChildrenFontReductionOptions={{
-                                                    // reduce by number of pastimes to shrink how much space they take up
-                                                    reduceByPx: pageText.otherPastimes.length
-                                                }}
-                                                sides={sides}
-                                                fill={themeColors.primary}
-                                                rotation={rotation}
-                                            />
-                                        </div>
-                                    );
-                                })}
+                                {renderedOtherPastimes}
                             </ScrollToShow>
                         </div>
                     </div>
