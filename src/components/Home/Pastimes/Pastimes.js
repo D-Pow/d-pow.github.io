@@ -30,7 +30,7 @@ function Pastimes(props) {
                 showDefault: 'Open-source projects',
                 showWithEasterEgg: 'Check out MockRequests',
                 textInShapeProps: {
-                    onClickProps: { reduceByPx: 2 }
+                    onClickProps: { reduceByPx: 1.5 }
                 }
             },
             {
