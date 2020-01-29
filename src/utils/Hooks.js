@@ -193,15 +193,17 @@ export function useHover(overrideBoundingClientRect) {
 /**
  * Returns an array of false booleans that will toggle to true one after another
  * according to the specified `intervalTimeMs`.
+ * Optionally allows toggling back from true -> false
  *
  * @param {number} arrayLength - How many entries should be in the toggle array
  * @param {number} intervalTimeMs - How much time should pass before toggling the next entry
+ * @param {boolean} [allowBackwardsToggle=false] - Allow array toggle to be able to trigger in both directions, false <-> true
  * @returns {[ boolean[], Function ]} - An array of booleans to toggle and a function to initiate array toggling
  */
-export function useTimedArrayToggle(arrayLength, intervalTimeMs) {
+export function useTimedArrayToggle(arrayLength, intervalTimeMs, allowBackwardsToggle = false) {
     const toggleArrayEntryReducer = (prevArray, index) => {
         const toggledEntries = [...prevArray];
-        toggledEntries[index] = true;
+        toggledEntries[index] = !toggledEntries[index];
         return toggledEntries;
     };
 
@@ -211,8 +213,18 @@ export function useTimedArrayToggle(arrayLength, intervalTimeMs) {
     const [ shouldToggleEntries, setShouldToggleEntries ] = useState(false);
     const [ timeoutTriggered, setTimeoutTriggered ] = useState(false);
 
+    const resetTimeoutTrigger = () => {
+        if (allowBackwardsToggle) {
+            setTimeout(() => {
+                setShouldToggleEntries(false);
+                setTimeoutTriggered(false);
+            }, arrayLength * intervalTimeMs);
+        }
+    };
+
     if (shouldToggleEntries && !timeoutTriggered) {
         setTimeoutTriggered(true);
+
         for (let i = 0; i < arrayLength; i++) {
             const timeToShow = intervalTimeMs*i;
 
@@ -220,6 +232,8 @@ export function useTimedArrayToggle(arrayLength, intervalTimeMs) {
                 dispatchToggleEntry(i);
             }, timeToShow);
         }
+
+        resetTimeoutTrigger();
     }
 
     const triggerArrayToggle = () => {
