@@ -15,8 +15,9 @@ function ImageCard(props) {
         imageAria,
         title,
         description,
-        aria,
         widthFit,
+        showBorder,
+        aria,
         onLoad
     } = props;
     const { ref, ...restOfImageAria } = imageAria;
@@ -62,7 +63,7 @@ function ImageCard(props) {
     // Center image within wrapper (in the event the image is smaller than wrapper) with `m-auto`
     const centerCls = centerInWrapper ? 'm-auto' : '';
     const isMobileBrowserWithXsScreen = isMobileBrowser({ onlyXsScreenSizes: true });
-    const mobileShadowAndBorderCls = isMobileBrowserWithXsScreen
+    const mobileShadowAndBorderCls = isMobileBrowserWithXsScreen || showBorder
         ? 'box-shadow-sm border border-medium border-primary-opacity-4'
         : '';
     const width = isMobileBrowserWithXsScreen ? ImageCard.WidthFits.DYNAMIC_MOBILE : widthFit;
@@ -99,8 +100,9 @@ ImageCard.propTypes = {
     imageAria: PropTypes.object,
     title: PropTypes.node,
     description: PropTypes.node,
-    aria: PropTypes.object,
+    showBorder: PropTypes.bool,
     widthFit: PropTypes.oneOf(Object.values(ImageCard.WidthFits)),
+    aria: PropTypes.object,
     onLoad: PropTypes.func
 };
 
@@ -114,8 +116,9 @@ ImageCard.defaultProps = {
     imageAria: {},
     title: '',
     description: '',
-    aria: {},
+    showBorder: false,
     widthFit: ImageCard.WidthFits.FIT,
+    aria: {},
     onLoad: () => {}
 };
 
