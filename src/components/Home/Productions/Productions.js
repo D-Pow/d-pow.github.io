@@ -60,6 +60,8 @@ function Productions(props) {
                                         )}
                                         <SameHeightImageCard
                                             widthFit={SameHeightImageCard.WidthFits.STRETCH}
+                                            wrapperCls={'m-2'}
+                                            showBorder={true}
                                             {...imageCardProps}
                                         />
                                     </div>
