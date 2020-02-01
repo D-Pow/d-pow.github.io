@@ -54,6 +54,8 @@ function AtomSpinner({ svg }) {
     const rotationDegrees = 180 / numElectrons;
     const electronColors = [ 'primary', 'secondary', 'tertiary' ];
 
+    // render atom orbit paths first, followed by the electrons so that the electrons are
+    // naturally placed on top of all paths instead of only the path to which they are assigned
     return (
         <div className={'m-auto absolute-center atom-container'}>
             {Array.from({ length: numElectrons }).map((nul, i) => (
