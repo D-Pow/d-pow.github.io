@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[24],{363:function(p,s,o){p.exports=o.p+"static/assets/profile_pic-124f868c.jpg"}}]);
