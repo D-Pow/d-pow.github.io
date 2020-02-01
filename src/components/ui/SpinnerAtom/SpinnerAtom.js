@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AtomSpinner from './AtomSpinner';
 import { getDurationTimeMsFromClassName, resetWindowScroll } from 'utils/Functions';
 
-function SpinnerAtom({ className, fullScreen, show, preventScrolling, useSvg }) {
+function SpinnerAtom({ className, fullScreen, show, preventScrolling, numElectrons, electronColors }) {
     const [ showMomentarily, setShowMomentarily ] = useState(false);
     const classes = [
         'bg-dark',
@@ -70,7 +70,7 @@ function SpinnerAtom({ className, fullScreen, show, preventScrolling, useSvg }) 
     return (show || showMomentarily) ? (
         <div className={cls}>
             <div className={'m-auto'}>
-                <AtomSpinner svg={useSvg} />
+                <AtomSpinner numElectrons={numElectrons} electronColors={electronColors} />
             </div>
         </div>
     ) : null;
@@ -81,15 +81,14 @@ SpinnerAtom.propTypes = {
     fullScreen: PropTypes.bool,
     show: PropTypes.bool,
     preventScrolling: PropTypes.bool,
-    useSvg: PropTypes.bool
+    ...AtomSpinner.propTypes
 };
 
 SpinnerAtom.defaultProps = {
     className: '',
     fullScreen: true,
     show: false,
-    preventScrolling: false,
-    useSvg: false
+    preventScrolling: false
 };
 
 export default SpinnerAtom;
