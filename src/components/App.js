@@ -16,16 +16,16 @@ import IncompatibleBrowserFallback from 'components/IncompatibleBrowserFallback'
  * be loaded until the user traverses to /about.
  */
 
-const homeImportPromise = import('components/Home');
+const homeImportPromise = import(/* webpackChunkName: 'Home' */ 'components/Home');
 const Home = React.lazy(() => homeImportPromise);
 
-const aboutImportPromise = import('components/About');
+const aboutImportPromise = import(/* webpackChunkName: 'About' */ 'components/About');
 const About = React.lazy(() => aboutImportPromise);
 
-const headerImportPromise = import('components/Header');
+const headerImportPromise = import(/* webpackChunkName: 'Header' */ 'components/Header');
 const Header = React.lazy(() => headerImportPromise);
 
-const footerImportPromise = import('components/Footer');
+const footerImportPromise = import(/* webpackChunkName: 'Footer' */ 'components/Footer');
 const Footer = React.lazy(() => footerImportPromise);
 
 const routes = [
