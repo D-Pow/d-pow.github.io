@@ -53,6 +53,9 @@ function AtomSpinner({ svg }) {
     const numElectrons = 3;
     const rotationDegrees = 180 / numElectrons;
     const electronColors = [ 'primary', 'secondary', 'tertiary' ];
+    const getRotationTransformProperty = electronIndex => `rotate(${rotationDegrees * electronIndex}deg)`;
+    const getAnimationDelay = electronIndex => `-${electronIndex / (2 * numElectrons)}s`;
+    const getElectronBgColor = electronIndex => `bg-${electronColors[electronIndex % electronColors.length]}`;
 
     // render atom orbit paths first, followed by the electrons so that the electrons are
     // naturally placed on top of all paths instead of only the path to which they are assigned
@@ -62,7 +65,7 @@ function AtomSpinner({ svg }) {
                 <div
                     className={'atom-orbit-path'}
                     style={{
-                        transform: `rotate(${rotationDegrees*i}deg)`
+                        transform: getRotationTransformProperty(i)
                     }}
                     key={i}
                 />
@@ -71,14 +74,14 @@ function AtomSpinner({ svg }) {
                 <div
                     className={'atom-orbit-path-invisible'}
                     style={{
-                        transform: `rotate(${rotationDegrees*i}deg)`
+                        transform: getRotationTransformProperty(i)
                     }}
                     key={i}
                 >
                     <div
-                        className={`atom-electron atom-electron-orbit bg-${electronColors[i % electronColors.length]}`}
+                        className={`atom-electron atom-electron-orbit ${getElectronBgColor(i)}`}
                         style={{
-                            animationDelay: `-${(1/(2 * numElectrons))*i}s`
+                            animationDelay: getAnimationDelay(i)
                         }}
                     />
                 </div>
