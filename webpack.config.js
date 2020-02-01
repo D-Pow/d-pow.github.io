@@ -119,8 +119,7 @@ module.exports = {
         new InterpolateHtmlPlugin(publicEnv),
         // splits CSS out from the rest of the code
         new MiniCssExtractPlugin({
-            filename: `${publicUrl}/css/[name].[contenthash:8].css`,
-            chunkFilename: `${publicUrl}/css/[name].[contenthash:8].chunk.css`
+            filename: `${publicUrl}/css/[name].[contenthash:8].css`
         }),
         // manually copies files from src to dest
         new CopyWebpackPlugin([
@@ -146,6 +145,12 @@ module.exports = {
                     test: /[\\/]node_modules[\\/]/,
                     name: 'vendor',
                     chunks: 'all'
+                },
+                styles: {
+                    test: scssRegex,
+                    name: 'styles',
+                    chunks: 'all',
+                    enforce: true // collect all CSS into a single file since the separated CSS files contained only duplicate code
                 }
             }
         }
