@@ -50,31 +50,33 @@ function AtomSpinner({ svg }) {
         );
     }
 
+    const numElectrons = 3;
+    const rotationDegrees = 180 / numElectrons;
     const electronColors = [ 'primary', 'secondary', 'tertiary' ];
 
     return (
         <div className={'m-auto absolute-center atom-container'}>
-            {Array.from({ length: 3 }).map((nul, i) => (
+            {Array.from({ length: numElectrons }).map((nul, i) => (
                 <div
                     className={'atom-orbit-path'}
                     style={{
-                        transform: `rotate(${60*i}deg)`
+                        transform: `rotate(${rotationDegrees*i}deg)`
                     }}
                     key={i}
                 />
             ))}
-            {Array.from({ length: 3 }).map((nul, i) => (
+            {Array.from({ length: numElectrons }).map((nul, i) => (
                 <div
                     className={'atom-orbit-path-invisible'}
                     style={{
-                        transform: `rotate(${60*i}deg)`
+                        transform: `rotate(${rotationDegrees*i}deg)`
                     }}
                     key={i}
                 >
                     <div
-                        className={`atom-electron atom-electron-orbit bg-${electronColors[i]}`}
+                        className={`atom-electron atom-electron-orbit bg-${electronColors[i % electronColors.length]}`}
                         style={{
-                            animationDelay: `-${(1/6)*i}s`
+                            animationDelay: `-${(1/(2 * numElectrons))*i}s`
                         }}
                     />
                 </div>
