@@ -171,6 +171,7 @@ class ContactModal extends React.Component {
                             placeholder={placeholder.name}
                             value={this.state.nameInput}
                             onChange={this.handleTyping('name')}
+                            aria-label={'name-input'}
                         />
                         {this.renderErrorMessage(nameError)}
                     </div>
@@ -181,6 +182,7 @@ class ContactModal extends React.Component {
                             placeholder={placeholder.email}
                             value={this.state.emailInput}
                             onChange={this.handleTyping('email')}
+                            aria-label={'email-input'}
                         />
                         {this.renderErrorMessage(emailError)}
                     </div>
@@ -191,6 +193,7 @@ class ContactModal extends React.Component {
                             placeholder={placeholder.message}
                             value={this.state.messageInput}
                             onChange={this.handleTyping('message')}
+                            aria-label={'message-input'}
                         />
                         {this.renderErrorMessage(messageError)}
                     </div>
