@@ -165,15 +165,33 @@ class ContactModal extends React.Component {
             modalBody = (
                 <div className={'form-group'}>
                     <div className={'form-row mb-2'}>
-                        <input className={'form-control bg-secondary text-white'} type={'text'} placeholder={placeholder.name} value={this.state.nameInput} onChange={this.handleTyping('name')} />
+                        <input
+                            className={'form-control bg-secondary text-white'}
+                            type={'text'}
+                            placeholder={placeholder.name}
+                            value={this.state.nameInput}
+                            onChange={this.handleTyping('name')}
+                        />
                         {this.renderErrorMessage(nameError)}
                     </div>
                     <div className={'form-row mb-2'}>
-                        <input className={'form-control bg-secondary text-white'} type={'email'} placeholder={placeholder.email} value={this.state.emailInput} onChange={this.handleTyping('email')} />
+                        <input
+                            className={'form-control bg-secondary text-white'}
+                            type={'email'}
+                            placeholder={placeholder.email}
+                            value={this.state.emailInput}
+                            onChange={this.handleTyping('email')}
+                        />
                         {this.renderErrorMessage(emailError)}
                     </div>
                     <div className={'form-row'}>
-                        <textarea className={'form-control bg-secondary text-white'} rows={3} placeholder={placeholder.message} value={this.state.messageInput} onChange={this.handleTyping('message')} />
+                        <textarea
+                            className={'form-control bg-secondary text-white'}
+                            rows={3}
+                            placeholder={placeholder.message}
+                            value={this.state.messageInput}
+                            onChange={this.handleTyping('message')}
+                        />
                         {this.renderErrorMessage(messageError)}
                     </div>
                 </div>
