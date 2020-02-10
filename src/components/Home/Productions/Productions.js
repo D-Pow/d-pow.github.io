@@ -38,7 +38,7 @@ function Productions(props) {
     };
 
     return (
-        <div className={'bg-light w-100 pb-5'}>
+        <div className={'bg-light w-100 pb-5 ' + props.className}>
             <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
                 <h1 className={'p-5'}>Productions</h1>
             </ScrollToShow>
@@ -76,10 +76,12 @@ function Productions(props) {
 }
 
 Productions.propTypes = {
+    className: PropTypes.string,
     titleAnimationCls: PropTypes.string
 };
 
 Productions.defaultProps = {
+    className: '',
     titleAnimationCls: ''
 };
 

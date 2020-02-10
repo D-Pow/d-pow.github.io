@@ -38,7 +38,7 @@ function Projects(props) {
     ));
 
     return (
-        <React.Fragment>
+        <div className={props.className}>
             <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
                 <h1 className={'p-5'}>Projects and Publications</h1>
             </ScrollToShow>
@@ -56,15 +56,17 @@ function Projects(props) {
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 
 Projects.propTypes = {
+    className: PropTypes.string,
     titleAnimationCls: PropTypes.string
 };
 
 Projects.defaultProps = {
+    className: '',
     titleAnimationCls: ''
 };
 

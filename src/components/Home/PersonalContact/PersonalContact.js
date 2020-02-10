@@ -55,7 +55,7 @@ function PersonalContact(props) {
     );
 
     return (
-        <div className={'mb-5'}>
+        <div className={'mb-5 ' + props.className}>
             <ScrollToShow
                 addClasses={'show'}
                 distributeClasses={props.titleAnimationCls}
@@ -83,10 +83,12 @@ function PersonalContact(props) {
 }
 
 PersonalContact.propTypes = {
+    className: PropTypes.string,
     titleAnimationCls: PropTypes.string
 };
 
 PersonalContact.defaultProps = {
+    className: '',
     titleAnimationCls: ''
 };
 

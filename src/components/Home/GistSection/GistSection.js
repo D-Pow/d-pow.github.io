@@ -23,7 +23,7 @@ function GistSection(props) {
     const sectionCardShowThreshold = 2/3;
 
     return (
-        <React.Fragment>
+        <div className={props.className}>
             <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
                 <h1 className={'p-5'}>The gist...</h1>
             </ScrollToShow>
@@ -41,15 +41,17 @@ function GistSection(props) {
                     </ScrollToShow>
                 </SectionCard>
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 
 GistSection.propTypes = {
+    className: PropTypes.string,
     titleAnimationCls: PropTypes.string
 };
 
 GistSection.defaultProps = {
+    className: '',
     titleAnimationCls: ''
 };
 
