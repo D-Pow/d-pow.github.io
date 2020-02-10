@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'components/ui/Image';
 import { useHover } from 'utils/Hooks';
-import { isMobileBrowser } from 'utils/Functions';
+import { isMobileBrowser, isMicrosoftBrowser } from 'utils/Functions';
 
 function ImageCard(props) {
     const {
@@ -27,7 +27,7 @@ function ImageCard(props) {
     function renderHoverContent() {
         const textWrapperColorCls = 'bg-primary text-light';
         const textWrapperPositionCls = 'position-absolute m-auto fixed-top h-100';
-        const textWrapperChildrenPositioningCls = 'd-flex align-content-evenly flex-wrap';
+        const textWrapperChildrenPositioningCls = 'd-flex flex-wrap ' + (isMicrosoftBrowser() ? 'align-content-space-around' : 'align-content-evenly');
         const textWrapperAnimationCls = 'animated fade';
         const textWrapperCls = [
             textWrapperColorCls,

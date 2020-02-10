@@ -124,6 +124,10 @@ $container-max-widths: (
   align-content: space-evenly !important;
 }
 
+.align-content-space-around {
+  align-content: space-around;
+}
+
 .underline {
   text-decoration: underline;
 
