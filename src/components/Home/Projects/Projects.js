@@ -49,7 +49,7 @@ function Projects(props) {
                             {projectInfoCardEntries}
                         </ScrollToShow>
                     </div>
-                    <div className={'d-none d-sm-flex'}>
+                    <div className={'d-none d-sm-flex w-100'}>
                         <ScrollToShow {...projectEntriesScrollToShowClassProps} distributeSimultaneously={0.32}>
                             {projectInfoCardEntries}
                         </ScrollToShow>

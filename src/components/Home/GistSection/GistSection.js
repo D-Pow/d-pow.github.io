@@ -36,8 +36,8 @@ function GistSection(props) {
                         </ScrollToShow>
                     )}
                 >
-                    <ScrollToShow addClasses={'slide-in-right show'} distributeClasses={'animated'} threshold={sectionCardShowThreshold}>
-                        <Shape image={'profile_pic.jpg'} sides={6} rotation={90} />
+                    <ScrollToShow addClasses={'slide-in-right show'} distributeClasses={'animated h-100'} threshold={sectionCardShowThreshold}>
+                        <Shape className={'h-100'} image={'profile_pic.jpg'} sides={6} rotation={90} />
                     </ScrollToShow>
                 </SectionCard>
             </div>
