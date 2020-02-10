@@ -88,7 +88,7 @@ module.exports = {
         ]
     },
     entry: {
-        client: ['core-js', path.resolve(__dirname, 'src/index.js')],
+        client: ['core-js', 'isomorphic-fetch', path.resolve(__dirname, 'src/index.js')],
         vendor: ['react', 'react-dom', 'react-router-dom', 'prop-types']
     },
     output: {
