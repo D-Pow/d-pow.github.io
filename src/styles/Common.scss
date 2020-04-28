@@ -143,7 +143,7 @@ $container-max-widths: (
 }
 
 .border.border-medium {
-  border-width: 0.2rem !important;
+  border-width: 0.25rem !important;
 
   @each $colorName, $color in $theme-colors {
     @for $opacity from 0 through 9 {
