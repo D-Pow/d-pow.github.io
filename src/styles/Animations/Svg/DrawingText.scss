@@ -1,0 +1,35 @@
+// length of `stroke-dasharray` is about 75 per 1em font-size
+$strokeDasharrayLengthForFontSize1em: 75;
+
+:export {
+    strokeDasharrayLengthForFontSize1em: $strokeDasharrayLengthForFontSize1em;
+}
+
+.draw-text-and-fill {
+    --stroke-dasharray-length: $strokeDasharrayLengthForFontSize1em;
+    fill-opacity: 0;
+    stroke-dasharray: var(--stroke-dasharray-length);
+    /* `cubic-bezier(.5,0,.5,1)` is like `ease-in-out` but with a slower start/end and faster middle */
+    animation:  draw-outline 3s cubic-bezier(.5, 0, .5, 1),
+                fill-fade-in 1s ease-out 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes draw-outline {
+    from {
+        stroke-dashoffset: var(--stroke-dasharray-length);
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes fill-fade-in {
+    from {
+        /* use fill-opacity instead of `fill: rgba(,,,0)` to inherit fill color from parent */
+        fill-opacity: 0;
+    }
+    to {
+        fill-opacity: 1;
+    }
+}
