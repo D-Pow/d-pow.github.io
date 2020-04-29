@@ -5,30 +5,26 @@ import { strokeDasharrayLengthForFontSize1em } from 'styles/Animations/Svg/Drawi
 function SvgDrawingText({
         className,
         fontSizeEm,
-        fillColor,
-        strokeColor,
-        x,
-        y,
         textElemProps,
+        style,
         children
     }) {
+    // override default props with those specified by user
+    // but ensure that the default props are set if user didn't specify them all
+    const elemProps = Object.assign({}, SvgDrawingText.defaultProps.textElemProps, textElemProps);
     const strokeDasharrayLength = Math.ceil(fontSizeEm * Number(strokeDasharrayLengthForFontSize1em));
+    // override user styles with those that depend on font-size
+    const elemStyle = {
+        ...style,
+        ['--stroke-dasharray-length']: strokeDasharrayLength,
+        fontSize: `${fontSizeEm}em`
+    };
 
     return (
         <text
-            {...textElemProps}
+            {...elemProps}
             className={'draw-text-and-fill ' + className}
-            x={x}
-            y={y}
-            dominantBaseline={'middle'} // y-axis centering
-            textAnchor={'middle'} // x-axis centering
-            fill={fillColor}
-            stroke={strokeColor}
-            strokeWidth={0.5}
-            style={{
-                ['--stroke-dasharray-length']: strokeDasharrayLength,
-                fontSize: `${fontSizeEm}em`
-            }}
+            style={elemStyle}
         >
             {children}
         </text>
@@ -38,10 +34,7 @@ function SvgDrawingText({
 SvgDrawingText.propTypes = {
     className: PropTypes.string,
     fontSizeEm: PropTypes.number,
-    fillColor: PropTypes.string,
-    strokeColor: PropTypes.string,
-    x: PropTypes.string,
-    y: PropTypes.string,
+    style: PropTypes.object,
     textElemProps: PropTypes.object,
     children: PropTypes.oneOfType([ PropTypes.node, PropTypes.arrayOf(PropTypes.node) ])
 };
@@ -49,11 +42,16 @@ SvgDrawingText.propTypes = {
 SvgDrawingText.defaultProps = {
     className: '',
     fontSizeEm: 1,
-    fillColor: 'white',
-    strokeColor: 'white',
-    x: '50%',
-    y: '50%',
-    textElemProps: {}
+    style: {},
+    textElemProps: {
+        fill: 'white',
+        stroke: 'white',
+        strokeWidth: 0.5,
+        x: '50%',
+        y: '50%',
+        dominantBaseline: 'middle', // y-axis centering
+        textAnchor: 'middle', // x-axis centering
+    }
 };
 
 export default SvgDrawingText;
