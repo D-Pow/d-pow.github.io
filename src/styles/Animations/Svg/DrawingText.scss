@@ -6,7 +6,7 @@ $strokeDasharrayLengthForFontSize1em: 75;
 }
 
 .draw-text-and-fill {
-    --stroke-dasharray-length: $strokeDasharrayLengthForFontSize1em;
+    --stroke-dasharray-length: #{$strokeDasharrayLengthForFontSize1em};
     fill-opacity: 0;
     stroke-dasharray: var(--stroke-dasharray-length);
     /* `cubic-bezier(.5,0,.5,1)` is like `ease-in-out` but with a slower start/end and faster middle */
