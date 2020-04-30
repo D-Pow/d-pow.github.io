@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import SpinnerAtom from 'components/ui/SpinnerAtom';
-import AppContext from 'utils/AppContext';
+import AppContext, { AppContextFields } from 'utils/AppContext';
 import { isMicrosoftBrowser, resetWindowScroll } from 'utils/Functions';
 import IncompatibleBrowserFallback from 'components/IncompatibleBrowserFallback';
 
@@ -51,10 +51,8 @@ function App() {
     const renderedRoutes = routes.map(routeAria => (
         <Route key={routeAria.path} {...routeAria} />
     ));
-    const { contextState: { imagesRequested, imagesLoaded }} = useContext(AppContext.Context);
-    const imagesHaveBeenRequested = imagesRequested > 0;
-    const imagesHaveFinishedLoading = imagesLoaded === imagesRequested;
-    const imagesStillLoading = !imagesHaveBeenRequested || !imagesHaveFinishedLoading;
+    const { contextState } = useContext(AppContext.Context);
+    const imagesStillLoading = contextState[AppContextFields.GET_IMAGES_STILL_LOADING]();
     const showSpinner = imagesStillLoading || showSpinnerLonger;
 
     useEffect(() => {
