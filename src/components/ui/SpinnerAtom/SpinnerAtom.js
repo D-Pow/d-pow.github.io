@@ -3,7 +3,16 @@ import PropTypes from 'prop-types';
 import AtomSpinner from './AtomSpinner';
 import { getDurationTimeMsFromClassName, resetWindowScroll } from 'utils/Functions';
 
-function SpinnerAtom({ className, fullScreen, show, preventScrolling, numElectrons, electronColors }) {
+function SpinnerAtom({
+    className,
+    fullScreen,
+    show,
+    preventScrolling,
+    onClose,
+    onUnmount,
+    numElectrons,
+    electronColors
+}) {
     const [ showMomentarily, setShowMomentarily ] = useState(false);
     const classes = [
         'bg-dark',
@@ -63,7 +72,9 @@ function SpinnerAtom({ className, fullScreen, show, preventScrolling, numElectro
         if (wasJustClosed) {
             setTimeout(() => {
                 setShowMomentarily(false);
+                onUnmount();
             }, fadeOutDelay);
+            onClose();
         }
     }, [show, fadeOutDelay]);
 
@@ -81,6 +92,13 @@ SpinnerAtom.propTypes = {
     fullScreen: PropTypes.bool,
     show: PropTypes.bool,
     preventScrolling: PropTypes.bool,
+
+    // handler for when the spinner is first closed
+    onClose: PropTypes.func,
+
+    // handler for when the spinner is fully removed from view (after animation)
+    onUnmount: PropTypes.func,
+
     ...AtomSpinner.propTypes
 };
 
@@ -88,7 +106,9 @@ SpinnerAtom.defaultProps = {
     className: '',
     fullScreen: true,
     show: false,
-    preventScrolling: false
+    preventScrolling: false,
+    onClose: () => {},
+    onUnmount: () => {}
 };
 
 export default SpinnerAtom;
