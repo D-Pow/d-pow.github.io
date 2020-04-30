@@ -8,12 +8,13 @@ const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-const buildOutputPaths = {
+const relativeBuildOutputPaths = {
     dev: '',
     prod: 'website'
 };
-const buildOutputPath = process.env.NODE_ENV === 'production' ? buildOutputPaths.prod : buildOutputPaths.dev;
-const publicUrl = 'static';
+const relativeBuildOutputPath = process.env.NODE_ENV === 'production' ? relativeBuildOutputPaths.prod : relativeBuildOutputPaths.dev;
+const absoluteBuildOutputPath = path.resolve(__dirname, relativeBuildOutputPath);
+const transpiledSrcOutputPath = 'static';
 const title = 'Devon Powell';
 
 const env = dotenv.config({
@@ -24,7 +25,7 @@ process.env = {
     ...process.env,
     ...env,
     NODE_ENV: process.env.NODE_ENV || 'development',
-    PUBLIC_URL: publicUrl
+    PUBLIC_URL: transpiledSrcOutputPath
 };
 
 const publicEnv = {
@@ -73,7 +74,7 @@ module.exports = {
                     {
                         loader: 'file-loader',
                         options: {
-                            name: `${publicUrl}/assets/[name]-[hash:8].[ext]`
+                            name: `${transpiledSrcOutputPath}/assets/[name]-[hash:8].[ext]`
                         }
                     }
                 ]
@@ -92,9 +93,9 @@ module.exports = {
         vendor: ['react', 'react-dom', 'react-router-dom', 'prop-types']
     },
     output: {
-        path: path.resolve(__dirname, buildOutputPath), // output path for webpack build on machine, not relative paths for index.html
-        filename: `${publicUrl}/js/[name].[hash:8].bundle.js`,
-        chunkFilename: `${publicUrl}/js/[name].[hash:8].chunk.js`
+        path: absoluteBuildOutputPath, // output path for webpack build on machine, not relative paths for index.html
+        filename: `${transpiledSrcOutputPath}/js/[name].[hash:8].bundle.js`,
+        chunkFilename: `${transpiledSrcOutputPath}/js/[name].[hash:8].chunk.js`
     },
     devServer: {
         port: 3000,
@@ -119,7 +120,7 @@ module.exports = {
         new InterpolateHtmlPlugin(publicEnv),
         // splits CSS out from the rest of the code
         new MiniCssExtractPlugin({
-            filename: `${publicUrl}/css/[name].[contenthash:8].css`
+            filename: `${transpiledSrcOutputPath}/css/[name].[contenthash:8].css`
         }),
         // manually copies files from src to dest
         new CopyWebpackPlugin([
