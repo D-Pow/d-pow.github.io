@@ -8,7 +8,7 @@ class SectionCard extends React.Component {
         return (
             <div className={`m-auto ${SectionCard.colSize}`}>
                 <h3 className={'p-2'}>{title}</h3>
-                <div className={'font-size-1-2em'}>{description}</div>
+                <p>{description}</p>
             </div>
         );
     }

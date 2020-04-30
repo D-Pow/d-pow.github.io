@@ -14,6 +14,10 @@ body {
   font-family: sans-serif;
 }
 
+p {
+  font-size: 1.2em;
+}
+
 @for $i from 0 through 9 {
   .border-size-#{$i}[class*="border"] {
     border-width: #{$i}px !important;
