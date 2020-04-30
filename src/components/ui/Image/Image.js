@@ -20,7 +20,7 @@ function Image(props) {
 
     function incrementAppContextField(finishedLoading = false) {
         if (props.updateAppContext) {
-            const contextField = finishedLoading ? AppContextFields.LOADED : AppContextFields.REQUESTED;
+            const contextField = finishedLoading ? AppContextFields.IMAGES_LOADED : AppContextFields.IMAGES_REQUESTED;
 
             setContextState(prevState => ({
                 ...prevState,
