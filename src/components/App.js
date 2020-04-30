@@ -72,7 +72,7 @@ function App() {
     }, []);
 
     return (
-        <div className="App text-center">
+        <div className="App text-center font-didot-serif">
             <React.Suspense
                 fallback={<SpinnerAtom show={true} preventScrolling={true} />}
             >
