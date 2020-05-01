@@ -6,7 +6,7 @@ import Projects from 'components/Home/Projects';
 import Pastimes from 'components/Home/Pastimes';
 import PersonalContact from 'components/Home/PersonalContact';
 
-function Home(props) {
+function Home() {
     const titleDisplayAnimationCls = 'animated fade duration-10';
 
     return (
