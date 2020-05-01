@@ -37,6 +37,7 @@ const publicEnv = {
 const jsRegex = /\.jsx?$/;
 const scssRegex = /\.s?css$/;
 const assetRegex = /\.(png|gif|jpe?g|svg|ico|pdf|tex)$/;
+const fontRegex = /\.(ttf|woff2?|eot)$/;
 
 const hotReloading = false; // process.env.NODE_ENV === 'development';
 
@@ -74,7 +75,7 @@ module.exports = {
                 ]
             },
             {
-                test: assetRegex,
+                test: [ assetRegex, fontRegex ],
                 use: [
                     {
                         loader: 'file-loader',
@@ -95,6 +96,12 @@ module.exports = {
                                      * files in output root directory, `website/`.
                                      */
                                     return `[name].[ext]`;
+                                }
+
+                                if (fontRegex.test(assetName)) {
+                                    // Don't append hash to font file outputs
+                                    // so that the SCSS mixin can work with the direct file name
+                                    return '[path][name].[ext]';
                                 }
 
                                 return '[path][name]-[hash:8].[ext]';
