@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'components/ui/Image';
 import SvgDrawingText from 'components/ui/SvgDrawingText';
 import { isMobileBrowser } from 'utils/Functions';
+import AppContext, { AppContextFields } from 'utils/AppContext';
 import 'styles/SplashSection.scss';
 
 function DrawingTextSplashSection() {
+    const { contextState } = useContext(AppContext.Context);
+    const spinnerWasClosed = contextState[AppContextFields.GLOBAL_SPINNER_CLOSED];
+
     function renderEvenlySpacedSkewedDrawingTexts(textArray) {
         const centerX = '50%';
         /*
@@ -33,10 +37,14 @@ function DrawingTextSplashSection() {
         ));
     }
 
+    const renderedDrawingTexts = spinnerWasClosed
+        ? renderEvenlySpacedSkewedDrawingTexts([ 'Hey there,', "I'm Devon!" ])
+        : '';
+
     return (
         <div className={'full-screen-minus-scrollbar flex-center bg-dark'}>
             <svg className={'h-75 w-80'} viewBox={'0 0 100 100'}>
-                {renderEvenlySpacedSkewedDrawingTexts([ 'Hey there,', "I'm Devon!" ])}
+                {renderedDrawingTexts}
             </svg>
         </div>
     );
