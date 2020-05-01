@@ -8,15 +8,28 @@ import PersonalContact from 'components/Home/PersonalContact';
 
 function Home() {
     const titleDisplayAnimationCls = 'animated fade duration-10';
+    const backgroundColorAlternations = [
+        '',     // default background color = $lightest as defined in Common.scss
+        'bg-light'
+    ];
+    const sections = [
+        GistSection,
+        Productions,
+        Projects,
+        Pastimes,
+        PersonalContact
+    ];
 
     return (
         <React.Fragment>
             <SplashSection />
-            <GistSection titleAnimationCls={titleDisplayAnimationCls} />
-            <Productions titleAnimationCls={titleDisplayAnimationCls} />
-            <Projects titleAnimationCls={titleDisplayAnimationCls} />
-            <Pastimes titleAnimationCls={titleDisplayAnimationCls} />
-            <PersonalContact titleAnimationCls={titleDisplayAnimationCls} />
+            {sections.map((Component, i) => (
+                <Component
+                    className={backgroundColorAlternations[i % 2]}
+                    titleAnimationCls={titleDisplayAnimationCls}
+                    key={i}
+                />
+            ))}
         </React.Fragment>
     );
 }
