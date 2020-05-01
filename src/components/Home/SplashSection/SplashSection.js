@@ -1,9 +1,48 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Image from 'components/ui/Image';
+import SvgDrawingText from 'components/ui/SvgDrawingText';
 import { isMobileBrowser } from 'utils/Functions';
 import 'styles/SplashSection.scss';
 
-function SplashSection() {
+function DrawingTextSplashSection() {
+    function renderEvenlySpacedSkewedDrawingTexts(textArray) {
+        const centerX = '50%';
+        /*
+         * Distribute text elements vertically such that there are equal
+         * entries before/after the Y midpoint (y=50%), and closer to the center
+         * than the edges.
+         *
+         * e.g. If 2 items, then 33% and 66%. If 3, then 25%, 50%, and 75%.
+         */
+        const evenlySpacedY = textIndex => `${(100 / (textArray.length + 1)) * (textIndex + 1)}%`;
+
+        return textArray.map((text, i) => (
+            <SvgDrawingText
+                className={'font-brush-script'}
+                key={i}
+                fontSizeEm={1.5}
+                style={{ transform: 'skewY(-5deg)' }}
+                textElemProps={{
+                    x: centerX,
+                    y:evenlySpacedY(i)
+                }}
+            >
+                {text}
+            </SvgDrawingText>
+        ));
+    }
+
+    return (
+        <div className={'full-screen-minus-scrollbar flex-center bg-dark'}>
+            <svg className={'h-75 w-80'} viewBox={'0 0 100 100'}>
+                {renderEvenlySpacedSkewedDrawingTexts([ 'Hey there,', "I'm Devon!" ])}
+            </svg>
+        </div>
+    );
+}
+
+function MountainBackgroundSplashSection() {
     const pageText = {
         welcomeTitle: "Hey there, I'm Devon!"
     };
@@ -51,5 +90,28 @@ function SplashSection() {
         </div>
     );
 }
+
+function SplashSection(props) {
+    const componentTypes = {
+        [SplashSection.Types.DRAWING_TEXT]: DrawingTextSplashSection,
+        [SplashSection.Types.MOUNTAIN_BACKGROUND]: MountainBackgroundSplashSection
+    };
+    const Component = componentTypes[props.type];
+
+    return <Component />;
+}
+
+SplashSection.Types = {
+    DRAWING_TEXT: 'DrawingText',
+    MOUNTAIN_BACKGROUND: 'MountainBackground'
+};
+
+SplashSection.propTypes = {
+    type: PropTypes.oneOf(Object.values(SplashSection.Types))
+};
+
+SplashSection.defaultProps = {
+    type: SplashSection.Types.DRAWING_TEXT
+};
 
 export default SplashSection;
