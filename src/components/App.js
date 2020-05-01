@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import SpinnerAtom from 'components/ui/SpinnerAtom';
-import AppContext, { AppContextFields } from 'utils/AppContext';
-import { isMicrosoftBrowser, resetWindowScroll } from 'utils/Functions';
 import IncompatibleBrowserFallback from 'components/IncompatibleBrowserFallback';
+import { isMicrosoftBrowser, resetWindowScroll } from 'utils/Functions';
+import AppContext, { AppContextFields } from 'utils/AppContext';
 
 /**
  * Lazy-load components so the Spinner is prioritized, loaded quickly, and unblocked from animating.
@@ -54,7 +54,7 @@ function App() {
                 setShowSpinnerLonger(false);
             }, 1750);
         }
-    }, [imagesStillLoading]);
+    }, [ imagesStillLoading ]);
 
     useEffect(() => {
         window.addEventListener('unload', resetWindowScroll);
