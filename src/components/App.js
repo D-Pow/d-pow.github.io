@@ -43,10 +43,21 @@ const routes = [
 ];
 
 function App() {
-    const { contextState } = useContext(AppContext.Context);
+    const { contextState, setContextState } = useContext(AppContext.Context);
     const imagesStillLoading = contextState[AppContextFields.GET_IMAGES_STILL_LOADING]();
+
+    const [ spinnerWasClosed, setSpinnerWasClosed ] = useState(false);
+    const [ spinnerWasUnmounted, setSpinnerWasUnmounted ] = useState(false);
     const [ showSpinnerLonger, setShowSpinnerLonger ] = useState(true);
     const showSpinner = imagesStillLoading || showSpinnerLonger;
+
+    useEffect(() => {
+        setContextState(prevState => ({
+            ...prevState,
+            [AppContextFields.GLOBAL_SPINNER_CLOSED]: spinnerWasClosed,
+            [AppContextFields.GLOBAL_SPINNER_UNMOUNTED]: spinnerWasUnmounted
+        }));
+    }, [ spinnerWasClosed, spinnerWasUnmounted ]);
 
     useEffect(() => {
         if (!imagesStillLoading) {
@@ -84,7 +95,12 @@ function App() {
                         <Footer />
                     </React.Fragment>
                 </Router>
-                <SpinnerAtom show={showSpinner} preventScrolling={true} />
+                <SpinnerAtom
+                    show={showSpinner}
+                    preventScrolling={true}
+                    onClose={() => setSpinnerWasClosed(true)}
+                    onUnmount={() => setSpinnerWasUnmounted(true)}
+                />
             </React.Suspense>
         </div>
     );
