@@ -43,16 +43,9 @@ const routes = [
 ];
 
 function App() {
-    if (isMicrosoftBrowser()) {
-        return <IncompatibleBrowserFallback />
-    }
-
-    const [ showSpinnerLonger, setShowSpinnerLonger ] = useState(true);
-    const renderedRoutes = routes.map(routeAria => (
-        <Route key={routeAria.path} {...routeAria} />
-    ));
     const { contextState } = useContext(AppContext.Context);
     const imagesStillLoading = contextState[AppContextFields.GET_IMAGES_STILL_LOADING]();
+    const [ showSpinnerLonger, setShowSpinnerLonger ] = useState(true);
     const showSpinner = imagesStillLoading || showSpinnerLonger;
 
     useEffect(() => {
@@ -70,6 +63,14 @@ function App() {
             window.removeEventListener('unload', resetWindowScroll);
         };
     }, []);
+
+    const renderedRoutes = routes.map(routeAria => (
+        <Route key={routeAria.path} {...routeAria} />
+    ));
+
+    if (isMicrosoftBrowser()) {
+        return <IncompatibleBrowserFallback />
+    }
 
     return (
         <div className="App text-center font-didot-serif">
