@@ -11,7 +11,7 @@ function Home(props) {
 
     return (
         <React.Fragment>
-            <SplashSection titleAnimationCls={titleDisplayAnimationCls} />
+            <SplashSection />
             <GistSection titleAnimationCls={titleDisplayAnimationCls} />
             <Productions titleAnimationCls={titleDisplayAnimationCls} />
             <Projects titleAnimationCls={titleDisplayAnimationCls} />
