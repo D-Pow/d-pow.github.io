@@ -8,13 +8,14 @@ function SplashSection() {
     const { contextState } = useContext(AppContext.Context);
     const spinnerWasClosed = contextState[AppContextFields.GLOBAL_SPINNER_CLOSED];
     const [ showBgImage, setShowBgImage ] = useState(false);
-    const drawingAnimationTime = 3000;
+    const drawingAnimationTimeMs = SvgDrawingText.defaultProps.animationDurationSeconds * 1000;
 
     useEffect(() => {
         if (spinnerWasClosed && !showBgImage) {
+            // show mountain image after text-drawing animation has finished
             setTimeout(() => {
                 setShowBgImage(true);
-            }, drawingAnimationTime);
+            }, drawingAnimationTimeMs);
         }
     }, [ spinnerWasClosed ]);
 
