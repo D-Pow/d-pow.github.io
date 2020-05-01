@@ -5,6 +5,7 @@ import { strokeDasharrayLengthForFontSize1em } from 'styles/Animations/Svg/Drawi
 function SvgDrawingText({
         className,
         fontSizeEm,
+        animationDurationSeconds,
         textElemProps,
         style,
         children
@@ -13,11 +14,16 @@ function SvgDrawingText({
     // but ensure that the default props are set if user didn't specify them all
     const elemProps = Object.assign({}, SvgDrawingText.defaultProps.textElemProps, textElemProps);
     const strokeDasharrayLength = Math.ceil(fontSizeEm * Number(strokeDasharrayLengthForFontSize1em));
-    // override user styles with those that depend on font-size
+    // make draw-outline and fill-fade-in animations end at the same time
+    // fill-fade-in will wait until draw-outline is 2/3 complete before beginning
+    const fillFadeInDuration = animationDurationSeconds / 3;
+    const fillFadeInDelay = animationDurationSeconds - fillFadeInDuration;
     const elemStyle = {
         ...style,
         ['--stroke-dasharray-length']: strokeDasharrayLength,
-        fontSize: `${fontSizeEm}em`
+        fontSize: `${fontSizeEm}em`, // stroke-dasharray length depends on font-size, so ensure they match
+        animationDuration: `${animationDurationSeconds}s, ${fillFadeInDuration}s`,
+        animationDelay: `0s, ${fillFadeInDelay}s`
     };
 
     return (
@@ -34,6 +40,7 @@ function SvgDrawingText({
 SvgDrawingText.propTypes = {
     className: PropTypes.string,
     fontSizeEm: PropTypes.number,
+    animationDurationSeconds: PropTypes.number,
     style: PropTypes.object,
     textElemProps: PropTypes.object,
     children: PropTypes.oneOfType([ PropTypes.node, PropTypes.arrayOf(PropTypes.node) ])
@@ -42,6 +49,7 @@ SvgDrawingText.propTypes = {
 SvgDrawingText.defaultProps = {
     className: '',
     fontSizeEm: 1,
+    animationDurationSeconds: 3,
     style: {},
     textElemProps: {
         fill: 'white',

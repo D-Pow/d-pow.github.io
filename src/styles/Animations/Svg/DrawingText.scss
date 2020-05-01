@@ -10,8 +10,8 @@ $strokeDasharrayLengthForFontSize1em: 75;
     fill-opacity: 0;
     stroke-dasharray: var(--stroke-dasharray-length);
     /* `cubic-bezier(.5,0,.5,1)` is like `ease-in-out` but with a slower start/end and faster middle */
-    animation:  draw-outline 3s cubic-bezier(.5, 0, .5, 1),
-                fill-fade-in 1s ease-out 2s;
+    animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1), ease-out;
+    animation-name: draw-outline, fill-fade-in;
     animation-fill-mode: forwards;
 }
 
