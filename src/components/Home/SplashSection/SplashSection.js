@@ -53,7 +53,7 @@ function SplashSection() {
     return (
         <div className={'bg-dark full-screen-minus-scrollbar'}>
             <Image
-                className={`w-100 h-100 animated fade duration-8 ${showBgImage ? 'show' : ''}`}
+                className={`w-100 h-100 animated fade duration-15 ${showBgImage ? 'show' : ''}`}
                 image={'blue_horizon.svg'}
                 fluidImage={false}
             />
