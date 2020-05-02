@@ -42,6 +42,13 @@ const routes = [
     }
 ];
 
+// TODO
+//  IE and Edge don't support the SpinnerAtom animation
+//  IE doesn't support SVG fill or draw animations
+//  Edge doesn't support HoverTranslate as an SVG foreignObject
+//  IE doesn't support SVG foreignObject at all
+const blockMicrosoftBrowsers = false;
+
 function App() {
     const { contextState, setContextState } = useContext(AppContext.Context);
     const imagesStillLoading = contextState[AppContextFields.GET_IMAGES_STILL_LOADING]();
@@ -79,7 +86,7 @@ function App() {
         <Route key={routeAria.path} {...routeAria} />
     ));
 
-    if (isMicrosoftBrowser()) {
+    if (blockMicrosoftBrowsers && isMicrosoftBrowser()) {
         return <IncompatibleBrowserFallback />
     }
 

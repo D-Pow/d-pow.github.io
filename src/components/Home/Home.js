@@ -5,9 +5,11 @@ import Productions from 'components/Home/Productions';
 import Projects from 'components/Home/Projects';
 import Pastimes from 'components/Home/Pastimes';
 import PersonalContact from 'components/Home/PersonalContact';
+import { isMicrosoftBrowser } from 'utils/Functions';
 
 function Home() {
     const titleDisplayAnimationCls = 'animated fade duration-10';
+    const showPastimes = !isMicrosoftBrowser(false);
     const backgroundColorAlternations = [
         '',     // default background color = $lightest as defined in Common.scss
         'bg-light'
@@ -16,9 +18,13 @@ function Home() {
         GistSection,
         Productions,
         Projects,
-        Pastimes,
-        PersonalContact
     ];
+
+    if (showPastimes) {
+        sections.push(Pastimes);
+    }
+
+    sections.push(PersonalContact);
 
     return (
         <React.Fragment>
