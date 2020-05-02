@@ -44,7 +44,7 @@ function PersonalContact(props) {
     const renderedModalButton = (
         <div className={`col ${getContactMethodCls(modalButtonShownChildrenIndex)}`}>
             <button
-                className={'btn border border-primary border-medium rounded p-4 hover-invert-bg-light duration-3'}
+                className={'btn border border-primary border-medium rounded p-4 hover-invert-text-bg-colors duration-3'}
                 onClick={showContactModal}
             >
                 <h5 className={'margin-clear'}>
