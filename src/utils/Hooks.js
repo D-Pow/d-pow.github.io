@@ -277,7 +277,7 @@ export function useDynamicFontSizeShrinking(originalConstrainingRef = { current:
     const toResizeElem = useRef(null);
     const originalFontSizePx = getComputedStyle(originalConstrainingRef.current).fontSize;
     const [ fontSizePx, setFontSizePx ] = useState(originalFontSizePx);
-    const { windowSizeState, resetWasSized } = useWindowResize();
+    const { windowSizeState, resetWasSized } = useWindowResize(800);
 
     useEffect(() => {
         if (constrainingElem.current && toResizeElem.current) {
