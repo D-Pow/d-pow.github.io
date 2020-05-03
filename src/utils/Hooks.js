@@ -113,34 +113,21 @@ export function useRootClose(acceptableElement, closeElement) {
     return [ rootWasClosed, resetRootClosed ];
 }
 
-export function useWindowResize(delay = 1000) {
-    const initialState = {
-        wasResized: false,
-        width: window.innerWidth,
-        height: window.innerHeight
-    };
-
+export function useWindowResize(debounceDelay = 1000) {
     function handleResize(prevState, setState) {
-        setState({
-            wasResized: true,
-            width: window.innerWidth,
-            height: window.innerHeight
-        });
+        setState(true);
     }
 
-    const [ windowSizeState, setWindowSizeState ] = useWindowEvent('resize', {
-        initialEventState: initialState,
-        handleEvent: debounce(handleResize, delay)
+    const [ windowWasResized, setWindowWasResized ] = useWindowEvent('resize', {
+        initialEventState: false,
+        handleEvent: debounce(handleResize, debounceDelay)
     });
 
     function resetWasSized() {
-        setWindowSizeState(prevState => ({
-            ...prevState,
-            wasResized: false
-        }))
+        setWindowWasResized(false)
     }
 
-    return { windowSizeState, setWindowSizeState, resetWasSized };
+    return [ windowWasResized, resetWasSized ];
 }
 
 /**
@@ -277,7 +264,7 @@ export function useDynamicFontSizeShrinking(originalConstrainingRef = { current:
     const toResizeElem = useRef(null);
     const originalFontSizePx = getComputedStyle(originalConstrainingRef.current).fontSize;
     const [ fontSizePx, setFontSizePx ] = useState(originalFontSizePx);
-    const { windowSizeState, resetWasSized } = useWindowResize(800);
+    const [ windowWasResized, resetWasSized ] = useWindowResize(800);
 
     useEffect(() => {
         if (constrainingElem.current && toResizeElem.current) {
@@ -298,7 +285,7 @@ export function useDynamicFontSizeShrinking(originalConstrainingRef = { current:
 
             resetWasSized();
         }
-    }, [ constrainingElem.current, toResizeElem.current, windowSizeState.wasResized, fontSizePx ]);
+    }, [ constrainingElem.current, toResizeElem.current, windowWasResized, fontSizePx ]);
 
     return [ constrainingElem, toResizeElem, fontSizePx ];
 }
