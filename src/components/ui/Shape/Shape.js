@@ -281,10 +281,7 @@ Shape.propTypes = {
         onlyOnMobile: PropTypes.bool,
         onlyAtLength: PropTypes.number
     }),
-    svgChildren: PropTypes.oneOfType([
-        PropTypes.node,
-        PropTypes.arrayOf([ PropTypes.node ])
-    ]),
+    svgChildren: PropTypes.node,
 
     // degrees of rotation of shape
     rotation: PropTypes.number,

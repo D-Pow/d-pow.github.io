@@ -43,7 +43,7 @@ SvgDrawingText.propTypes = {
     animationDurationSeconds: PropTypes.number,
     style: PropTypes.object,
     textElemProps: PropTypes.object,
-    children: PropTypes.oneOfType([ PropTypes.node, PropTypes.arrayOf(PropTypes.node) ])
+    children: PropTypes.node
 };
 
 SvgDrawingText.defaultProps = {
