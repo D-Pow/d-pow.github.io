@@ -7,7 +7,7 @@ function InfoCard(props) {
         <div className={`text-left ${props.className}`} {...props.aria}>
             <Image className={'mb-3'} image={props.image} />
             <h3 className={'mb-3'}>{props.title}</h3>
-            <p className={'mb-3'}>{props.description}</p>
+            <p className={'mb-4'}>{props.description}</p>
             <div className={'d-block d-sm-none segment-bar'} />
         </div>
     );
