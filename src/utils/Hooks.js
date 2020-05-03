@@ -1,6 +1,6 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react';
 import { asNumber } from 'utils/Numbers';
-import { elementIsInClickPath, getClickPath, setDocumentScrolling } from 'utils/Events';
+import { debounce, elementIsInClickPath, getClickPath, setDocumentScrolling } from 'utils/Events';
 
 /**
  * @callback hookedChildRenderer
@@ -113,7 +113,7 @@ export function useRootClose(acceptableElement, closeElement) {
     return [ rootWasClosed, resetRootClosed ];
 }
 
-export function useWindowResize() {
+export function useWindowResize(delay = 1000) {
     const initialState = {
         wasResized: false,
         width: window.innerWidth,
@@ -130,7 +130,7 @@ export function useWindowResize() {
 
     const [ windowSizeState, setWindowSizeState ] = useWindowEvent('resize', {
         initialEventState: initialState,
-        handleEvent: handleResize
+        handleEvent: debounce(handleResize, delay)
     });
 
     function resetWasSized() {
