@@ -2,7 +2,16 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRootClose } from 'utils/Hooks';
 
-function Modal({ title, children, footer, useGridForChildren, useGridForFooter, show, onClose }) {
+function Modal({
+    title,
+    children,
+    footer,
+    useGridForChildren,
+    useGridForFooter,
+    show,
+    showCloseButton,
+    onClose
+}) {
     const [ hideMomentarily, setHideMomentarily ] = useState(false);
     const [ rootWasClosed, resetRootClosed ] = useRootClose(
         { attribute: 'class', value: 'modal-content' },
@@ -58,9 +67,11 @@ function Modal({ title, children, footer, useGridForChildren, useGridForFooter, 
                         <div className={'modal-title'}>
                             {renderedTitle}
                         </div>
-                        <button className={'close'} onClick={handleClose}>
-                            <span>&times;</span>
-                        </button>
+                        {showCloseButton && (
+                            <button className={'close'} onClick={handleClose}>
+                                <span>&times;</span>
+                            </button>
+                        )}
                     </div>
 
                     <div className={'modal-body'}>
@@ -90,6 +101,7 @@ Modal.propTypes = {
     useGridForChildren: PropTypes.bool,
     useGridForFooter: PropTypes.bool,
     show: PropTypes.bool,
+    showCloseButton: PropTypes.bool,
     onClose: PropTypes.func
 };
 
@@ -100,6 +112,7 @@ Modal.defaultProps = {
     useGridForChildren: true,
     useGridForFooter: false,
     show: false,
+    showCloseButton: true,
     onClose: () => {}
 };
 
