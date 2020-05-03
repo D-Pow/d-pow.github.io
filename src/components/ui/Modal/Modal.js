@@ -36,6 +36,11 @@ function Modal({ title, children, footer, useGridForChildren, useGridForFooter, 
 
     const displayCls = (show && !hideMomentarily) ? 'show' : '';
     const sizeStyle = show ? '' : '0%';
+    // Default title text to be a header.
+    // Clear the margin since that's handled by .modal-title
+    const renderedTitle = typeof title === typeof ''
+        ? <h4 className={'margin-clear'}>{title}</h4>
+        : title;
 
     return (
         <div className={`modal fade d-block ${displayCls}`}
@@ -50,7 +55,9 @@ function Modal({ title, children, footer, useGridForChildren, useGridForFooter, 
                 <div className={'modal-content'}>
 
                     <div className={'modal-header'}>
-                        <h5 className={'modal-title'}>{title}</h5>
+                        <div className={'modal-title'}>
+                            {renderedTitle}
+                        </div>
                         <button className={'close'} onClick={handleClose}>
                             <span>&times;</span>
                         </button>
@@ -77,7 +84,7 @@ function Modal({ title, children, footer, useGridForChildren, useGridForFooter, 
 }
 
 Modal.propTypes = {
-    title: PropTypes.string,
+    title: PropTypes.node,
     children: PropTypes.node,
     footer: PropTypes.node,
     useGridForChildren: PropTypes.bool,
