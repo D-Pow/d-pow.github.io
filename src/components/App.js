@@ -83,10 +83,19 @@ function App() {
         return <IncompatibleBrowserFallback />
     }
 
+    const renderedSpinner = (
+        <SpinnerAtom
+            show={showSpinner}
+            preventScrolling={true}
+            onClose={() => setSpinnerWasClosed(true)}
+            onUnmount={() => setSpinnerWasUnmounted(true)}
+        />
+    );
+
     return (
         <div className="App text-center font-didot-serif">
             <React.Suspense
-                fallback={<SpinnerAtom show={true} preventScrolling={true} />}
+                fallback={renderedSpinner}
             >
                 <Router>
                     <React.Fragment>
@@ -95,12 +104,7 @@ function App() {
                         <Footer />
                     </React.Fragment>
                 </Router>
-                <SpinnerAtom
-                    show={showSpinner}
-                    preventScrolling={true}
-                    onClose={() => setSpinnerWasClosed(true)}
-                    onUnmount={() => setSpinnerWasUnmounted(true)}
-                />
+                {renderedSpinner}
             </React.Suspense>
         </div>
     );
