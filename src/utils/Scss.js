@@ -58,7 +58,7 @@ export function getDurationTimeMsFromClassName(className) {
     }
 }
 
-export function randomColor(colorsToAvoid, onlyColors = null) {
+export function getRandomColor(colorsToAvoid, onlyColors = null) {
     let forbiddenColors;
     if (colorsToAvoid == null) {
         forbiddenColors = [''];

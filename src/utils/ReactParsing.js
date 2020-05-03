@@ -28,6 +28,6 @@ export function childIsOfType(child, component) {
  * @param {Node} child - Child whose type to check
  * @returns {boolean} - If the child is a React.Component
  */
-export function childIsReactElement(child) {
+export function childIsReactComponent(child) {
     return typeof child.type === 'function';
 }

@@ -3,7 +3,7 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 import SpinnerAtom from 'components/ui/SpinnerAtom';
 import IncompatibleBrowserFallback from 'components/IncompatibleBrowserFallback';
 import { isMicrosoftBrowser } from 'utils/BrowserIdentification';
-import { resetWindowScroll } from 'utils/Events';
+import { scrollWindowToTop } from 'utils/Events';
 import AppContext, { AppContextFields } from 'utils/AppContext';
 
 /**
@@ -69,10 +69,10 @@ function App() {
     }, [ imagesStillLoading ]);
 
     useEffect(() => {
-        window.addEventListener('unload', resetWindowScroll);
+        window.addEventListener('unload', scrollWindowToTop);
 
         return () => {
-            window.removeEventListener('unload', resetWindowScroll);
+            window.removeEventListener('unload', scrollWindowToTop);
         };
     }, []);
 

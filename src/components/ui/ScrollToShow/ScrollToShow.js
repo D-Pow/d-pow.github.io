@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SHOW_ELEMENT_SCROLL_THRESHOLD } from 'utils/Constants';
 import { asNumber } from 'utils/Numbers';
-import { childIsReactElement } from 'utils/ReactParsing';
+import { childIsReactComponent } from 'utils/ReactParsing';
 import { getDurationTimeMsFromClassName } from 'utils/Scss';
 
 class ScrollToShow extends React.Component {
@@ -142,7 +142,7 @@ class ScrollToShow extends React.Component {
      * @returns {Node} HTML element with attached ref
      */
     asHtmlElement = (child, index) => {
-        if (childIsReactElement(child)) {
+        if (childIsReactComponent(child)) {
             return (
                 <div className={this.getClassNames(index)} key={index} ref={this.state.childRefs[index]}>
                     {child}

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isMobileBrowser } from 'utils/BrowserIdentification';
-import { randomColor } from 'utils/Scss';
+import { getRandomColor } from 'utils/Scss';
 import Triangle from 'components/ui/Triangle';
 
 class FullPageTriangles extends React.Component {
@@ -68,7 +68,7 @@ class FullPageTriangles extends React.Component {
             for (let colIndex = 0; colIndex < numTrianglesInRow; colIndex++) {
                 if (!row[colIndex]) {
                     const neighboringColors = this.getNeighboringColors(rowIndex, colIndex, chosenColors);
-                    let color = randomColor(neighboringColors, ['primary', 'secondary', 'tertiary', 'info', 'dark']);
+                    let color = getRandomColor(neighboringColors, ['primary', 'secondary', 'tertiary', 'info', 'dark']);
                     chosenColors[rowIndex].push(color);
                 }
             }
