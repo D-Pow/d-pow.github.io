@@ -11,7 +11,7 @@ function Footer(props) {
         <React.Fragment>
             <div className={'d-block h5 text-dark'}>{textLine1}</div>
             <div className={'d-block h5 text-dark'}>{textLine2}
-                <EasterEgg onClick={() => setShowSrcCode(!showSrcCode)} />
+                <EasterEgg className={'cursor-pointer'} onClick={() => setShowSrcCode(!showSrcCode)} />
             </div>
         </React.Fragment>
     );
