@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AtomSpinner from './AtomSpinner';
-import { setDocumentScrolling } from 'utils/Events';
+import { useBlockDocumentScrolling } from 'utils/Hooks';
 import { getDurationTimeMsFromClassName } from 'utils/Scss';
 
 function SpinnerAtom({
@@ -39,28 +39,9 @@ function SpinnerAtom({
     const cls = classes.join(' ');
     const fadeOutDelay = getDurationTimeMsFromClassName(cls) + 200; // slightly longer time than .duration-XX class
 
-    useEffect(() => {
-        /**
-         * Don't return a cleanup function to handle activating scrolling.
-         *
-         * React calls cleanup functions upon both component unmount
-         * and component re-render. Also, the App component uses the Spinner
-         * as both React.Suspense.fallback and within the rendered app.
-         *
-         * As such, the re-render between Suspense and in-app rendering would
-         * cause the cleanup function to be called, removing the scroll handler.
-         * Thus, handle the cleanup manually.
-         */
-        if (preventScrolling) {
-            if (show) {
-                setDocumentScrolling(false);
-            } else {
-                setDocumentScrolling();
-            }
-        } else {
-            setDocumentScrolling()
-        }
-    }, [show, preventScrolling]);
+    useBlockDocumentScrolling(
+        () => (show && preventScrolling)
+    );
 
     useEffect(() => {
         /**

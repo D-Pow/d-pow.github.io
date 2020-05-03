@@ -1,6 +1,6 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react';
 import { asNumber } from 'utils/Numbers';
-import { elementIsInClickPath, getClickPath } from 'utils/Events';
+import { elementIsInClickPath, getClickPath, setDocumentScrolling } from 'utils/Events';
 
 /**
  * @callback hookedChildRenderer
@@ -141,6 +141,34 @@ export function useWindowResize() {
     }
 
     return { windowSizeState, setWindowSizeState, resetWasSized };
+}
+
+/**
+ * Blocks the `document.body` from being scrollable as long as
+ * the `shouldBlockScrolling` function returns true.
+ *
+ * @param {function(): boolean} shouldBlockScrolling - Function to determine if scrolling should be disabled
+ */
+export function useBlockDocumentScrolling(shouldBlockScrolling) {
+    /**
+     * Don't return a cleanup function to handle activating scrolling.
+     *
+     * React calls cleanup functions upon both component unmount
+     * and component re-render.
+     *
+     * If re-activating scrolling were returned in the cleanup function,
+     * then anytime the component re-rendered, document scrolling
+     * would be re-activated, even if the `shouldBlockScrolling()` returned true.
+     *
+     * Thus, handle the cleanup manually in else-block.
+     */
+    useEffect(() => {
+        if (shouldBlockScrolling()) {
+            setDocumentScrolling(false);
+        } else {
+            setDocumentScrolling();
+        }
+    }, [ shouldBlockScrolling ]);
 }
 
 /**
