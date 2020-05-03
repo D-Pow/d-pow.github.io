@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useRootClose } from 'utils/Hooks';
+import { useRootClose, useBlockDocumentScrolling } from 'utils/Hooks';
 
 function Modal({
     title,
@@ -8,6 +8,7 @@ function Modal({
     footer,
     useGridForBody,
     useGridForFooter,
+    preventDocumentScrolling,
     show,
     showCloseButton,
     onClose
@@ -42,6 +43,10 @@ function Modal({
             handleClose();
         }
     }
+
+    useBlockDocumentScrolling(
+        () => (show && preventDocumentScrolling)
+    );
 
     const displayCls = (show && !hideMomentarily) ? 'show' : '';
     const sizeStyle = show ? '' : '0%';
@@ -100,6 +105,7 @@ Modal.propTypes = {
     footer: PropTypes.node,
     useGridForBody: PropTypes.bool,
     useGridForFooter: PropTypes.bool,
+    preventDocumentScrolling: PropTypes.bool,
     show: PropTypes.bool,
     showCloseButton: PropTypes.bool,
     onClose: PropTypes.func
@@ -111,6 +117,7 @@ Modal.defaultProps = {
     footer: '',
     useGridForBody: true,
     useGridForFooter: true,
+    preventDocumentScrolling: true,
     show: false,
     showCloseButton: true,
     onClose: () => {}
