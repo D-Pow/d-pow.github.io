@@ -6,7 +6,7 @@ function Modal({
     title,
     children,
     footer,
-    useGridForChildren,
+    useGridForBody,
     useGridForFooter,
     show,
     showCloseButton,
@@ -75,7 +75,7 @@ function Modal({
                     </div>
 
                     <div className={'modal-body'}>
-                        <div className={useGridForChildren ? 'container-fluid' : ''}>
+                        <div className={useGridForBody ? 'container-fluid' : ''}>
                             {children}
                         </div>
                     </div>
@@ -98,7 +98,7 @@ Modal.propTypes = {
     title: PropTypes.node,
     children: PropTypes.node,
     footer: PropTypes.node,
-    useGridForChildren: PropTypes.bool,
+    useGridForBody: PropTypes.bool,
     useGridForFooter: PropTypes.bool,
     show: PropTypes.bool,
     showCloseButton: PropTypes.bool,
@@ -109,8 +109,8 @@ Modal.defaultProps = {
     title: '',
     children: '',
     footer: '',
-    useGridForChildren: true,
-    useGridForFooter: false,
+    useGridForBody: true,
+    useGridForFooter: true,
     show: false,
     showCloseButton: true,
     onClose: () => {}

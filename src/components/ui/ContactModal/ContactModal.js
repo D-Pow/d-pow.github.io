@@ -218,7 +218,6 @@ class ContactModal extends React.Component {
             <Modal
                 title={'Get in touch'}
                 footer={modalFooter}
-                useGridForFooter={true}
                 show={this.props.show}
                 onClose={this.handleCloseModal}
             >
