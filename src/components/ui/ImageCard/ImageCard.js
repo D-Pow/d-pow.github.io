@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'components/ui/Image';
 import { useHover } from 'utils/Hooks';
-import { isMobileBrowser, isMicrosoftBrowser } from 'utils/Functions';
+import { isMobileBrowser, isMicrosoftBrowser } from 'utils/BrowserIdentification';
 
 function ImageCard(props) {
     const {

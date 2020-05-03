@@ -4,7 +4,8 @@ import ScrollToShow from 'components/ui/ScrollToShow';
 import Shape from 'components/ui/Shape';
 import HoverTranslate from 'components/ui/HoverTranslate';
 import FlipCard from 'components/ui/FlipCard';
-import { getThemeColors, isMobileBrowser, isSafariBrowser } from 'utils/Functions';
+import { isMobileBrowser, isSafariBrowser } from 'utils/BrowserIdentification';
+import { getThemeColors } from 'utils/Scss';
 import { useTimedArrayToggle } from 'utils/Hooks';
 import { EasterEgg } from 'utils/CommonRenders';
 

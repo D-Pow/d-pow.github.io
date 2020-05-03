@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isMobileBrowser, randomColor } from 'utils/Functions';
+import { isMobileBrowser } from 'utils/BrowserIdentification';
+import { randomColor } from 'utils/Scss';
 import Triangle from 'components/ui/Triangle';
 
 class FullPageTriangles extends React.Component {

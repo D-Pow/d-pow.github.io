@@ -4,7 +4,7 @@ import ScrollToShow from 'components/ui/ScrollToShow';
 import InfoCard from 'components/ui/InfoCard';
 import Link from 'components/ui/Link';
 import { LINKS } from 'utils/Constants';
-import { isMobileBrowser } from 'utils/Functions';
+import { isMobileBrowser } from 'utils/BrowserIdentification';
 
 function Projects(props) {
     const pageText = {

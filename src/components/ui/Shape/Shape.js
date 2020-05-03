@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { importImageAsync, asNumber, isMobileBrowser, attemptParseObjLiteral } from 'utils/Functions';
+import { asNumber } from 'utils/Numbers';
+import { attemptParseObjLiteral } from 'utils/Objects';
+import { isMobileBrowser } from 'utils/BrowserIdentification';
+import { importImageAsync } from 'utils/Events';
 import { Hooked, useDynamicFontSizeShrinking } from 'utils/Hooks';
 
 class Shape extends React.Component {

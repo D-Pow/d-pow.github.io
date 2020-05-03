@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import ImageCard from './ImageCard';
 import ContextFactory from 'utils/ContextFactory';
-import { validateObjNestedFields } from 'utils/Functions';
+import { validateObjNestedFields } from 'utils/Objects';
 
 const defaultContextImgHeight = 'auto';
 const ImageCardSizeContext = ContextFactory(defaultContextImgHeight);

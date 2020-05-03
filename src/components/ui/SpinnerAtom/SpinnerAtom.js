@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AtomSpinner from './AtomSpinner';
-import { getDurationTimeMsFromClassName, setDocumentScrolling } from 'utils/Functions';
+import { setDocumentScrolling } from 'utils/Events';
+import { getDurationTimeMsFromClassName } from 'utils/Scss';
 
 function SpinnerAtom({
     className,

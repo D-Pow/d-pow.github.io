@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import SpinnerAtom from 'components/ui/SpinnerAtom';
 import IncompatibleBrowserFallback from 'components/IncompatibleBrowserFallback';
-import { isMicrosoftBrowser, resetWindowScroll } from 'utils/Functions';
+import { isMicrosoftBrowser } from 'utils/BrowserIdentification';
+import { resetWindowScroll } from 'utils/Events';
 import AppContext, { AppContextFields } from 'utils/AppContext';
 
 /**
