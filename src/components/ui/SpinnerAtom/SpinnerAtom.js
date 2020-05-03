@@ -8,7 +8,7 @@ function SpinnerAtom({
     className,
     fullScreen,
     show,
-    preventScrolling,
+    preventDocumentScrolling,
     onClose,
     onUnmount,
     numElectrons,
@@ -40,7 +40,7 @@ function SpinnerAtom({
     const fadeOutDelay = getDurationTimeMsFromClassName(cls) + 200; // slightly longer time than .duration-XX class
 
     useBlockDocumentScrolling(
-        () => (show && preventScrolling)
+        () => (show && preventDocumentScrolling)
     );
 
     useEffect(() => {
@@ -79,7 +79,7 @@ SpinnerAtom.propTypes = {
     className: PropTypes.string,
     fullScreen: PropTypes.bool,
     show: PropTypes.bool,
-    preventScrolling: PropTypes.bool,
+    preventDocumentScrolling: PropTypes.bool,
 
     // handler for when the spinner is first closed
     onClose: PropTypes.func,
@@ -94,7 +94,7 @@ SpinnerAtom.defaultProps = {
     className: '',
     fullScreen: true,
     show: false,
-    preventScrolling: false,
+    preventDocumentScrolling: true,
     onClose: () => {},
     onUnmount: () => {}
 };

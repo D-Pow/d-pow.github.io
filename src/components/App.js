@@ -87,7 +87,6 @@ function App() {
     const renderedSpinner = (
         <SpinnerAtom
             show={showSpinner}
-            preventScrolling={true}
             onClose={() => setSpinnerWasClosed(true)}
             onUnmount={() => setSpinnerWasUnmounted(true)}
         />
