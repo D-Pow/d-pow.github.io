@@ -138,7 +138,7 @@ function Pastimes(props) {
         }
     };
     const renderedTitleText = (
-        <h1 className={'d-inline-block'} onClick={triggerEasterEggAnimation}>
+        <h1 className={'d-inline-block cursor-pointer'} onClick={triggerEasterEggAnimation}>
             Pastimes
         </h1>
     );
