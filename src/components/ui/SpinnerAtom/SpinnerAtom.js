@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AtomSpinner from './AtomSpinner';
-import { getDurationTimeMsFromClassName, resetWindowScroll } from 'utils/Functions';
+import { getDurationTimeMsFromClassName, setDocumentScrolling } from 'utils/Functions';
 
 function SpinnerAtom({
     className,
@@ -40,19 +40,25 @@ function SpinnerAtom({
 
     useEffect(() => {
         /**
-         * Don't add scroll handler if not shown.
+         * Don't return a cleanup function to handle activating scrolling.
+         *
          * React calls cleanup functions upon both component unmount
-         * and component re-render. Thus, the re-render from changing
-         * the `show` prop will cause the cleanup function to be called,
-         * removing the scroll handler.
+         * and component re-render. Also, the App component uses the Spinner
+         * as both React.Suspense.fallback and within the rendered app.
+         *
+         * As such, the re-render between Suspense and in-app rendering would
+         * cause the cleanup function to be called, removing the scroll handler.
+         * Thus, handle the cleanup manually.
          */
-        if (show && preventScrolling) {
-            window.addEventListener('scroll', resetWindowScroll);
+        if (preventScrolling) {
+            if (show) {
+                setDocumentScrolling(false);
+            } else {
+                setDocumentScrolling();
+            }
+        } else {
+            setDocumentScrolling()
         }
-
-        return () => {
-            window.removeEventListener('scroll', resetWindowScroll);
-        };
     }, [show, preventScrolling]);
 
     useEffect(() => {
