@@ -227,6 +227,20 @@ export function resetWindowScroll() {
 }
 
 /**
+ * Sets the scrolling ability of the whole `document.body`.
+ * Useful for controlling the app's ability to scroll from any
+ * component.
+ *
+ * Since `document.body` is outside of the control of React,
+ * set the style manually. Default value is ''.
+ *
+ * @param allowScrolling
+ */
+export function setDocumentScrolling(allowScrolling = true) {
+    document.body.style.overflow = allowScrolling ? '' : 'hidden';
+}
+
+/**
  * Parses a map into a JS object. Every value for any key will be a string
  *
  * @param {string} scssMapStr - String imported from a .scss file
