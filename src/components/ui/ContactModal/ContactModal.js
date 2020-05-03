@@ -139,7 +139,7 @@ class ContactModal extends React.Component {
     }
 
     renderErrorMessage(errorText) {
-        return errorText ? <div className={'invalid-feedback d-inline'}>{errorText}</div> : '';
+        return errorText ? <div className={'text-danger d-inline w-100'}>{errorText}</div> : '';
     }
 
     render() {
@@ -150,7 +150,7 @@ class ContactModal extends React.Component {
         if (this.state.hasClosedAfterSubmitting) {
             modalBody = (
                 <React.Fragment>
-                    <h6>Didn't you already contact me?</h6>
+                    <h5>Didn't you already contact me?</h5>
                     <EasterEgg />
                 </React.Fragment>
             );
