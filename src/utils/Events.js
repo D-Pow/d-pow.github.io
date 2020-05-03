@@ -116,5 +116,5 @@ export function scrollWindowToTop() {
  * @param allowScrolling
  */
 export function setDocumentScrolling(allowScrolling = true) {
-    document.body.style.overflow = allowScrolling ? '' : 'hidden';
+    document.body.style.overflow = allowScrolling ? 'auto' : 'hidden';
 }
