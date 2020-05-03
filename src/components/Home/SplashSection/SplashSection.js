@@ -38,7 +38,7 @@ function SplashSection() {
                 style={{ transform: 'skewY(-5deg)' }}
                 textElemProps={{
                     x: centerX,
-                    y:evenlySpacedY(i)
+                    y: evenlySpacedY(i)
                 }}
             >
                 {text}
