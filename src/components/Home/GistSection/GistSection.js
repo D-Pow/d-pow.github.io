@@ -22,24 +22,31 @@ function GistSection(props) {
     };
     const sectionCardShowThreshold = 2/3;
 
+    const renderedSection = (
+        <SectionCard
+            className={'mb-5'}
+            mainContent={(
+                <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated'} threshold={sectionCardShowThreshold}>
+                    {SectionCard.renderDefaultTextContent(pageText.title, pageText.description)}
+                </ScrollToShow>
+            )}
+        >
+            <ScrollToShow addClasses={'slide-in-right show'} distributeClasses={'animated h-100'} threshold={sectionCardShowThreshold}>
+                <Shape className={'h-100'} image={'profile_pic.jpg'} sides={6} rotation={90} />
+            </ScrollToShow>
+        </SectionCard>
+    );
+
     return (
         <div className={props.className}>
             <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
                 <h1 className={'p-5'}>The gist...</h1>
             </ScrollToShow>
-            <div className={'container'}>
-                <SectionCard
-                    className={'mb-5'}
-                    mainContent={(
-                        <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated'} threshold={sectionCardShowThreshold}>
-                            {SectionCard.renderDefaultTextContent(pageText.title, pageText.description)}
-                        </ScrollToShow>
-                    )}
-                >
-                    <ScrollToShow addClasses={'slide-in-right show'} distributeClasses={'animated h-100'} threshold={sectionCardShowThreshold}>
-                        <Shape className={'h-100'} image={'profile_pic.jpg'} sides={6} rotation={90} />
-                    </ScrollToShow>
-                </SectionCard>
+            <div className={'d-block d-md-none container-fluid'}>
+                {renderedSection}
+            </div>
+            <div className={'d-none d-md-block container'}>
+                {renderedSection}
             </div>
         </div>
     );
