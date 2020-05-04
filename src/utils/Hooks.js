@@ -12,11 +12,12 @@ import { debounce, elementIsInClickPath, getClickPath, setDocumentScrolling } fr
  *
  * @param {Object} props - Props for returned React.Component
  * @param {function} props.hook - Hook to use within class component
+ * @param {Array<*>} [props.hookArgs=[]] - Arguments to pass to `props.hook`
  * @param {hookedChildRenderer} props.children - Function that uses value from hook() to render children; passed as React.Component.props
  * @returns {React.Component} - Children rendered using the hook() return values
  */
-export function Hooked({ hook, hookArgs, children }) {
-    return children(hook(hookArgs))
+export function Hooked({ hook, hookArgs = [], children }) {
+    return children(hook(...hookArgs))
 }
 
 /**
