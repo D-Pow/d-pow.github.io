@@ -56,7 +56,7 @@ export function useWindowEvent(
         const newEventState = nestedEventField ? event[nestedEventField] : event;
 
         if (isUsingOwnEventHandler) {
-            handleEvent(eventState, setEventState, newEventState);
+            handleEvent(setEventState, newEventState);
         } else {
             setEventState(newEventState);
         }
@@ -115,7 +115,7 @@ export function useRootClose(acceptableElement, closeElement) {
 }
 
 export function useWindowResize(debounceDelay = 1000) {
-    function handleResize(prevState, setState) {
+    function handleResize(setState) {
         setState(true);
     }
 
@@ -178,7 +178,7 @@ export function useBlockDocumentScrolling(shouldBlockScrolling) {
 export function useHover(overrideBoundingClientRect) {
     const ref = useRef(overrideBoundingClientRect);
 
-    function handleMouseMove(prevIsHovered, setIsHovered, newEvent) {
+    function handleMouseMove(setIsHovered, newEvent) {
         const { pageX, pageY } = newEvent;
 
         if (ref.current) {
