@@ -51,7 +51,7 @@ function SplashSection() {
         : '';
 
     return (
-        <div className={'bg-dark full-screen-minus-scrollbar'}>
+        <section id={'splash'} className={'bg-dark full-screen-minus-scrollbar'}>
             <Image
                 className={`w-100 h-100 animated fade duration-15 ${showBgImage ? 'show' : ''}`}
                 image={'blue_horizon.svg'}
@@ -62,7 +62,7 @@ function SplashSection() {
                     {renderedDrawingTexts}
                 </svg>
             </div>
-        </div>
+        </section>
     );
 }
 

@@ -38,7 +38,7 @@ function Projects(props) {
     ));
 
     return (
-        <div className={props.className}>
+        <section id={'projects'} className={props.className}>
             <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
                 <h1 className={'p-5'}>Projects and Publications</h1>
             </ScrollToShow>
@@ -56,7 +56,7 @@ function Projects(props) {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 

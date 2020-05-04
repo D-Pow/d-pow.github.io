@@ -38,7 +38,7 @@ function GistSection(props) {
     );
 
     return (
-        <div className={props.className}>
+        <section id={'the-gist'} className={props.className}>
             <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
                 <h1 className={'p-5'}>The gist...</h1>
             </ScrollToShow>
@@ -48,7 +48,7 @@ function GistSection(props) {
             <div className={'d-none d-md-block container'}>
                 {renderedSection}
             </div>
-        </div>
+        </section>
     );
 }
 

@@ -158,7 +158,7 @@ function Pastimes(props) {
     );
 
     return (
-        <div className={'bg-light w-100 pb-5 ' + props.className}>
+        <section id={'pastimes'} className={'bg-light w-100 pb-5 ' + props.className}>
             <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
                 {renderedTitle}
             </ScrollToShow>
@@ -180,7 +180,7 @@ function Pastimes(props) {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 

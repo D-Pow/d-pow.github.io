@@ -55,7 +55,7 @@ function PersonalContact(props) {
     );
 
     return (
-        <div className={'mb-5 ' + props.className}>
+        <section id={'personal-contact'} className={'mb-5 ' + props.className}>
             <ScrollToShow
                 addClasses={'show'}
                 distributeClasses={props.titleAnimationCls}
@@ -78,7 +78,7 @@ function PersonalContact(props) {
             </div>
 
             <ContactModal show={showModal} onClose={handleCloseModal} />
-        </div>
+        </section>
     );
 }
 
