@@ -79,9 +79,9 @@ function App() {
         };
     }, []);
 
-    const [ windowWasResized ] = useWindowResize();
+    const [ windowSizeState ] = useWindowResize();
 
-    if (reloadOnScreenResize && windowWasResized) {
+    if (reloadOnScreenResize && windowSizeState.wasResized) {
         window.location.reload();
     }
 

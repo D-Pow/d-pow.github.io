@@ -115,20 +115,29 @@ export function useRootClose(acceptableElement, closeElement) {
 }
 
 export function useWindowResize(debounceDelay = 1000) {
+    const generateInitialState = () => ({
+        wasResized: false,
+        prevWidth: window.innerWidth,
+        prevHeight: window.innerHeight
+    });
+
     function handleResize(setState) {
-        setState(true);
+        setState(prevState => ({
+            ...prevState,
+            wasResized: true
+        }));
     }
 
-    const [ windowWasResized, setWindowWasResized ] = useWindowEvent('resize', {
-        initialEventState: false,
+    const [ windowSizeState, setWindowSizeState ] = useWindowEvent('resize', {
+        initialEventState: generateInitialState(),
         handleEvent: debounce(handleResize, debounceDelay)
     });
 
     function resetWasSized() {
-        setWindowWasResized(false)
+        setWindowSizeState(generateInitialState());
     }
 
-    return [ windowWasResized, resetWasSized ];
+    return [ windowSizeState, resetWasSized ];
 }
 
 /**
@@ -265,7 +274,7 @@ export function useDynamicFontSizeShrinking(originalConstrainingRef = { current:
     const toResizeElem = useRef(null);
     const originalFontSizePx = getComputedStyle(originalConstrainingRef.current).fontSize;
     const [ fontSizePx, setFontSizePx ] = useState(originalFontSizePx);
-    const [ windowWasResized, resetWasSized ] = useWindowResize(800);
+    const [ windowSizeState, resetWasSized ] = useWindowResize(800);
 
     useEffect(() => {
         if (constrainingElem.current && toResizeElem.current) {
@@ -286,7 +295,7 @@ export function useDynamicFontSizeShrinking(originalConstrainingRef = { current:
 
             resetWasSized();
         }
-    }, [ constrainingElem.current, toResizeElem.current, windowWasResized, fontSizePx ]);
+    }, [ constrainingElem.current, toResizeElem.current, windowSizeState.wasResized, fontSizePx ]);
 
     return [ constrainingElem, toResizeElem, fontSizePx ];
 }
