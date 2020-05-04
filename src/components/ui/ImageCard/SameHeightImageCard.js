@@ -25,11 +25,8 @@ function SameHeightImageCard({ imageAria, imageStyle, onLoad, ...imageCardProps 
     }
 
     const handleOnLoad = e => {
-        if (typeof onLoad === typeof (() => {})) {
-            onLoad(e);
-        }
-
-        shrinkContextHeightToSmallestImage(e);
+        onLoad(e); // defaultProps.onLoad = () => {}
+        shrinkContextHeightToSmallestImage();
     };
 
     return (
