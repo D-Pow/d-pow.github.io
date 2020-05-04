@@ -79,10 +79,14 @@ function App() {
         };
     }, []);
 
-    const [ windowSizeState ] = useWindowResize();
+    const [ windowSizeState, resetWasSized ] = useWindowResize();
 
     if (reloadOnScreenResize && windowSizeState.wasResized) {
-        window.location.reload();
+        if (windowSizeState.prevWidth !== window.innerWidth) {
+            window.location.reload();
+        } else {
+            resetWasSized();
+        }
     }
 
     const renderedRoutes = routes.map(routeAria => (
