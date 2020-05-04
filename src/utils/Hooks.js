@@ -114,6 +114,13 @@ export function useRootClose(acceptableElement, closeElement) {
     return [ rootWasClosed, resetRootClosed ];
 }
 
+/**
+ * Hook to determine if the window was resized and the previous
+ * innerWidth/innerHeight values on resize.
+ *
+ * @param {number} debounceDelay - How long to debounce resize event before firing setState()
+ * @returns {[{ wasResized: boolean, prevWidth: number, prevHeight: number}, function ]}
+ */
 export function useWindowResize(debounceDelay = 1000) {
     const generateInitialState = () => ({
         wasResized: false,
@@ -133,11 +140,11 @@ export function useWindowResize(debounceDelay = 1000) {
         handleEvent: debounce(handleResize, debounceDelay)
     });
 
-    function resetWasSized() {
+    function resetWasResized() {
         setWindowSizeState(generateInitialState());
     }
 
-    return [ windowSizeState, resetWasSized ];
+    return [ windowSizeState, resetWasResized ];
 }
 
 /**
@@ -274,7 +281,7 @@ export function useDynamicFontSizeShrinking(originalConstrainingRef = { current:
     const toResizeElem = useRef(null);
     const originalFontSizePx = getComputedStyle(originalConstrainingRef.current).fontSize;
     const [ fontSizePx, setFontSizePx ] = useState(originalFontSizePx);
-    const [ windowSizeState, resetWasSized ] = useWindowResize(800);
+    const [ windowSizeState, resetWasResized ] = useWindowResize(800);
 
     useEffect(() => {
         if (constrainingElem.current && toResizeElem.current) {
@@ -293,7 +300,7 @@ export function useDynamicFontSizeShrinking(originalConstrainingRef = { current:
                 setFontSizePx(newFontSize);
             }
 
-            resetWasSized();
+            resetWasResized();
         }
     }, [ constrainingElem.current, toResizeElem.current, windowSizeState.wasResized, fontSizePx ]);
 

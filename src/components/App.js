@@ -79,13 +79,13 @@ function App() {
         };
     }, []);
 
-    const [ windowSizeState, resetWasSized ] = useWindowResize();
+    const [ windowSizeState, resetWasResized ] = useWindowResize();
 
     if (reloadOnScreenResize && windowSizeState.wasResized) {
         if (windowSizeState.prevWidth !== window.innerWidth) {
             window.location.reload();
         } else {
-            resetWasSized();
+            resetWasResized();
         }
     }
 
