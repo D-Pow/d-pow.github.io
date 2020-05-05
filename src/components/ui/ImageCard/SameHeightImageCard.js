@@ -1,38 +1,75 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ImageCard from './ImageCard';
 import ContextFactory from 'utils/ContextFactory';
 import { validateObjNestedFields } from 'utils/Objects';
+import { useWindowResize } from 'utils/Hooks';
 
-const defaultContextImgHeight = 'auto';
-const ImageCardSizeContext = ContextFactory(defaultContextImgHeight);
+const ImageCardSizeContext = ContextFactory([]);
 const { Provider, Context } = ImageCardSizeContext;
 
 function SameHeightImageCard({ imageAria, imageStyle, onLoad, ...imageCardProps }) {
     const imageRef = React.createRef();
-    const { contextState: contextImgHeight, setContextState: setContextImgHeight } = useContext(Context);
+    const [ imageIndex, setImageIndex ] = useState();
+    const { contextState: allImageHeights, setContextState } = useContext(Context);
 
-    function shrinkContextHeightToSmallestImage() {
+    // don't sort in-place/maintain index vals
+    const getSmallestImageHeightFromContext = () => [...allImageHeights].sort()[0];
+    const addImageHeightToContext = height => setContextState(prevState => {
+        const newImageHeights = prevState;
+
+        newImageHeights.push(height);
+
+        return newImageHeights;
+    });
+    const updateImageHeightInContext = (index, height) => setContextState(prevState => {
+        const newImageHeights = prevState;
+
+        newImageHeights[index] = height;
+
+        return newImageHeights;
+    });
+
+    function getMountedImageHeight() {
         const imageMounted = validateObjNestedFields(imageRef, 'current');
 
         if (imageMounted) {
             const imageElement = imageRef.current;
             const { height } = imageElement.getBoundingClientRect();
 
-            if (contextImgHeight === defaultContextImgHeight || contextImgHeight > height) {
-                setContextImgHeight(height);
-            }
+            return height;
+        }
+    }
+
+    function addMountedImageHeightToContext() {
+        const height = getMountedImageHeight();
+
+        if (height != null) {
+            addImageHeightToContext(height);
         }
     }
 
     const handleOnLoad = e => {
-        onLoad(e); // defaultProps.onLoad = () => {}
-        shrinkContextHeightToSmallestImage();
+        onLoad(e);
+        setImageIndex(allImageHeights.length);
+        addMountedImageHeightToContext();
     };
+
+    const [ windowSizeState, resetWasResized ] = useWindowResize();
+
+    useEffect(() => {
+        const windowWidthChanged = windowSizeState.prevWidth !== window.innerWidth;
+
+        if (windowSizeState.wasResized && windowWidthChanged) {
+            updateImageHeightInContext(imageIndex, getMountedImageHeight());
+
+            resetWasResized();
+        }
+    }, [ windowSizeState.wasResized, windowSizeState.prevWidth ]);
 
     return (
         <ImageCard
             {...imageCardProps}
-            imageStyle={{ height: `${contextImgHeight}px`, overflow: 'hidden', ...imageStyle }}
+            imageStyle={{ height: `${getSmallestImageHeightFromContext()}px`, overflow: 'hidden', ...imageStyle }}
             imageAria={{ ref: imageRef, ...imageAria }}
             onLoad={handleOnLoad}
         />

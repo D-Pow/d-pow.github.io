@@ -5,7 +5,6 @@ import IncompatibleBrowserFallback from 'components/IncompatibleBrowserFallback'
 import { isMicrosoftBrowser } from 'utils/BrowserIdentification';
 import { scrollWindowToTop } from 'utils/Events';
 import AppContext, { AppContextFields } from 'utils/AppContext';
-import { useWindowResize } from 'utils/Hooks';
 
 /**
  * Lazy-load components so the Spinner is prioritized, loaded quickly, and unblocked from animating.
@@ -44,8 +43,6 @@ const routes = [
     }
 ];
 
-const reloadOnScreenResize = true;
-
 function App() {
     const { contextState, setContextState } = useContext(AppContext.Context);
     const imagesStillLoading = contextState[AppContextFields.GET_IMAGES_STILL_LOADING]();
@@ -78,16 +75,6 @@ function App() {
             window.removeEventListener('unload', scrollWindowToTop);
         };
     }, []);
-
-    const [ windowSizeState, resetWasResized ] = useWindowResize();
-
-    if (reloadOnScreenResize && windowSizeState.wasResized) {
-        if (windowSizeState.prevWidth !== window.innerWidth) {
-            window.location.reload();
-        } else {
-            resetWasResized();
-        }
-    }
 
     const renderedRoutes = routes.map(routeAria => (
         <Route key={routeAria.path} {...routeAria} />
