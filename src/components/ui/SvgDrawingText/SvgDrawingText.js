@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isSafariBrowser } from 'utils/BrowserIdentification';
 import { strokeDasharrayLengthForFontSize1em } from 'styles/Animations/Svg/DrawingText.scss';
 
 function SvgDrawingText({
@@ -13,7 +14,9 @@ function SvgDrawingText({
     // override default props with those specified by user
     // but ensure that the default props are set if user didn't specify them all
     const elemProps = Object.assign({}, SvgDrawingText.defaultProps.textElemProps, textElemProps);
-    const strokeDasharrayLength = Math.ceil(fontSizeEm * Number(strokeDasharrayLengthForFontSize1em));
+    // again, Safari is the new IE. Add a hacky fix to make text-outline-drawing work on Safari
+    const safariModifier = isSafariBrowser() ? 12 : 1;
+    const strokeDasharrayLength = Math.ceil(fontSizeEm * safariModifier * Number(strokeDasharrayLengthForFontSize1em));
     // make draw-outline and fill-fade-in animations end at the same time
     // fill-fade-in will wait until draw-outline is 2/3 complete before beginning
     const fillFadeInDuration = animationDurationSeconds / 3;
