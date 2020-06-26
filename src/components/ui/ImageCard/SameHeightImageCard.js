@@ -13,7 +13,7 @@ function SameHeightImageCard({ imageAria, imageStyle, onLoad, ...imageCardProps 
     const { contextState: allImageHeights, setContextState } = useContext(Context);
 
     // don't sort in-place/maintain index vals
-    const getSmallestImageHeightFromContext = () => [...allImageHeights].sort()[0];
+    const getSmallestImageHeightFromContext = () => Math.min(...allImageHeights);
     const addImageHeightToContext = height => setContextState(prevState => {
         const newImageHeights = prevState;
 
