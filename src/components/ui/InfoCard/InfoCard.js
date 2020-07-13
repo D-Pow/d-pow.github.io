@@ -3,13 +3,25 @@ import PropTypes from 'prop-types';
 import Image from 'components/ui/Image';
 
 function InfoCard(props) {
-    return (
-        <div className={`text-left ${props.className}`} {...props.aria}>
+    const renderedContent = (
+        <div className={'text-left'}>
             <Image className={'mb-3'} image={props.image} />
             <h3 className={'mb-3'}>{props.title}</h3>
             <p className={'mb-4'}>{props.description}</p>
             <div className={'d-block d-sm-none segment-bar'} />
         </div>
+    );
+    const hoverCls = props.expandOnHoverInDesktop ? 'hover-expand hover-shadow-sm' : '';
+
+    return (
+        <React.Fragment>
+            <div className={`d-xs-none d-sm-block p-2 ${hoverCls} ${props.className}`} {...props.aria}>
+                {renderedContent}
+            </div>
+            <div className={`d-xs-block d-sm-none p-2 ${props.className}`} {...props.aria}>
+                {renderedContent}
+            </div>
+        </React.Fragment>
     );
 }
 
@@ -18,6 +30,7 @@ InfoCard.propTypes = {
     image: PropTypes.string,
     title: PropTypes.node,
     description: PropTypes.node,
+    expandOnHoverInDesktop: PropTypes.bool,
     aria: PropTypes.object
 };
 
@@ -26,6 +39,7 @@ InfoCard.defaultProps = {
     image: '',
     title: '',
     description: '',
+    expandOnHoverInDesktop: true,
     aria: {}
 };
 
