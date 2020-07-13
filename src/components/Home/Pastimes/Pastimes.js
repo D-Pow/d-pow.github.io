@@ -5,7 +5,7 @@ import Shape from 'components/ui/Shape';
 import HoverTranslate from 'components/ui/HoverTranslate';
 import FlipCard from 'components/ui/FlipCard';
 import { isMobileBrowser, isSafariBrowser } from 'utils/BrowserIdentification';
-import { getThemeColors } from 'utils/Scss';
+import { getGridBreakpoints, getThemeColors } from 'utils/Scss';
 import { useTimedArrayToggle } from 'utils/Hooks';
 import { EasterEgg } from 'utils/CommonRenders';
 
@@ -70,7 +70,12 @@ function Pastimes(props) {
                 english={pageText.hoverTranslate.english}
                 japanese={pageText.hoverTranslate.japanese}
                 aria={{
-                    style: { fontSize: '14px' }
+                    style: {
+                        fontSize: (
+                            (window.innerWidth <= getGridBreakpoints().sm)
+                            || (window.innerWidth >= getGridBreakpoints().lg)
+                        ) ? '20px' : '14px'
+                    }
                 }}
             />
         </React.Fragment>
