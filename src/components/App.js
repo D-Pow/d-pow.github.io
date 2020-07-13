@@ -5,6 +5,7 @@ import IncompatibleBrowserFallback from 'components/IncompatibleBrowserFallback'
 import { isMicrosoftBrowser } from 'utils/BrowserIdentification';
 import { scrollWindowToTop } from 'utils/Events';
 import AppContext, { AppContextFields } from 'utils/AppContext';
+import { useWindowResize } from 'utils/Hooks';
 
 /**
  * Lazy-load components so the Spinner is prioritized, loaded quickly, and unblocked from animating.
@@ -49,6 +50,8 @@ const routes = [
 function App() {
     const { contextState, setContextState } = useContext(AppContext.Context);
     const imagesStillLoading = contextState[AppContextFields.GET_IMAGES_STILL_LOADING]();
+
+    const [ windowSizeState ] = useWindowResize();
 
     const [ spinnerWasClosed, setSpinnerWasClosed ] = useState(false);
     const [ spinnerWasUnmounted, setSpinnerWasUnmounted ] = useState(false);
@@ -95,8 +98,16 @@ function App() {
         />
     );
 
+    // Force the app to re-render on window resize to make renders
+    // dependent on isMobileBrowser() to be responsive, since that
+    // util function isn't responsive on its own.
+    // Changing the `key` prop in functional components is equivalent
+    // to calling a class component's forceUpdate().
     return (
-        <div className="App text-center font-didot-serif">
+        <div
+            className="App text-center font-didot-serif"
+            key={`${windowSizeState.prevWidth}x${windowSizeState.prevHeight}`}
+        >
             <React.Suspense
                 fallback={renderedSpinner}
             >
