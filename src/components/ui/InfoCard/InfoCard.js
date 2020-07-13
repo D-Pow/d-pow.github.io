@@ -15,10 +15,10 @@ function InfoCard(props) {
 
     return (
         <React.Fragment>
-            <div className={`d-xs-none d-sm-block p-2 ${hoverCls} ${props.className}`} {...props.aria}>
+            <div className={`d-none d-sm-block p-2 ${hoverCls} ${props.className}`} {...props.aria}>
                 {renderedContent}
             </div>
-            <div className={`d-xs-block d-sm-none p-2 ${props.className}`} {...props.aria}>
+            <div className={`d-block d-sm-none p-2 ${props.className}`} {...props.aria}>
                 {renderedContent}
             </div>
         </React.Fragment>

@@ -42,12 +42,6 @@ $container-max-widths: (
     xxl: 1440px
 );
 
-@media (max-width: map_get($grid-breakpoints, "sm")) {
-  .d-xs-none {
-    display: none !important;
-  }
-}
-
 .nav-link {
   color: $light;
   transition: color 0.5s;
