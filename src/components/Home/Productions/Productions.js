@@ -11,27 +11,27 @@ function Productions(props) {
             {
                 image: 'prebuilt_portfolios.jpg',
                 title: <Link className={'text-light'} href={LINKS.PrebuiltPortfolios}>Prebuilt Portfolios</Link>,
-                description: 'Selections of mutual funds to fit individual investment styles'
+                description: 'Selections of funds to fit individual investment styles'
             },
             {
                 image: 'automatic_investing.jpg',
                 title: <Link className={'text-light'} href={LINKS.AutomaticInvesting}>Automatic Investing</Link>,
-                description: 'Automates fund investments with varying frequencies and contribution amounts'
+                description: 'Automates investing with varying frequencies and amounts'
             },
             {
                 image: 'premarket_modal.png',
-                title: 'Pre-market Dashboard',
-                description: 'Analyzes the health of internal systems before the markets open'
+                title: 'Premarket Dashboard',
+                description: 'Analyzes the health of internal systems before markets open'
             },
             {
                 image: 'edge_panel_widget.png',
                 title: <Link className={'text-light'} href={LINKS.EtradeAndroidApp}>Edge Panel</Link>,
-                description: 'Android widget for edge-devices to display a user\'s stock watch lists'
+                description: 'Android widget for edge-devices to display stock watch lists'
             },
             {
                 image: 'mock_requests.png',
                 title: <Link className={'text-light'} href={LINKS.MockRequests}>MockRequests</Link>,
-                description: 'Open-source front-end network mocking system',
+                description: 'Open-source JS network mocking system',
                 className: 'bg-lighter'
             }
         ]
