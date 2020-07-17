@@ -33,6 +33,11 @@ function Productions(props) {
                 title: <Link className={'text-light'} href={LINKS.MockRequests}>MockRequests</Link>,
                 description: 'Open-source JS network mocking system',
                 className: 'bg-lighter'
+            },
+            {
+                image: 'anime_atsume.png',
+                title: <Link className={'text-light'} href={LINKS.AnimeAtsume}>Anime Atsume</Link>,
+                description: 'Aggregator for searching and watching anime'
             }
         ]
     };
