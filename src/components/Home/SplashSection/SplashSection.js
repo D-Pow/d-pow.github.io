@@ -57,7 +57,7 @@ function SplashSection() {
                 image={'blue_horizon.svg'}
                 fluidImage={false}
             />
-            <div className={'absolute-center'}>
+            <div className={'absolute-center w-100 h-100'}>
                 <svg className={'h-75 w-80'} viewBox={'0 0 100 100'}>
                     {renderedDrawingTexts}
                 </svg>
