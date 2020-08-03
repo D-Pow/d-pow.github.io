@@ -10,7 +10,7 @@ function SvgDrawingText({
         textElemProps,
         style,
         children
-    }) {
+}) {
     // override default props with those specified by user
     // but ensure that the default props are set if user didn't specify them all
     const elemProps = Object.assign({}, SvgDrawingText.defaultProps.textElemProps, textElemProps);
