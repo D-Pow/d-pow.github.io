@@ -29,10 +29,7 @@ function Pastimes(props) {
         otherPastimes: [
             {
                 showDefault: 'Open-source projects',
-                showWithEasterEgg: 'Check out MockRequests',
-                textInShapeProps: {
-                    onClickProps: { reduceByPx: 1.5 }
-                }
+                showWithEasterEgg: 'Check out MockRequests and Anime Atsume'
             },
             {
                 showDefault: 'Cooking',
