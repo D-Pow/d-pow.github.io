@@ -66,36 +66,36 @@ function Modal({
              }}
         >
             <div className={'d-block w-100'}>
-            <div className={'modal-dialog modal-dialog-centered flex-center'}>
-                <div className={'modal-content overflow-auto'} style={{ maxHeight: '90vh' }}>
+                <div className={'modal-dialog modal-dialog-centered flex-center'}>
+                    <div className={'modal-content overflow-auto'} style={{ maxHeight: '90vh' }}>
 
-                    <div className={'modal-header'}>
-                        <div className={'modal-title'}>
-                            {renderedTitle}
+                        <div className={'modal-header'}>
+                            <div className={'modal-title'}>
+                                {renderedTitle}
+                            </div>
+                            {showCloseButton && (
+                                <button className={'close'} onClick={handleClose}>
+                                    <span>&times;</span>
+                                </button>
+                            )}
                         </div>
-                        {showCloseButton && (
-                            <button className={'close'} onClick={handleClose}>
-                                <span>&times;</span>
-                            </button>
-                        )}
-                    </div>
 
-                    <div className={'modal-body'}>
-                        <div className={useGridForBody ? 'container-fluid' : ''}>
-                            {children}
-                        </div>
-                    </div>
-
-                    {footer && (
-                        <div className={'modal-footer'}>
-                            <div className={useGridForFooter ? 'container-fluid' : ''}>
-                                {footer}
+                        <div className={'modal-body'}>
+                            <div className={useGridForBody ? 'container-fluid' : ''}>
+                                {children}
                             </div>
                         </div>
-                    )}
 
+                        {footer && (
+                            <div className={'modal-footer'}>
+                                <div className={useGridForFooter ? 'container-fluid' : ''}>
+                                    {footer}
+                                </div>
+                            </div>
+                        )}
+
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     );
