@@ -67,7 +67,7 @@ function Modal({
         >
             <div className={'d-block w-100'}>
                 <div className={'modal-dialog modal-dialog-centered flex-center'}>
-                    <div className={'modal-content overflow-auto'} style={{ maxHeight: '90vh' }}>
+                    <div className={'modal-content overflow-auto'} style={{ maxWidth: '90vw', maxHeight: '90vh' }}>
 
                         <div className={'modal-header'}>
                             <div className={'modal-title'}>
