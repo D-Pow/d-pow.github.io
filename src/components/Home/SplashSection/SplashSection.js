@@ -58,9 +58,11 @@ function SplashSection() {
                 fluidImage={false}
             />
             <div className={'absolute-center w-100 h-100'}>
-                <svg className={'h-75 w-80'} viewBox={'0 0 100 100'}>
-                    {renderedDrawingTexts}
-                </svg>
+                <div className={'h-75 w-80'}>
+                    <svg className={'h-100 w-100'} viewBox={'0 0 100 100'}>
+                        {renderedDrawingTexts}
+                    </svg>
+                </div>
             </div>
         </section>
     );
