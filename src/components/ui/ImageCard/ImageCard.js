@@ -20,8 +20,7 @@ function ImageCard(props) {
         aria,
         onLoad
     } = props;
-    const { ref, ...restOfImageAria } = imageAria;
-    const imageRef = ref || React.createRef();
+    const { ref: imageRef, ...restOfImageAria } = imageAria;
     const [ hoverRef, isHovered ] = useHover();
 
     function renderHoverContent() {
