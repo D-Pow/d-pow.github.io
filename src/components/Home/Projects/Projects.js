@@ -30,7 +30,7 @@ function Projects(props) {
         distributeClasses: 'animated duration-15'
     };
     const projectInfoCardEntries = pageText.infoCards.map((props, index) => (
-        <div className={'col-sm-4 mb-5 p-0'} key={index}>
+        <div className={'col-sm-4 mb-5 p-0 px-1'} key={index}>
             <InfoCard {...props} />
         </div>
     ));
