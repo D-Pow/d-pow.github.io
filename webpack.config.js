@@ -155,7 +155,9 @@ module.exports = {
     stats: { modules: false, children: false }, // clean up npm output
     plugins: [
         // makes env available to src
-        new webpack.DefinePlugin({ 'process.env': JSON.stringify(publicEnv) }),
+        new webpack.DefinePlugin({
+            'process.env': JSON.stringify(publicEnv)
+        }),
         // injects tags like <script> into index.html
         new HtmlWebpackPlugin({
             title,
