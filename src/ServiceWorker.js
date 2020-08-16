@@ -15,6 +15,32 @@ function removeOldCaches() {
         });
 }
 
+function clearCache(cache, exceptUrls) {
+    if (typeof exceptUrls === typeof '') {
+        exceptUrls = [ exceptUrls ];
+    } else if (exceptUrls == null) {
+        exceptUrls = [];
+    }
+
+    function clearCacheEntries(cacheObj) {
+        return cacheObj.keys().then(function(requests) {
+            return Promise.all(
+                requests.filter(function(request) {
+                    return !exceptUrls.includes(request.url);
+                }).map(function(request) {
+                    return cacheObj.delete(request);
+                })
+            );
+        });
+    }
+
+    if (cache == null) {
+        return caches.open(CACHE_NAME).then(clearCacheEntries);
+    }
+
+    return clearCacheEntries(cache);
+}
+
 function fetchAndCache(event, cache) {
     return fetch(event.request)
         .then(function(fetchResponse) {
@@ -68,7 +94,23 @@ self.addEventListener('fetch', event => {
                          * will reflect once the page is reloaded. Any change in this service worker will best be
                          * handled by unregistering old ones.
                          */
-                        fetchAndCache(event, cache);
+                        const newIndexHtmlResponse = fetchAndCache(event, cache);
+                        const newIndexHtmlBody = newIndexHtmlResponse.then(function(res) {
+                            return res.text();
+                        });
+                        const oldIndexHtmlBody = response.clone().text();
+
+                        Promise.all([ newIndexHtmlBody, oldIndexHtmlBody ])
+                            .then(function(htmlStrings) {
+                                const newIndexHtmlText = htmlStrings[0];
+                                const oldIndexHtmlText = htmlStrings[1];
+
+                                if (newIndexHtmlText !== oldIndexHtmlText) {
+                                    console.log('New website version is available, deleting old cache content');
+
+                                    clearCache(cache, url);
+                                }
+                            });
                     }
 
                     return response;
