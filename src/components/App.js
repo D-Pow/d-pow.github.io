@@ -44,8 +44,8 @@ const routes = [
     }
 ];
 
-// TODO add Toast message saying "Get the latest features and updates using a madern
-//  broswer like Firefox or Chrome
+// TODO add Toast message saying "Get the latest features and updates using a modern
+//  browser like Firefox or Chrome
 
 function App() {
     const { contextState, setContextState } = useContext(AppContext.Context);
