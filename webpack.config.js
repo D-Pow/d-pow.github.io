@@ -32,8 +32,7 @@ process.env = {
 const publicEnv = {
     NODE_ENV: process.env.NODE_ENV,
     NODE_PATH: process.env.NODE_PATH,
-    PUBLIC_URL: process.env.PUBLIC_URL,
-    VERSION: packageJson.version
+    PUBLIC_URL: process.env.PUBLIC_URL
 };
 
 const jsRegex = /\.jsx?$/;
