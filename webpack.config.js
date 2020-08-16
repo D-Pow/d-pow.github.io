@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const packageJson = require('./package.json');
 
 const relativeBuildOutputPaths = {
     dev: '',
@@ -31,7 +32,8 @@ process.env = {
 const publicEnv = {
     NODE_ENV: process.env.NODE_ENV,
     NODE_PATH: process.env.NODE_PATH,
-    PUBLIC_URL: process.env.PUBLIC_URL
+    PUBLIC_URL: process.env.PUBLIC_URL,
+    VERSION: packageJson.version
 };
 
 const jsRegex = /\.jsx?$/;
