@@ -182,7 +182,16 @@ module.exports = {
                 },
                 {
                     from: 'src/ServiceWorker.js',
-                    to: '[name].[ext]'
+                    to: '[name].[ext]',
+                    transform: buffer => {
+                        // Service worker doesn't have access to `process` so
+                        // the version has to be injected manually here
+                        const serviceWorkerFileContent = buffer.toString();
+                        const versionStr = 'VERSION';
+                        const swFileContentWithVersionInjected = serviceWorkerFileContent.replace(versionStr, packageJson.version);
+
+                        return Buffer.from(swFileContentWithVersionInjected);
+                    }
                 }
             ]
         })

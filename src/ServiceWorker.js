@@ -1,4 +1,4 @@
-var CACHE_NAME = 'cache-v1.0.0';
+var CACHE_NAME = 'cache-VERSION';
 var urlsToCache = []; // filenames change in each build (via appended filename hashes), so they can't be predicted here
 
 function removeOldCaches() {
