@@ -44,9 +44,6 @@ const routes = [
     }
 ];
 
-// TODO add Toast message saying "Get the latest features and updates using a modern
-//  browser like Firefox or Chrome
-
 function App() {
     const { contextState, setContextState } = useContext(AppContext.Context);
     const imagesStillLoading = contextState[AppContextFields.GET_IMAGES_STILL_LOADING]();
