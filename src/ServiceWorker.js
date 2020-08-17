@@ -1,5 +1,6 @@
 var CACHE_NAME = 'cache-VERSION';
 var urlsToCache = []; // filenames change in each build (via appended filename hashes), so they can't be predicted here
+var BROADCAST_CHANNEL = 'BRD_CHANNEL';
 
 function removeOldCaches() {
     return caches.keys()
@@ -53,6 +54,12 @@ function fetchAndCache(event, cache) {
         .catch(function(fetchError) {
             console.log('Could not fetch url:', event.request.url, 'Failed with fetch error:', fetchError);
         });
+}
+
+function postMessageToClient(message) {
+    var channel = new BroadcastChannel(BROADCAST_CHANNEL);
+
+    channel.postMessage(message);
 }
 
 self.addEventListener('install', function(event) {

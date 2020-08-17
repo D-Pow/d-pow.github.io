@@ -50,6 +50,12 @@ export default function register() {
     }
 }
 
+function broadcastMessage(message) {
+    const broadcastChannel = new BroadcastChannel(process.env.BROADCAST_CHANNEL);
+
+    broadcastChannel.postMessage(message);
+}
+
 function registerValidSW(swUrl) {
     navigator.serviceWorker
         .register(swUrl)

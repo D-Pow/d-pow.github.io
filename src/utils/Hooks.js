@@ -340,3 +340,28 @@ export function useAfterAnimation(afterAnimationFn = () => {}) {
 
     return animationRef;
 }
+
+/**
+ * Creates a new {@code BroadcastChannel} with the given name and attaches the
+ * passed event listener to the channel's 'message' event.
+ *
+ * @param {function} messageEventListener - 'message' event listener added to BroadcastChannel.
+ * @param {string} [channelName=process.env.BROADCAST_CHANNEL] - Name of BroadcastChannel.
+ * @returns {BroadcastChannel} - A new BroadcastChannel with the respective event listener and channel name.
+ */
+export function useServiceWorkerBroadcastChannel(messageEventListener, channelName = process.env.BROADCAST_CHANNEL) {
+    const broadcastChannel = new BroadcastChannel(channelName);
+    const eventName = 'message';
+
+    useEffect(() => {
+        if (messageEventListener != null) {
+            broadcastChannel.addEventListener(eventName, messageEventListener);
+        }
+
+        return () => {
+            broadcastChannel.removeEventListener(eventName, messageEventListener);
+        };
+    }, [ channelName, broadcastChannel, messageEventListener ]);
+
+    return broadcastChannel;
+}

@@ -17,6 +17,7 @@ const relativeBuildOutputPath = process.env.NODE_ENV === 'production' ? relative
 const absoluteBuildOutputPath = path.resolve(__dirname, relativeBuildOutputPath);
 const transpiledSrcOutputPath = 'static';
 const title = 'Devon Powell';
+const broadcastChannel = packageJson.name;
 
 const env = dotenv.config({
     path: './.env'
@@ -32,7 +33,8 @@ process.env = {
 const publicEnv = {
     NODE_ENV: process.env.NODE_ENV,
     NODE_PATH: process.env.NODE_PATH,
-    PUBLIC_URL: process.env.PUBLIC_URL
+    PUBLIC_URL: process.env.PUBLIC_URL,
+    BROADCAST_CHANNEL: broadcastChannel
 };
 
 const jsRegex = /\.jsx?$/;
@@ -189,8 +191,10 @@ module.exports = {
                         const serviceWorkerFileContent = buffer.toString();
                         const versionStr = 'VERSION';
                         const swFileContentWithVersionInjected = serviceWorkerFileContent.replace(versionStr, packageJson.version);
+                        const broadcastStr = 'BRD_CHANNEL';
+                        const swFileContentWithInjections = swFileContentWithVersionInjected.replace(broadcastStr, broadcastChannel);
 
-                        return Buffer.from(swFileContentWithVersionInjected);
+                        return Buffer.from(swFileContentWithInjections);
                     }
                 }
             ]
