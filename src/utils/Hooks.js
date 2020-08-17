@@ -336,7 +336,7 @@ export function useAfterAnimation(afterAnimationFn = () => {}) {
             animationRef.current.removeEventListener('animationend', handleAfterAnimation);
             animationRef.current.removeEventListener('webkitAnimationEnd', handleAfterAnimation);
         }
-    }, [ animationRef.current ]);
+    }, [ animationRef.current, handleAfterAnimation ]);
 
     return animationRef;
 }
