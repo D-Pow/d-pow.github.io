@@ -53,9 +53,13 @@ export default function register() {
 }
 
 function broadcastMessage(message) {
-    const broadcastChannel = new BroadcastChannel(process.env.BROADCAST_CHANNEL);
+    try {
+        const broadcastChannel = new BroadcastChannel(process.env.BROADCAST_CHANNEL);
 
-    broadcastChannel.postMessage(message);
+        broadcastChannel.postMessage(message);
+    } catch(e) {
+        // BroadcastChannel not defined, likely because client is using Safari or IE
+    }
 }
 
 function registerValidSW(swUrl) {

@@ -58,9 +58,13 @@ function fetchAndCache(event, cache) {
 }
 
 function postMessageToClient(message) {
-    var channel = new BroadcastChannel(BROADCAST_CHANNEL);
+    try {
+        var channel = new BroadcastChannel(BROADCAST_CHANNEL);
 
-    channel.postMessage(message);
+        channel.postMessage(message);
+    } catch(e) {
+        // BroadcastChannel not defined, likely because client is using Safari or IE
+    }
 }
 
 self.addEventListener('install', function(event) {

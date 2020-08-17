@@ -350,10 +350,20 @@ export function useAfterAnimation(afterAnimationFn = () => {}) {
  * @returns {BroadcastChannel} - A new BroadcastChannel with the respective event listener and channel name.
  */
 export function useServiceWorkerBroadcastChannel(messageEventListener, channelName = process.env.BROADCAST_CHANNEL) {
-    const broadcastChannel = new BroadcastChannel(channelName);
     const eventName = 'message';
+    let broadcastChannel;
+
+    try {
+        broadcastChannel = new BroadcastChannel(channelName);
+    } catch(e) {
+        // BroadcastChannel not defined, likely because client is using Safari or IE
+    }
 
     useEffect(() => {
+        if (broadcastChannel == null) {
+            return;
+        }
+
         if (messageEventListener != null) {
             broadcastChannel.addEventListener(eventName, messageEventListener);
         }
