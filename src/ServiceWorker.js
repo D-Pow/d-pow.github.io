@@ -1,6 +1,7 @@
 var CACHE_NAME = 'cache-VERSION';
 var urlsToCache = []; // filenames change in each build (via appended filename hashes), so they can't be predicted here
 var BROADCAST_CHANNEL = 'BRD_CHANNEL';
+var UPDATE_BROADCAST = 'UPDATE';
 
 function removeOldCaches() {
     return caches.keys()
@@ -116,6 +117,15 @@ self.addEventListener('fetch', event => {
                                     console.log('New website version is available, deleting old cache content');
 
                                     clearCache(cache, url);
+
+                                    setTimeout(function() {
+                                        /* Service worker will determine if index.html changed
+                                         * before the page actually loads, so add a timeout to
+                                         * message broadcast to allow the website to continue loading
+                                         * before receiving the message.
+                                         */
+                                        postMessageToClient(UPDATE_BROADCAST);
+                                    }, 5000);
                                 }
                             });
                     }

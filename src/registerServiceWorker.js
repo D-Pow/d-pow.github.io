@@ -1,3 +1,5 @@
+import { UPDATE_BROADCAST } from 'utils/Constants';
+
 /**
  * This lets the app load faster on subsequent visits in production, and gives
  * it offline capabilities. However, it also means that developers (and users)
@@ -70,7 +72,7 @@ function registerValidSW(swUrl) {
                             // It's the perfect time to display a "New content is
                             // available; please refresh." message in your web app.
                             console.log('New content is available; please refresh.');
-                            // TODO notify user of new content available
+                            broadcastMessage(UPDATE_BROADCAST);
                         } else {
                             // At this point, everything has been precached.
                             // It's the perfect time to display a

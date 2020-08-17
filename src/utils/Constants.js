@@ -49,3 +49,5 @@ export const LINKS = {
 
 // Submit contact requests to FormSpree so bots can't scan for my email address
 export const CONTACT_FORM_URL = 'https://formspree.io/xkdoqyjm';
+
+export const UPDATE_BROADCAST = 'UPDATE';
