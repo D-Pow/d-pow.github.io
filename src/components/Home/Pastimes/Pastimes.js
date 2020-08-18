@@ -92,7 +92,7 @@ function Pastimes(props) {
             )}
         />
     );
-    const TextInShape = ({ textToRender, reduceByPx = pageText.otherPastimes.length, index }) => {
+    const TextInShape = ({ textToRender, reduceByPx, index }) => {
         const sides = 7 - index; // decrease each entry by 1, starting from Japanese at 8
         const rotation = (sides % 2) * -90;
 
@@ -102,7 +102,7 @@ function Pastimes(props) {
                 htmlChildrenWrapperCls={'text-light'}
                 htmlChildrenFontReductionOptions={{
                     // reduce by number of pastimes to shrink how much space they take up
-                    reduceByPx: reduceByPx
+                    reduceByPx
                 }}
                 sides={sides}
                 fill={themeColors.primary}
@@ -113,9 +113,7 @@ function Pastimes(props) {
     const renderedOtherPastimes = (
         pageText.otherPastimes.map((pastimeTextFields, index) => {
             const axis = index % 2 === 0 ? FlipCard.AXES.X : FlipCard.AXES.Y;
-            const textInShapeProps = pastimeTextFields.textInShapeProps || {};
-            const defaultProps = textInShapeProps.defaultProps || {};
-            const onClickProps = textInShapeProps.onClickProps || {};
+            const reduceFontSizeByPx = pageText.otherPastimes.length;
 
             return (
                 <div className={'col-sm-6'} key={index}>
@@ -123,8 +121,8 @@ function Pastimes(props) {
                         axis={axis}
                         durationCls={'duration-8'}
                         isFlipped={otherPastimesToggleArray[index]}
-                        showDefault={<TextInShape textToRender={pastimeTextFields.showDefault} index={index} {...defaultProps} />}
-                        showOnClick={<TextInShape textToRender={pastimeTextFields.showWithEasterEgg} index={index} {...onClickProps} />}
+                        showDefault={<TextInShape textToRender={pastimeTextFields.showDefault} index={index} reduceByPx={reduceFontSizeByPx} />}
+                        showOnClick={<TextInShape textToRender={pastimeTextFields.showWithEasterEgg} index={index} reduceByPx={reduceFontSizeByPx} />}
                     />
                 </div>
             );
