@@ -1,6 +1,6 @@
 /**
  * Gets the string representation of a single React node
-
+ *
  * @param {Node} child - Child whose name will be retrieved
  * @returns {string} - The string representation of the node
  */

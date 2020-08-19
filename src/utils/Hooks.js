@@ -17,7 +17,7 @@ import { debounce, elementIsInClickPath, getClickPath, setDocumentScrolling } fr
  * @returns {React.Component} - Children rendered using the hook() return values
  */
 export function Hooked({ hook, hookArgs = [], children }) {
-    return children(hook(...hookArgs))
+    return children(hook(...hookArgs));
 }
 
 /**
