@@ -121,7 +121,7 @@ function Pastimes(props) {
                         axis={axis}
                         durationCls={'duration-8'}
                         isFlipped={otherPastimesToggleArray[index]}
-                        showDefault={<TextInShape textToRender={pastimeTextFields.showDefault} index={index} reduceByPx={reduceFontSizeByPx} />}
+                        showDefault={<TextInShape textToRender={pastimeTextFields.showDefault} index={index} reduceByPx={reduceFontSizeByPx - 1} />}
                         showOnClick={<TextInShape textToRender={pastimeTextFields.showWithEasterEgg} index={index} reduceByPx={reduceFontSizeByPx} />}
                     />
                 </div>
