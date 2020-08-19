@@ -281,16 +281,24 @@ export function useDynamicFontSizeShrinking(originalConstrainingRef = { current:
     const toResizeElem = useRef(null);
     const originalFontSizePx = getComputedStyle(originalConstrainingRef.current).fontSize;
     const [ fontSizePx, setFontSizePx ] = useState(originalFontSizePx);
-    const [ windowSizeState, resetWasResized ] = useWindowResize(800);
+    let constrainingStyles;
+    let toResizeStyles;
+    let constrainingHeight;
+    let constrainingWidth;
+    let toResizeHeight;
+    let toResizeWidth;
+
+    if (constrainingElem.current && toResizeElem.current) {
+        constrainingStyles = getComputedStyle(constrainingElem.current);
+        toResizeStyles = getComputedStyle(toResizeElem.current);
+        constrainingHeight = asNumber(constrainingStyles.height);
+        constrainingWidth = asNumber(constrainingStyles.width);
+        toResizeHeight = asNumber(toResizeStyles.height);
+        toResizeWidth = asNumber(toResizeStyles.width);
+    }
 
     useEffect(() => {
-        if (constrainingElem.current && toResizeElem.current) {
-            const constrainingStyles = getComputedStyle(constrainingElem.current);
-            const toResizeStyles = getComputedStyle(toResizeElem.current);
-            const constrainingHeight = asNumber(constrainingStyles.height);
-            const constrainingWidth = asNumber(constrainingStyles.width);
-            const toResizeHeight = asNumber(toResizeStyles.height);
-            const toResizeWidth = asNumber(toResizeStyles.width);
+        if (constrainingStyles != null && toResizeStyles != null) {
             const shouldShrink = (toResizeHeight > constrainingHeight) || (toResizeWidth > constrainingWidth);
 
             if (shouldShrink) {
@@ -299,10 +307,8 @@ export function useDynamicFontSizeShrinking(originalConstrainingRef = { current:
 
                 setFontSizePx(newFontSize);
             }
-
-            resetWasResized();
         }
-    }, [ constrainingElem.current, toResizeElem.current, windowSizeState.wasResized, fontSizePx ]);
+    }, [ constrainingStyles, constrainingWidth, constrainingHeight, toResizeStyles, toResizeWidth, toResizeHeight, fontSizePx ]);
 
     return [ constrainingElem, toResizeElem, fontSizePx ];
 }
