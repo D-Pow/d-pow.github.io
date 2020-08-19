@@ -276,41 +276,44 @@ export function useTimedArrayToggle(arrayLength, intervalTimeMs, allowBackwardsT
     return [ toggledEntries, triggerArrayToggle ];
 }
 
-export function useDynamicFontSizeShrinking(originalConstrainingRef = { current: document.body }) {
-    const constrainingElem = useRef(null);
-    const toResizeElem = useRef(null);
-    const originalFontSizePx = getComputedStyle(originalConstrainingRef.current).fontSize;
-    const [ fontSizePx, setFontSizePx ] = useState(originalFontSizePx);
+export function useDynamicFontSizeShrinking() {
+    const constrainingElemRef = useRef(null);
+    const toResizeElemRef = useRef(null);
+    const originalFontSizePx = getComputedStyle(document.body).fontSize;
+    const [ fontSizeStr, setFontSizeStr ] = useState(originalFontSizePx);
+    const refsAreMounted = Boolean(constrainingElemRef.current && toResizeElemRef.current);
     let constrainingStyles;
     let toResizeStyles;
     let constrainingHeight;
     let constrainingWidth;
     let toResizeHeight;
     let toResizeWidth;
+    let toResizeFontSize;
 
-    if (constrainingElem.current && toResizeElem.current) {
-        constrainingStyles = getComputedStyle(constrainingElem.current);
-        toResizeStyles = getComputedStyle(toResizeElem.current);
+    if (refsAreMounted) {
+        constrainingStyles = getComputedStyle(constrainingElemRef.current);
+        toResizeStyles = getComputedStyle(toResizeElemRef.current);
         constrainingHeight = asNumber(constrainingStyles.height);
         constrainingWidth = asNumber(constrainingStyles.width);
         toResizeHeight = asNumber(toResizeStyles.height);
         toResizeWidth = asNumber(toResizeStyles.width);
+        toResizeFontSize = asNumber(toResizeStyles.fontSize);
     }
 
+    const shouldShrink = refsAreMounted && (
+        (toResizeHeight > constrainingHeight)
+        || (toResizeWidth > constrainingWidth)
+    );
+
     useEffect(() => {
-        if (constrainingStyles != null && toResizeStyles != null) {
-            const shouldShrink = (toResizeHeight > constrainingHeight) || (toResizeWidth > constrainingWidth);
+        if (shouldShrink) {
+            const newFontSize = `${toResizeFontSize - 1}px`;
 
-            if (shouldShrink) {
-                const currentFontSize = asNumber(toResizeStyles.fontSize);
-                const newFontSize = `${currentFontSize - 1}px`;
-
-                setFontSizePx(newFontSize);
-            }
+            setFontSizeStr(newFontSize);
         }
-    }, [ constrainingStyles, constrainingWidth, constrainingHeight, toResizeStyles, toResizeWidth, toResizeHeight, fontSizePx ]);
+    }, [ shouldShrink, toResizeFontSize ]);
 
-    return [ constrainingElem, toResizeElem, fontSizePx ];
+    return [ constrainingElemRef, toResizeElemRef, fontSizeStr ];
 }
 
 /**
