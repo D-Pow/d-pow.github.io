@@ -42,7 +42,7 @@ function ForeignObject({
     htmlChildrenFontReductionOptions,
     foreignObjectBoundingClientRectInWindow,
 }) {
-    const [ constrainingElem, toResizeElem, fontSizePx ] = useDynamicFontSizeShrinking();
+    const [ constrainingElemRef, toResizeElemRef, fontSizePx ] = useDynamicFontSizeShrinking();
     const isUsingCustomResizeElement = typeof htmlChildren === typeof slightlySmallerThanLargestPossibleFontSize;
     // reduce font size slightly so text doesn't go all the way to the edge of the foreignObject
     const fontSizeStr = slightlySmallerThanLargestPossibleFontSize(fontSizePx, htmlChildren, htmlChildrenFontReductionOptions);
@@ -51,17 +51,17 @@ function ForeignObject({
         ? (
             <ForeignObjectChildrenWrapper
                 className={htmlChildrenWrapperCls}
-                constrainingElem={constrainingElem}
+                constrainingElem={constrainingElemRef}
                 fontSize={fontSizeStr}
             >
-                {htmlChildren(toResizeElem, foreignObjectBoundingClientRectInWindow)}
+                {htmlChildren(toResizeElemRef, foreignObjectBoundingClientRectInWindow)}
             </ForeignObjectChildrenWrapper>
         ) : (
             <ForeignObjectChildrenWrapper
                 className={htmlChildrenWrapperCls}
-                constrainingElem={constrainingElem}
+                constrainingElem={constrainingElemRef}
                 fontSize={fontSizeStr}
-                toResizeElem={toResizeElem}
+                toResizeElem={toResizeElemRef}
             >
                 {htmlChildren}
             </ForeignObjectChildrenWrapper>
