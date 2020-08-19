@@ -80,7 +80,6 @@ function Pastimes(props) {
         <Shape
             sides={8}
             fill={themeColors.primary}
-            htmlChildrenFontReductionOptions={{ reduceByPx: 1 }} // only 1 HoverTranslate present
             htmlChildren={(resizeTextRef, foreignObjectBoundingClientRectInWindow) => (
                 <HoverTranslate
                     className={'text-light'}
