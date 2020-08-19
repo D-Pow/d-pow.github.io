@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { asNumber } from 'utils/Numbers';
+import ForeignObject from './ForeignObject';
 import { attemptParseObjLiteral } from 'utils/Objects';
-import { isMobileBrowser } from 'utils/BrowserIdentification';
 import { importImageAsync } from 'utils/Events';
-import { Hooked, useDynamicFontSizeShrinking } from 'utils/Hooks';
 
 class Shape extends React.Component {
     svgDimensions = {
@@ -181,11 +179,7 @@ class Shape extends React.Component {
         const {
             htmlChildren,
             htmlChildrenWrapperCls,
-            htmlChildrenFontReductionOptions: {
-                reduceByPx,
-                onlyOnMobile,
-                onlyAtLength
-            }
+            htmlChildrenFontReductionOptions
         } = this.props;
 
         if (!htmlChildren) {
@@ -194,60 +188,17 @@ class Shape extends React.Component {
 
         const { x, y, width, height } = this.foreignObjectDimensions;
 
-        const slightlySmallerThanLargestPossibleFontSize = (fontSizePxStr) => {
-            let reduceFontSize = true;
-
-            if (onlyOnMobile) {
-                reduceFontSize = reduceFontSize && isMobileBrowser();
-            }
-
-            if (typeof onlyAtLength === typeof 0) {
-                reduceFontSize = reduceFontSize && (typeof htmlChildren === typeof '') && htmlChildren.length >= onlyAtLength;
-            }
-
-            return reduceFontSize ? `${asNumber(fontSizePxStr) - reduceByPx}px` : fontSizePxStr;
-        };
-
-        const TextWrapper = ({ constrainingElem, fontSizePx, toResizeElem, children }) => (
-            <div className={`text-center d-flex h-100 w-100 ${htmlChildrenWrapperCls}`} ref={constrainingElem}>
-                <div
-                    className={'m-auto'}
-                    ref={toResizeElem}
-                    style={{
-                        fontSize: slightlySmallerThanLargestPossibleFontSize(fontSizePx)
-                    }}
-                >
-                    {children}
-                </div>
-            </div>
-        );
-
-        /**
-         * Since SVG doesn't support text-wrapping by default, use `foreignObject`
-         * with nested `div`s to allow text-wrapping.
-         * Also, center the text content by setting div wrapper's display to flex, making
-         * it the same height as the SVG, and then using a child div with `margin: auto;`
-         */
         return (
-            <foreignObject x={x} y={y} width={width} height={height}>
-                <Hooked hook={useDynamicFontSizeShrinking}>
-                    {([ constrainingElem, toResizeElem, fontSizePx ]) => {
-                        if (this.isUsingHtmlChildrenWithCustomResizeElem) {
-                            return (
-                                <TextWrapper constrainingElem={constrainingElem} fontSizePx={fontSizePx}>
-                                    {htmlChildren(toResizeElem, this.foreignObjectBoundingClientRectInWindow)}
-                                </TextWrapper>
-                            );
-                        }
-
-                        return (
-                            <TextWrapper constrainingElem={constrainingElem} fontSizePx={fontSizePx} toResizeElem={toResizeElem}>
-                                {htmlChildren}
-                            </TextWrapper>
-                        );
-                    }}
-                </Hooked>
-            </foreignObject>
+            <ForeignObject
+                x={x}
+                y={y}
+                width={width}
+                height={height}
+                htmlChildren={htmlChildren}
+                htmlChildrenWrapperCls={htmlChildrenWrapperCls}
+                foreignObjectBoundingClientRectInWindow={this.foreignObjectBoundingClientRectInWindow}
+                htmlChildrenFontReductionOptions={htmlChildrenFontReductionOptions}
+            />
         );
     }
 
@@ -271,20 +222,11 @@ Shape.propTypes = {
     image: PropTypes.string,
     fill: PropTypes.string,
     sides: PropTypes.number,
-    htmlChildren: PropTypes.oneOfType([
-        PropTypes.node,
-        PropTypes.func // (resizeTextRef, foreignObjectBoundingClientRectInWindow) => (React.Component)
-    ]),
-    htmlChildrenWrapperCls: PropTypes.string,
-    htmlChildrenFontReductionOptions: PropTypes.shape({
-        reduceByPx: PropTypes.number,
-        onlyOnMobile: PropTypes.bool,
-        onlyAtLength: PropTypes.number
-    }),
+    htmlChildren: ForeignObject.propTypes.htmlChildren,
+    htmlChildrenWrapperCls: ForeignObject.propTypes.htmlChildrenWrapperCls,
+    htmlChildrenFontReductionOptions: ForeignObject.propTypes.htmlChildrenFontReductionOptions,
     svgChildren: PropTypes.node,
-
-    // degrees of rotation of shape
-    rotation: PropTypes.number,
+    rotation: PropTypes.number, // degrees of rotation of shape
     aria: PropTypes.object
 };
 
