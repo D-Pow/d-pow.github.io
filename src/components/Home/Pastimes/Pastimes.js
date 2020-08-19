@@ -9,6 +9,25 @@ import { getGridBreakpoints, getThemeColors } from 'utils/Scss';
 import { useTimedArrayToggle } from 'utils/Hooks';
 import { EasterEgg } from 'utils/CommonRenders';
 
+const TextInShape = ({ textToRender, reduceByPx, index }) => {
+    const sides = 7 - index; // decrease each entry by 1, starting from Japanese at 8
+    const rotation = (sides % 2) * -90;
+
+    return (
+        <Shape
+            htmlChildren={textToRender}
+            htmlChildrenWrapperCls={'text-light'}
+            htmlChildrenFontReductionOptions={{
+                // reduce by number of pastimes to shrink how much space they take up
+                reduceByPx
+            }}
+            sides={sides}
+            fill={getThemeColors().primary}
+            rotation={rotation}
+        />
+    );
+};
+
 function Pastimes(props) {
     const [ showEasterEgg, setShowEasterEgg ] = useState(false);
     const pageText = {
@@ -91,24 +110,6 @@ function Pastimes(props) {
             )}
         />
     );
-    const TextInShape = ({ textToRender, reduceByPx, index }) => {
-        const sides = 7 - index; // decrease each entry by 1, starting from Japanese at 8
-        const rotation = (sides % 2) * -90;
-
-        return (
-            <Shape
-                htmlChildren={textToRender}
-                htmlChildrenWrapperCls={'text-light'}
-                htmlChildrenFontReductionOptions={{
-                    // reduce by number of pastimes to shrink how much space they take up
-                    reduceByPx
-                }}
-                sides={sides}
-                fill={themeColors.primary}
-                rotation={rotation}
-            />
-        );
-    };
     const renderedOtherPastimes = (
         pageText.otherPastimes.map((pastimeTextFields, index) => {
             const axis = index % 2 === 0 ? FlipCard.AXES.X : FlipCard.AXES.Y;
