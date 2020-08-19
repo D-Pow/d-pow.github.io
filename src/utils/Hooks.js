@@ -217,7 +217,7 @@ export function useHover(overrideBoundingClientRect) {
     const [ isHovered ] = useWindowEvent('mousemove', {
         initialEventState: false,
         handleEvent: handleMouseMove,
-        useEffectInputs: [ref.current]
+        useEffectInputs: [ ref.current, overrideBoundingClientRect ]
     });
 
     return [ ref, isHovered ];
