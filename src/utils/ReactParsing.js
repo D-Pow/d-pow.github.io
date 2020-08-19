@@ -1,3 +1,16 @@
+import PropTypes from 'prop-types';
+
+export function getRefPropType(onlyHtmlElements = false) {
+    return PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.shape({
+            current: onlyHtmlElements
+                ? PropTypes.instanceOf(Element)
+                : PropTypes.any
+        })
+    ]);
+}
+
 /**
  * Gets the string representation of a single React node
  *
