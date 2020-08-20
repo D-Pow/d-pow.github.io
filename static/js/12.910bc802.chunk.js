@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[12],{618:function(p,e,n){p.exports=n.p+"static/assets/edge_panel_widget-779182c5.png"}}]);
