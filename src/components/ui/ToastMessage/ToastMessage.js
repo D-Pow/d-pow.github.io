@@ -15,6 +15,10 @@ function ToastMessage(props) {
         }
     }, [ props.hideAfterDelay ]);
 
+    if (!props.show) {
+        return '';
+    }
+
     const renderedHeader = props.header
         ? (
             <div className={'toast-header'}>
@@ -44,7 +48,7 @@ function ToastMessage(props) {
 
     return (
         <div
-            className={`toast toast-message ${props.show ? 'show slide-in-top' : ''}`}
+            className={'toast toast-message show slide-in-top'}
             style={style}
         >
             {renderedHeader}
