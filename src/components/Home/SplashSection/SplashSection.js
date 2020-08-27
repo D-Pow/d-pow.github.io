@@ -52,7 +52,7 @@ function SplashSection() {
                 setShowBgImage(true);
             }, drawingAnimationTimeMs);
         }
-    }, [ spinnerWasClosed ]);
+    }, [ spinnerWasClosed, drawingAnimationTimeMs ]);
 
     const renderedDrawingTexts = spinnerWasClosed
         ? <EvenlySpacedSkewedDrawingTexts textArray={textToDisplay} />
