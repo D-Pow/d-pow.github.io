@@ -38,9 +38,7 @@ const EvenlySpacedSkewedDrawingTexts = React.memo(
     objEquals
 );
 
-function SplashSection() {
-    const { contextState } = useContext(AppContext.Context);
-    const spinnerWasClosed = contextState[AppContextFields.GLOBAL_SPINNER_CLOSED];
+function SplashSection({ spinnerWasClosed }) {
     const [ showBgImage, setShowBgImage ] = useState(false);
     const drawingAnimationTimeMs = SvgDrawingText.defaultProps.animationDurationSeconds * 1000;
     const textToDisplay = [ 'Hey there,', "I'm Devon!" ];
@@ -76,4 +74,13 @@ function SplashSection() {
     );
 }
 
-export default SplashSection;
+const MemoizedSplashSection = React.memo(SplashSection);
+
+function SplashSectionProvider() {
+    const { contextState } = useContext(AppContext.Context);
+    const spinnerWasClosed = contextState[AppContextFields.GLOBAL_SPINNER_CLOSED];
+
+    return <MemoizedSplashSection spinnerWasClosed={spinnerWasClosed} />
+}
+
+export default SplashSectionProvider;
