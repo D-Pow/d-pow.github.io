@@ -51,17 +51,17 @@ function ForeignObject({
         ? (
             <ForeignObjectChildrenWrapper
                 className={htmlChildrenWrapperCls}
-                constrainingElem={constrainingElemRef}
                 fontSize={fontSizeStr}
+                wrapperOuterRef={constrainingElemRef}
             >
                 {htmlChildren(toResizeElemRef, foreignObjectBoundingClientRectInWindow)}
             </ForeignObjectChildrenWrapper>
         ) : (
             <ForeignObjectChildrenWrapper
                 className={htmlChildrenWrapperCls}
-                constrainingElem={constrainingElemRef}
                 fontSize={fontSizeStr}
-                toResizeElem={toResizeElemRef}
+                wrapperOuterRef={constrainingElemRef}
+                wrapperInnerRef={toResizeElemRef}
             >
                 {htmlChildren}
             </ForeignObjectChildrenWrapper>

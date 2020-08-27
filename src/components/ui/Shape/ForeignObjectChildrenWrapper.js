@@ -5,15 +5,15 @@ import { getRefPropType } from 'utils/ReactParsing';
 function ForeignObjectChildrenWrapper({
     className,
     fontSize,
-    constrainingElem,
-    toResizeElem,
+    wrapperOuterRef,
+    wrapperInnerRef,
     children
 }) {
     return (
-        <div className={`text-center d-flex h-100 w-100 ${className}`} ref={constrainingElem}>
+        <div className={`text-center d-flex h-100 w-100 ${className}`} ref={wrapperOuterRef}>
             <div
                 className={'m-auto'}
-                ref={toResizeElem}
+                ref={wrapperInnerRef}
                 style={{
                     fontSize
                 }}
@@ -27,8 +27,8 @@ function ForeignObjectChildrenWrapper({
 ForeignObjectChildrenWrapper.propTypes = {
     className: PropTypes.string,
     fontSize: PropTypes.string,
-    constrainingElem: getRefPropType(true),
-    toResizeElem: getRefPropType(true),
+    wrapperOuterRef: getRefPropType(true),
+    wrapperInnerRef: getRefPropType(true),
     children: PropTypes.node
 };
 
