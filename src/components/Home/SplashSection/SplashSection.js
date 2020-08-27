@@ -43,6 +43,7 @@ function SplashSection() {
     const spinnerWasClosed = contextState[AppContextFields.GLOBAL_SPINNER_CLOSED];
     const [ showBgImage, setShowBgImage ] = useState(false);
     const drawingAnimationTimeMs = SvgDrawingText.defaultProps.animationDurationSeconds * 1000;
+    const textToDisplay = [ 'Hey there,', "I'm Devon!" ];
 
     useEffect(() => {
         if (spinnerWasClosed && !showBgImage) {
@@ -54,7 +55,7 @@ function SplashSection() {
     }, [ spinnerWasClosed ]);
 
     const renderedDrawingTexts = spinnerWasClosed
-        ? <EvenlySpacedSkewedDrawingTexts textArray={[ 'Hey there,', "I'm Devon!" ]} />
+        ? <EvenlySpacedSkewedDrawingTexts textArray={textToDisplay} />
         : '';
 
     return (
