@@ -3,7 +3,40 @@ import Image from 'components/ui/Image';
 import SvgDrawingText from 'components/ui/SvgDrawingText';
 import AppContext, { AppContextFields } from 'utils/AppContext';
 import { distributeValuesEvenlyBetween } from 'utils/Numbers';
+import { objEquals } from 'utils/Objects';
 import 'styles/SplashSection.scss';
+
+function renderEvenlySpacedSkewedDrawingTexts({ textArray = [] }) {
+    /*
+     * Distribute text elements vertically such that there are equal
+     * entries before/after the Y midpoint (y=50%), and closer to the center
+     * than the edges.
+     *
+     * e.g. If 2 items, then 33% and 66%. If 3, then 25%, 50%, and 75%.
+     */
+    const evenlySpacedYValues = distributeValuesEvenlyBetween(0, 100, textArray.length);
+    const centerX = '50%';
+
+    return textArray.map((text, i) => (
+        <SvgDrawingText
+            className={'font-brush-script'}
+            key={i}
+            fontSizeEm={1.5}
+            style={{ transform: 'skewY(-5deg)' }}
+            textElemProps={{
+                x: centerX,
+                y: `${Math.round(evenlySpacedYValues[i])}%`
+            }}
+        >
+            {text}
+        </SvgDrawingText>
+    ));
+}
+
+const EvenlySpacedSkewedDrawingTexts = React.memo(
+    renderEvenlySpacedSkewedDrawingTexts,
+    objEquals
+);
 
 function SplashSection() {
     const { contextState } = useContext(AppContext.Context);
@@ -20,35 +53,8 @@ function SplashSection() {
         }
     }, [ spinnerWasClosed ]);
 
-    function renderEvenlySpacedSkewedDrawingTexts(textArray) {
-        const centerX = '50%';
-        /*
-         * Distribute text elements vertically such that there are equal
-         * entries before/after the Y midpoint (y=50%), and closer to the center
-         * than the edges.
-         *
-         * e.g. If 2 items, then 33% and 66%. If 3, then 25%, 50%, and 75%.
-         */
-        const evenlySpacedYValues = distributeValuesEvenlyBetween(0, 100, textArray.length);
-
-        return textArray.map((text, i) => (
-            <SvgDrawingText
-                className={'font-brush-script'}
-                key={i}
-                fontSizeEm={1.5}
-                style={{ transform: 'skewY(-5deg)' }}
-                textElemProps={{
-                    x: centerX,
-                    y: `${Math.round(evenlySpacedYValues[i])}%`
-                }}
-            >
-                {text}
-            </SvgDrawingText>
-        ));
-    }
-
     const renderedDrawingTexts = spinnerWasClosed
-        ? renderEvenlySpacedSkewedDrawingTexts([ 'Hey there,', "I'm Devon!" ])
+        ? <EvenlySpacedSkewedDrawingTexts textArray={[ 'Hey there,', "I'm Devon!" ]} />
         : '';
 
     return (
