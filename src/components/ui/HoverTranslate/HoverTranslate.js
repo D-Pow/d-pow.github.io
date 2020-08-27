@@ -2,7 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHover } from 'utils/Hooks';
 
-function HoverTranslate({ className, animationCls, english, japanese, passedRef, boundingClientRectForHover, aria }) {
+function HoverTranslate({
+    className,
+    animationCls,
+    english,
+    japanese,
+    passedRef,
+    boundingClientRectForHover,
+    aria
+}) {
     // Since the absolute-positioned divs cover one another, the :hover only gets applied to the element rendered
     // on top (the latter of the div.absolute-center). Thus, a set of .hover-(show|hide) CSS classes won't work
     // unless the CSS uses sibling selectors for show/hide. Until that is added, simply use the useHover() hook
