@@ -46,22 +46,25 @@ function ForeignObject({
     const isUsingCustomResizeElement = typeof htmlChildren === typeof slightlySmallerThanLargestPossibleFontSize;
     // reduce font size slightly so text doesn't go all the way to the edge of the foreignObject
     const fontSizeStr = slightlySmallerThanLargestPossibleFontSize(fontSizePx, htmlChildren, htmlChildrenFontReductionOptions);
+    const foreignObjectWrapperStyle = {
+        fontSize: fontSizeStr
+    };
 
     const renderedForeignObjectChildrenWrapper = isUsingCustomResizeElement
         ? (
             <ForeignObjectChildrenWrapper
                 className={htmlChildrenWrapperCls}
-                fontSize={fontSizeStr}
                 wrapperOuterRef={constrainingElemRef}
+                style={foreignObjectWrapperStyle}
             >
                 {htmlChildren(toResizeElemRef, foreignObjectBoundingClientRectInWindow)}
             </ForeignObjectChildrenWrapper>
         ) : (
             <ForeignObjectChildrenWrapper
                 className={htmlChildrenWrapperCls}
-                fontSize={fontSizeStr}
                 wrapperOuterRef={constrainingElemRef}
                 wrapperInnerRef={toResizeElemRef}
+                style={foreignObjectWrapperStyle}
             >
                 {htmlChildren}
             </ForeignObjectChildrenWrapper>
