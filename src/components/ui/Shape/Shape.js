@@ -234,10 +234,6 @@ Shape.defaultProps = {
     className: '',
     image: '',
     fill: '',
-    htmlChildrenWrapperCls: '',
-    htmlChildrenFontReductionOptions: {
-        reduceByPx: 0
-    },
     sides: 6,
     rotation: 0,
     aria: {}
