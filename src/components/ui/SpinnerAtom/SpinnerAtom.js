@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AtomSpinner from './AtomSpinner';
+import { objEquals } from 'utils/Objects';
 import { useBlockDocumentScrolling } from 'utils/Hooks';
 import { getDurationTimeMsFromClassName } from 'utils/Scss';
 
@@ -99,4 +100,4 @@ SpinnerAtom.defaultProps = {
     onUnmount: () => {}
 };
 
-export default SpinnerAtom;
+export default React.memo(SpinnerAtom, objEquals);
