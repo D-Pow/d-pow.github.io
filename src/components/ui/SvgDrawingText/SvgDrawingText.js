@@ -4,12 +4,12 @@ import { isSafariBrowser } from 'utils/BrowserIdentification';
 import { strokeDasharrayLengthForFontSize1em } from 'styles/Animations/Svg/DrawingText.scss';
 
 function SvgDrawingText({
-        className,
-        fontSizeEm,
-        animationDurationSeconds,
-        textElemProps,
-        style,
-        children
+    className,
+    fontSizeEm,
+    animationDurationSeconds,
+    textElemProps,
+    style,
+    children
 }) {
     // override default props with those specified by user
     // but ensure that the default props are set if user didn't specify them all
