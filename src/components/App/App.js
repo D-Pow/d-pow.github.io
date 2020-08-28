@@ -48,17 +48,15 @@ function App({ imagesStillLoading, setContextState }) {
     const [ windowSizeState ] = useWindowResize();
 
     const [ spinnerWasClosed, setSpinnerWasClosed ] = useState(false);
-    const [ spinnerWasUnmounted, setSpinnerWasUnmounted ] = useState(false);
     const [ showSpinnerLonger, setShowSpinnerLonger ] = useState(true);
     const showSpinner = imagesStillLoading || showSpinnerLonger;
 
     useEffect(() => {
         setContextState(prevState => ({
             ...prevState,
-            [AppContextFields.GLOBAL_SPINNER_CLOSED]: spinnerWasClosed,
-            [AppContextFields.GLOBAL_SPINNER_UNMOUNTED]: spinnerWasUnmounted
+            [AppContextFields.GLOBAL_SPINNER_CLOSED]: spinnerWasClosed
         }));
-    }, [ spinnerWasClosed, spinnerWasUnmounted ]);
+    }, [ spinnerWasClosed ]);
 
     useEffect(() => {
         if (!imagesStillLoading) {
@@ -89,7 +87,6 @@ function App({ imagesStillLoading, setContextState }) {
             preventDocumentScrolling={preventScrolling}
             show={showSpinner}
             onClose={() => setSpinnerWasClosed(true)}
-            onUnmount={() => setSpinnerWasUnmounted(true)}
         />
     );
 

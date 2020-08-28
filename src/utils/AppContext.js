@@ -6,8 +6,7 @@ export const AppContextFields = {
     GET_IMAGES_HAVE_BEEN_REQUESTED: 'getImagesHaveBeenRequested',
     GET_IMAGES_STILL_LOADING: 'getImagesStillLoading',
     GET_IMAGES_FINISHED_LOADING: 'getImagesFinishedLoading',
-    GLOBAL_SPINNER_CLOSED: 'globalSpinnerClosed',
-    GLOBAL_SPINNER_UNMOUNTED: 'globalSpinnerUnmounted'
+    GLOBAL_SPINNER_CLOSED: 'globalSpinnerClosed'
 };
 
 /**
@@ -37,8 +36,7 @@ const initialState = {
 
         return haventBeenRequestedYet || haventFinishedLoading;
     },
-    [AppContextFields.GLOBAL_SPINNER_CLOSED]: false,
-    [AppContextFields.GLOBAL_SPINNER_UNMOUNTED]: false
+    [AppContextFields.GLOBAL_SPINNER_CLOSED]: false
 };
 
 const AppContext = ContextFactory(initialState);
