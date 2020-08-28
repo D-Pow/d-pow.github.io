@@ -103,6 +103,7 @@ class ScrollToShow extends React.Component {
     }
 
     shouldChildBeShown(index) {
+        // TODO maybe use linear interpolation methods described [here](https://www.trysmudford.com/blog/linear-interpolation-functions/)
         if (index >= this.state.childRefs.length) {
             return false;
         }
