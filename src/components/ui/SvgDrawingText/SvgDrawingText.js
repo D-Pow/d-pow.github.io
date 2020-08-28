@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isSafariBrowser } from 'utils/BrowserIdentification';
+import { objEquals } from 'utils/Objects';
 import { strokeDasharrayLengthForFontSize1em } from 'styles/Animations/Svg/DrawingText.scss';
 
 function SvgDrawingText({
@@ -65,4 +66,9 @@ SvgDrawingText.defaultProps = {
     }
 };
 
-export default SvgDrawingText;
+const MemoizedSvgDrawingText = React.memo(SvgDrawingText, objEquals);
+
+MemoizedSvgDrawingText.propTypes = SvgDrawingText.propTypes;
+MemoizedSvgDrawingText.defaultProps = SvgDrawingText.defaultProps;
+
+export default MemoizedSvgDrawingText;
