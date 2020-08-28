@@ -198,29 +198,57 @@ export function useWindowResize(debounceDelay = 1000) {
  * Blocks the `document.body` from being scrollable as long as
  * the `shouldBlockScrolling` function returns true.
  *
+ * @function
  * @param {function(): boolean} shouldBlockScrolling - Function to determine if scrolling should be disabled
  */
-export function useBlockDocumentScrolling(shouldBlockScrolling) {
-    /**
-     * Don't return a cleanup function to handle activating scrolling.
-     *
-     * React calls cleanup functions upon both component unmount
-     * and component re-render.
-     *
-     * If re-activating scrolling were returned in the cleanup function,
-     * then anytime the component re-rendered, document scrolling
-     * would be re-activated, even if the `shouldBlockScrolling()` returned true.
-     *
-     * Thus, handle the cleanup manually in else-block.
-     */
-    useEffect(() => {
-        if (shouldBlockScrolling()) {
-            setDocumentScrolling(false);
-        } else {
-            setDocumentScrolling();
+export const useBlockDocumentScrolling = (() => {
+    function useBlockDocumentScrollingHook(shouldBlockScrolling, hookState, id) {
+        /**
+         * Don't return a cleanup function to handle activating scrolling.
+         *
+         * React calls cleanup functions upon both component unmount
+         * and component re-render.
+         *
+         * If re-activating scrolling were returned in the cleanup function,
+         * then anytime the component re-rendered, document scrolling
+         * would be re-activated, even if the `shouldBlockScrolling()` returned true.
+         *
+         * Thus, handle the cleanup manually in else-block.
+         */
+        const blockScrolling = shouldBlockScrolling();
+        const otherHooksBlockingScrolling = hookState
+            .filter(entry => entry.id !== id)
+            .some(entry => entry.isBlockingScrolling);
+
+        useEffect(() => {
+            if (blockScrolling) {
+                setDocumentScrolling(false);
+            } else if (!otherHooksBlockingScrolling) {
+                setDocumentScrolling();
+            }
+        }, [blockScrolling, otherHooksBlockingScrolling]);
+
+        return blockScrolling;
+    }
+
+    function setTrackAllHookCallsState(prevHookState, setHookState, hookReturnVal, id) {
+        const thisHookEntry = prevHookState.find(entries => entries.id === id);
+
+        if (thisHookEntry == null) {
+            prevHookState.push({id, isBlockingScrolling: hookReturnVal});
+            setHookState(prevHookState);
+        } else if (thisHookEntry.isBlockingScrolling !== hookReturnVal) {
+            thisHookEntry.isBlockingScrolling = hookReturnVal;
+            setHookState(prevHookState);
         }
-    }, [ shouldBlockScrolling ]);
-}
+    }
+
+    return withGlobalState(
+        useBlockDocumentScrollingHook,
+        setTrackAllHookCallsState,
+        []
+    )
+})();
 
 /**
  * Determines if the mouse is hovering over an element using JavaScript.
