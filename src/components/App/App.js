@@ -84,8 +84,9 @@ function App({ imagesStillLoading, setContextState }) {
         return <IncompatibleBrowserFallback />
     }
 
-    const renderedSpinner = (
+    const renderSpinner = preventScrolling => (
         <SpinnerAtom
+            preventDocumentScrolling={preventScrolling}
             show={showSpinner}
             onClose={() => setSpinnerWasClosed(true)}
             onUnmount={() => setSpinnerWasUnmounted(true)}
@@ -103,7 +104,7 @@ function App({ imagesStillLoading, setContextState }) {
             key={`${windowSizeState.prevWidth}x${windowSizeState.prevHeight}`}
         >
             <React.Suspense
-                fallback={renderedSpinner}
+                fallback={renderSpinner(false)}
             >
                 <Router>
                     <React.Fragment>
@@ -112,7 +113,7 @@ function App({ imagesStillLoading, setContextState }) {
                         <Footer />
                     </React.Fragment>
                 </Router>
-                {renderedSpinner}
+                {renderSpinner(true)}
             </React.Suspense>
         </div>
     );
