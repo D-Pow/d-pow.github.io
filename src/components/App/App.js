@@ -47,16 +47,15 @@ const routes = [
 function App({ imagesStillLoading, setContextState }) {
     const [ windowSizeState ] = useWindowResize();
 
-    const [ spinnerWasClosed, setSpinnerWasClosed ] = useState(false);
     const [ showSpinnerLonger, setShowSpinnerLonger ] = useState(true);
     const showSpinner = imagesStillLoading || showSpinnerLonger;
 
-    useEffect(() => {
+    function handleSpinnerClose() {
         setContextState(prevState => ({
             ...prevState,
-            [AppContextFields.GLOBAL_SPINNER_CLOSED]: spinnerWasClosed
+            [AppContextFields.GLOBAL_SPINNER_CLOSED]: true
         }));
-    }, [ spinnerWasClosed ]);
+    }
 
     useEffect(() => {
         if (!imagesStillLoading) {
@@ -86,7 +85,7 @@ function App({ imagesStillLoading, setContextState }) {
         <SpinnerAtom
             preventDocumentScrolling={preventScrolling}
             show={showSpinner}
-            onClose={() => setSpinnerWasClosed(true)}
+            onClose={handleSpinnerClose}
         />
     );
 
