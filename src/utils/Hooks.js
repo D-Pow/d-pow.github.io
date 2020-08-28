@@ -305,13 +305,12 @@ export function useDynamicFontSizeShrinking() {
         || (toResizeWidth > constrainingWidth)
     );
 
-    useEffect(() => {
-        if (shouldShrink) {
-            const newFontSize = `${toResizeFontSize - 1}px`;
+    if (shouldShrink) {
+        const newFontSize = `${toResizeFontSize - 1}px`;
 
-            setFontSizeStr(newFontSize);
-        }
-    }, [ shouldShrink, toResizeFontSize ]);
+        // Prevent too many re-renders occurring at once via Promise.resolve()
+        Promise.resolve().then(() => setFontSizeStr(newFontSize));
+    }
 
     return [ constrainingElemRef, toResizeElemRef, fontSizeStr ];
 }
