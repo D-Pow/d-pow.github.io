@@ -70,7 +70,10 @@ function SpinnerAtom({
     return (show || showMomentarily) ? (
         <div className={cls}>
             <div className={'m-auto'}>
-                <AtomSpinner numElectrons={numElectrons} electronColors={electronColors} />
+                <AtomSpinner
+                    numElectrons={numElectrons}
+                    electronColors={electronColors}
+                />
             </div>
         </div>
     ) : null;
