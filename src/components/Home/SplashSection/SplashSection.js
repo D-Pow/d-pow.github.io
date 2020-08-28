@@ -1,42 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Image from 'components/ui/Image';
-import SvgDrawingText from 'components/ui/SvgDrawingText';
-import AppContext, { AppContextFields } from 'utils/AppContext';
-import { distributeValuesEvenlyBetween } from 'utils/Numbers';
-import { objEquals } from 'utils/Objects';
+import SvgDrawingText, { EvenlySpacedSkewedDrawingTexts } from 'components/ui/SvgDrawingText';
 import 'styles/SplashSection.scss';
-
-function renderEvenlySpacedSkewedDrawingTexts({ textArray = [] }) {
-    /*
-     * Distribute text elements vertically such that there are equal
-     * entries before/after the Y midpoint (y=50%), and closer to the center
-     * than the edges.
-     *
-     * e.g. If 2 items, then 33% and 66%. If 3, then 25%, 50%, and 75%.
-     */
-    const evenlySpacedYValues = distributeValuesEvenlyBetween(0, 100, textArray.length);
-    const centerX = '50%';
-
-    return textArray.map((text, i) => (
-        <SvgDrawingText
-            className={'font-brush-script'}
-            key={i}
-            fontSizeEm={1.5}
-            style={{ transform: 'skewY(-5deg)' }}
-            textElemProps={{
-                x: centerX,
-                y: `${Math.round(evenlySpacedYValues[i])}%`
-            }}
-        >
-            {text}
-        </SvgDrawingText>
-    ));
-}
-
-const EvenlySpacedSkewedDrawingTexts = React.memo(
-    renderEvenlySpacedSkewedDrawingTexts,
-    objEquals
-);
 
 function SplashSection({ spinnerWasClosed }) {
     const [ showBgImage, setShowBgImage ] = useState(false);
@@ -74,13 +40,8 @@ function SplashSection({ spinnerWasClosed }) {
     );
 }
 
-const MemoizedSplashSection = React.memo(SplashSection);
-
-function SplashSectionProvider() {
-    const { contextState } = useContext(AppContext.Context);
-    const spinnerWasClosed = contextState[AppContextFields.GLOBAL_SPINNER_CLOSED];
-
-    return <MemoizedSplashSection spinnerWasClosed={spinnerWasClosed} />
+SplashSection.propTypes = {
+    spinnerWasClosed: PropTypes.bool
 }
 
-export default SplashSectionProvider;
+export default React.memo(SplashSection);

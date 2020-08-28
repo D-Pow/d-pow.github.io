@@ -1,3 +1,3 @@
-import SplashSection from './SplashSection';
+import SplashSectionProvider from './SplashSectionProvider';
 
-export default SplashSection;
+export default SplashSectionProvider;
