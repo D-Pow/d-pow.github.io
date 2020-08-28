@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import SpinnerAtom from 'components/ui/SpinnerAtom';
-import IncompatibleBrowserFallback from 'components/IncompatibleBrowserFallback';
+import IncompatibleBrowserFallback from './IncompatibleBrowserFallback';
 import { isMicrosoftBrowser } from 'utils/BrowserIdentification';
 import { scrollWindowToTop } from 'utils/Events';
-import AppContext, { AppContextFields } from 'utils/AppContext';
+import { AppContextFields } from 'utils/AppContext';
 import { useWindowResize } from 'utils/Hooks';
 
 /**
@@ -44,10 +44,7 @@ const routes = [
     }
 ];
 
-function App() {
-    const { contextState, setContextState } = useContext(AppContext.Context);
-    const imagesStillLoading = contextState[AppContextFields.GET_IMAGES_STILL_LOADING]();
-
+function App({ imagesStillLoading, setContextState }) {
     const [ windowSizeState ] = useWindowResize();
 
     const [ spinnerWasClosed, setSpinnerWasClosed ] = useState(false);
@@ -121,4 +118,4 @@ function App() {
     );
 }
 
-export default App;
+export default React.memo(App);
