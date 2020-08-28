@@ -4,7 +4,7 @@ import ForeignObject from './ForeignObject';
 import { attemptParseObjLiteral } from 'utils/Objects';
 import { importImageAsync } from 'utils/Events';
 
-class Shape extends React.Component {
+class Shape extends React.PureComponent {
     svgDimensions = {
         x: 0,
         y: 0,
