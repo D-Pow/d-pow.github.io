@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{614:function(s,n,p){s.exports=p.p+"static/assets/anime_atsume-a28b000b.png"}}]);
