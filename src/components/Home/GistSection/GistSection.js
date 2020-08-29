@@ -6,6 +6,7 @@ import Shape from 'components/ui/Shape';
 import Link from 'components/ui/Link';
 import { LINKS } from 'utils/Constants';
 import { ETRADE_LINK } from 'utils/CommonRenders';
+import { getGridBreakpoints } from 'utils/Scss';
 
 function GistSection(props) {
     const pageText = {
@@ -42,10 +43,7 @@ function GistSection(props) {
             <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
                 <h1 className={'p-5'}>The gist...</h1>
             </ScrollToShow>
-            <div className={'d-block d-md-none container-fluid'}>
-                {renderedSection}
-            </div>
-            <div className={'d-none d-md-block container'}>
+            <div className={`container${window.innerWidth <= getGridBreakpoints().md ? '-fluid' : ''}`}>
                 {renderedSection}
             </div>
         </section>
