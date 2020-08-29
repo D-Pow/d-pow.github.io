@@ -5,14 +5,12 @@ function SectionCard(props) {
     const pageContent = [ props.mainContent, props.children ];
 
     return (
-        <div className={props.className}>
-            <div className={'row'}>
-                <div className={'col-sm-6 m-auto pb-4'}>
-                    {pageContent[Number(props.flipped)]}
-                </div>
-                <div className={'col-sm-6 m-auto'}>
-                    {pageContent[Number(!props.flipped)]}
-                </div>
+        <div className={'row ' + props.className}>
+            <div className={'col-sm-6 m-auto pb-4'}>
+                {pageContent[Number(props.flipped)]}
+            </div>
+            <div className={'col-sm-6 m-auto'}>
+                {pageContent[Number(!props.flipped)]}
             </div>
         </div>
     );
