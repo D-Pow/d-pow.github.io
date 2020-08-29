@@ -44,18 +44,18 @@ $slideAmount: 100%;
     }
 }
 
-.slide-in-left {
+.slide-in-left.show {
     animation: slideInLeft 1s ease;
 }
 
-.slide-in-right {
+.slide-in-right.show {
     animation: slideInRight 1s ease;
 }
 
-.slide-in-top {
+.slide-in-top.show {
     animation: slideInTop 1s ease;
 }
 
-.slide-in-bottom {
+.slide-in-bottom.show {
     animation: slideInBottom 1s ease;
 }
