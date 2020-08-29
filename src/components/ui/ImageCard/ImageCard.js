@@ -20,7 +20,6 @@ function ImageCard(props) {
         aria,
         onLoad
     } = props;
-    const { ref: imageRef, ...restOfImageAria } = imageAria;
     const [ hoverRef, isHovered ] = useHover();
 
     function renderHoverContent() {
@@ -75,7 +74,7 @@ function ImageCard(props) {
                     className={`w-100 ${imageCls}`}
                     image={image}
                     onLoad={onLoad}
-                    aria={{ ref: imageRef, ...restOfImageAria }}
+                    aria={imageAria}
                 />
                 {renderHoverContent()}
             </div>
