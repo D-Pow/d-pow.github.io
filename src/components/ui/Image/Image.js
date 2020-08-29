@@ -63,4 +63,4 @@ Image.defaultProps = {
     aria: {}
 };
 
-export default Image;
+export default React.memo(Image);
