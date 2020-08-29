@@ -1,61 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class SectionCard extends React.Component {
-    static colSize = 'col-sm-6';
-
-    static renderDefaultTextContent(title, description) {
-        return (
-            <div className={`m-auto ${SectionCard.colSize}`}>
-                <h3 className={'p-2'}>{title}</h3>
-                <p>{description}</p>
-            </div>
-        );
-    }
-
-    renderDesktop() {
-        const renderedMain = this.props.mainContent;
+function SectionCard(props) {
+    const renderDesktop = () => {
+        const renderedMain = props.mainContent;
         const renderedChildren = (
             <div className={`m-auto ${SectionCard.colSize}`}>
-                {this.props.children}
+                {props.children}
             </div>
         );
         const pageContent = [ renderedMain, renderedChildren ];
 
         return (
-            <div className={`d-none d-sm-block ${this.props.className}`}>
+            <div className={`d-none d-sm-block ${props.className}`}>
                 <div className={'row'}>
-                    {pageContent[Number(this.props.flipped)]}
-                    {pageContent[Number(!this.props.flipped)]}
+                    {pageContent[Number(props.flipped)]}
+                    {pageContent[Number(!props.flipped)]}
                 </div>
             </div>
         );
-    }
+    };
 
-    renderMobile() {
+    const renderMobile = () => {
         return (
-            <div className={`d-block d-sm-none ${this.props.className}`}>
+            <div className={`d-block d-sm-none ${props.className}`}>
                 <div className={'row mb-4'}>
                     <div className={'m-auto'}>
-                        {this.props.mainContent}
+                        {props.mainContent}
                     </div>
                 </div>
                 <div>
-                    {this.props.children}
+                    {props.children}
                 </div>
             </div>
         );
-    }
+    };
 
-    render() {
-        return (
-            <React.Fragment>
-                {this.renderDesktop()}
-                {this.renderMobile()}
-            </React.Fragment>
-        );
-    }
+    return (
+        <React.Fragment>
+            {renderDesktop()}
+            {renderMobile()}
+        </React.Fragment>
+    );
 }
+
+SectionCard.colSize = 'col-sm-6';
+SectionCard.renderDefaultTextContent = (title, description) => (
+    <div className={`m-auto ${SectionCard.colSize}`}>
+        <h3 className={'p-2'}>{title}</h3>
+        <p>{description}</p>
+    </div>
+);
 
 SectionCard.propTypes = {
     className: PropTypes.string,
