@@ -2,51 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function SectionCard(props) {
-    const renderDesktop = () => {
-        const renderedMain = props.mainContent;
-        const renderedChildren = (
-            <div className={`m-auto ${SectionCard.colSize}`}>
-                {props.children}
-            </div>
-        );
-        const pageContent = [ renderedMain, renderedChildren ];
+    const pageContent = [ props.mainContent, props.children ];
 
-        return (
-            <div className={`d-none d-sm-block ${props.className}`}>
-                <div className={'row'}>
+    return (
+        <div className={props.className}>
+            <div className={'row'}>
+                <div className={'col-sm-6 mx-auto mb-4'}>
                     {pageContent[Number(props.flipped)]}
+                </div>
+                <div className={'col-sm-6 m-auto'}>
                     {pageContent[Number(!props.flipped)]}
                 </div>
             </div>
-        );
-    };
-
-    const renderMobile = () => {
-        return (
-            <div className={`d-block d-sm-none ${props.className}`}>
-                <div className={'row mb-4'}>
-                    <div className={'m-auto'}>
-                        {props.mainContent}
-                    </div>
-                </div>
-                <div>
-                    {props.children}
-                </div>
-            </div>
-        );
-    };
-
-    return (
-        <React.Fragment>
-            {renderDesktop()}
-            {renderMobile()}
-        </React.Fragment>
+        </div>
     );
 }
 
 SectionCard.colSize = 'col-sm-6';
 SectionCard.renderDefaultTextContent = (title, description) => (
-    <div className={`m-auto ${SectionCard.colSize}`}>
+    <div className={'m-auto'}>
         <h3 className={'p-2'}>{title}</h3>
         <p>{description}</p>
     </div>
@@ -60,6 +34,8 @@ SectionCard.propTypes = {
 
     // Option to alternate left/right renders (desktop only)
     flipped: PropTypes.bool,
+
+    children: PropTypes.node
 };
 
 SectionCard.defaultProps = {
