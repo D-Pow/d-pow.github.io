@@ -4,6 +4,7 @@ import ScrollToShow from 'components/ui/ScrollToShow';
 import InfoCard from 'components/ui/InfoCard';
 import Link from 'components/ui/Link';
 import { LINKS } from 'utils/Constants';
+import { getGridBreakpoints } from 'utils/Scss';
 
 function Projects(props) {
     const pageText = {
@@ -25,9 +26,14 @@ function Projects(props) {
             }
         ]
     };
+    const isDesktop = window.innerWidth >= getGridBreakpoints().sm;
+    const desktopScrollToShowDistributeTime = 0.32;
     const projectEntriesScrollToShowClassProps = {
         addClasses: 'slide-in-left show',
-        distributeClasses: 'animated duration-15'
+        distributeClasses: 'animated duration-15',
+        distributeSimultaneously: isDesktop
+            ? desktopScrollToShowDistributeTime
+            : null
     };
     const projectInfoCardEntries = pageText.infoCards.map((props, index) => (
         <div className={'col-sm-4 mb-5 p-0 px-1'} key={index}>
@@ -42,13 +48,8 @@ function Projects(props) {
             </ScrollToShow>
             <div className={'container'}>
                 <div className={'row'}>
-                    <div className={'d-block d-sm-none'}>
+                    <div className={`w-100 ${isDesktop ? 'd-flex' : ''}`}>
                         <ScrollToShow {...projectEntriesScrollToShowClassProps}>
-                            {projectInfoCardEntries}
-                        </ScrollToShow>
-                    </div>
-                    <div className={'d-none d-sm-flex w-100'}>
-                        <ScrollToShow {...projectEntriesScrollToShowClassProps} distributeSimultaneously={0.32}>
                             {projectInfoCardEntries}
                         </ScrollToShow>
                     </div>
