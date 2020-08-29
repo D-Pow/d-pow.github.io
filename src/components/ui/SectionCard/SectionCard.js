@@ -18,7 +18,6 @@ function SectionCard(props) {
     );
 }
 
-SectionCard.colSize = 'col-sm-6';
 SectionCard.renderDefaultTextContent = (title, description) => (
     <div className={'m-auto'}>
         <h3 className={'p-2'}>{title}</h3>
