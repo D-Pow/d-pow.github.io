@@ -36,7 +36,7 @@ function Productions(props) {
                 className: 'bg-lighter'
             },
             {
-                image: 'anime_atsume.png',
+                image: 'anime_atsume.jpg',
                 title: <Link className={'text-light'} href={LINKS.AnimeAtsume}>Anime Atsume</Link>,
                 description: 'Aggregator for searching and watching anime'
             }
