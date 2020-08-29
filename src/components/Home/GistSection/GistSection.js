@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ScrollToShow from 'components/ui/ScrollToShow';
-import SectionCard from 'components/ui/SectionCard';
 import Shape from 'components/ui/Shape';
 import Link from 'components/ui/Link';
 import { LINKS } from 'utils/Constants';
@@ -21,30 +20,37 @@ function GistSection(props) {
             </React.Fragment>
         )
     };
-    const sectionCardShowThreshold = 2/3;
-
-    const renderedSection = (
-        <SectionCard
-            className={'mb-5'}
-            mainContent={(
-                <ScrollToShow addClasses={'slide-in-left show'} distributeClasses={'animated'} threshold={sectionCardShowThreshold}>
-                    {SectionCard.renderDefaultTextContent(pageText.title, pageText.description)}
-                </ScrollToShow>
-            )}
-        >
-            <ScrollToShow addClasses={'slide-in-right show'} distributeClasses={'animated h-100'} threshold={sectionCardShowThreshold}>
-                <Shape className={'h-100'} image={'profile_pic.jpg'} sides={6} rotation={90} />
-            </ScrollToShow>
-        </SectionCard>
-    );
+    const mainContentShowThreshold = 2/3;
 
     return (
         <section id={'the-gist'} className={props.className}>
             <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
                 <h1 className={'p-5'}>The gist...</h1>
             </ScrollToShow>
-            <div className={`container${window.innerWidth <= getGridBreakpoints().md ? '-fluid' : ''}`}>
-                {renderedSection}
+            <div className={`container${window.innerWidth <= getGridBreakpoints().md ? '-fluid' : ''} mb-5`}>
+                <div className={'row'}>
+                    <ScrollToShow
+                        addClasses={'show'}
+                        distributeClasses={'animated'}
+                        threshold={mainContentShowThreshold}
+                        distributeSimultaneously={0}
+                    >
+                        <div className={'col-sm-6 m-auto pb-4 slide-in-left'}>
+                            <div className={'m-auto'}>
+                                <h3 className={'p-2'}>{pageText.title}</h3>
+                                <p>{pageText.description}</p>
+                            </div>
+                        </div>
+                        <div className={'col-sm-6 m-auto slide-in-right'}>
+                            <Shape
+                                className={'h-100'}
+                                image={'profile_pic.jpg'}
+                                sides={6}
+                                rotation={90}
+                            />
+                        </div>
+                    </ScrollToShow>
+                </div>
             </div>
         </section>
     );
