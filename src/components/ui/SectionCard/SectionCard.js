@@ -7,7 +7,7 @@ function SectionCard(props) {
     return (
         <div className={props.className}>
             <div className={'row'}>
-                <div className={'col-sm-6 mx-auto mb-4'}>
+                <div className={'col-sm-6 m-auto pb-4'}>
                     {pageContent[Number(props.flipped)]}
                 </div>
                 <div className={'col-sm-6 m-auto'}>
