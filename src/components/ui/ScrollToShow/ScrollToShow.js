@@ -77,7 +77,7 @@ class ScrollToShow extends React.Component {
         if (allChildrenShown) {
             this.removeScrollEventListener();
 
-            const hasAllChildrenShownHandler = typeof this.props.onAllChildrenShown === typeof (() => {});
+            const hasAllChildrenShownHandler = typeof this.props.onAllChildrenShown === typeof this.constructor;
 
             if (hasAllChildrenShownHandler) {
                 const timeToDelayCallingCallback = getDurationTimeMsFromClassName(this.props.distributeClasses);

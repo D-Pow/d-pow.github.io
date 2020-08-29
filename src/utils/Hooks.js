@@ -97,7 +97,7 @@ export function useWindowEvent(
     } = {}
 ) {
     const [ eventState, setEventState ] = useState(initialEventState);
-    const isUsingOwnEventHandler = typeof handleEvent === typeof (() => {});
+    const isUsingOwnEventHandler = typeof handleEvent === typeof setEventState;
 
     function eventListener(event) {
         const newEventState = nestedEventField ? event[nestedEventField] : event;

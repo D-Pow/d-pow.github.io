@@ -45,7 +45,7 @@ class Shape extends React.PureComponent {
     };
 
     get isUsingHtmlChildrenWithCustomResizeElem() {
-        return typeof this.props.htmlChildren === typeof (() => {});
+        return typeof this.props.htmlChildren === typeof this.constructor;
     }
 
     componentDidMount() {
