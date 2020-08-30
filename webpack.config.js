@@ -10,11 +10,12 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const AlterFilePostBuildPlugin = require('./scripts/AlterFilePostBuildPlugin');
 const packageJson = require('./package.json');
 
+const isProduction = process.env.NODE_ENV === 'production';
 const relativeBuildOutputPaths = {
     dev: '',
     prod: 'website'
 };
-const relativeBuildOutputPath = process.env.NODE_ENV === 'production' ? relativeBuildOutputPaths.prod : relativeBuildOutputPaths.dev;
+const relativeBuildOutputPath = isProduction ? relativeBuildOutputPaths.prod : relativeBuildOutputPaths.dev;
 const absoluteBuildOutputPath = path.resolve(__dirname, relativeBuildOutputPath);
 const transpiledSrcOutputPath = 'static';
 const title = 'Devon Powell';
@@ -213,7 +214,9 @@ module.exports = {
                 fileUrlsToCache.push('"./"');
 
                 return `urlsToCache=[${fileUrlsToCache.join(',')}]`;
-        })
+            },
+            isProduction
+        )
     ],
     optimization: {
         minimizer: [ new TerserJSPlugin(), new OptimizeCSSAssetsPlugin() ],
