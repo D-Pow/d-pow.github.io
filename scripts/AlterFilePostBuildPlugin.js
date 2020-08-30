@@ -12,14 +12,20 @@ class AlterFilePostBuildPlugin {
      * @param {string} fileName - Name of the file emitted by webpack; absolute path not necessary.
      * @param {(string|RegExp)} textToReplace - Text to be found and replaced within the file.
      * @param {(string|replaceTextCallback)} replaceWith - Text to replace {@code textToReplace} or function accepting file names that returns a string.
+     * @param {boolean} [run=true] - Optional flag to enable/disable plugin. Recommended to enable only for production builds.
      */
-    constructor(fileName, textToReplace, replaceWith) {
+    constructor(fileName, textToReplace, replaceWith, run = true) {
         this.fileName = fileName;
         this.textToReplace = textToReplace;
         this.replaceWith = replaceWith;
+        this.run = run;
     }
 
     apply(compiler) {
+        if (!this.run) {
+            return;
+        }
+
         compiler.hooks.afterEmit.tap(this.constructor.name, compilation => {
             const emittedFilesPaths = this.getEmittedFilesPaths(compilation);
             const targetFilePaths = emittedFilesPaths.find(path => path.relative.includes(this.fileName));
