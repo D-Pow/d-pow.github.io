@@ -118,10 +118,6 @@ self.addEventListener('fetch', event => {
                                 const oldIndexHtmlText = htmlStrings[1];
 
                                 if (newIndexHtmlText !== oldIndexHtmlText) {
-                                    console.log('New website version is available, deleting old cache content');
-
-                                    clearCache(cache, url);
-
                                     setTimeout(function() {
                                         /* Service worker will determine if index.html changed
                                          * before the page actually loads, so add a timeout to
@@ -129,6 +125,8 @@ self.addEventListener('fetch', event => {
                                          * before receiving the message.
                                          */
                                         postMessageToClient(UPDATE_BROADCAST);
+                                        clearCache(cache, url);
+                                        console.log('New website version is available, deleting old cache content');
                                     }, 5000);
                                 }
                             });
