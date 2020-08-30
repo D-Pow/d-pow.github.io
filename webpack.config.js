@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const AlterFilePostBuildPlugin = require('./scripts/AlterFilePostBuildPlugin');
 const packageJson = require('./package.json');
 
 const relativeBuildOutputPaths = {
@@ -198,6 +199,20 @@ module.exports = {
                     }
                 }
             ]
+        }),
+        new AlterFilePostBuildPlugin(
+            'ServiceWorker.js',
+            /urlsToCache ?= ?\[\]/g,
+            relativeEmittedFilePaths => {
+                const pathsWithoutServiceWorkerOrFonts = relativeEmittedFilePaths
+                    .filter(path => !path.includes('ServiceWorker.js') && !path.includes('fonts'));
+                const fileUrlsToCache = pathsWithoutServiceWorkerOrFonts.map(path => `"./${path}"`); // ServiceWorker exists at root level
+
+                // `/` isn't a file but is routed to /index.html automatically.
+                // Add it manually so the URL can be mapped to a file.
+                fileUrlsToCache.push('"./"');
+
+                return `urlsToCache=[${fileUrlsToCache.join(',')}]`;
         })
     ],
     optimization: {
