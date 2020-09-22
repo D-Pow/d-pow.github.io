@@ -40,6 +40,7 @@ export const LINKS = {
     EtradeAndroidApp: 'https://play.google.com/store/apps/details?id=com.etrade.mobilepro.activity',
     MockRequests: 'https://www.npmjs.com/package/mock-requests',
     AnimeAtsumeGitHub: 'https://github.com/D-Pow/anime-atsume',
+    AnimeAtsumeLive: 'https://anime-atsume.herokuapp.com',
     AtomsOfConfusion: 'https://atomsofconfusion.com',
     AnticancerPeptides: 'https://www.ncbi.nlm.nih.gov/pubmed/29897657',
     TardigradeStratification: 'https://bioone.org/journals/Transactions-of-the-Kansas-Academy-of-Science/volume-118/issue-3-4/062.118.0306/Tardigrades-of-the-Canopy-Evidence-of-Stratification/10.1660/062.118.0306.short',
