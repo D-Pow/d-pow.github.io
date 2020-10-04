@@ -21,8 +21,15 @@ export function Hooked({ hook, hookArgs = [], children }) {
 }
 
 /**
+ * @callback hookModifiedForGlobalState
+ * @param {*} origHookParams - Parameters for the original hook, passed by calling component.
+ * @param {*} globalHookState - The global state for all hook instances.
+ * @param {number} hookCallerId - Unique ID of the parent that is calling the hook.
+ * @returns {*} - Value returned from original hook.
+ */
+/**
  * @callback setGlobalStateForWrappedHook
- * @param {*} globalHookState - The global state for the wrapped hook from {@link withGlobalState}.
+ * @param {*} globalHookState - The global state for all hook instances.
  * @param {function} setGlobalHookState - Standard {@link useState} {@code setState} function.
  * @param {*} hookReturnVal - Return value of passed {@code hook}.
  * @param {number} hookCallerId - Unique ID of the parent that is calling the hook.
@@ -33,17 +40,21 @@ export function Hooked({ hook, hookArgs = [], children }) {
  * state. Returns the original hook that accepts caller arguments
  * as well as global state arguments.
  *
- * @param {function} hook - The hook to wrap.
+ * @param {hookModifiedForGlobalState} hook - The hook to wrap.
  * @param {setGlobalStateForWrappedHook} setGlobalState - {@code setState} function for global state.
  * @param {*} initialGlobalStateVal - Initial value for global state.
  * @returns {function} - The original hook wrapped with global state functionality.
  */
 export function withGlobalState(hook, setGlobalState, initialGlobalStateVal) {
-    // Mimic useState since this isn't a hook
+    /*
+     * Mimic `useState` since this isn't a hook.
+     * This will still cause React to re-render if `globalHookState` changes because the
+     * passed `hook` is modified to read and react to its value.
+     */
     let globalHookState = initialGlobalStateVal;
 
     function setGlobalHookState(newState) {
-        if (typeof newState === typeof (() => {})) {
+        if (typeof newState === typeof withGlobalState) {
             globalHookState = newState(globalHookState);
         } else {
             globalHookState = newState;
@@ -195,14 +206,18 @@ export function useWindowResize(debounceDelay = 1000) {
 }
 
 /**
- * Blocks the `document.body` from being scrollable as long as
- * the `shouldBlockScrolling` function returns true.
+ * Blocks the `document.body` from being scrollable as long as the
+ * `shouldBlockScrolling` function returns true.
+ *
+ * Keeps track of all other `useBlockDocumentScrolling()` instances such
+ * that even if one instance returns false, the `document.body` is still not
+ * scrollable if another returns true.
  *
  * @function
- * @param {function(): boolean} shouldBlockScrolling - Function to determine if scrolling should be disabled
+ * @param {function(): boolean} shouldBlockScrolling - Function to determine if scrolling should be disabled.
  */
 export const useBlockDocumentScrolling = (() => {
-    function useBlockDocumentScrollingHook(shouldBlockScrolling, hookState, id) {
+    function useBlockDocumentScrollingHook(shouldBlockScrolling, allHooksBlockingScrollingGlobalState, id) {
         /**
          * Don't return a cleanup function to handle activating scrolling.
          *
@@ -216,7 +231,7 @@ export const useBlockDocumentScrolling = (() => {
          * Thus, handle the cleanup manually in else-block.
          */
         const blockScrolling = shouldBlockScrolling();
-        const otherHooksBlockingScrolling = hookState
+        const otherHooksBlockingScrolling = allHooksBlockingScrollingGlobalState
             .filter(entry => entry.id !== id)
             .some(entry => entry.isBlockingScrolling);
 
@@ -226,20 +241,20 @@ export const useBlockDocumentScrolling = (() => {
             } else if (!otherHooksBlockingScrolling) {
                 setDocumentScrolling();
             }
-        }, [blockScrolling, otherHooksBlockingScrolling]);
+        }, [ blockScrolling, otherHooksBlockingScrolling ]);
 
         return blockScrolling;
     }
 
-    function setTrackAllHookCallsState(prevHookState, setHookState, hookReturnVal, id) {
-        const thisHookEntry = prevHookState.find(entries => entries.id === id);
+    function setTrackAllHookCallsState(prevGlobalState, setGlobalState, hookReturnVal, id) {
+        const thisHookEntry = prevGlobalState.find(entries => entries.id === id);
 
         if (thisHookEntry == null) {
-            prevHookState.push({id, isBlockingScrolling: hookReturnVal});
-            setHookState(prevHookState);
+            prevGlobalState.push({ id, isBlockingScrolling: hookReturnVal });
+            setGlobalState(prevGlobalState);
         } else if (thisHookEntry.isBlockingScrolling !== hookReturnVal) {
             thisHookEntry.isBlockingScrolling = hookReturnVal;
-            setHookState(prevHookState);
+            setGlobalState(prevGlobalState);
         }
     }
 
