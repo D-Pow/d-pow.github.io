@@ -5,12 +5,12 @@
   "homepage": "http://d-pow.github.io",
   "scripts": {
     "start": "webpack-dev-server",
-    "clean": "npx shx rm -rf website",
+    "clean": "npx shx rm -rf dist",
     "prebuild": "npm run clean",
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "create": "node scripts/createComponent.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d website"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "bootstrap": "^4.4.1",

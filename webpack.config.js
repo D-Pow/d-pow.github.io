@@ -13,7 +13,7 @@ const packageJson = require('./package.json');
 const isProduction = process.env.NODE_ENV === 'production';
 const relativeBuildOutputPaths = {
     dev: '',
-    prod: 'website'
+    prod: 'dist'
 };
 const relativeBuildOutputPath = isProduction ? relativeBuildOutputPaths.prod : relativeBuildOutputPaths.dev;
 const absoluteBuildOutputPath = path.resolve(__dirname, relativeBuildOutputPath);
@@ -94,11 +94,11 @@ module.exports = {
                                      * e.g. `src/assets/my-image.png` or `src/assets/images/my-image.png`.
                                      *
                                      * Don't append `[path]` for favicon files since they
-                                     * need to be in the output root directory, `website/`.
+                                     * need to be in the output root directory, `dist/`.
                                      *
                                      * This, mixed with the removal of `static/` in the
                                      * `outputPath` function results in outputting favicon
-                                     * files in output root directory, `website/`.
+                                     * files in output root directory, `dist/`.
                                      */
                                     return `[name].[ext]`;
                                 }
@@ -122,7 +122,7 @@ module.exports = {
 
                                 if (pathRelativeToSrc.includes('favicon')) {
                                     // Don't add `static/` to favicon images.
-                                    // Results in outputting them to output root directory, `website/`.
+                                    // Results in outputting them to output root directory, `dist/`.
                                     return pathRelativeToSrc;
                                 }
 
