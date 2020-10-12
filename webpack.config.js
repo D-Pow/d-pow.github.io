@@ -201,6 +201,7 @@ module.exports = {
                 }
             ]
         }),
+        // TODO is it worth putting the CopyWebpackPlugin transform here?
         new AlterFilePostBuildPlugin(
             'ServiceWorker.js',
             /urlsToCache ?= ?\[\]/g,
