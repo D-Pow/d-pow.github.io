@@ -1,4 +1,4 @@
-# [My personal website](https://d-pow.github.io/website/)
+# [My personal website](https://d-pow.github.io/)
 
 * Built using React
 * All components, hooks, etc. written from scratch (no third-party libraries)
