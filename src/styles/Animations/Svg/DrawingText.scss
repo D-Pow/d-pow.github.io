@@ -5,11 +5,30 @@ $strokeDasharrayLengthForFontSize1em: 75;
     strokeDasharrayLengthForFontSize1em: $strokeDasharrayLengthForFontSize1em;
 }
 
+/**
+ * As explained [here](https://css-tricks.com/svg-line-animation-works/):
+ * - Make the path outline/border a dashed line instead of solid line with
+ *   `stroke-dasharray`.
+ * - Make the `stroke-dasharray` the whole length of the path so that you
+ *   only have one single dash.
+ * - Use the `stroke-dashoffset` to set where the dash begins.
+ * - Animate the `stroke-dashoffset` to go from length(`stroke-dasharray`) to 0
+ *   (or vice versa) to give the appearance of the single, long dash outlining
+ *   the path.
+ * - Mixing `stroke-dasharray` with an animated `stroke-dashoffset` gives the
+ *   appearance of drawing the specified path
+ * - Use `animation-fill-mode: forwards;` to make the final animation frame
+ *   remain after animation is complete.
+ */
+
 .draw-text-and-fill {
+    // Use standard CSS variable here so it can be changed in JavaScript and applied
+    // in all the styles here
     --stroke-dasharray-length: #{$strokeDasharrayLengthForFontSize1em};
     fill-opacity: 0;
     stroke-dasharray: var(--stroke-dasharray-length);
-    /* `cubic-bezier(.5,0,.5,1)` is like `ease-in-out` but with a slower start/end and faster middle */
+    // `cubic-bezier(.5,0,.5,1)` is like `ease-in-out` but with a slower start/end and faster middle
+    // see [cubic-bezier visual](https://cubic-bezier.com/) to get good timings
     animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1), ease-out;
     animation-name: draw-outline, fill-fade-in;
     animation-fill-mode: forwards;
