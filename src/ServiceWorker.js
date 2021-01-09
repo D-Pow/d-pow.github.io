@@ -93,7 +93,9 @@ self.addEventListener('fetch', event => {
         caches.open(CACHE_NAME).then(function(cache) {
             return cache.match(event.request).then(function(response) {
                 var url = event.request.url;
-                var isIndexHtml = url[url.length-1] === '/' || url.split('/').pop() === 'index.html';
+                var fileRequested = url.split('/').pop();
+                var isIndexHtml = url[url.length-1] === '/' || fileRequested === 'index.html';
+                var isResourceFile = Boolean(fileRequested.match(/\.\w{2,6}$/)) && event.request.method === 'GET';
 
                 if (response) { // Cache hit - return response served from ServiceWorker
                     if (isIndexHtml) {
@@ -133,9 +135,10 @@ self.addEventListener('fetch', event => {
                     }
 
                     return response;
-                } else { // Not cached - fetch it and then store for future network requests
+                } else if (isResourceFile || isIndexHtml) { // Not cached - fetch it and then store for future network requests
                     return fetchAndCache(event, cache);
                 }
+                // else if not resource file (e.g. endpoint request), do not cache it so it's fresh on every request
             });
         })
     );
