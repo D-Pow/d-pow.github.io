@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[18],{626:function(s,o,p){s.exports=p.p+"static/assets/fonts/BrushScript.eot"}}]);
