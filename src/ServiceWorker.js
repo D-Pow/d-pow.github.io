@@ -106,16 +106,16 @@ self.addEventListener('fetch', event => {
                          * will reflect once the page is reloaded. Any change in this service worker will best be
                          * handled by unregistering old ones.
                          */
-                        const newIndexHtmlResponse = fetchAndCache(event, cache);
-                        const newIndexHtmlBody = newIndexHtmlResponse.then(function(res) {
+                        var newIndexHtmlResponse = fetchAndCache(event, cache);
+                        var newIndexHtmlBody = newIndexHtmlResponse.then(function(res) {
                             return res.text();
                         });
-                        const oldIndexHtmlBody = response.clone().text();
+                        var oldIndexHtmlBody = response.clone().text();
 
                         Promise.all([ newIndexHtmlBody, oldIndexHtmlBody ])
                             .then(function(htmlStrings) {
-                                const newIndexHtmlText = htmlStrings[0];
-                                const oldIndexHtmlText = htmlStrings[1];
+                                var newIndexHtmlText = htmlStrings[0];
+                                var oldIndexHtmlText = htmlStrings[1];
 
                                 if (newIndexHtmlText !== oldIndexHtmlText) {
                                     setTimeout(function() {
