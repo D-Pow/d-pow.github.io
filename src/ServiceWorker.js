@@ -97,7 +97,8 @@ self.addEventListener('fetch', event => {
                 var isIndexHtml = url[url.length-1] === '/' || fileRequested === 'index.html';
                 var isResourceFile = Boolean(fileRequested.match(/\.\w{2,6}$/)) && event.request.method === 'GET';
 
-                if (response) { // Cache hit - return response served from ServiceWorker
+                if (response) {
+                    // Cache hit - return response served from ServiceWorker
                     if (isIndexHtml) {
                         /**
                          * If a root level file (like index.html) is requested, then function in a cache-then-network
@@ -135,10 +136,13 @@ self.addEventListener('fetch', event => {
                     }
 
                     return response;
-                } else if (isResourceFile || isIndexHtml) { // Not cached - fetch it and then store for future network requests
+                } else if (isResourceFile || isIndexHtml) {
+                    // Not cached - fetch it and then store for future network requests
                     return fetchAndCache(event, cache);
                 }
-                // else if not resource file (e.g. endpoint request), do not cache it so it's fresh on every request
+
+                // Not a resource file (e.g. is an endpoint request) - do not cache it so it's fresh on every request
+                return fetch(event.request);
             });
         })
     );
