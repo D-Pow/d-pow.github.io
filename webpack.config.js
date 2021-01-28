@@ -186,22 +186,10 @@ module.exports = {
                 },
                 {
                     from: 'src/ServiceWorker.js',
-                    to: '[name].[ext]',
-                    transform: buffer => {
-                        // Service worker doesn't have access to `process` so
-                        // the version has to be injected manually here
-                        const serviceWorkerFileContent = buffer.toString();
-                        const versionStr = 'VERSION';
-                        const swFileContentWithVersionInjected = serviceWorkerFileContent.replace(versionStr, packageJson.version);
-                        const broadcastStr = 'BRD_CHANNEL';
-                        const swFileContentWithInjections = swFileContentWithVersionInjected.replace(broadcastStr, broadcastChannel);
-
-                        return Buffer.from(swFileContentWithInjections);
-                    }
+                    to: '[name].[ext]'
                 }
             ]
         }),
-        // TODO is it worth putting the CopyWebpackPlugin transform here?
         new AlterFilePostBuildPlugin(
             'ServiceWorker.js',
             /urlsToCache ?= ?\[\]/g,
@@ -216,6 +204,18 @@ module.exports = {
 
                 return `urlsToCache=[${fileUrlsToCache.join(',')}]`;
             },
+            isProduction
+        ),
+        new AlterFilePostBuildPlugin(
+            'ServiceWorker.js',
+            'VERSION',
+            packageJson.version,
+            isProduction
+        ),
+        new AlterFilePostBuildPlugin(
+            'ServiceWorker.js',
+            'BRD_CHANNEL',
+            broadcastChannel,
             isProduction
         )
     ],
