@@ -1,5 +1,5 @@
 var CACHE_NAME = 'cache-VERSION';
-var urlsToCache = []; // filenames change in each build (via appended filename hashes), so they can't be predicted here
+var urlsToCache = []; // filenames change in each build (via appended filename hashes) and are injected during webpack build
 var BROADCAST_CHANNEL = 'BRD_CHANNEL';
 var UPDATE_BROADCAST = 'UPDATE';
 
