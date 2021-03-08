@@ -225,7 +225,7 @@ module.exports = {
             cacheGroups: {
                 vendor: { // split node_modules (as vendor) from src (as client)
                     test: /[\\/]node_modules[\\/]/,
-                    name: 'vendor',
+                    name: 'vendor-chunk',
                     chunks: 'all'
                 },
                 styles: {
