@@ -1,5 +1,10 @@
 const fs = require('fs');
+const path = require('path');
+const { WebpackPluginInstance, Compiler } = require('webpack');
 
+/**
+ * @extends WebpackPluginInstance
+ */
 class AlterFilePostBuildPlugin {
     /**
      * @callback replaceTextCallback
@@ -21,13 +26,16 @@ class AlterFilePostBuildPlugin {
         this.run = run;
     }
 
+    /**
+     * @param {Compiler} compiler
+     */
     apply(compiler) {
         if (!this.run) {
             return;
         }
 
         compiler.hooks.afterEmit.tap(this.constructor.name, compilation => {
-            const emittedFilesPaths = this.getEmittedFilesPaths(compilation);
+            const emittedFilesPaths = this.getEmittedFilesPaths(compiler, compilation);
             const targetFilePaths = emittedFilesPaths.find(path => path.relative.includes(this.fileName));
             let replaceWithText = this.replaceWith;
 
@@ -44,16 +52,29 @@ class AlterFilePostBuildPlugin {
         });
     }
 
-    getEmittedFilesPaths(compilation) {
-        return Object.entries(compilation.assets)
-            .filter(entry => entry[1].emitted)
-            .map(entry => {
-                const [ relativePath, rawSourceObject ] = entry;
-                return {
-                    relative: relativePath,
-                    absolute: rawSourceObject.existsAt
-                };
-            });
+    getEmittedFilesPaths(compiler, compilation) {
+        let majorVersion = 4;
+
+        try {
+            majorVersion = Number(compiler.webpack.version.match(/(^\d+)/)[1]);
+        } catch (e) {}
+
+        if (majorVersion < 5) {
+            return Object.entries(compilation.assets)
+                .filter(entry => entry[1].emitted)
+                .map(entry => {
+                    const [ relativePath, rawSourceObject ] = entry;
+                    return {
+                        relative: relativePath,
+                        absolute: rawSourceObject.existsAt
+                    };
+                });
+        }
+
+        return Object.keys(compilation.assets).map(relativeFilePath => ({
+            relative: relativeFilePath,
+            absolute: path.resolve(compiler.outputPath, relativeFilePath)
+        }));
     }
 
     replaceTextInFile(fileAbsPath, oldText, newText) {
