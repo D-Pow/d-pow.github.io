@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[23],{655:function(s,p,n){s.exports=n.p+"static/assets/mock_requests-b7618045.png"}}]);

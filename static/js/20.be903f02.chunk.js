@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[20],{652:function(s,t,p){s.exports=p.p+"static/assets/fonts/BrushScript.ttf"}}]);
