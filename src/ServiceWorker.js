@@ -136,9 +136,6 @@ self.addEventListener('fetch', event => {
                     }
 
                     return response;
-                } else if (isResourceFile || isIndexHtml) {
-                    // Not cached - fetch it and then store for future network requests
-                    return fetchAndCache(event, cache);
                 }
 
                 // Not a resource file (e.g. is an endpoint request) - do not cache it so it's fresh on every request
