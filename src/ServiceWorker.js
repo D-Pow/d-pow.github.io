@@ -129,6 +129,13 @@ self.addEventListener('fetch', event => {
                                          */
                                         postMessageToClient(UPDATE_BROADCAST);
                                         clearCache(cache, url);
+
+                                        cache
+                                            .put(event.request, newIndexHtmlResponse.clone())
+                                            .catch(function(cacheError) {
+                                                console.log('Could not cache url:', event.request.url, 'Failed with error:', cacheError);
+                                            });
+
                                         console.log('New website version is available, deleting old cache content');
                                     }, 5000);
                                 }
