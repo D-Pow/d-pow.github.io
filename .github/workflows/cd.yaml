@@ -88,6 +88,13 @@ jobs:
     runs-on: ubuntu-latest
     # Only run on merge to master: https://github.community/t/depend-on-another-workflow/16311/3
     if: ${{ github.event.pull_request.merged || github.ref == 'refs/heads/master' }}
+    # Grant the permissions required for deployments to GitHub Pages.
+    #
+    # See:
+    #   - https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
+    permissions:
+      pages: write      # Grant write permissions to deploy to the `gh-pages` (or whatever is specified in "Settings") branch
+      # id-token: write   # to verify the deployment originates from an appropriate source
     steps:
       - name: Checkout repository branch
         uses: actions/checkout@v2
@@ -198,5 +205,8 @@ jobs:
       #   - https://github.com/tschaub/gh-pages#optionsuser
       #     - https://github.com/actions/checkout/issues/13
       - name: Deploy application
+        # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+        # env:
+        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm run --ignore-scripts deploy -- --user 'D-Pow <D-Pow@users.noreply.github.com>'
+          npm run --ignore-scripts deploy -- --user "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
