@@ -84,7 +84,7 @@ jobs:
           path: |
             node_modules
             dist
-          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src') }}
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**') }}
           restore-keys: |
             ${{ env.cache-name }}-${{ runner.os }}-
             ${{ env.cache-name }}-

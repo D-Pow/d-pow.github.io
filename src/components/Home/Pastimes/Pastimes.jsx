@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import ScrollToShow from '@/components/ui/ScrollToShow';
@@ -79,7 +79,7 @@ function Pastimes(props) {
     // inside the `div.absolute-center` elements and a font-size of 14px since
     // that's what is rendered on all other browsers.
     const renderedHoverTranslateInShape = isSafariBrowser() ? (
-        <React.Fragment>
+        <>
             <Shape sides={8} fill={themeColors.primary} />
             <HoverTranslate
                 className={'text-light'}
@@ -95,7 +95,7 @@ function Pastimes(props) {
                     },
                 }}
             />
-        </React.Fragment>
+        </>
     ) : (
         <Shape
             sides={8}
@@ -149,11 +149,11 @@ function Pastimes(props) {
             isFlipped={showEasterEgg}
             showDefault={renderedTitleText}
             showOnClick={(
-                <React.Fragment>
+                <>
                     {renderedTitleText}
                     {' '}
                     <EasterEgg />
-                </React.Fragment>
+                </>
             )}
         />
     );
