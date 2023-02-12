@@ -49,6 +49,7 @@ const indexHtmlMetaTagData = {
     keywords: packageJson.keywords.join(', '),
     'theme-color': manifestJson.theme_color,
     viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
+    version: packageJson.version,
 };
 
 const fileUrlsNotToCacheInPwa = [];
