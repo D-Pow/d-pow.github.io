@@ -201,6 +201,8 @@ jobs:
           path: |
             node_modules
             dist
+            package.json
+            package-lock.json
           # ( declare origIFS="$IFS"; declare IFS=$'\n'; declare fileHashes=(); for file in $(find src/ -type f); do fileHashes+=("$(sha256sum "$file")"); done; declare fileHashesStr="$(printf "%s\n" "${_fileHashes[@]}")"; fileHashesStr="${fileHashesStr/%\n}"; declare fileHashesSortedByFilename="$(echo "$fileHashesStr" | sort -V -k 2)"; declare dirHash="$(echo -n "$fileHashesSortedByFilename" | sha256sum | awk '{ print $1 }')"; echo "$dirHash"; )
           key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
         continue-on-error: false
@@ -214,9 +216,11 @@ jobs:
         # continue-on-error: false
         name: Client CD - Generate CI artifacts
         run: |
-          echo ${{ steps.ci-cache.outputs.cache-hit }}
           git pull
+          git config --global user.name ${{ env.gitUserName }}
+          git config --global user.email ${{ env.gitUserEmail }}
           npm install
+          npm version --no-git-tag-version patch
           npm run build
 
 
@@ -247,23 +251,26 @@ jobs:
           path: |
             node_modules
             dist
+            package.json
+            package-lock.json
           # ( declare origIFS="$IFS"; declare IFS=$'\n'; declare fileHashes=(); for file in $(find src/ -type f); do fileHashes+=("$(sha256sum "$file")"); done; declare fileHashesStr="$(printf "%s\n" "${_fileHashes[@]}")"; fileHashesStr="${fileHashesStr/%\n}"; declare fileHashesSortedByFilename="$(echo "$fileHashesStr" | sort -V -k 2)"; declare dirHash="$(echo -n "$fileHashesSortedByFilename" | sha256sum | awk '{ print $1 }')"; echo "$dirHash"; )
           key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
         continue-on-error: false
 
-      - name: Client CD - Increment version
-        id: cd-client-version-bump
-        # Not required since `npm version` returns the version string (with "v" in it), but for reference:
+      - name: Client CD Deploy - Upgrade app version
+        # Not necessarily required since `npm version` returns the version string (with "v" in it), but for reference:
         #   - Normal: npm version patch; git commit --amend -m "Patch to v$(jq -r '.version' package.json)"
         #   - Without git commit or tag: newAppVersion=$(npm version --no-git-tag-version patch); git commit -am "Patch to ${newAppVersion}"
+        #
+        # run:
+        #   newAppVersion=$(npm version --no-git-tag-version patch)
+        #   git commit -am "Patch to ${newAppVersion}"
         run: |
-          git pull
           git config --global user.name ${{ env.gitUserName }}
           git config --global user.email ${{ env.gitUserEmail }}
-          newAppVersion=$(npm version --no-git-tag-version patch)
+          newAppVersion="$(jq -r '.version' package.json)"
           git commit -am "Patch to ${newAppVersion}"
           git push
-          npm run build
 
       # Ignore pre-/post- npm scripts via `npm run --ignore-scripts <my-script>`.
       # This could be useful for, e.g. scripts like `deploy` since `predeploy` (`npm run build`)
@@ -289,10 +296,14 @@ jobs:
           # ls -FlAh dist || exit 0
           # jq -r '.version' package.json
           # npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
-        # We need to re-run `npm run build` since the version was incremented in the previous step
+        # We need to either cache the build output after the version is incremented, or re-run
+        # `npm run build` so the version is injected into the code where needed.
         run: |
           git pull
           newAppVersion="$(jq -r '.version' package.json)"
+          git status
+          jq -r '.version' package.json
+          cat dist/ServiceWorker.js | grep -Eio '^.{30}'
           git checkout gh-pages
           ( for path in $(ls --ignore=dist --ignore=.git); do echo "$path"; rm -rf "$path"; done; )
           cp -R dist/* .

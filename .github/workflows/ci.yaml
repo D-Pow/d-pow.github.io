@@ -23,6 +23,12 @@ defaults:
     shell: bash
 
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  gitUserName: ${{ github.actor }}
+  gitUserEmail: ${{ github.actor }}@users.noreply.github.com
+
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # Job 1. Handles everything related to the client/ folder
@@ -63,6 +69,8 @@ jobs:
           path: |
             node_modules
             dist
+            package.json
+            package-lock.json
           key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
 
       # Ensure old cache is deleted so that the build step's cache request isn't ignored
@@ -84,12 +92,16 @@ jobs:
         # Import reusable GitHub Action logic via `uses`
         uses: ./.github/workflows/actions/client
 
-      # Separate this step from `verify` to ensure linting, type-checking, etc. pass before using resources for building the app
-      - name: Client Build
+      # Separate this step from `verify` to ensure linting, type-checking, etc. pass before using resources for building the app.
+      # We need to either cache the build output after the version is incremented, or re-run
+      # `npm run build` so the version is injected into the code where needed.
+      - name: Client CI - Build and increment app version
         id: client-build
-        shell: bash
-        working-directory: ./
         run: |
+          git pull
+          git config --global user.name ${{ env.gitUserName }}
+          git config --global user.email ${{ env.gitUserEmail }}
+          npm version --no-git-tag-version patch
           npm run build
 
       - name: Client cache build and install artifacts
@@ -101,6 +113,8 @@ jobs:
           path: |
             node_modules
             dist
+            package.json
+            package-lock.json
           key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
           restore-keys: |
             ${{ env.cache-name }}-${{ runner.os }}-
