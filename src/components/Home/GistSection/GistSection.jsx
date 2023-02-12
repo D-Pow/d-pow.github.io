@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import ScrollToShow from '@/components/ui/ScrollToShow';
@@ -12,13 +11,13 @@ function GistSection(props) {
     const pageText = {
         title: 'Full-stack software engineer',
         description: (
-            <React.Fragment>
+            <>
                 I build platforms at {ETRADE_LINK} for creating <Link href={LINKS.MutualFundsHome}>Mutual Fund/ETF </Link>
                 investment plans. I have a passion for good coding practices, both for humans (readability, design patterns) and
                 computers (efficiency). Enjoying my work is all about learning new things, making meaningful
                 contributions, and collaborating with my teammates, because it's the people who make the workplace
                 worthwhile.
-            </React.Fragment>
+            </>
         ),
     };
     const mainContentShowThreshold = 2/3;

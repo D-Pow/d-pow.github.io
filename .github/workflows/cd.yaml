@@ -193,12 +193,24 @@ jobs:
       #   run: |
       #     npm install
 
-      - if: ${{ steps.ci-cache.outputs.cache-hit != 'true' }}
-        name: Client CD - Download CI artifacts
-        # continue-on-error: true
+      - name: Client CD - Download CI artifacts
+        uses: actions/cache/restore@v3
+        env:
+          cache-name: ci-cache
+        with:
+          path: |
+            node_modules
+            dist
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src') }}
+          restore-keys: |
+            ${{ env.cache-name }}-${{ runner.os }}-
+            ${{ env.cache-name }}-
+        if: ${{ steps.ci-cache.outputs.cache-hit != 'true' }}
+        continue-on-error: true
         run: |
           git pull
           npm install
+          npm run build
 
 
       - name: Client CD - Increment version
