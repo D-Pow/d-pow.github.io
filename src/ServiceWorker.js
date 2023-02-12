@@ -1,5 +1,6 @@
 var CACHE_NAME = 'cache-VERSION';
 var urlsToCache = []; // filenames change in each build (via appended filename hashes) and are injected during webpack build
+var urlsNotToCache = [];
 var BROADCAST_CHANNEL = 'BRD_CHANNEL';
 var UPDATE_BROADCAST = 'UPDATE';
 
@@ -96,6 +97,16 @@ self.addEventListener('fetch', event => {
                 var fileRequested = url.split('/').pop();
                 var isIndexHtml = url[url.length-1] === '/' || fileRequested === 'index.html';
                 var isResourceFile = Boolean(fileRequested.match(/\.\w{2,6}$/)) && event.request.method === 'GET';
+                var shouldNotCache = urlsNotToCache.some(function (regexOrString) {
+                    return (
+                        regexOrString === url
+                        || (
+                            regexOrString
+                            && regexOrString.test
+                            && regexOrString.test(url)
+                        )
+                    );
+                });
 
                 if (response) {
                     // Cache hit - return response served from ServiceWorker
@@ -125,6 +136,9 @@ self.addEventListener('fetch', event => {
                                      * before the page actually loads, so wait until promises resolve
                                      * before broadcasting to allow the website to continue loading
                                      * before receiving the message.
+                                     *
+                                     * Also, clear cache first, then add the new index.html content to the
+                                     * new cache so that it's already cached for the next page reload.
                                      */
                                     clearCache(cache, url)
                                         .then(function() {
@@ -146,6 +160,11 @@ self.addEventListener('fetch', event => {
                     }
 
                     return response;
+                }
+
+                if (!shouldNotCache && (isResourceFile || isIndexHtml)) {
+                    // Not cached - fetch it and then store for future network requests
+                    return fetchAndCache(event, cache);
                 }
 
                 // Not a resource file (e.g. is an endpoint request) - do not cache it so it's fresh on every request
