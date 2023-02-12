@@ -290,10 +290,10 @@ jobs:
         # We need to re-run `npm run build` since the version was incremented in the previous step
         run: |
           git pull
-          ls -FlAh
           git checkout gh-pages
           ( for path in $(ls --ignore=dist --ignore=.git --ignore=package.json); do rm -rf "$path"; done; )
           cp -R dist/* .
+          ( for path in dist/*; do git add "$(echo "$path" | sed -E 's/dist/./')"; done; )
           rm -rf dist
           git commit -am "Patch to v$(jq -r '.version' package.json)"
           git push
