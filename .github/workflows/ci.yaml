@@ -56,7 +56,7 @@ jobs:
           node-version: 16
 
       - name: Client Verify
-        # Import pipeline logic via `uses`
+        # Import reusable GitHub Action logic via `uses`
         uses: ./.github/workflows/actions/client
 
       # Separate this step from `verify` to ensure linting, type-checking, etc. pass before using resources for building the app

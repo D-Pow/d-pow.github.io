@@ -43,6 +43,20 @@ on:
 defaults:
   run:
     shell: bash
+    working-directory: ./
+
+
+# Set GitHub user info for ease of use of Git CLI commands.
+#
+# See:
+#   - https://docs.npmjs.com/cli/v9/commands/npm-run-script#ignore-scripts
+#   - https://stackoverflow.com/questions/59471962/how-does-npm-behave-differently-with-ignore-scripts-set-to-true
+#   - https://github.com/tschaub/gh-pages#optionsuser
+#     - https://github.com/actions/checkout/issues/13
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  gitUserName: ${{ github.actor }}
+  gitUserEmail: ${{ github.actor }}@users.noreply.github.com
 
 
 jobs:
@@ -94,7 +108,11 @@ jobs:
     #   - https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
     permissions:
       pages: write      # Grant write permissions to deploy to the `gh-pages` (or whatever is specified in "Settings") branch
-      # id-token: write   # to verify the deployment originates from an appropriate source
+      id-token: write   # to verify the deployment originates from an appropriate source
+      deployments: write
+      packages: write
+      actions: write
+      contents: write
     steps:
       - name: Checkout repository branch
         uses: actions/checkout@v2
@@ -103,22 +121,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-
-      - name: Temp git user.name
-        run: |
-          git config --global user.name || exit 0
-
-      - name: Temp git user.email
-        run: |
-          git config --global user.email || exit 0
-
-      - name: Temp git all
-        run: |
-          git config --list || exit 0
-
-      - name: Temp cat .gitconfig
-        run: |
-          cat ~/.gitconfig || exit 0
 
       # Native GitHub `actions/download-artifact@v3` doesn't allow sharing between workflows.
       #   - Issue: https://github.com/actions/toolkit/issues/501
@@ -173,7 +175,7 @@ jobs:
       #
       # TODO: Try the cache instead of storing artifacts manually:
       #   - Related - Cache: https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
-      - name: CD Test CLI command to download stuff
+      - name: Client CD - Download CI artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WORKFLOW_RUN_ID: ${{ github.run_id }}
@@ -183,10 +185,6 @@ jobs:
           cp -R ci-workflow-artifact-output/*/* dist
           rm -rf ci-workflow-artifact-output
 
-      - name: TEMP list dir
-        run: |
-          ls -FlAh
-
       # Only necessary if running npm scripts in CD, which we are for `deploy`
       - name: Client CD - Install
         id: cd-client-install
@@ -195,18 +193,39 @@ jobs:
         run: |
           npm install
 
-      # Ignore pre-/post- npm scripts since pre-deploy (`npm run build`) was already run in CI.
-      #
-      # Set `user.name` and `user.email` for ~/.gitconfig inline via the `--user` flag for `gh-pages`.
-      #
-      # See:
-      #   - https://docs.npmjs.com/cli/v9/commands/npm-run-script#ignore-scripts
-      #   - https://stackoverflow.com/questions/59471962/how-does-npm-behave-differently-with-ignore-scripts-set-to-true
-      #   - https://github.com/tschaub/gh-pages#optionsuser
-      #     - https://github.com/actions/checkout/issues/13
-      - name: Deploy application
-        # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Client CD - Increment version
+        id: cd-client-version-bump
+          # git commit -a "Patch to $(jq -r '.version' package.json)"
+          # git push
         run: |
-          npm run --ignore-scripts deploy -- --user "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+          git config --global user.name ${{ env.gitUserName }}
+          git config --global user.email ${{ env.gitUserEmail }}
+          git pull
+          jq -r '.version' package.json
+          npm version patch
+
+      # Ignore pre-/post- npm scripts via `npm run --ignore-scripts <my-script>`.
+      # This could be useful for, e.g. scripts like `deploy` since `predeploy` (`npm run build`)
+      # was already run in CI.
+      #
+      # Set `user.name` and `user.email` for ~/.gitconfig inline via the `--user` flag for `gh-pages`:
+      #   npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
+      - name: Deploy application
+        # run: |
+        #   git config --list
+        #   git config --global user.name ${{ env.gitUserName }}
+        #   git config --global user.email ${{ env.gitUserEmail }}
+        #   git remote -v
+        #   git branch --show-current
+        #   git config --unset http.https://github.com/.extraheader
+        #   npm run --ignore-scripts deploy
+        # ls --ignore=dist --ignore=.git
+          # git checkout gh-pages
+          # ( for path in $(ls --ignore=dist --ignore=.git); do rm -rf "$path"; done; )
+          # cp -R dist/* .
+          # rm -rf dist
+          # ls -FlAh
+          # ls -FlAh dist || exit 0
+        run: |
+          jq -r '.version' package.json
+          npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
