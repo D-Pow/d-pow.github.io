@@ -15,10 +15,10 @@ function PersonalContact(props) {
     const handleCloseModal = () => setShowModal(false);
 
     const contactLinks = [
-        <Link href={LINKS.LinkedIn}>
+        <Link href={LINKS.LinkedIn} key={LINKS.LinkedIn}>
             <Image className={'w-60 mb-4'} image={'linkedin_logo.svg'} />
         </Link>,
-        <Link href={LINKS.GitHub}>
+        <Link href={LINKS.GitHub} key={LINKS.GitHub}>
             <Image className={'w-60 mb-4'} image={'github_logo.svg'} />
         </Link>,
     ];

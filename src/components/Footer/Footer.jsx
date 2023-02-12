@@ -6,7 +6,7 @@ import { EasterEgg, SRC_CODE } from '@/utils/CommonRenders';
 function Footer(props) {
     const [ showSrcCode, setShowSrcCode ] = useState(false);
     const defaultText = [ 'There are 3 easter eggs on this site.', 'Can you find them all?' ];
-    const easterEggText = [ <Fragment>You just discovered the {SRC_CODE}!</Fragment>, '' ];
+    const easterEggText = [ <Fragment key={'discovered-src-code'}>You just discovered the {SRC_CODE}!</Fragment>, '' ];
 
     const renderTitleContent = ([ textLine1, textLine2 ]) => (
         <Fragment>
