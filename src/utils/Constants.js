@@ -46,6 +46,7 @@ export const LINKS = {
     TardigradeStratification: 'https://bioone.org/journals/Transactions-of-the-Kansas-Academy-of-Science/volume-118/issue-3-4/062.118.0306/Tardigrades-of-the-Canopy-Evidence-of-Stratification/10.1660/062.118.0306.short',
     EtradeHome: 'https://etrade.com',
     EtradeIcon: 'https://cdn.etrade.net/1/19042220580.0/aempros/etc/designs/responsive-etrade/pagemeta/images/favicon-16x16.png',
+    NextdoorHome: 'https://nextdoor.com',
 };
 
 // Submit contact requests to FormSpree so bots can't scan for my email address

@@ -13,6 +13,13 @@ export const ETRADE_LINK = (
     </Link>
 );
 
+export const NEXTDOOR_LOGO = (
+    <Link href={LINKS.NextdoorHome}>
+        <Image image={'nextdoor_icon.svg'} className={'w-7 h-7 mb-5px'} />
+        Nextdoor
+    </Link>
+);
+
 export function EasterEgg({ className = '', ...props }) {
     return (
         <h4 className={`d-inline-block margin-clear ${className}`} {...props}>🐣</h4>
