@@ -23,6 +23,10 @@
 #     run: docker-compose run test
 # Ref: https://stackoverflow.com/questions/61154750/use-local-dockerfile-in-a-github-action
 
+
+name: CD
+
+
 on:
   workflow_dispatch:
   push:
@@ -33,19 +37,6 @@ on:
   #   - https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#merge_group
   merge_group:
     branches: [ checks_requested ]
-
-
-name: CD
-
-
-# Multiple ways to do this, including:
-on:
-  workflow_dispatch:
-  # 1. Publish your release in GitHub and have your pipeline
-  # react to deploy the package
-  release:
-    types: [ published ]
-
   # 2. Run the pipeline on merge to `master` and do the release/deploy then.
   # pull_request:
   #   types: [ closed ]
