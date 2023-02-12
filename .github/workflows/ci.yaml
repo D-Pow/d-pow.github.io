@@ -63,7 +63,7 @@ jobs:
           path: |
             node_modules
             dist
-          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./+(src|test|tests|config|mocks)/**') }}
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
 
       # Ensure old cache is deleted so that the build step's cache request isn't ignored
       #
@@ -75,7 +75,9 @@ jobs:
           WORKFLOW_RUN_ID: ${{ github.run_id }}
         run: |
           CACHES_API_URL="https://api.github.com/repos/$(gh repo view --json owner --jq '.owner.login')/$(gh repo view --json name --jq '.name')/actions/caches"
-          ( for cacheId in $(gh api ${CACHES_API_URL} --jq '.actions_caches[].id'); do gh api --method DELETE "${CACHES_API_URL}/$cacheId"; done; )
+          cacheIds=($(gh api ${CACHES_API_URL} --jq '.actions_caches[].id'))
+          echo "Deleting cache IDs: ${cacheIds[@]}..."
+          ( for cacheId in ${cacheIds[@]}; do gh api --method DELETE "${CACHES_API_URL}/$cacheId"; done; )
 
       - name: Client Verify
         # Import reusable GitHub Action logic via `uses`
@@ -98,7 +100,7 @@ jobs:
           path: |
             node_modules
             dist
-          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./+(src|test|tests|config|mocks)/**') }}
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
           restore-keys: |
             ${{ env.cache-name }}-${{ runner.os }}-
             ${{ env.cache-name }}-
