@@ -9,7 +9,13 @@ function Image(props) {
     const { setContextState } = useContext(AppContext.Context);
 
     async function loadImageSrc() {
-        const imageSrc = await importImageAsync(props.image);
+        let imageSrc = props.image;
+
+        try {
+            imageSrc = await importImageAsync(props.image);
+        } catch (e) {
+            // Could not import image, maybe direct src was given
+        }
 
         setImageSrc(imageSrc);
     }
