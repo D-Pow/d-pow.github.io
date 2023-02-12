@@ -1,6 +1,5 @@
 import {
     PureComponent,
-    Fragment,
     createRef,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -144,7 +143,7 @@ class Shape extends PureComponent {
         // clip path (image)
         const patternId = Math.random().toString(36).substr(2); // radix = 36 uses both letters and numbers
         return (
-            <Fragment>
+            <>
                 <defs>
                     <clipPath
                         id={patternId}
@@ -164,7 +163,7 @@ class Shape extends PureComponent {
                     width={'100%'}
                     height={'100%'}
                 />
-            </Fragment>
+            </>
         );
     }
 
