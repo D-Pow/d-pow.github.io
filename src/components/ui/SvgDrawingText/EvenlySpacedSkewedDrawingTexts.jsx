@@ -1,9 +1,10 @@
-import React from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 
-import SvgDrawingText from '@/components/ui/SvgDrawingText';
 import { distributeValuesEvenlyBetween } from '@/utils/Numbers';
 import { objEquals } from '@/utils/Objects';
+
+import SvgDrawingText from './SvgDrawingText';
 
 function EvenlySpacedSkewedDrawingTexts({ textArray = []}) {
     /*
@@ -36,7 +37,7 @@ EvenlySpacedSkewedDrawingTexts.propTypes = {
     textArray: PropTypes.arrayOf(PropTypes.string),
 };
 
-export default React.memo(
+export default memo(
     EvenlySpacedSkewedDrawingTexts,
     objEquals,
 );

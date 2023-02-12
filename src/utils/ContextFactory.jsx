@@ -49,7 +49,6 @@ import React, { useState } from 'react';
  */
 export default function ContextFactory(defaultValue = null) {
     const Context = React.createContext();
-
     const Provider = props => {
         const [ contextState, setContextState ] = useState(defaultValue);
 
