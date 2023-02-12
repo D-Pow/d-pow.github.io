@@ -199,7 +199,6 @@ jobs:
         run: |
           git pull
           npm install
-          npm run build
 
 
       - name: Client CD - Increment version
@@ -238,8 +237,9 @@ jobs:
           # jq -r '.version' package.json
           # npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
         run: |
+          npm run build
           git checkout gh-pages
-          ( for path in $(ls --ignore=dist --ignore=.git); do rm -rf "$path"; done; )
+          ( for path in $(ls --ignore=dist --ignore=.git --ignore=package.json); do rm -rf "$path"; done; )
           cp -R dist/* .
           rm -rf dist
-          git commit -am "Updates"
+          git commit -am "Patch to v$(jq -r '.version' package.json)"
