@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getRefPropType } from 'utils/ReactParsing';
+
+import { getRefPropType } from '@/utils/ReactParsing';
 
 function ForeignObjectChildrenWrapper({
     className,

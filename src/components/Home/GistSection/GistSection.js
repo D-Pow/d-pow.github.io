@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ScrollToShow from 'components/ui/ScrollToShow';
-import Shape from 'components/ui/Shape';
-import Link from 'components/ui/Link';
-import { LINKS } from 'utils/Constants';
-import { ETRADE_LINK } from 'utils/CommonRenders';
-import { getGridBreakpoints } from 'utils/Scss';
+
+import ScrollToShow from '@/components/ui/ScrollToShow';
+import Shape from '@/components/ui/Shape';
+import Link from '@/components/ui/Link';
+import { LINKS } from '@/utils/Constants';
+import { ETRADE_LINK } from '@/utils/CommonRenders';
+import { getGridBreakpoints } from '@/utils/Scss';
 
 function GistSection(props) {
     const pageText = {

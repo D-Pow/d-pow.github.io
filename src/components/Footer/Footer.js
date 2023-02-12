@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import FlipCard from 'components/ui/FlipCard';
-import { EasterEgg, SRC_CODE } from 'utils/CommonRenders';
+
+import FlipCard from '@/components/ui/FlipCard';
+import { EasterEgg, SRC_CODE } from '@/utils/CommonRenders';
 
 function Footer(props) {
     const [ showSrcCode, setShowSrcCode ] = useState(false);

@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
+
+import AppContext, { AppContextFields } from '@/utils/AppContext';
+
 import App from './App';
-import AppContext, { AppContextFields } from 'utils/AppContext';
 
 function AppProvider() {
     const { contextState, setContextState } = useContext(AppContext.Context);

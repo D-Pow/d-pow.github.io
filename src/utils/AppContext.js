@@ -1,4 +1,4 @@
-import ContextFactory from 'utils/ContextFactory';
+import ContextFactory from '@/utils/ContextFactory';
 
 export const AppContextFields = {
     IMAGES_REQUESTED: 'imagesRequested',

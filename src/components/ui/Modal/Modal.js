@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useRootClose, useBlockDocumentScrolling } from 'utils/Hooks';
+
+import { useRootClose, useBlockDocumentScrolling } from '@/utils/Hooks';
 
 function Modal({
     title,

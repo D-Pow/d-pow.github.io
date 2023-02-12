@@ -1,6 +1,7 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react';
-import { asNumber } from 'utils/Numbers';
-import { debounce, elementIsInClickPath, getClickPath, setDocumentScrolling } from 'utils/Events';
+
+import { asNumber } from '@/utils/Numbers';
+import { debounce, elementIsInClickPath, getClickPath, setDocumentScrolling } from '@/utils/Events';
 
 /**
  * @callback hookedChildRenderer

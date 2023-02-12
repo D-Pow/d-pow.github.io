@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ScrollToShow from 'components/ui/ScrollToShow';
-import { SameHeightImageCard } from 'components/ui/ImageCard';
-import Link from 'components/ui/Link';
-import { LINKS } from 'utils/Constants';
+
+import ScrollToShow from '@/components/ui/ScrollToShow';
+import { SameHeightImageCard } from '@/components/ui/ImageCard';
+import Link from '@/components/ui/Link';
+import { LINKS } from '@/utils/Constants';
 
 function Productions(props) {
     const pageText = {

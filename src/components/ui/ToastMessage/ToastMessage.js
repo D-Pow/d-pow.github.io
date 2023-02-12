@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import 'styles/ToastMessage.scss';
+
+import '@/styles/ToastMessage.scss';
 
 function ToastMessage(props) {
     function handleClose() {

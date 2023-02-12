@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { useDynamicFontSizeShrinking } from '@/utils/Hooks';
+import { isMobileBrowser } from '@/utils/BrowserIdentification';
+import { asNumber } from '@/utils/Numbers';
+
 import ForeignObjectChildrenWrapper from './ForeignObjectChildrenWrapper';
-import { useDynamicFontSizeShrinking } from 'utils/Hooks';
-import { isMobileBrowser } from 'utils/BrowserIdentification';
-import { asNumber } from 'utils/Numbers';
 
 function slightlySmallerThanLargestPossibleFontSize(
     fontSizePxStr,

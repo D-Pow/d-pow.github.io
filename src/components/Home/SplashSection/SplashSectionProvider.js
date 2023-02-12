@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
+
+import AppContext, { AppContextFields } from '@/utils/AppContext';
+
 import SplashSection from './SplashSection';
-import AppContext, { AppContextFields } from 'utils/AppContext';
 
 function SplashSectionProvider() {
     const { contextState } = useContext(AppContext.Context);

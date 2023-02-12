@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
+
+import ContextFactory from '@/utils/ContextFactory';
+import { validateObjNestedFields } from '@/utils/Objects';
+import { useWindowResize } from '@/utils/Hooks';
+
 import ImageCard from './ImageCard';
-import ContextFactory from 'utils/ContextFactory';
-import { validateObjNestedFields } from 'utils/Objects';
-import { useWindowResize } from 'utils/Hooks';
 
 const ImageCardSizeContext = ContextFactory([]);
 const { Provider, Context } = ImageCardSizeContext;

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'styles/Animations/AtomOrbit.scss';
+
+import '@/styles/Animations/AtomOrbit.scss';
 
 function AtomSpinner({ numElectrons, electronColors }) {
     const rotationDegrees = 180 / numElectrons;

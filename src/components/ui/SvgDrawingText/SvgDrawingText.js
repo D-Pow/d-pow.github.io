@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isSafariBrowser } from 'utils/BrowserIdentification';
-import { objEquals } from 'utils/Objects';
-import { strokeDasharrayLengthForFontSize1em } from 'styles/Animations/Svg/DrawingText.scss';
+
+import { isSafariBrowser } from '@/utils/BrowserIdentification';
+import { objEquals } from '@/utils/Objects';
+import SvgDrawingTestStyles from '@/styles/Animations/Svg/DrawingText.scss';
+
+const { strokeDasharrayLengthForFontSize1em } = SvgDrawingTestStyles;
 
 function SvgDrawingText({
     className,

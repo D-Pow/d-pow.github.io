@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SvgDrawingText from 'components/ui/SvgDrawingText';
-import { distributeValuesEvenlyBetween } from 'utils/Numbers';
-import { objEquals } from 'utils/Objects';
+
+import SvgDrawingText from '@/components/ui/SvgDrawingText';
+import { distributeValuesEvenlyBetween } from '@/utils/Numbers';
+import { objEquals } from '@/utils/Objects';
 
 function EvenlySpacedSkewedDrawingTexts({ textArray = [] }) {
     /*

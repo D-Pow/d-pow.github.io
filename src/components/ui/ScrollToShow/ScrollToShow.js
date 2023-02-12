@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SHOW_ELEMENT_SCROLL_THRESHOLD } from 'utils/Constants';
-import { asNumber } from 'utils/Numbers';
-import { childIsReactComponent } from 'utils/ReactParsing';
-import { getDurationTimeMsFromClassName } from 'utils/Scss';
+
+import { SHOW_ELEMENT_SCROLL_THRESHOLD } from '@/utils/Constants';
+import { asNumber } from '@/utils/Numbers';
+import { childIsReactComponent } from '@/utils/ReactParsing';
+import { getDurationTimeMsFromClassName } from '@/utils/Scss';
 
 class ScrollToShow extends React.Component {
     constructor(props) {

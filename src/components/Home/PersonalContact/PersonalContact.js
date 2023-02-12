@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import ScrollToShow from 'components/ui/ScrollToShow';
-import ContactModal from 'components/ui/ContactModal';
-import Image from 'components/ui/Image';
-import Link from 'components/ui/Link';
-import { LINKS } from 'utils/Constants';
-import { useTimedArrayToggle } from 'utils/Hooks';
+
+import ScrollToShow from '@/components/ui/ScrollToShow';
+import ContactModal from '@/components/ui/ContactModal';
+import Image from '@/components/ui/Image';
+import Link from '@/components/ui/Link';
+import { LINKS } from '@/utils/Constants';
+import { useTimedArrayToggle } from '@/utils/Hooks';
 
 function PersonalContact(props) {
     const [ showModal, setShowModal ] = useState(false);

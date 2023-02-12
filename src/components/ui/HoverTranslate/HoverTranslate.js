@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useHover } from 'utils/Hooks';
+
+import { useHover } from '@/utils/Hooks';
 
 function HoverText({ className, title, description, show, passedRef }) {
     return (

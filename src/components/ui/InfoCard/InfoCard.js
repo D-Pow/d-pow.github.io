@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Image from 'components/ui/Image';
+
+import Image from '@/components/ui/Image';
 
 function InfoCard(props) {
     const renderedContent = (

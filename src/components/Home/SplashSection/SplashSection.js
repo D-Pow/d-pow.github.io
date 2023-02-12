@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Image from 'components/ui/Image';
-import SvgDrawingText, { EvenlySpacedSkewedDrawingTexts } from 'components/ui/SvgDrawingText';
-import 'styles/SplashSection.scss';
+
+import Image from '@/components/ui/Image';
+import SvgDrawingText, { EvenlySpacedSkewedDrawingTexts } from '@/components/ui/SvgDrawingText';
+import '@/styles/SplashSection.scss';
 
 function SplashSection({ spinnerWasClosed }) {
     const [ showBgImage, setShowBgImage ] = useState(false);

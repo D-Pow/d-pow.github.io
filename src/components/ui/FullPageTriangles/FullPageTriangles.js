@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isMobileBrowser } from 'utils/BrowserIdentification';
-import { getRandomColor } from 'utils/Scss';
-import Triangle from 'components/ui/Triangle';
+
+import Triangle from '@/components/ui/Triangle';
+import { isMobileBrowser } from '@/utils/BrowserIdentification';
+import { getRandomColor } from '@/utils/Scss';
 
 class FullPageTriangles extends React.Component {
     constructor(props) {

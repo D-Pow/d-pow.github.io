@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import SplashSection from 'components/Home/SplashSection';
-import GistSection from 'components/Home/GistSection';
-import Productions from 'components/Home/Productions';
-import Projects from 'components/Home/Projects';
-import Pastimes from 'components/Home/Pastimes';
-import PersonalContact from 'components/Home/PersonalContact';
-import ToastMessage from 'components/ui/ToastMessage';
-import { UPDATE_BROADCAST } from 'utils/Constants';
-import { useServiceWorkerBroadcastChannel } from 'utils/Hooks';
+
+import SplashSection from '@/components/Home/SplashSection';
+import GistSection from '@/components/Home/GistSection';
+import Productions from '@/components/Home/Productions';
+import Projects from '@/components/Home/Projects';
+import Pastimes from '@/components/Home/Pastimes';
+import PersonalContact from '@/components/Home/PersonalContact';
+import ToastMessage from '@/components/ui/ToastMessage';
+import { UPDATE_BROADCAST } from '@/utils/Constants';
+import { useServiceWorkerBroadcastChannel } from '@/utils/Hooks';
 
 function Home() {
     const [ appWasUpdated, setAppWasUpdated ] = useState(false);

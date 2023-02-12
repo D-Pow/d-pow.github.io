@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'components/ui/Modal';
-import SpinnerCircle from 'components/ui/SpinnerCircle';
-import { CONTACT_FORM_URL, EMAIL_REGEX } from 'utils/Constants';
-import { EasterEgg } from 'utils/CommonRenders';
+
+import Modal from '@/components/ui/Modal';
+import SpinnerCircle from '@/components/ui/SpinnerCircle';
+import { CONTACT_FORM_URL, EMAIL_REGEX } from '@/utils/Constants';
+import { EasterEgg } from '@/utils/CommonRenders';
 
 class ContactModal extends React.Component {
     pageText = {

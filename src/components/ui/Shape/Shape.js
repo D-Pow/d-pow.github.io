@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { attemptParseObjLiteral } from '@/utils/Objects';
+import { importImageAsync } from '@/utils/Events';
+
 import ForeignObject from './ForeignObject';
-import { attemptParseObjLiteral } from 'utils/Objects';
-import { importImageAsync } from 'utils/Events';
 
 class Shape extends React.PureComponent {
     svgDimensions = {

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Route } from 'react-router-dom';
-import SpinnerAtom from 'components/ui/SpinnerAtom';
-import IncompatibleBrowserFallback from './IncompatibleBrowserFallback';
-import { isMicrosoftBrowser } from 'utils/BrowserIdentification';
-import { scrollWindowToTop } from 'utils/Events';
-import { AppContextFields } from 'utils/AppContext';
-import { useWindowResize } from 'utils/Hooks';
+import {
+    HashRouter as Router,
+    Route,
+} from 'react-router-dom';
+
+import IncompatibleBrowserFallback from '@/components/App/IncompatibleBrowserFallback';
+import SpinnerAtom from '@/components/ui/SpinnerAtom';
+import { isMicrosoftBrowser } from '@/utils/BrowserIdentification';
+import { scrollWindowToTop } from '@/utils/Events';
+import { AppContextFields } from '@/utils/AppContext';
+import { useWindowResize } from '@/utils/Hooks';
 
 /**
  * Lazy-load components so the Spinner is prioritized, loaded quickly, and unblocked from animating.
@@ -18,16 +22,16 @@ import { useWindowResize } from 'utils/Hooks';
  * be loaded until the user traverses to /about.
  */
 
-const homeImportPromise = import(/* webpackChunkName: 'Home' */ 'components/Home');
+const homeImportPromise = import(/* webpackChunkName: 'Home' */ '@/components/Home');
 const Home = React.lazy(() => homeImportPromise);
 
-const aboutImportPromise = import(/* webpackChunkName: 'About' */ 'components/About');
+const aboutImportPromise = import(/* webpackChunkName: 'About' */ '@/components/About');
 const About = React.lazy(() => aboutImportPromise);
 
-const headerImportPromise = import(/* webpackChunkName: 'Header' */ 'components/Header');
+const headerImportPromise = import(/* webpackChunkName: 'Header' */ '@/components/Header');
 const Header = React.lazy(() => headerImportPromise);
 
-const footerImportPromise = import(/* webpackChunkName: 'Footer' */ 'components/Footer');
+const footerImportPromise = import(/* webpackChunkName: 'Footer' */ '@/components/Footer');
 const Footer = React.lazy(() => footerImportPromise);
 
 const routes = [

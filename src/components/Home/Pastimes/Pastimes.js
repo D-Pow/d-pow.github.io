@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import ScrollToShow from 'components/ui/ScrollToShow';
-import Shape from 'components/ui/Shape';
-import HoverTranslate from 'components/ui/HoverTranslate';
-import FlipCard from 'components/ui/FlipCard';
-import { isMobileBrowser, isSafariBrowser } from 'utils/BrowserIdentification';
-import { getGridBreakpoints, getThemeColors } from 'utils/Scss';
-import { useTimedArrayToggle } from 'utils/Hooks';
-import { EasterEgg } from 'utils/CommonRenders';
+
+import ScrollToShow from '@/components/ui/ScrollToShow';
+import Shape from '@/components/ui/Shape';
+import HoverTranslate from '@/components/ui/HoverTranslate';
+import FlipCard from '@/components/ui/FlipCard';
+import { isMobileBrowser, isSafariBrowser } from '@/utils/BrowserIdentification';
+import { getGridBreakpoints, getThemeColors } from '@/utils/Scss';
+import { useTimedArrayToggle } from '@/utils/Hooks';
+import { EasterEgg } from '@/utils/CommonRenders';
 
 const TextInShape = ({ textToRender, reduceByPx, index }) => {
     const sides = 7 - index; // decrease each entry by 1, starting from Japanese at 8

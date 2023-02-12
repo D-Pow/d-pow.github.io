@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ScrollToShow from 'components/ui/ScrollToShow';
-import InfoCard from 'components/ui/InfoCard';
-import Link from 'components/ui/Link';
-import { LINKS } from 'utils/Constants';
-import { getGridBreakpoints } from 'utils/Scss';
+
+import ScrollToShow from '@/components/ui/ScrollToShow';
+import InfoCard from '@/components/ui/InfoCard';
+import Link from '@/components/ui/Link';
+import { LINKS } from '@/utils/Constants';
+import { getGridBreakpoints } from '@/utils/Scss';
 
 function Projects(props) {
     const pageText = {

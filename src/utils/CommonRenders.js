@@ -1,7 +1,8 @@
 import React from 'react';
-import Link from 'components/ui/Link';
-import Image from 'components/ui/Image';
-import { LINKS } from 'utils/Constants';
+
+import Link from '@/components/ui/Link';
+import Image from '@/components/ui/Image';
+import { LINKS } from '@/utils/Constants';
 
 export const SRC_CODE = (
     <Link href={LINKS.SrcCode}>source code</Link>

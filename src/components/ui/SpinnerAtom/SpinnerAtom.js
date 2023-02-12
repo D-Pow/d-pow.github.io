@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
+import { objEquals } from '@/utils/Objects';
+import { useBlockDocumentScrolling } from '@/utils/Hooks';
+import { getDurationTimeMsFromClassName } from '@/utils/Scss';
+
 import AtomSpinner from './AtomSpinner';
-import { objEquals } from 'utils/Objects';
-import { useBlockDocumentScrolling } from 'utils/Hooks';
-import { getDurationTimeMsFromClassName } from 'utils/Scss';
 
 function SpinnerAtom({
     className,
