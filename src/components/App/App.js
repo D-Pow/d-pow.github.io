@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
     HashRouter as Router,
+    Routes,
     Route,
 } from 'react-router-dom';
 
@@ -34,18 +35,26 @@ const Header = React.lazy(() => headerImportPromise);
 const footerImportPromise = import(/* webpackChunkName: 'Footer' */ '@/components/Footer');
 const Footer = React.lazy(() => footerImportPromise);
 
+
+/** @typedef {import('react-router-dom').RouteProps[]} Routes */
+
+/**
+ * @type {Routes}
+ *
+ * @see [Docs on Route with(out) nested Route children]{@link https://reactrouter.com/docs/en/v6/api#routes-and-route}
+ * @see [react-router v5 docs]{@link https://github.com/remix-run/react-router/tree/v5.3.1/packages/react-router/docs/api}
+ * @see [Upgrading from v5 to v6]{@link https://gist.github.com/mjackson/b5748add2795ce7448a366ae8f8ae3bb}
+ */
 const routes = [
     {
         path: '/',
-        component: Home,
-        name: 'Home',
-        exact: true
+        element: <Home />,
     },
     {
         path: '/about',
-        component: About,
-        name: 'About'
-    }
+        element: <About />,
+        name: 'About',
+    },
 ];
 
 function App({ imagesStillLoading, setContextState }) {
@@ -85,14 +94,6 @@ function App({ imagesStillLoading, setContextState }) {
         return <IncompatibleBrowserFallback />
     }
 
-    const renderSpinner = preventScrolling => (
-        <SpinnerAtom
-            preventDocumentScrolling={preventScrolling}
-            show={showSpinner}
-            onClose={handleSpinnerClose}
-        />
-    );
-
     // Force the app to re-render on window resize to make renders
     // dependent on isMobileBrowser() to be responsive, since that
     // util function isn't responsive on its own.
@@ -104,16 +105,21 @@ function App({ imagesStillLoading, setContextState }) {
             key={`${windowSizeState.prevWidth}x${windowSizeState.prevHeight}`}
         >
             <React.Suspense
-                fallback={renderSpinner(false)}
+                fallback={(
+                    <SpinnerAtom
+                        preventDocumentScrolling={true}
+                        show={showSpinner}
+                        onClose={handleSpinnerClose}
+                    />
+                )}
             >
                 <Router>
-                    <React.Fragment>
-                        {/*<Header navRoutes={routes} />*/}
+                    {/* <Header navRoutes={routes} /> */}
+                    <Routes>
                         {renderedRoutes}
-                        <Footer />
-                    </React.Fragment>
+                    </Routes>
+                    <Footer />
                 </Router>
-                {renderSpinner(true)}
             </React.Suspense>
         </div>
     );
