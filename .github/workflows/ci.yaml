@@ -68,8 +68,9 @@ jobs:
           npm run build
 
       - name: Client Build Output
+        id: ci-build-output
         uses: actions/upload-artifact@v3
         with:
-          name: ci-build-output
+          name: ci-build-output-artifacts
           path: |
             dist

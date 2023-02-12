@@ -6,6 +6,9 @@
 # Preventing concurrent workflows (e.g. multiple merges to master at once)
 # https://github.blog/changelog/2021-04-19-github-actions-limit-workflow-run-or-job-concurrency/
 # From: https://github.community/t/how-to-limit-concurrent-workflow-runs/16844/
+#
+# Further split sub-directories' actions/workflows for more granular control.
+#   - https://stackoverflow.com/questions/64009546/how-to-run-multiple-github-actions-workflows-from-sub-directories
 
 
 # If we decide to use Docker - Using local Dockerfile in pipeline:
@@ -29,18 +32,11 @@ name: CD
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ master ]
-  # To run upon merge in general, apparently, there is no `merge` event, only `merge_group` which specifies merging
-  # when certain checks are required. Thus, mark "all checks" via `checks_requested`.
-  # See:
-  #   - https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#merge_group
-  merge_group:
-    branches: [ checks_requested ]
-  # Run on CI completion (the `if:` in the `deploy` job below would need updating accordingly)
+  release:
+    types: [ published ]
   workflow_run:
-    branches: [ master ]
     workflows: [ 'CI' ]
+    branches: [ master ]
     types: [ completed ]
 
 
@@ -50,18 +46,46 @@ defaults:
 
 
 jobs:
-  cd-client-build:
-    runs-on: ubuntu-latest
-    needs: [ ci-build-and-upload-artifacts ]
-    steps:
-      - uses: actions/checkout@v2
-      # TODO - Relative paths are finicky/often only work when using actions.
-      # When making this file an official GitHub Workflow, update this block.
-      - uses: ./.github/workflows/ci.yaml
+  # cd-init:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository branch
+  #       uses: actions/checkout@v2
+  #
+  #     - name: CD Client build
+  #       # Workflows require at least one job that has no dependencies.
+  #       # However, we can still use the `uses` block for "reusable workflows"
+  #       #
+  #       # See:
+  #       #   - Reusable workflows `uses`: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_iduses
+  #       uses: ./.github/workflows/ci.yaml
+  #
+  # cd-init:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository branch
+  #       uses: actions/checkout@v2
+  #
+  # cd-client-build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Client CD - Download CI output
+  #       id: cd-download-artifacts
+  #       needs: [ cd-init ]
+  #     # Workflows require at least one job that has no dependencies.
+  #     # However, we can still use the `uses` block for "reusable workflows"
+  #     #
+  #     # See:
+  #     #   - Reusable workflows `uses`: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_iduses
+  #       #  uses: ./.github/workflows/ci.yaml
+  #       #  uses: actions/download-artifact@v3
+  #       with:
+  #         name: ci-build-output
+  #         path: |
+  #           dist
 
   cd-deploy:
     runs-on: ubuntu-latest
-    needs: [ cd-client-build ]
     # Only run on merge to master: https://github.community/t/depend-on-another-workflow/16311/3
     if: ${{ github.event.pull_request.merged || github.ref == 'refs/heads/master' }}
     steps:
@@ -73,13 +97,88 @@ jobs:
         with:
           node-version: 16
 
-      - name: Client CD - Download CI output
-        id: cd-download-artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: ci-build-and-upload-artifacts
-          path: |
-            dist
+      - name: Temp git user.name
+        run: |
+          git config --global user.name || exit 0
+
+      - name: Temp git user.email
+        run: |
+          git config --global user.email || exit 0
+
+      - name: Temp git all
+        run: |
+          git config --list || exit 0
+
+      - name: Temp cat .gitconfig
+        run: |
+          cat ~/.gitconfig || exit 0
+
+      # Native GitHub `actions/download-artifact@v3` doesn't allow sharing between workflows.
+      #   - Issue: https://github.com/actions/toolkit/issues/501
+      # Once it does, we can use:
+      #
+      # - name: Client CD - Download CI output
+      #   id: cd-download-artifacts
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: ci-build-output
+      #     path: |
+      #       dist
+      #
+      # Note that simply adding a `needs`/`uses` block for my-workflow.yaml file doesn't suffice until this is fixed;
+      # adding said block for my-action.yaml would (since it's an action and actions are reusable while workflows aren't
+      # despite what GitHub claims) but only if that action covers all your needs.
+      #
+      # We can work around this via:
+      #
+      # 1.
+      # Use a third-party download-artifact action.
+      #   - Good example: https://stackoverflow.com/questions/60355925/share-artifacts-between-workflows-github-actions/65049722#65049722
+      #
+      # - name: Client CD - Download CI output
+      #   id: cd-download-artifacts
+      #   # needs: [ ci-build-output ]
+      #   # needs: [ ci-build-and-upload-artifacts ]
+      #   uses: dawidd6/action-download-artifact@v2
+      #   with:
+      #     name: ci-build-output-artifacts
+      #     branch: master
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     if_no_artifact_found: fail
+      #     workflow_conclusion: success
+      #
+      # 2. Use our own custom CLI action to manually download the artifact files.
+      #    This is the only reliable option at the moment for sharing artifacts between workflow files
+      #    without uploading them in Release files.
+      #    Do so via:
+      #     - Get latest CI workflow ID via:
+      #       gh run list --limit 1 --workflow CI | tail -n +1 | awk '{ print $(NF - 2) }'
+      #     - Download all files from that workflow into an arbitrary dir (`ci-workflow-artifact-output` in this case).
+      #     - Create the dir we actually want to use (`dist` in this case).
+      #     - Copy all nested files/directories from the downloaded dir to the desired dir.
+      #     - Delete the original temp dir.
+      #    Notes:
+      #     - `github.run_id` == Current workflow run ID, not the ID of the run we want (previous workflow run).
+      #     - GitHub CLI docs: https://cli.github.com/manual/gh_help_reference
+      #     - GitHub workflows - Storing artifacts: https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts
+      #     - GitHub workflows - Using `gh` CLI: https://docs.github.com/en/actions/using-workflows/using-github-cli-in-workflows
+      #     - GitHub workflows - `github` context vars available: https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+      #
+      # TODO: Try the cache instead of storing artifacts manually:
+      #   - Related - Cache: https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
+      - name: CD Test CLI command to download stuff
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WORKFLOW_RUN_ID: ${{ github.run_id }}
+        run: |
+          gh run download --dir ci-workflow-artifact-output --pattern '*' $(gh run list --limit 1 --workflow CI | tail -n +1 | awk '{ print $(NF - 2) }')
+          mkdir dist
+          cp -R ci-workflow-artifact-output/*/* dist
+          rm -rf ci-workflow-artifact-output
+
+      - name: TEMP list dir
+        run: |
+          ls -FlAh
 
       # Only necessary if running npm scripts in CD, which we are for `deploy`
       - name: Client CD - Install
@@ -89,6 +188,15 @@ jobs:
         run: |
           npm install
 
+      # Ignore pre-/post- npm scripts since pre-deploy (`npm run build`) was already run in CI.
+      #
+      # Set `user.name` and `user.email` for ~/.gitconfig inline via the `--user` flag for `gh-pages`.
+      #
+      # See:
+      #   - https://docs.npmjs.com/cli/v9/commands/npm-run-script#ignore-scripts
+      #   - https://stackoverflow.com/questions/59471962/how-does-npm-behave-differently-with-ignore-scripts-set-to-true
+      #   - https://github.com/tschaub/gh-pages#optionsuser
+      #     - https://github.com/actions/checkout/issues/13
       - name: Deploy application
         run: |
-          npm run deploy
+          npm run --ignore-scripts deploy -- --user 'D-Pow <D-Pow@users.noreply.github.com>'
