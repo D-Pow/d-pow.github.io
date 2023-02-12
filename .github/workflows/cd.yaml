@@ -244,3 +244,4 @@ jobs:
           cp -R dist/* .
           rm -rf dist
           git commit -am "Patch to v$(jq -r '.version' package.json)"
+          git push
