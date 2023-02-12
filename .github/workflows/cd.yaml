@@ -253,13 +253,15 @@ jobs:
 
       - name: Client CD - Increment version
         id: cd-client-version-bump
-        # Not required since `npm version` already makes a commit for us, but for reference:
-        #   git commit -am "Patch to v$(jq -r '.version' package.json)"
+        # Not required since `npm version` returns the version string (with "v" in it), but for reference:
+        #   - Normal: npm version patch; git commit --amend -m "Patch to v$(jq -r '.version' package.json)"
+        #   - Without git commit or tag: newAppVersion=$(npm version --no-git-tag-version patch); git commit -am "Patch to ${newAppVersion}"
         run: |
           git pull
           git config --global user.name ${{ env.gitUserName }}
           git config --global user.email ${{ env.gitUserEmail }}
-          npm version patch
+          newAppVersion=$(npm version --no-git-tag-version patch)
+          git commit -am "Patch to ${newAppVersion}"
           git push
           npm run build
 
