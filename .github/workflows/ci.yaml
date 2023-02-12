@@ -63,7 +63,7 @@ jobs:
           path: |
             node_modules
             dist
-          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**') }}
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./+(src|test|tests|config|mocks)/**') }}
 
       - if: ${{ failure() }}
         name: Client Verify
@@ -89,7 +89,7 @@ jobs:
           path: |
             node_modules
             dist
-          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**') }}
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./+(src|test|tests|config|mocks)/**') }}
           restore-keys: |
             ${{ env.cache-name }}-${{ runner.os }}-
             ${{ env.cache-name }}-
