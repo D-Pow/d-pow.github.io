@@ -94,7 +94,9 @@ jobs:
     #   - https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
     permissions:
       pages: write      # Grant write permissions to deploy to the `gh-pages` (or whatever is specified in "Settings") branch
-      # id-token: write   # to verify the deployment originates from an appropriate source
+      id-token: write   # to verify the deployment originates from an appropriate source
+      deployments: write
+      packages: write
     steps:
       - name: Checkout repository branch
         uses: actions/checkout@v2
@@ -205,8 +207,15 @@ jobs:
       #   - https://github.com/tschaub/gh-pages#optionsuser
       #     - https://github.com/actions/checkout/issues/13
       - name: Deploy application
-        # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          gitUserName: ${{ github.actor }}
+          gitUserEmail: ${{ github.actor }}@users.noreply.github.com
+          # npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
         run: |
-          npm run --ignore-scripts deploy -- --user "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+          git config --global user.name ${{ env.gitUserName }}
+          git config --global user.email ${{ env.gitUserEmail }}
+          git remote -v
+          git branch --show-current
+          npm run --ignore-scripts deploy
