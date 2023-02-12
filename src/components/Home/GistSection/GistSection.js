@@ -25,16 +25,16 @@ function GistSection(props) {
 
     return (
         <section id={'the-gist'} className={props.className}>
-            <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
+            <ScrollToShow addClasses={'show'} distributeClassesBeforeShow={props.titleAnimationCls}>
                 <h1 className={'p-5'}>The gist...</h1>
             </ScrollToShow>
             <div className={`container${window.innerWidth <= getGridBreakpoints().md ? '-fluid' : ''} mb-5`}>
                 <div className={'row'}>
                     <ScrollToShow
                         addClasses={'show'}
-                        distributeClasses={'animated'}
+                        distributeClassesBeforeShow={'animated'}
                         threshold={mainContentShowThreshold}
-                        distributeSimultaneously={0}
+                        distributeSimultaneouslyInterval={0}
                     >
                         <div className={'col-sm-6 m-auto pb-4 slide-in-left'}>
                             <div className={'m-auto'}>

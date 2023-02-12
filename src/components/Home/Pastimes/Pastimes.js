@@ -160,13 +160,13 @@ function Pastimes(props) {
 
     return (
         <section id={'pastimes'} className={'bg-light w-100 pb-5 ' + props.className}>
-            <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
+            <ScrollToShow addClasses={'show'} distributeClassesBeforeShow={props.titleAnimationCls}>
                 {renderedTitle}
             </ScrollToShow>
             <div className={'container'}>
                 <div className={'row mb-5'}>
                     <div className={'col-sm-6 mb-4'}>
-                        <ScrollToShow addClasses={'slide-in-bottom show'} distributeClasses={'animated duration-15'}>
+                        <ScrollToShow addClasses={'slide-in-bottom show'} distributeClassesBeforeShow={'animated duration-15'}>
                             <div>
                                 {renderedHoverTranslateInShape}
                             </div>
@@ -174,7 +174,11 @@ function Pastimes(props) {
                     </div>
                     <div className={'col-sm-6'}>
                         <div className={'row'}>
-                            <ScrollToShow addClasses={'slide-in-bottom show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.5}>
+                            <ScrollToShow
+                                addClasses={'slide-in-bottom show'}
+                                distributeClassesBeforeShow={'animated duration-15'}
+                                distributeSimultaneouslyInterval={0.5}
+                            >
                                 {renderedOtherPastimes}
                             </ScrollToShow>
                         </div>

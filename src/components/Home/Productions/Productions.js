@@ -46,13 +46,17 @@ function Productions(props) {
 
     return (
         <section id={'productions'} className={'bg-light w-100 pb-5 ' + props.className}>
-            <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
+            <ScrollToShow addClasses={'show'} distributeClassesBeforeShow={props.titleAnimationCls}>
                 <h1 className={'p-5'}>Productions</h1>
             </ScrollToShow>
             <div className={'container'}>
                 <div className={'row'}>
                     <SameHeightImageCard.Provider>
-                        <ScrollToShow addClasses={'flip-y show'} distributeClasses={'animated duration-15'} distributeSimultaneously={0.5}>
+                        <ScrollToShow
+                            addClasses={'flip-y show'}
+                            distributeClassesBeforeShow={'animated duration-15'}
+                            distributeSimultaneouslyInterval={0.5}
+                        >
                             {pageText.imageCards.map((imageCardProps, index) => {
                                 // Center if odd number of items and last item
                                 const centerCls = index % 2 === 0 && index === pageText.imageCards.length - 1 ? 'mx-auto' : '';

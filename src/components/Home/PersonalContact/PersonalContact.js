@@ -59,7 +59,7 @@ function PersonalContact(props) {
         <section id={'personal-contact'} className={'mb-5 ' + props.className}>
             <ScrollToShow
                 addClasses={'show'}
-                distributeClasses={props.titleAnimationCls}
+                distributeClassesBeforeShow={props.titleAnimationCls}
                 onAllChildrenShown={handleAfterTitleAnimation}
             >
                 <h1 className={'p-5'}>Personal Contact</h1>

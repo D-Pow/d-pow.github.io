@@ -31,8 +31,8 @@ function Projects(props) {
     const desktopScrollToShowDistributeTime = 0.32;
     const projectEntriesScrollToShowClassProps = {
         addClasses: 'slide-in-left show',
-        distributeClasses: 'animated duration-15',
-        distributeSimultaneously: isDesktop
+        distributeClassesBeforeShow: 'animated duration-15',
+        distributeSimultaneouslyInterval: isDesktop
             ? desktopScrollToShowDistributeTime
             : null
     };
@@ -44,7 +44,7 @@ function Projects(props) {
 
     return (
         <section id={'projects'} className={props.className}>
-            <ScrollToShow addClasses={'show'} distributeClasses={props.titleAnimationCls}>
+            <ScrollToShow addClasses={'show'} distributeClassesBeforeShow={props.titleAnimationCls}>
                 <h1 className={'p-5'}>Projects and Publications</h1>
             </ScrollToShow>
             <div className={'container'}>
