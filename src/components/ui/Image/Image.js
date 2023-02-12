@@ -17,7 +17,7 @@ function Image(props) {
     useEffect(() => {
         incrementAppContextField();
         loadImageSrc();
-    }, [props.image]);
+    }, [ props.image ]);
 
     function incrementAppContextField(finishedLoading = false) {
         if (props.updateAppContext) {
@@ -25,7 +25,7 @@ function Image(props) {
 
             setContextState(prevState => ({
                 ...prevState,
-                [contextField]: prevState[contextField] + 1
+                [contextField]: prevState[contextField] + 1,
             }));
         }
     }
@@ -52,7 +52,7 @@ Image.propTypes = {
     fluidImage: PropTypes.bool,
     updateAppContext: PropTypes.bool,
     onLoad: PropTypes.func,
-    aria: PropTypes.object
+    aria: PropTypes.object,
 };
 
 Image.defaultProps = {
@@ -61,7 +61,7 @@ Image.defaultProps = {
     fluidImage: true,
     updateAppContext: true,
     onLoad: () => {},
-    aria: {}
+    aria: {},
 };
 
 export default React.memo(Image);

@@ -10,7 +10,7 @@ class Triangle extends React.Component {
             className,
             upsideDown,
             color,
-            height
+            height,
         } = this.props;
         const base = height / Math.sin(Math.PI / 3); // Equilateral triangle: sin(60deg == pi/3) = height / base
         const baseHalved = base/2; // Actual CSS base length
@@ -20,7 +20,7 @@ class Triangle extends React.Component {
         let originHeight = `${height * 2/3}px`; // deal with uneven border widths by offsetting rotation origin
         const classNames = [
             'triangle',
-            className
+            className,
         ];
         if (upsideDown) {
             borderColorField = 'borderTopColor';
@@ -40,7 +40,7 @@ class Triangle extends React.Component {
             animationDuration: `${animationDuration}s`,
             animationDelay: `${spinDelay}s`,
             transformOrigin: `${baseHalved} ${originHeight}`,
-            marginLeft: `-${baseHalved}px`
+            marginLeft: `-${baseHalved}px`,
         };
 
         return (
@@ -55,13 +55,13 @@ Triangle.propTypes = {
     spinDelay: PropTypes.number,
     animationDuration: PropTypes.number,
     upsideDown: PropTypes.bool,
-    height: PropTypes.number
+    height: PropTypes.number,
 };
 
 Triangle.defaultProps = {
     color: 'red',
     upsideDown: false,
-    height: 86
+    height: 86,
 };
 
 export default Triangle;

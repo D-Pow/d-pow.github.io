@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import '@/styles/Animations/AtomOrbit.scss';
@@ -17,7 +16,7 @@ function AtomSpinner({ numElectrons, electronColors }) {
                 <div
                     className={'atom-orbit-path'}
                     style={{
-                        transform: getRotationTransformProperty(i)
+                        transform: getRotationTransformProperty(i),
                     }}
                     key={i}
                 />
@@ -26,14 +25,14 @@ function AtomSpinner({ numElectrons, electronColors }) {
                 <div
                     className={'atom-orbit-path-invisible'}
                     style={{
-                        transform: getRotationTransformProperty(i)
+                        transform: getRotationTransformProperty(i),
                     }}
                     key={i}
                 >
                     <div
                         className={`atom-electron atom-electron-orbit ${getElectronBgColor(i)}`}
                         style={{
-                            animationDelay: getAnimationDelay(i)
+                            animationDelay: getAnimationDelay(i),
                         }}
                     />
                 </div>
@@ -44,12 +43,12 @@ function AtomSpinner({ numElectrons, electronColors }) {
 
 AtomSpinner.propTypes = {
     numElectrons: PropTypes.number,
-    electronColors: PropTypes.arrayOf(PropTypes.string)
+    electronColors: PropTypes.arrayOf(PropTypes.string),
 };
 
 AtomSpinner.defaultProps = {
     numElectrons: 3,
-    electronColors: [ 'primary', 'secondary', 'tertiary' ]
+    electronColors: [ 'primary', 'secondary', 'tertiary' ],
 };
 
 export default AtomSpinner;

@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import Image from '@/components/ui/Image';
@@ -19,7 +18,7 @@ function ImageCard(props) {
         widthFit,
         showBorder,
         aria,
-        onLoad
+        onLoad,
     } = props;
     const [ hoverRef, isHovered ] = useHover();
 
@@ -32,7 +31,7 @@ function ImageCard(props) {
             textWrapperColorCls,
             textWrapperPositionCls,
             textWrapperChildrenPositioningCls,
-            textWrapperAnimationCls
+            textWrapperAnimationCls,
         ].join(' ');
 
         const animationCls = 'duration-5 linear';
@@ -86,7 +85,7 @@ function ImageCard(props) {
 ImageCard.WidthFits = {
     FIT: 'width-fit',
     STRETCH: 'w-100',
-    DYNAMIC_MOBILE: 'w-90'
+    DYNAMIC_MOBILE: 'w-90',
 };
 
 ImageCard.propTypes = {
@@ -102,7 +101,7 @@ ImageCard.propTypes = {
     showBorder: PropTypes.bool,
     widthFit: PropTypes.oneOf(Object.values(ImageCard.WidthFits)),
     aria: PropTypes.object,
-    onLoad: PropTypes.func
+    onLoad: PropTypes.func,
 };
 
 ImageCard.defaultProps = {
@@ -118,7 +117,7 @@ ImageCard.defaultProps = {
     showBorder: false,
     widthFit: ImageCard.WidthFits.FIT,
     aria: {},
-    onLoad: () => {}
+    onLoad: () => {},
 };
 
 export default ImageCard;

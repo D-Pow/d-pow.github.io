@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import '@/styles/ToastMessage.scss';
@@ -28,7 +28,7 @@ function ToastMessage(props) {
                     className={'ml-2 mb-1 close'}
                     style={{
                         position: 'absolute',
-                        right: '8px'
+                        right: '8px',
                     }}
                     onClick={handleClose}
                 >
@@ -41,10 +41,10 @@ function ToastMessage(props) {
         ? {
             margin: 'auto',
             [ToastMessage.Positions.LEFT]: '0',
-            [ToastMessage.Positions.RIGHT]: '0'
+            [ToastMessage.Positions.RIGHT]: '0',
         }
         : {
-            [props.float]: '5px'
+            [props.float]: '5px',
         };
 
     return (
@@ -63,7 +63,7 @@ function ToastMessage(props) {
 ToastMessage.Positions = {
     LEFT: 'left',
     RIGHT: 'right',
-    CENTER: 'center'
+    CENTER: 'center',
 };
 
 ToastMessage.propTypes = {
@@ -72,12 +72,12 @@ ToastMessage.propTypes = {
     header: PropTypes.node,
     hideAfterDelay: PropTypes.number,
     show: PropTypes.bool,
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
 };
 
 ToastMessage.defaultProps = {
     float: ToastMessage.Positions.LEFT,
-    onClose: () => {}
+    onClose: () => {},
 };
 
 export default ToastMessage;

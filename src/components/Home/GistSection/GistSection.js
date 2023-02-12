@@ -19,7 +19,7 @@ function GistSection(props) {
                 contributions, and collaborating with my teammates, because it's the people who make the workplace
                 worthwhile.
             </React.Fragment>
-        )
+        ),
     };
     const mainContentShowThreshold = 2/3;
 
@@ -59,12 +59,12 @@ function GistSection(props) {
 
 GistSection.propTypes = {
     className: PropTypes.string,
-    titleAnimationCls: PropTypes.string
+    titleAnimationCls: PropTypes.string,
 };
 
 GistSection.defaultProps = {
     className: '',
-    titleAnimationCls: ''
+    titleAnimationCls: '',
 };
 
 export default GistSection;

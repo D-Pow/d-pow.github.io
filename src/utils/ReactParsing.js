@@ -6,8 +6,8 @@ export function getRefPropType(onlyHtmlElements = false) {
         PropTypes.shape({
             current: onlyHtmlElements
                 ? PropTypes.instanceOf(Element)
-                : PropTypes.any
-        })
+                : PropTypes.any,
+        }),
     ]);
 }
 

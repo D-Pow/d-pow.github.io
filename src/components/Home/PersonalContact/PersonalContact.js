@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import ScrollToShow from '@/components/ui/ScrollToShow';
@@ -20,7 +20,7 @@ function PersonalContact(props) {
         </Link>,
         <Link href={LINKS.GitHub}>
             <Image className={'w-60 mb-4'} image={'github_logo.svg'} />
-        </Link>
+        </Link>,
     ];
 
     const numChildrenToFlip = contactLinks.length + 1; // include 'contact me' modal-opening button
@@ -85,12 +85,12 @@ function PersonalContact(props) {
 
 PersonalContact.propTypes = {
     className: PropTypes.string,
-    titleAnimationCls: PropTypes.string
+    titleAnimationCls: PropTypes.string,
 };
 
 PersonalContact.defaultProps = {
     className: '',
-    titleAnimationCls: ''
+    titleAnimationCls: '',
 };
 
 export default PersonalContact;

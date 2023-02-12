@@ -28,7 +28,7 @@ export async function importImageAsync(image, base64 = false) {
             }
 
             return imageSrc;
-        } catch(error) {} // default return below handles error case
+        } catch (error) {} // default return below handles error case
     }
 
     throw new Error(`${image} was not found`);
@@ -129,7 +129,7 @@ export function getClickPath(event) {
 export function elementIsInClickPath({ attribute, value }, clickPath) {
     let elementIsInPath = false;
 
-    for (let element of clickPath) {
+    for (const element of clickPath) {
         if (element instanceof HTMLElement) {
             const elemAttr = element.getAttribute(attribute);
 
@@ -140,7 +140,7 @@ export function elementIsInClickPath({ attribute, value }, clickPath) {
         }
     }
 
-    return elementIsInPath
+    return elementIsInPath;
 }
 
 /**

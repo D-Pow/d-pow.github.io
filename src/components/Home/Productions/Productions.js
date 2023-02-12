@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import ScrollToShow from '@/components/ui/ScrollToShow';
@@ -12,36 +11,36 @@ function Productions(props) {
             {
                 image: 'prebuilt_portfolios.jpg',
                 title: <Link className={'text-light'} href={LINKS.PrebuiltPortfolios}>Prebuilt Portfolios</Link>,
-                description: 'Selections of funds to fit individual investment styles'
+                description: 'Selections of funds to fit individual investment styles',
             },
             {
                 image: 'automatic_investing.jpg',
                 title: <Link className={'text-light'} href={LINKS.AutomaticInvesting}>Automatic Investing</Link>,
-                description: 'Automates investing with varying frequencies and amounts'
+                description: 'Automates investing with varying frequencies and amounts',
             },
             {
                 image: 'premarket_modal.png',
                 title: 'Premarket Dashboard',
-                description: 'Analyzes the health of internal systems before markets open'
+                description: 'Analyzes the health of internal systems before markets open',
             },
             {
                 image: 'edge_panel_widget.png',
                 title: <Link className={'text-light'} href={LINKS.EtradeAndroidApp}>Edge Panel</Link>,
-                description: 'Android widget for edge-devices to display stock watch lists'
+                description: 'Android widget for edge-devices to display stock watch lists',
             },
             {
                 image: 'mock_requests.png',
                 title: <Link className={'text-light'} href={LINKS.MockRequests}>MockRequests</Link>,
                 description: 'Open-source JS network mocking system',
                 imageCls: 'h-100 w-auto',
-                className: 'bg-lighter'
+                className: 'bg-lighter',
             },
             {
                 image: 'anime_atsume.jpg',
                 title: <Link className={'text-light'} href={LINKS.AnimeAtsumeLive}>Anime Atsume</Link>,
-                description: 'Aggregator for searching and watching anime'
-            }
-        ]
+                description: 'Aggregator for searching and watching anime',
+            },
+        ],
     };
 
     return (
@@ -88,12 +87,12 @@ function Productions(props) {
 
 Productions.propTypes = {
     className: PropTypes.string,
-    titleAnimationCls: PropTypes.string
+    titleAnimationCls: PropTypes.string,
 };
 
 Productions.defaultProps = {
     className: '',
-    titleAnimationCls: ''
+    titleAnimationCls: '',
 };
 
 export default Productions;

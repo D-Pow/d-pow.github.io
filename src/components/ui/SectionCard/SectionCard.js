@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 function SectionCard(props) {
@@ -32,13 +31,13 @@ SectionCard.propTypes = {
     // Option to alternate left/right renders (desktop only)
     flipped: PropTypes.bool,
 
-    children: PropTypes.node
+    children: PropTypes.node,
 };
 
 SectionCard.defaultProps = {
     className: '',
     mainContent: '',
-    flipped: false
+    flipped: false,
 };
 
 export default SectionCard;

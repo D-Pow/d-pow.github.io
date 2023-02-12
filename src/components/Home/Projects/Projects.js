@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import ScrollToShow from '@/components/ui/ScrollToShow';
@@ -13,19 +12,19 @@ function Projects(props) {
             {
                 image: 'atoms_of_confusion.jpg',
                 title: <Link className={'text-primary'} href={LINKS.AtomsOfConfusion}>Atoms of Confusion</Link>,
-                description: 'Research to understand fundamental causes of source code misunderstandings'
+                description: 'Research to understand fundamental causes of source code misunderstandings',
             },
             {
                 image: 'peptide_nmr.jpg',
                 title: <Link className={'text-primary'} href={LINKS.AnticancerPeptides}>Anti-cancer Polypeptides</Link>,
-                description: 'Research to develop polypeptides which destroy tumors upon proteolysis'
+                description: 'Research to develop polypeptides which destroy tumors upon proteolysis',
             },
             {
                 image: 'tardigrade.jpg',
                 title: <Link className={'text-primary'} href={LINKS.TardigradeStratification}>Tardigrade Stratification</Link>,
-                description: 'Research demonstrating tardigrade distributions and populations at various altitudes'
-            }
-        ]
+                description: 'Research demonstrating tardigrade distributions and populations at various altitudes',
+            },
+        ],
     };
     const isDesktop = window.innerWidth >= getGridBreakpoints().sm;
     const desktopScrollToShowDistributeTime = 0.32;
@@ -34,7 +33,7 @@ function Projects(props) {
         distributeClassesBeforeShow: 'animated duration-15',
         distributeSimultaneouslyInterval: isDesktop
             ? desktopScrollToShowDistributeTime
-            : null
+            : null,
     };
     const projectInfoCardEntries = pageText.infoCards.map((props, index) => (
         <div className={'col-sm-4 mb-5 p-0 px-1'} key={index}>
@@ -62,12 +61,12 @@ function Projects(props) {
 
 Projects.propTypes = {
     className: PropTypes.string,
-    titleAnimationCls: PropTypes.string
+    titleAnimationCls: PropTypes.string,
 };
 
 Projects.defaultProps = {
     className: '',
-    titleAnimationCls: ''
+    titleAnimationCls: '',
 };
 
 export default Projects;

@@ -23,5 +23,5 @@ if (process.env.NODE_ENV !== 'production' && module.hot) {
     console.log('hot reloading active');
     module.hot.accept('@/components/App', () => {
         reactRoot.render(renderedApp);
-    })
+    });
 }

@@ -1,4 +1,8 @@
-import React from 'react';
+import {
+    PureComponent,
+    Fragment,
+    createRef,
+} from 'react';
 import PropTypes from 'prop-types';
 
 import { attemptParseObjLiteral } from '@/utils/Objects';
@@ -6,14 +10,14 @@ import { importImageAsync } from '@/utils/Events';
 
 import ForeignObject from './ForeignObject';
 
-class Shape extends React.PureComponent {
+class Shape extends PureComponent {
     svgDimensions = {
         x: 0,
         y: 0,
         width: 100,
-        height: 100
+        height: 100,
     };
-    svgRef = React.createRef();
+    svgRef = createRef();
 
     foreignObjectSizeRatio = 0.8;
     foreignObjectPositionRatio = (1 - this.foreignObjectSizeRatio) / 2; // center x/y position by dividing by 2
@@ -21,14 +25,14 @@ class Shape extends React.PureComponent {
         x: Math.round(this.svgDimensions.width * this.foreignObjectPositionRatio), // remove infinite repeating decimals by rounding
         y: Math.round(this.svgDimensions.height * this.foreignObjectPositionRatio),
         width: this.svgDimensions.width * this.foreignObjectSizeRatio,
-        height: this.svgDimensions.height * this.foreignObjectSizeRatio
+        height: this.svgDimensions.height * this.foreignObjectSizeRatio,
     };
 
     constructor(props) {
         super(props);
         this.state = {
             imageSrc: '',
-            svgBoundingClientRect: {}
+            svgBoundingClientRect: {},
         };
 
         if (this.props.image) {
@@ -38,7 +42,7 @@ class Shape extends React.PureComponent {
 
     updateSvgBoundingClientRect() {
         this.setState({
-            svgBoundingClientRect: attemptParseObjLiteral(this.svgRef.current.getBoundingClientRect())
+            svgBoundingClientRect: attemptParseObjLiteral(this.svgRef.current.getBoundingClientRect()),
         });
     }
 
@@ -89,7 +93,7 @@ class Shape extends React.PureComponent {
                 top: svgBoundingClientRect.top + dy,
                 left: svgBoundingClientRect.left + dx,
                 bottom: svgBoundingClientRect.top + dy + height,
-                right: svgBoundingClientRect.left + dx + width
+                right: svgBoundingClientRect.left + dx + width,
             };
         }
 
@@ -99,7 +103,7 @@ class Shape extends React.PureComponent {
     get middleCoordinates() {
         return {
             x: (this.svgDimensions.x + this.svgDimensions.width) / 2,
-            y: (this.svgDimensions.y + this.svgDimensions.height) / 2
+            y: (this.svgDimensions.y + this.svgDimensions.height) / 2,
         };
     }
 
@@ -116,7 +120,7 @@ class Shape extends React.PureComponent {
             const x = (Math.cos(angleFromRightMostVertex) * radius) + radius;
             const y = (Math.sin(angleFromRightMostVertex) * radius) + radius;
 
-            points.push([Math.round(x), Math.round(y)]);
+            points.push([ Math.round(x), Math.round(y) ]);
         }
 
         return points.map(point => point.join(',')).join(' ');
@@ -140,7 +144,7 @@ class Shape extends React.PureComponent {
         // clip path (image)
         const patternId = Math.random().toString(36).substr(2); // radix = 36 uses both letters and numbers
         return (
-            <React.Fragment>
+            <Fragment>
                 <defs>
                     <clipPath
                         id={patternId}
@@ -160,7 +164,7 @@ class Shape extends React.PureComponent {
                     width={'100%'}
                     height={'100%'}
                 />
-            </React.Fragment>
+            </Fragment>
         );
     }
 
@@ -181,7 +185,7 @@ class Shape extends React.PureComponent {
         const {
             htmlChildren,
             htmlChildrenWrapperCls,
-            htmlChildrenFontReductionOptions
+            htmlChildrenFontReductionOptions,
         } = this.props;
 
         if (!htmlChildren) {
@@ -229,7 +233,7 @@ Shape.propTypes = {
     htmlChildrenFontReductionOptions: ForeignObject.propTypes.htmlChildrenFontReductionOptions,
     svgChildren: PropTypes.node,
     rotation: PropTypes.number, // degrees of rotation of shape
-    aria: PropTypes.object
+    aria: PropTypes.object,
 };
 
 Shape.defaultProps = {
@@ -238,7 +242,7 @@ Shape.defaultProps = {
     fill: '',
     sides: 6,
     rotation: 0,
-    aria: {}
+    aria: {},
 };
 
 export default Shape;

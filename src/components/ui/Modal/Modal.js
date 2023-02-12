@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useRootClose, useBlockDocumentScrolling } from '@/utils/Hooks';
@@ -12,12 +12,12 @@ function Modal({
     preventDocumentScrolling,
     show,
     showCloseButton,
-    onClose
+    onClose,
 }) {
     const [ hideMomentarily, setHideMomentarily ] = useState(false);
     const [ rootWasClosed, resetRootClosed ] = useRootClose(
         { attribute: 'class', value: 'modal-content' },
-        { attribute: 'class', value: 'modal fade' }
+        { attribute: 'class', value: 'modal fade' },
     );
 
     const handleClose = () => {
@@ -46,7 +46,7 @@ function Modal({
     }
 
     useBlockDocumentScrolling(
-        () => (show && preventDocumentScrolling)
+        () => (show && preventDocumentScrolling),
     );
 
     const displayCls = (show && !hideMomentarily) ? 'show' : '';
@@ -59,12 +59,12 @@ function Modal({
 
     return (
         <div className={`modal fade d-flex flex-center ${displayCls}`}
-             style={{
-                 // Bootstrap's CSS for the modal backdrop's opacity and size doesn't work correctly. Override it here
-                 background: 'rgba(0, 0, 0, 0.7)',
-                 width: sizeStyle,
-                 height: sizeStyle
-             }}
+            style={{
+                // Bootstrap's CSS for the modal backdrop's opacity and size doesn't work correctly. Override it here
+                background: 'rgba(0, 0, 0, 0.7)',
+                width: sizeStyle,
+                height: sizeStyle,
+            }}
         >
             <div className={'d-block w-100'}>
                 <div className={'modal-dialog modal-dialog-centered flex-center'}>
@@ -111,7 +111,7 @@ Modal.propTypes = {
     preventDocumentScrolling: PropTypes.bool,
     show: PropTypes.bool,
     showCloseButton: PropTypes.bool,
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
 };
 
 Modal.defaultProps = {
@@ -123,7 +123,7 @@ Modal.defaultProps = {
     preventDocumentScrolling: true,
     show: false,
     showCloseButton: true,
-    onClose: () => {}
+    onClose: () => {},
 };
 
 export default Modal;

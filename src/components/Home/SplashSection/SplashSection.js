@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { memo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Image from '@/components/ui/Image';
@@ -42,7 +42,7 @@ function SplashSection({ spinnerWasClosed }) {
 }
 
 SplashSection.propTypes = {
-    spinnerWasClosed: PropTypes.bool
-}
+    spinnerWasClosed: PropTypes.bool,
+};
 
-export default React.memo(SplashSection);
+export default memo(SplashSection);

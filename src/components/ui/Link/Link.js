@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 function Link(props) {
@@ -20,7 +19,7 @@ Link.propTypes = {
     href: PropTypes.string,
     children: PropTypes.node,
     underlineText: PropTypes.bool,
-    aria: PropTypes.object
+    aria: PropTypes.object,
 };
 
 Link.defaultProps = {
@@ -28,7 +27,7 @@ Link.defaultProps = {
     href: '',
     children: '',
     underlineText: true,
-    aria: {}
+    aria: {},
 };
 
 export default Link;

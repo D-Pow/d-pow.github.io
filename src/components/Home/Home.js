@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import {
+    Fragment,
+    useState,
+} from 'react';
 
 import SplashSection from '@/components/Home/SplashSection';
 import GistSection from '@/components/Home/GistSection';
@@ -21,7 +24,7 @@ function Home() {
     });
 
     return (
-        <React.Fragment>
+        <Fragment>
             <ToastMessage
                 float={ToastMessage.Positions.RIGHT}
                 header={'Please refresh the page'}
@@ -37,7 +40,7 @@ function Home() {
             <Projects titleAnimationCls={titleDisplayAnimationCls} />
             <Pastimes titleAnimationCls={titleDisplayAnimationCls} />
             <PersonalContact titleAnimationCls={titleDisplayAnimationCls} />
-        </React.Fragment>
+        </Fragment>
     );
 }
 

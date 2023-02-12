@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import { isSafariBrowser } from '@/utils/BrowserIdentification';
@@ -13,7 +13,7 @@ function SvgDrawingText({
     animationDurationSeconds,
     textElemProps,
     style,
-    children
+    children,
 }) {
     // override default props with those specified by user
     // but ensure that the default props are set if user didn't specify them all
@@ -30,7 +30,7 @@ function SvgDrawingText({
         ['--stroke-dasharray-length']: strokeDasharrayLength,
         fontSize: `${fontSizeEm}em`, // stroke-dasharray length depends on font-size, so ensure they match
         animationDuration: `${animationDurationSeconds}s, ${fillFadeInDuration}s`,
-        animationDelay: `0s, ${fillFadeInDelay}s`
+        animationDelay: `0s, ${fillFadeInDelay}s`,
     };
 
     return (
@@ -50,7 +50,7 @@ SvgDrawingText.propTypes = {
     animationDurationSeconds: PropTypes.number,
     style: PropTypes.object,
     textElemProps: PropTypes.object,
-    children: PropTypes.node
+    children: PropTypes.node,
 };
 
 SvgDrawingText.defaultProps = {
@@ -66,10 +66,10 @@ SvgDrawingText.defaultProps = {
         y: '50%',
         dominantBaseline: 'middle', // y-axis centering
         textAnchor: 'middle', // x-axis centering
-    }
+    },
 };
 
-const MemoizedSvgDrawingText = React.memo(SvgDrawingText, objEquals);
+const MemoizedSvgDrawingText = memo(SvgDrawingText, objEquals);
 
 MemoizedSvgDrawingText.propTypes = SvgDrawingText.propTypes;
 MemoizedSvgDrawingText.defaultProps = SvgDrawingText.defaultProps;

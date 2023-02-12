@@ -12,19 +12,19 @@ class ContactModal extends React.Component {
             placeholder: {
                 name: 'Name',
                 email: 'Email',
-                message: 'What\'s on your mind?'
+                message: 'What\'s on your mind?',
             },
             error: {
                 name: 'Wait, what\'s your name again?',
                 email: {
                     empty: 'Come on, don\'t be shy',
-                    invalid: 'Hmm, I don\'t seem to recognize that email format. Try again?'
+                    invalid: 'Hmm, I don\'t seem to recognize that email format. Try again?',
                 },
                 message: 'Please add a message (even if it\'s short)',
                 formGeneric: 'Oops, something went wrong. Could you try again?',
-                formNetwork: 'There was a network error. Are you sure you have an internet connection?'
-            }
-        }
+                formNetwork: 'There was a network error. Are you sure you have an internet connection?',
+            },
+        },
     };
 
     state = {
@@ -37,7 +37,7 @@ class ContactModal extends React.Component {
         nameError: '',
         emailError: '',
         messageError: '',
-        formError: ''
+        formError: '',
     };
 
     handleTyping = field => {
@@ -45,9 +45,9 @@ class ContactModal extends React.Component {
             this.setState({
                 [`${field}Input`]: event.target.value,
                 [`${field}Error`]: '',
-                formError: ''
+                formError: '',
             });
-        }
+        };
     };
 
     handleSubmit = () => {
@@ -63,7 +63,7 @@ class ContactModal extends React.Component {
             nameError: '',
             emailError: '',
             messageError: '',
-            formError: ''
+            formError: '',
         });
 
         if (this.state.hasSubmitted) {
@@ -86,7 +86,7 @@ class ContactModal extends React.Component {
         this.setState({
             nameError,
             emailError,
-            messageError
+            messageError,
         });
 
         return (nameError + emailError + messageError) === '';
@@ -127,14 +127,14 @@ class ContactModal extends React.Component {
             const response = await fetch(CONTACT_FORM_URL, {
                 method: 'POST',
                 headers: {
-                    Accept: 'application/json'
+                    Accept: 'application/json',
                 },
-                body: formData
+                body: formData,
             });
             const responseBody = await response.json(); // Check valid response from FormSpree's API
 
             handleAfterSubmit(response.ok && responseBody.ok);
-        } catch(networkError) {
+        } catch (networkError) {
             handleAfterSubmit(false, true);
         }
     }
@@ -230,12 +230,12 @@ class ContactModal extends React.Component {
 
 ContactModal.propTypes = {
     show: PropTypes.bool,
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
 };
 
 ContactModal.defaultProps = {
     show: false,
-    onClose: () => {}
+    onClose: () => {},
 };
 
 export default ContactModal;

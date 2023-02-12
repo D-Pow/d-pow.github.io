@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getRefPropType } from '@/utils/ReactParsing';
@@ -8,7 +7,7 @@ function ForeignObjectChildrenWrapper({
     style,
     wrapperOuterRef,
     wrapperInnerRef,
-    children
+    children,
 }) {
     return (
         <div className={`text-center d-flex h-100 w-100 ${className}`} ref={wrapperOuterRef}>
@@ -28,12 +27,12 @@ ForeignObjectChildrenWrapper.propTypes = {
     style: PropTypes.object,
     wrapperOuterRef: getRefPropType(true),
     wrapperInnerRef: getRefPropType(true),
-    children: PropTypes.node
+    children: PropTypes.node,
 };
 
 ForeignObjectChildrenWrapper.defaultProps = {
     className: '',
-    style: {}
+    style: {},
 };
 
 export default ForeignObjectChildrenWrapper;

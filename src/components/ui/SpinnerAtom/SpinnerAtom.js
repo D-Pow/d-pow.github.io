@@ -26,7 +26,7 @@ function SpinnerAtom({
         'position-fixed',
         'animated',
         'fade-out-disappear',
-        'duration-8'
+        'duration-8',
     ];
 
     if (fullScreen) {
@@ -78,7 +78,7 @@ function SpinnerAtom({
             }, fadeOutDelay);
             onClose();
         }
-    }, [show, fadeOutDelay]);
+    }, [ show, fadeOutDelay ]);
 
     return (show || showMomentarily) ? (
         <div className={cls}>
@@ -104,7 +104,7 @@ SpinnerAtom.propTypes = {
     // handler for when the spinner is fully removed from view (after animation)
     onUnmount: PropTypes.func,
 
-    ...AtomSpinner.propTypes
+    ...AtomSpinner.propTypes,
 };
 
 SpinnerAtom.defaultProps = {

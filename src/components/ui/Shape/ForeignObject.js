@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useDynamicFontSizeShrinking } from '@/utils/Hooks';
@@ -13,8 +12,8 @@ function slightlySmallerThanLargestPossibleFontSize(
     {
         reduceByPx = 0,
         onlyOnMobile,
-        onlyAtLength
-    } = {}
+        onlyAtLength,
+    } = {},
 ) {
     let reduceFontSize = true;
 
@@ -49,7 +48,7 @@ function ForeignObject({
     // reduce font size slightly so text doesn't go all the way to the edge of the foreignObject
     const fontSizeStr = slightlySmallerThanLargestPossibleFontSize(fontSizePx, htmlChildren, htmlChildrenFontReductionOptions);
     const foreignObjectWrapperStyle = {
-        fontSize: fontSizeStr
+        fontSize: fontSizeStr,
     };
 
     const renderedForeignObjectChildrenWrapper = isUsingCustomResizeElement
@@ -93,13 +92,13 @@ ForeignObject.propTypes = {
     height: PropTypes.number,
     htmlChildren: PropTypes.oneOfType([
         PropTypes.node,
-        PropTypes.func // (resizeTextRef, foreignObjectBoundingClientRectInWindow) => (React.Component)
+        PropTypes.func, // (resizeTextRef, foreignObjectBoundingClientRectInWindow) => (React.Component)
     ]),
     htmlChildrenWrapperCls: PropTypes.string,
     htmlChildrenFontReductionOptions: PropTypes.shape({
         reduceByPx: PropTypes.number,
         onlyOnMobile: PropTypes.bool,
-        onlyAtLength: PropTypes.number
+        onlyAtLength: PropTypes.number,
     }),
     foreignObjectBoundingClientRectInWindow: PropTypes.shape({
         x: PropTypes.number,
@@ -109,8 +108,8 @@ ForeignObject.propTypes = {
         top: PropTypes.number,
         left: PropTypes.number,
         bottom: PropTypes.number,
-        right: PropTypes.number
-    })
+        right: PropTypes.number,
+    }),
 };
 
 ForeignObject.defaultProps = {};

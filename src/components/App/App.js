@@ -1,4 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import {
+    lazy,
+    Suspense,
+    memo,
+    useState,
+    useEffect,
+} from 'react';
 import {
     HashRouter as Router,
     Routes,
@@ -24,16 +30,16 @@ import { useWindowResize } from '@/utils/Hooks';
  */
 
 const homeImportPromise = import(/* webpackChunkName: 'Home' */ '@/components/Home');
-const Home = React.lazy(() => homeImportPromise);
+const Home = lazy(() => homeImportPromise);
 
 const aboutImportPromise = import(/* webpackChunkName: 'About' */ '@/components/About');
-const About = React.lazy(() => aboutImportPromise);
+const About = lazy(() => aboutImportPromise);
 
 const headerImportPromise = import(/* webpackChunkName: 'Header' */ '@/components/Header');
-const Header = React.lazy(() => headerImportPromise);
+const Header = lazy(() => headerImportPromise);
 
 const footerImportPromise = import(/* webpackChunkName: 'Footer' */ '@/components/Footer');
-const Footer = React.lazy(() => footerImportPromise);
+const Footer = lazy(() => footerImportPromise);
 
 
 /** @typedef {import('react-router-dom').RouteProps[]} Routes */
@@ -66,7 +72,7 @@ function App({ imagesStillLoading, setContextState }) {
     function handleSpinnerClose() {
         setContextState(prevState => ({
             ...prevState,
-            [AppContextFields.GLOBAL_SPINNER_CLOSED]: true
+            [AppContextFields.GLOBAL_SPINNER_CLOSED]: true,
         }));
     }
 
@@ -91,7 +97,7 @@ function App({ imagesStillLoading, setContextState }) {
     ));
 
     if (isMicrosoftBrowser()) {
-        return <IncompatibleBrowserFallback />
+        return <IncompatibleBrowserFallback />;
     }
 
     const renderedSpinner = (
@@ -111,7 +117,7 @@ function App({ imagesStillLoading, setContextState }) {
             className="App text-center font-didot-serif"
             key={`${windowSizeState.prevWidth}x${windowSizeState.prevHeight}`}
         >
-            <React.Suspense
+            <Suspense
                 fallback={renderedSpinner}
             >
                 <Router>
@@ -122,9 +128,9 @@ function App({ imagesStillLoading, setContextState }) {
                     <Footer />
                 </Router>
                 {renderedSpinner}
-            </React.Suspense>
+            </Suspense>
         </div>
     );
 }
 
-export default React.memo(App);
+export default memo(App);

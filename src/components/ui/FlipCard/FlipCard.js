@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 function FlipCard(props) {
@@ -26,7 +25,7 @@ function FlipCard(props) {
 
 FlipCard.AXES = {
     X: 'x',
-    Y: 'y'
+    Y: 'y',
 };
 
 FlipCard.propTypes = {
@@ -35,14 +34,14 @@ FlipCard.propTypes = {
     durationCls: PropTypes.string,
     isFlipped: PropTypes.bool,
     showDefault: PropTypes.node,
-    showOnClick: PropTypes.node
+    showOnClick: PropTypes.node,
 };
 
 FlipCard.defaultProps = {
     axis: FlipCard.AXES.X,
     className: '',
     durationCls: 'duration-5',
-    isFlipped: false
+    isFlipped: false,
 };
 
 export default FlipCard;

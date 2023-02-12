@@ -1,17 +1,17 @@
-import React from 'react';
+import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import '@/styles/Header.scss';
 
-class Header extends React.Component {
+class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
             classList: [
                 'header',
-                'float-right'
-            ]
+                'float-right',
+            ],
         };
         this.handleScroll = this.handleScroll.bind(this);
     }
@@ -31,7 +31,7 @@ class Header extends React.Component {
     }
 
     toggleHeader(hide) {
-        const classList = [...this.state.classList];
+        const classList = [ ...this.state.classList ];
         const className = 'header-hidden';
         const isHidden = classList.indexOf(className) >= 0;
         if (hide && !isHidden) {
@@ -39,7 +39,7 @@ class Header extends React.Component {
         } else if (!hide && isHidden) {
             classList.splice(isHidden, 1);
         }
-        this.setState({ classList: classList});
+        this.setState({ classList: classList });
     }
 
     isActivePath(routeIndex) {
@@ -52,7 +52,7 @@ class Header extends React.Component {
         const routeLinks = this.props.navRoutes.map((routeAria, index) => {
             const { path, name } = routeAria;
             const active = this.isActivePath(index);
-            const classNames = ['nav-link'];
+            const classNames = [ 'nav-link' ];
             if (active) {
                 routeAria.active = true;
                 classNames.push('active');
@@ -83,8 +83,8 @@ class Header extends React.Component {
 Header.propTypes = {
     navRoutes: PropTypes.arrayOf(PropTypes.shape({
         path: PropTypes.string.isRequired,
-        component: PropTypes.func.isRequired
-    }))
+        component: PropTypes.func.isRequired,
+    })),
 };
 
 export default Header;

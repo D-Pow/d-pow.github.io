@@ -1,4 +1,3 @@
-import React from 'react';
 
 import Link from '@/components/ui/Link';
 import Image from '@/components/ui/Image';

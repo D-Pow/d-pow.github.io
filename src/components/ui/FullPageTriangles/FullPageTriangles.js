@@ -1,19 +1,19 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Triangle from '@/components/ui/Triangle';
 import { isMobileBrowser } from '@/utils/BrowserIdentification';
 import { getRandomColor } from '@/utils/Scss';
 
-class FullPageTriangles extends React.Component {
+class FullPageTriangles extends Component {
     constructor(props) {
         super(props);
         this.state = {
             windowSize: {
                 width: window.innerWidth,
-                height: window.innerHeight
+                height: window.innerHeight,
             },
-            triangleColorMatrix: []
+            triangleColorMatrix: [],
         };
     }
 
@@ -33,8 +33,8 @@ class FullPageTriangles extends React.Component {
         this.setState({
             windowSize: {
                 width: window.innerWidth,
-                height: window.innerHeight
-            }
+                height: window.innerHeight,
+            },
         });
         this.updateTriangleColorMatrix();
     };
@@ -69,7 +69,7 @@ class FullPageTriangles extends React.Component {
             for (let colIndex = 0; colIndex < numTrianglesInRow; colIndex++) {
                 if (!row[colIndex]) {
                     const neighboringColors = this.getNeighboringColors(rowIndex, colIndex, chosenColors);
-                    let color = getRandomColor(neighboringColors, ['primary', 'secondary', 'tertiary', 'info', 'dark']);
+                    const color = getRandomColor(neighboringColors, [ 'primary', 'secondary', 'tertiary', 'info', 'dark' ]);
                     chosenColors[rowIndex].push(color);
                 }
             }
@@ -104,11 +104,11 @@ class FullPageTriangles extends React.Component {
 }
 
 FullPageTriangles.propTypes = {
-    numRows: PropTypes.number
+    numRows: PropTypes.number,
 };
 
 FullPageTriangles.defaultProps = {
-    numRows: 8
+    numRows: 8,
 };
 
 export default FullPageTriangles;

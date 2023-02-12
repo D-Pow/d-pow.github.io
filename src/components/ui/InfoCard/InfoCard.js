@@ -32,7 +32,7 @@ InfoCard.propTypes = {
     title: PropTypes.node,
     description: PropTypes.node,
     expandOnHoverInDesktop: PropTypes.bool,
-    aria: PropTypes.object
+    aria: PropTypes.object,
 };
 
 InfoCard.defaultProps = {
@@ -41,7 +41,7 @@ InfoCard.defaultProps = {
     title: '',
     description: '',
     expandOnHoverInDesktop: true,
-    aria: {}
+    aria: {},
 };
 
 export default InfoCard;

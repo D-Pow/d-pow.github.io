@@ -5,7 +5,7 @@ import SvgDrawingText from '@/components/ui/SvgDrawingText';
 import { distributeValuesEvenlyBetween } from '@/utils/Numbers';
 import { objEquals } from '@/utils/Objects';
 
-function EvenlySpacedSkewedDrawingTexts({ textArray = [] }) {
+function EvenlySpacedSkewedDrawingTexts({ textArray = []}) {
     /*
      * Distribute text elements vertically such that there are equal
      * entries before/after the Y midpoint (y=50%), and closer to the center
@@ -24,7 +24,7 @@ function EvenlySpacedSkewedDrawingTexts({ textArray = [] }) {
             style={{ transform: 'skewY(-5deg)' }}
             textElemProps={{
                 x: centerX,
-                y: `${Math.round(evenlySpacedYValues[i])}%`
+                y: `${Math.round(evenlySpacedYValues[i])}%`,
             }}
         >
             {text}
@@ -33,10 +33,10 @@ function EvenlySpacedSkewedDrawingTexts({ textArray = [] }) {
 }
 
 EvenlySpacedSkewedDrawingTexts.propTypes = {
-    textArray: PropTypes.arrayOf(PropTypes.string)
+    textArray: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default React.memo(
     EvenlySpacedSkewedDrawingTexts,
-    objEquals
+    objEquals,
 );

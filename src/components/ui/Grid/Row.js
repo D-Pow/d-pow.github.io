@@ -21,13 +21,13 @@ class Row extends React.Component {
 
 Row.propTypes = {
     children: props => {
-        for (let child of React.Children.toArray(props.children)) {
+        for (const child of React.Children.toArray(props.children)) {
             if (!childIsOfType(child, Column)) {
                 return new Error(`Invalid child ${getChildName(child)} passed to Row. Expected Column.`);
             }
         }
     },
-    gridTemplateAreas: PropTypes.arrayOf(PropTypes.string)
+    gridTemplateAreas: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Row;

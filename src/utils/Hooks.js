@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect, useRef } from 'react';
+import { useState, useReducer, useEffect, useRef } from 'react';
 
 import { asNumber } from '@/utils/Numbers';
 import { debounce, elementIsInClickPath, getClickPath, setDocumentScrolling } from '@/utils/Events';
@@ -72,7 +72,7 @@ export function withGlobalState(hook, setGlobalState, initialGlobalStateVal) {
             globalHookState,
             setGlobalHookState,
             hookReturnVal,
-            hookCallerId
+            hookCallerId,
         );
 
         return hookReturnVal;
@@ -105,8 +105,8 @@ export function useWindowEvent(
         nestedEventField = null,
         initialEventState = null,
         handleEvent = null,
-        useEffectInputs = []
-    } = {}
+        useEffectInputs = [],
+    } = {},
 ) {
     const [ eventState, setEventState ] = useState(initialEventState);
     const isUsingOwnEventHandler = typeof handleEvent === typeof setEventState;
@@ -184,19 +184,19 @@ export function useWindowResize(debounceDelay = 1000) {
     const generateInitialState = () => ({
         wasResized: false,
         prevWidth: window.innerWidth,
-        prevHeight: window.innerHeight
+        prevHeight: window.innerHeight,
     });
 
     function handleResize(setState) {
         setState(prevState => ({
             ...prevState,
-            wasResized: true
+            wasResized: true,
         }));
     }
 
     const [ windowSizeState, setWindowSizeState ] = useWindowEvent('resize', {
         initialEventState: generateInitialState(),
-        handleEvent: debounce(handleResize, debounceDelay)
+        handleEvent: debounce(handleResize, debounceDelay),
     });
 
     function resetWasResized() {
@@ -262,8 +262,8 @@ export const useBlockDocumentScrolling = (() => {
     return withGlobalState(
         useBlockDocumentScrollingHook,
         setTrackAllHookCallsState,
-        []
-    )
+        [],
+    );
 })();
 
 /**
@@ -308,7 +308,7 @@ export function useHover(overrideBoundingClientRect) {
     const [ isHovered ] = useWindowEvent('mousemove', {
         initialEventState: false,
         handleEvent: handleMouseMove,
-        useEffectInputs: [ ref.current, overrideBoundingClientRect ]
+        useEffectInputs: [ ref.current, overrideBoundingClientRect ],
     });
 
     return [ ref, isHovered ];
@@ -326,7 +326,7 @@ export function useHover(overrideBoundingClientRect) {
  */
 export function useTimedArrayToggle(arrayLength, intervalTimeMs, allowBackwardsToggle = false) {
     const toggleArrayEntryReducer = (prevArray, index) => {
-        const toggledEntries = [...prevArray];
+        const toggledEntries = [ ...prevArray ];
         toggledEntries[index] = !toggledEntries[index];
         return toggledEntries;
     };
@@ -434,7 +434,7 @@ export function useAfterAnimation(afterAnimationFn = () => {}) {
             animationRef.current.removeEventListener('transitionend', handleAfterAnimation);
             animationRef.current.removeEventListener('animationend', handleAfterAnimation);
             animationRef.current.removeEventListener('webkitAnimationEnd', handleAfterAnimation);
-        }
+        };
     }, [ animationRef.current, handleAfterAnimation ]);
 
     return animationRef;
@@ -454,7 +454,7 @@ export function useServiceWorkerBroadcastChannel(messageEventListener, channelNa
 
     try {
         broadcastChannel = new BroadcastChannel(channelName);
-    } catch(e) {
+    } catch (e) {
         // BroadcastChannel not defined, likely because client is using Safari or IE
     }
 

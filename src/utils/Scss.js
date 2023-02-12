@@ -105,9 +105,9 @@ export function getDurationTimeMsFromClassName(className, {
 export function getRandomColor(colorsToAvoid, onlyColors = null) {
     let forbiddenColors;
     if (colorsToAvoid == null) {
-        forbiddenColors = [''];
-    } else if (typeof(colorsToAvoid) === 'string') {
-        forbiddenColors = [colorsToAvoid];
+        forbiddenColors = [ '' ];
+    } else if (typeof (colorsToAvoid) === 'string') {
+        forbiddenColors = [ colorsToAvoid ];
     } else {
         forbiddenColors = colorsToAvoid;
     }
@@ -119,7 +119,7 @@ export function getRandomColor(colorsToAvoid, onlyColors = null) {
     let chosenColor;
     do {
         chosenColor = validColors[Math.floor(randomNumber(validColors.length))];
-    } while(forbiddenColors.includes(chosenColor) || forbiddenColors.includes(themeColorsObj[chosenColor]));
+    } while (forbiddenColors.includes(chosenColor) || forbiddenColors.includes(themeColorsObj[chosenColor]));
 
     // If chosenColor is a theme color, the returned value will be a hex so that it can be used in any CSS field
     // Thus, forbiddenColors will need to search the hex value instead of the named value

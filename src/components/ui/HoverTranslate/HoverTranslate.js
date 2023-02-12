@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useHover } from '@/utils/Hooks';
@@ -19,7 +18,7 @@ function HoverTranslate({
     japanese,
     passedRef,
     boundingClientRectForHover,
-    aria
+    aria,
 }) {
     // Since the absolute-positioned divs cover one another, the :hover only gets applied to the element rendered
     // on top (the latter of the div.absolute-center). Thus, a set of .hover-(show|hide) CSS classes won't work
@@ -58,15 +57,15 @@ HoverTranslate.propTypes = {
     animationCls: PropTypes.string,
     english: PropTypes.shape({
         title: PropTypes.node,
-        description: PropTypes.node
+        description: PropTypes.node,
     }),
     japanese: PropTypes.shape({
         title: PropTypes.node,
-        description: PropTypes.node
+        description: PropTypes.node,
     }),
     passedRef: PropTypes.object,
     boundingClientRectForHover: PropTypes.object,
-    aria: PropTypes.object
+    aria: PropTypes.object,
 };
 
 HoverTranslate.defaultProps = {
@@ -74,7 +73,7 @@ HoverTranslate.defaultProps = {
     animationCls: 'animated fade duration-5',
     english: { title: '', description: '' },
     japanese: { title: '', description: '' },
-    aria: {}
+    aria: {},
 };
 
 export default HoverTranslate;

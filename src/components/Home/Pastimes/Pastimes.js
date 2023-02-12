@@ -20,7 +20,7 @@ const TextInShape = ({ textToRender, reduceByPx, index }) => {
             htmlChildrenWrapperCls={'text-light'}
             htmlChildrenFontReductionOptions={{
                 // reduce by number of pastimes to shrink how much space they take up
-                reduceByPx
+                reduceByPx,
             }}
             sides={sides}
             fill={getThemeColors().primary}
@@ -35,7 +35,7 @@ function Pastimes(props) {
         hoverTranslate: {
             english: {
                 title: 'Japanese',
-                description: 'I have been learning Japanese for a little over a year. It\'s a lot of fun!'
+                description: 'I have been learning Japanese for a little over a year. It\'s a lot of fun!',
             },
             japanese: {
                 title: (
@@ -43,33 +43,33 @@ function Pastimes(props) {
                         日本語
                     </div>
                 ),
-                description: 'ちょっと 一年 以上 日本語 を 学んで います。楽しい です よ！'
-            }
+                description: 'ちょっと 一年 以上 日本語 を 学んで います。楽しい です よ！',
+            },
         },
         otherPastimes: [
             {
                 showDefault: 'Open-source projects',
-                showWithEasterEgg: 'Check out MockRequests and Anime Atsume'
+                showWithEasterEgg: 'Check out MockRequests and Anime Atsume',
             },
             {
                 showDefault: 'Cooking',
-                showWithEasterEgg: 'I just throw stuff in a pot and hope it tastes okay'
+                showWithEasterEgg: 'I just throw stuff in a pot and hope it tastes okay',
             },
             {
                 showDefault: 'Rock climbing',
-                showWithEasterEgg: 'Well... at least I used to go'
+                showWithEasterEgg: 'Well... at least I used to go',
             },
             {
                 showDefault: 'Playing guitar',
-                showWithEasterEgg: 'Kind of, here and there'
+                showWithEasterEgg: 'Kind of, here and there',
             },
-        ]
+        ],
     };
     const themeColors = getThemeColors();
     const [ otherPastimesToggleArray, triggerToggleArray ] = useTimedArrayToggle(
         pageText.otherPastimes.length,
         400,
-        true
+        true,
     );
 
     // Safari doesn't correctly consider `foreignObject` as an SVG rendering root
@@ -91,8 +91,8 @@ function Pastimes(props) {
                         fontSize: (
                             (window.innerWidth <= getGridBreakpoints().sm)
                             || (window.innerWidth >= getGridBreakpoints().lg)
-                        ) ? '20px' : '14px'
-                    }
+                        ) ? '20px' : '14px',
+                    },
                 }}
             />
         </React.Fragment>
@@ -191,12 +191,12 @@ function Pastimes(props) {
 
 Pastimes.propTypes = {
     className: PropTypes.string,
-    titleAnimationCls: PropTypes.string
+    titleAnimationCls: PropTypes.string,
 };
 
 Pastimes.defaultProps = {
     className: '',
-    titleAnimationCls: ''
+    titleAnimationCls: '',
 };
 
 export default Pastimes;

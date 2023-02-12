@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 function SpinnerCircle(props) {
@@ -12,7 +11,7 @@ function SpinnerCircle(props) {
 }
 
 SpinnerCircle.propTypes = {
-    show: PropTypes.bool
+    show: PropTypes.bool,
 };
 
 export default SpinnerCircle;

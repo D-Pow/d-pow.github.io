@@ -18,7 +18,7 @@ export const COLORS = [
     'rosybrown',
     'royalblue',
     'salmon',
-    'sandybrown'
+    'sandybrown',
 ];
 
 export const SHOW_ELEMENT_SCROLL_THRESHOLD = 3/4;
@@ -45,7 +45,7 @@ export const LINKS = {
     AnticancerPeptides: 'https://www.ncbi.nlm.nih.gov/pubmed/29897657',
     TardigradeStratification: 'https://bioone.org/journals/Transactions-of-the-Kansas-Academy-of-Science/volume-118/issue-3-4/062.118.0306/Tardigrades-of-the-Canopy-Evidence-of-Stratification/10.1660/062.118.0306.short',
     EtradeHome: 'https://etrade.com',
-    EtradeIcon: 'https://cdn.etrade.net/1/19042220580.0/aempros/etc/designs/responsive-etrade/pagemeta/images/favicon-16x16.png'
+    EtradeIcon: 'https://cdn.etrade.net/1/19042220580.0/aempros/etc/designs/responsive-etrade/pagemeta/images/favicon-16x16.png',
 };
 
 // Submit contact requests to FormSpree so bots can't scan for my email address

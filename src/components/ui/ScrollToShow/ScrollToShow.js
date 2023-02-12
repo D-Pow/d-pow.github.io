@@ -148,7 +148,7 @@ class ScrollToShow extends PureComponent {
     }
 
     toggleChildIsShown = (index) => {
-        const newShownChildren = [...this.state.shownChildren];
+        const newShownChildren = [ ...this.state.shownChildren ];
 
         newShownChildren[index] = true;
 
