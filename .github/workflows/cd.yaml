@@ -237,6 +237,7 @@ jobs:
           # jq -r '.version' package.json
           # npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
         run: |
+          git pull
           npm run build
           git checkout gh-pages
           ( for path in $(ls --ignore=dist --ignore=.git --ignore=package.json); do rm -rf "$path"; done; )
