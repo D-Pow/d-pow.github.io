@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { objEquals } from '@/utils/Objects';
+import { setDocumentScrolling } from '@/utils/Events';
 import { useBlockDocumentScrolling } from '@/utils/Hooks';
 import { getDurationTimeMsFromClassName } from '@/utils/Scss';
 
@@ -15,7 +16,8 @@ function SpinnerAtom({
     onClose,
     onUnmount,
     numElectrons,
-    electronColors
+    electronColors,
+    useBlockDocumentScrollingHook,
 }) {
     const [ showMomentarily, setShowMomentarily ] = useState(false);
     const classes = [
@@ -42,9 +44,18 @@ function SpinnerAtom({
     const cls = classes.join(' ');
     const fadeOutDelay = getDurationTimeMsFromClassName(cls) + 200; // slightly longer time than .duration-XX class
 
-    useBlockDocumentScrolling(
-        () => (show && preventDocumentScrolling)
-    );
+    useEffect(() => {
+        if (useBlockDocumentScrollingHook) {
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            useBlockDocumentScrolling(
+                () => (show && preventDocumentScrolling),
+            );
+        } else if (show && preventDocumentScrolling) {
+            setDocumentScrolling(false);
+        } else {
+            setDocumentScrolling(true);
+        }
+    }, [ show, preventDocumentScrolling, useBlockDocumentScrollingHook ]);
 
     useEffect(() => {
         /**
@@ -101,8 +112,9 @@ SpinnerAtom.defaultProps = {
     fullScreen: true,
     show: false,
     preventDocumentScrolling: true,
+    useBlockDocumentScrollingHook: false,
     onClose: () => {},
-    onUnmount: () => {}
+    onUnmount: () => {},
 };
 
 export default React.memo(SpinnerAtom, objEquals);

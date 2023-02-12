@@ -94,6 +94,13 @@ function App({ imagesStillLoading, setContextState }) {
         return <IncompatibleBrowserFallback />
     }
 
+    const renderedSpinner = (
+        <SpinnerAtom
+            show={showSpinner}
+            onClose={handleSpinnerClose}
+        />
+    );
+
     // Force the app to re-render on window resize to make renders
     // dependent on isMobileBrowser() to be responsive, since that
     // util function isn't responsive on its own.
@@ -105,13 +112,7 @@ function App({ imagesStillLoading, setContextState }) {
             key={`${windowSizeState.prevWidth}x${windowSizeState.prevHeight}`}
         >
             <React.Suspense
-                fallback={(
-                    <SpinnerAtom
-                        preventDocumentScrolling={true}
-                        show={showSpinner}
-                        onClose={handleSpinnerClose}
-                    />
-                )}
+                fallback={renderedSpinner}
             >
                 <Router>
                     {/* <Header navRoutes={routes} /> */}
@@ -120,6 +121,7 @@ function App({ imagesStillLoading, setContextState }) {
                     </Routes>
                     <Footer />
                 </Router>
+                {renderedSpinner}
             </React.Suspense>
         </div>
     );
