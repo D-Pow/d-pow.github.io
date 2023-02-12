@@ -175,23 +175,32 @@ jobs:
       #
       # TODO: Try the cache instead of storing artifacts manually:
       #   - Related - Cache: https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
-      - name: Client CD - Download CI artifacts
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WORKFLOW_RUN_ID: ${{ github.run_id }}
-        run: |
-          gh run download --dir ci-workflow-artifact-output --pattern '*' $(gh run list --limit 1 --workflow CI | tail -n +1 | awk '{ print $(NF - 2) }')
-          mkdir dist
-          cp -R ci-workflow-artifact-output/*/* dist
-          rm -rf ci-workflow-artifact-output
+      # - name: Client CD - Download CI artifacts
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     WORKFLOW_RUN_ID: ${{ github.run_id }}
+      #   run: |
+      #     gh run download --dir ci-workflow-artifact-output --pattern '*' $(gh run list --limit 1 --workflow CI | tail -n +1 | awk '{ print $(NF - 2) }')
+      #     mkdir dist
+      #     cp -R ci-workflow-artifact-output/*/* dist
+      #     rm -rf ci-workflow-artifact-output
+      #
+      # # Only necessary if running npm scripts in CD, which we are for `deploy`
+      # - name: Client CD - Install
+      #   id: cd-client-install
+      #   shell: bash
+      #   working-directory: ./
+      #   run: |
+      #     npm install
 
-      # Only necessary if running npm scripts in CD, which we are for `deploy`
-      - name: Client CD - Install
-        id: cd-client-install
-        shell: bash
-        working-directory: ./
+      - if: ${{ steps.ci-cache.outputs.cache-hit != 'true' }}
+        name: Client CD - Download CI artifacts
+        # continue-on-error: true
         run: |
+          git pull
           npm install
+          npm run build
+
 
       - name: Client CD - Increment version
         id: cd-client-version-bump
@@ -229,7 +238,6 @@ jobs:
           # jq -r '.version' package.json
           # npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
         run: |
-          npm run build
           git checkout gh-pages
           ( for path in $(ls --ignore=dist --ignore=.git); do rm -rf "$path"; done; )
           cp -R dist/* .
