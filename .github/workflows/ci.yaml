@@ -74,4 +74,3 @@ jobs:
           name: ci-build-output-artifacts
           path: |
             dist
-            node_modules
