@@ -48,6 +48,13 @@
   "jest": {
     "preset": "./config/jest/jest.config.mjs"
   },
+  "keywords": [
+    "Devon Powell",
+    "web development",
+    "profile",
+    "typescript",
+    "website"
+  ],
   "overrides": {
     "react": "$react",
     "react-dom": "$react-dom",
