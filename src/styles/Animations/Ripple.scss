@@ -1,4 +1,6 @@
-@import "../Common";
+@use "../Common";
+
+@import "~bootstrap/scss/bootstrap";
 
 $transformTransitionTime: 1.5s;
 $opacityTransitionTime: 2s;

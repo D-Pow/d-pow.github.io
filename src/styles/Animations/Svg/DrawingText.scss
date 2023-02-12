@@ -1,10 +1,6 @@
 // length of `stroke-dasharray` is about 75 per 1em font-size
 $strokeDasharrayLengthForFontSize1em: 75;
 
-:export {
-    strokeDasharrayLengthForFontSize1em: $strokeDasharrayLengthForFontSize1em;
-}
-
 /**
  * As explained [here](https://css-tricks.com/svg-line-animation-works/):
  * - Make the path outline/border a dashed line instead of solid line with
@@ -51,4 +47,8 @@ $strokeDasharrayLengthForFontSize1em: 75;
     to {
         fill-opacity: 1;
     }
+}
+
+:export {
+    strokeDasharrayLengthForFontSize1em: $strokeDasharrayLengthForFontSize1em;
 }

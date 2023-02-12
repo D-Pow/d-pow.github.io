@@ -1,3 +1,5 @@
+@use "sass:map";
+
 @import 'Common';
 
 .triangle-section {
@@ -7,6 +9,6 @@
 
 .bg-dark-fadeout {
   $opacity: 0.9;
-  background: rgba($dark, $opacity);
+  background: rgba(map.get($theme-colors, "dark"), $opacity);
   box-shadow: 0 0 20px 15px rgba($dark, $opacity) !important;
 }

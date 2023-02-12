@@ -1,8 +1,10 @@
+@use "sass:math";
+
 $triangleBaseLength: 100px;
 $triangleHeight: 86px;
-$triangleBaseLengthHalved: ($triangleBaseLength / 2);
-$triangleHeightToCenter: ($triangleHeight * 2 / 3);
-$upsideDownTriangleHeightToCenter: ($triangleHeight / 3);
+$triangleBaseLengthHalved: math.div($triangleBaseLength, 2);
+$triangleHeightToCenter: math.div($triangleHeight * 2, 3);
+$upsideDownTriangleHeightToCenter: math.div($triangleHeight, 3);
 
 .triangle {
   display: inline-block;

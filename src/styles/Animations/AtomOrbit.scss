@@ -1,4 +1,6 @@
-@import '../Shapes';
+@use "sass:math";
+
+@use '../Shapes';
 
 $atomContainerSize: 200px;
 $electronSize: 36px;
@@ -36,8 +38,8 @@ $atomOrbitPathBorderWidth: 6px;
     height: $electronSize;
 }
 
-$halfElectronSize: $electronSize / 2;
-$halfBorderWidth: $atomOrbitPathBorderWidth / 2;
+$halfElectronSize: math.div($electronSize, 2);
+$halfBorderWidth: math.div($atomOrbitPathBorderWidth, 2);
 
 @keyframes atomElectronOrbit {
     0% {

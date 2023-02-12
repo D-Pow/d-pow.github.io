@@ -1,10 +1,12 @@
-@import "Animations/Fade";
-@import "Animations/Spin";
-@import "Animations/Flip";
-@import "Animations/Slide";
-@import "Animations/Hover";
-@import "Animations/Ripple";
-@import "Animations/Svg/DrawingText";
+@use "sass:math";
+
+@use "Animations/Fade";
+@use "Animations/Spin";
+@use "Animations/Flip";
+@use "Animations/Slide";
+@use "Animations/Hover";
+@use "Animations/Ripple";
+@use "Animations/Svg/DrawingText";
 
 .animated {
     opacity: 0;
@@ -20,7 +22,7 @@
 }
 
 @for $time from 1 through 20 {
-    $duration: $time/10 * 1s;
+    $duration: math.div($time, 10) * 1s;
     .duration-#{$time} {
         animation-duration: $duration !important;
         transition-duration: $duration !important;
