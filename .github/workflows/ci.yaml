@@ -65,22 +65,19 @@ jobs:
             dist
           key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./+(src|test|tests|config|mocks)/**') }}
 
-      - if: ${{ failure() }}
-        name: Client Verify
+      - name: Client Verify
         # Import reusable GitHub Action logic via `uses`
         uses: ./.github/workflows/actions/client
 
       # Separate this step from `verify` to ensure linting, type-checking, etc. pass before using resources for building the app
-      - if: ${{ failure() }}
-        name: Client Build
+      - name: Client Build
         id: client-build
         shell: bash
         working-directory: ./
         run: |
           npm run build
 
-      - if: ${{ failure() }}
-        name: Client cache build and install artifacts
+      - name: Client cache build and install artifacts
         id: ci-cache
         uses: actions/cache@v3
         env:
