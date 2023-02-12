@@ -193,7 +193,7 @@ jobs:
       #   run: |
       #     npm install
 
-      - name: Client CD - Download CI cache
+      - name: Client CD Build - Download CI cache
         uses: actions/cache/restore@v3
         env:
           cache-name: ci-cache
@@ -203,14 +203,18 @@ jobs:
             dist
           # ( declare origIFS="$IFS"; declare IFS=$'\n'; declare fileHashes=(); for file in $(find src/ -type f); do fileHashes+=("$(sha256sum "$file")"); done; declare fileHashesStr="$(printf "%s\n" "${_fileHashes[@]}")"; fileHashesStr="${fileHashesStr/%\n}"; declare fileHashesSortedByFilename="$(echo "$fileHashesStr" | sort -V -k 2)"; declare dirHash="$(echo -n "$fileHashesSortedByFilename" | sha256sum | awk '{ print $1 }')"; echo "$dirHash"; )
           key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**') }}
+        continue-on-error: false
 
       # See:
       #   - Cache GitHub Workflow action docs: https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#example-using-the-cache-action
       #   - Cache-restore between workflows: https://github.com/actions/cache#example-cache-workflow
       # Only run next step if cache-hit failed
-      - if: ${{ steps.ci-cache.outputs.cache-hit != 'true' }}
+      # - if: ${{ steps.ci-cache.outputs.cache-hit != 'true' }}
+      - if: ${{ failure() }}
+        # continue-on-error: false
         name: Client CD - Generate CI artifacts
         run: |
+          echo ${{ steps.ci-cache.outputs.cache-hit }}
           git pull
           npm install
           npm run build
@@ -227,6 +231,26 @@ jobs:
       actions: write
       contents: write
     steps:
+      - name: Checkout repository branch
+        uses: actions/checkout@v2
+
+      - name: Set NodeJS version
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Client CD Deploy - Download CI cache
+        uses: actions/cache/restore@v3
+        env:
+          cache-name: ci-cache
+        with:
+          path: |
+            node_modules
+            dist
+          # ( declare origIFS="$IFS"; declare IFS=$'\n'; declare fileHashes=(); for file in $(find src/ -type f); do fileHashes+=("$(sha256sum "$file")"); done; declare fileHashesStr="$(printf "%s\n" "${_fileHashes[@]}")"; fileHashesStr="${fileHashesStr/%\n}"; declare fileHashesSortedByFilename="$(echo "$fileHashesStr" | sort -V -k 2)"; declare dirHash="$(echo -n "$fileHashesSortedByFilename" | sha256sum | awk '{ print $1 }')"; echo "$dirHash"; )
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**') }}
+        continue-on-error: false
+
       - name: Client CD - Increment version
         id: cd-client-version-bump
         # Not required since `npm version` already makes a commit for us, but for reference:
@@ -244,7 +268,7 @@ jobs:
       #
       # Set `user.name` and `user.email` for ~/.gitconfig inline via the `--user` flag for `gh-pages`:
       #   npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
-      - name: Deploy application
+      - name: CD - Deploy application
         # run: |
         #   git config --list
         #   git config --global user.name ${{ env.gitUserName }}
@@ -264,6 +288,7 @@ jobs:
           # npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
         run: |
           git pull
+          ls -FlAh
           npm run build
           git checkout gh-pages
           ( for path in $(ls --ignore=dist --ignore=.git --ignore=package.json); do rm -rf "$path"; done; )

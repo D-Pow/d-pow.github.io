@@ -55,27 +55,32 @@ jobs:
         with:
           node-version: 16
 
-      - name: Client Verify
+      - name: Client CI - Download CI cache
+        uses: actions/cache/restore@v3
+        env:
+          cache-name: ci-cache
+        with:
+          path: |
+            node_modules
+            dist
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**') }}
+
+      - if: ${{ failure() }}
+        name: Client Verify
         # Import reusable GitHub Action logic via `uses`
         uses: ./.github/workflows/actions/client
 
       # Separate this step from `verify` to ensure linting, type-checking, etc. pass before using resources for building the app
-      - name: Client Build
+      - if: ${{ failure() }}
+        name: Client Build
         id: client-build
         shell: bash
         working-directory: ./
         run: |
           npm run build
 
-      - name: Client Build Output
-        id: ci-build-output
-        uses: actions/upload-artifact@v3
-        with:
-          name: ci-build-output-artifacts
-          path: |
-            dist
-
-      - name: Client cache build and install artifacts
+      - if: ${{ failure() }}
+        name: Client cache build and install artifacts
         id: ci-cache
         uses: actions/cache@v3
         env:
