@@ -195,14 +195,14 @@ jobs:
 
       - name: Client CD - Increment version
         id: cd-client-version-bump
-          # git commit -a "Patch to $(jq -r '.version' package.json)"
-          # git push
+        # Not required since `npm version` already makes a commit for us, but for reference:
+        #   git commit -am "Patch to v$(jq -r '.version' package.json)"
         run: |
           git config --global user.name ${{ env.gitUserName }}
           git config --global user.email ${{ env.gitUserEmail }}
           git pull
-          jq -r '.version' package.json
           npm version patch
+          git push
 
       # Ignore pre-/post- npm scripts via `npm run --ignore-scripts <my-script>`.
       # This could be useful for, e.g. scripts like `deploy` since `predeploy` (`npm run build`)
@@ -226,6 +226,12 @@ jobs:
           # rm -rf dist
           # ls -FlAh
           # ls -FlAh dist || exit 0
+          # jq -r '.version' package.json
+          # npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
         run: |
-          jq -r '.version' package.json
-          npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
+          npm run build
+          git checkout gh-pages
+          ( for path in $(ls --ignore=dist --ignore=.git); do rm -rf "$path"; done; )
+          cp -R dist/* .
+          rm -rf dist
+          git commit -am "Updates"
