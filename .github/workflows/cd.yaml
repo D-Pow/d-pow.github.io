@@ -90,6 +90,5 @@ jobs:
           npm install
 
       - name: Deploy application
-        needs: [ cd-download-artifacts ]
         run: |
           npm run deploy
