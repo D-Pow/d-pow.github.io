@@ -261,6 +261,7 @@ jobs:
           git config --global user.email ${{ env.gitUserEmail }}
           npm version patch
           git push
+          npm run build
 
       # Ignore pre-/post- npm scripts via `npm run --ignore-scripts <my-script>`.
       # This could be useful for, e.g. scripts like `deploy` since `predeploy` (`npm run build`)
@@ -286,10 +287,10 @@ jobs:
           # ls -FlAh dist || exit 0
           # jq -r '.version' package.json
           # npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
+        # We need to re-run `npm run build` since the version was incremented in the previous step
         run: |
           git pull
           ls -FlAh
-          npm run build
           git checkout gh-pages
           ( for path in $(ls --ignore=dist --ignore=.git --ignore=package.json); do rm -rf "$path"; done; )
           cp -R dist/* .
