@@ -1,110 +1,215 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
+const path = require('path');
 
-const COMPONENT_NAME_INDEX = 2;
-const DIR_NAME_INDEX = 3;
+const { parseCliArgs, isMain } = require('../config/utils');
 
-function getClassComponentText(componentName) {
-    return (
-`class ${componentName} extends React.Component {
-    constructor(props) {
-        super(props);
+
+function getPropTypesText(indentForClassStaticVar, typescript) {
+    if (typescript) {
+        return '';
     }
+
+    const spacesIndent = ' '.repeat(4);
+    const extraIndent = indentForClassStaticVar ? spacesIndent : '';
+
+    return (
+`propTypes = {
+${extraIndent}    className: PropTypes.string,
+${extraIndent}    children: PropTypes.node,
+${extraIndent}};`
+    );
+}
+
+
+function getClassComponentText(componentName, typescript) {
+    return (
+`class ${componentName} extends React.Component${typescript ? `<${componentName}Props, ${componentName}State>` : ''} {
+    ${
+        typescript
+            ? ''
+            : `static ${getPropTypesText(true, typescript)}\n    `
+    }static defaultProps = {};
+
+    state = {};
 
     render() {
         return (
-            <div></div>
+            <>
+                <div className={this.props.className}>{this.props.children}</div>
+            </>
         );
     }
 }`
     );
 }
 
-function getFunctionalComponentText(componentName) {
+
+function getFunctionalComponentText(componentName, typescript) {
+    let functionDefinitionStr =
+`function ${componentName}({
+    className = '',
+    children,
+}${typescript ? `: ${componentName}Props` : ''}) {
     return (
-`function ${componentName}(props) {
-    return (
-        <div></div>
+        <>
+            <div className={className}>{children}</div>
+        </>
     );
-}`
-    );
+}`;
+
+    if (!typescript) {
+        functionDefinitionStr +=
+`
+
+${componentName}.${getPropTypesText(false, typescript)}`;
+    }
+
+    return functionDefinitionStr;
 }
 
-function getComponentText(componentName, functional = false) {
+
+function getComponentText(componentName, { functionalComponent = false, typescript = false } = {}) {
+    let propTypesImport = `import PropTypes from 'prop-types';`;
+
+    if (typescript) {
+        propTypesImport =
+`\nexport interface ${componentName}Props {
+    className?: string;
+    children?: React.ReactNode;
+}`;
+
+        if (!functionalComponent) {
+            propTypesImport += `\n\ninterface ${componentName}State {}`;
+        }
+    }
+
     return (
 `import React from 'react';
-import PropTypes from 'prop-types';
+${propTypesImport}
 
-${functional ? getFunctionalComponentText(componentName) : getClassComponentText(componentName)}
-
-${componentName}.propTypes = {
-
-};
-
-${componentName}.defaultProps = {
-
-};
+${functionalComponent ? getFunctionalComponentText(componentName, typescript) : getClassComponentText(componentName, typescript)}
 
 export default ${componentName};
 `
     );
 }
 
-function processArgs(args) {
-    const functionalComponentFlagIndex = args.indexOf('func');
-    const functionalComponentFlag = functionalComponentFlagIndex >= 0;
 
-    if (functionalComponentFlag) {
-        args.splice(functionalComponentFlagIndex, 1);
-    }
-
-    switch (args.length) {
-        case 3:
-            createClass(args[COMPONENT_NAME_INDEX], 'components', functionalComponentFlag);
-            break;
-        case 4:
-            createClass(args[COMPONENT_NAME_INDEX], args[DIR_NAME_INDEX], functionalComponentFlag);
-            break;
-        default:
-            printUsage();
-    }
-}
-
-function createClass(componentName, dirName = 'components', functionalComponent = false) {
-    const dir = `./src/${dirName}/${componentName}`;
+function createComponentInDirectory(
+    componentName,
+    {
+        dirName,
+        functionalComponent,
+        typescript,
+        soloComponent,
+    } = {},
+) {
+    const dir = `./src/components/${dirName}/${soloComponent ? '.' : componentName}`;
+    const componentFileExtension = typescript ? 'tsx' : 'jsx';
+    const indexFileExtension = typescript ? 'ts' : 'js';
     const indexText = `import ${componentName} from './${componentName}';\n\nexport default ${componentName};\n`;
-    const componentText = getComponentText(componentName, functionalComponent);
+    const componentText = getComponentText(
+        componentName,
+        {
+            functionalComponent,
+            typescript,
+        },
+    );
 
-    fs.mkdir(`${dir}`, {recursive: true}, err => {
-        if (err) {
-            error(err);
-        } else {
-            fs.writeFile(`${dir}/index.js`, indexText, err => {
-                if (err) {
-                    error(err);
-                } else {
-                    fs.writeFile(`${dir}/${componentName}.js`, componentText, err => {
-                        if (err) {
-                            error(err);
-                        } else {
-                            console.log(`Created ${componentName} in src/${dirName}/`);
-                        }
-                    });
-                }
-            });
+    try {
+        fs.mkdirSync(dir, { recursive: true });
+        fs.writeFileSync(`${dir}/${componentName}.${componentFileExtension}`, componentText);
+
+        if (!soloComponent) {
+            fs.writeFileSync(`${dir}/index.${indexFileExtension}`, indexText);
         }
-    });
+
+        console.log(`Created new "${componentName}" component in ${path.relative('.', dir)}/`);
+    } catch (e) {
+        error(e);
+    }
 }
 
-function printUsage() {
-    const usage = "Creates a component inside its own folder in the src/ directory along with an index.js file" +
-        "\nUsage: createComponent NAME [directory under src/] [func|make functional component]";
-    console.log(usage);
-    process.exit(0);
-}
 
 function error(err) {
     console.error(err);
     process.exit(1);
 }
 
-processArgs(process.argv);
+
+/**
+ * Creates a new React component under `src/components/`.
+ *
+ * Optionally allows:
+ * - Specifying a sub-directory.
+ * - Making it a functional component (default is a class component).
+ * - Using TypeScript (default is JavaScript).
+ *
+ * @param {string[]} [argv] - Array of option flags with the component name arg as the final array entry.
+ */
+function createComponent(argv) {
+    const usage = `Creates a new component inside its own folder under \`src/components/\` along with an \`index.[tj]s\` file.
+
+Note - The format for using the script changes slightly based on how it's called:
+    npm script (requires two hyphens if using \`npm\`, none if using \`yarn\`):
+        npm run createComponent -- [options] <ComponentName>
+    Direct script call:
+        ./createComponent.js [options] <ComponentName>
+`;
+
+    const parsedArgs = parseCliArgs({
+        argv,
+        removeNodeAndScriptFromArgs: !argv,
+        helpMessage: usage,
+        optionsConfigs: {
+            functionalComponent: {
+                description: 'Make the component a functional component (default: class component).',
+                aliases: [ 'f', 'func' ],
+            },
+            dirName: {
+                description: 'Directory under `src/components/` to place your component.',
+                numArgs: 1,
+                defaultValue: '.',
+                aliases: [ 'd', 'dir' ],
+            },
+            javascript: {
+                description: 'Use JavaScript to create the component (default: TypeScript).',
+                aliases: [ 'j' ],
+            },
+            soloComponent: {
+                description: 'Create the component file only without nesting it in a new directory.',
+                aliases: [ 's', 'solo' ],
+            },
+            help: {
+                description: 'Print this message and exit.',
+                aliases: [ 'h' ],
+            },
+        },
+    });
+
+    const {
+        functionalComponent,
+        dirName,
+        javascript,
+        soloComponent,
+    } = parsedArgs;
+    const componentName = parsedArgs._?.[0];
+
+    createComponentInDirectory(
+        componentName,
+        {
+            dirName,
+            functionalComponent,
+            typescript: !javascript,
+            soloComponent,
+        },
+    );
+}
+
+if (isMain(__filename)) {
+    createComponent();
+}
+
+module.exports = createComponent;

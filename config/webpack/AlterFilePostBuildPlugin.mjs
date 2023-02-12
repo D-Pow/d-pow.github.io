@@ -1,6 +1,12 @@
-const fs = require('fs');
-const path = require('path');
-const { WebpackPluginInstance, Compiler } = require('webpack');
+import fs from 'node:fs';
+import path from 'node:path';
+
+const { NormalModule } = await import('webpack');
+
+
+/** @typedef {import('webpack/types').WebpackPluginInstance} WebpackPluginInstance */
+/** @typedef {import('webpack/types').Compiler} Compiler */
+
 
 /**
  * @extends WebpackPluginInstance
@@ -53,11 +59,7 @@ class AlterFilePostBuildPlugin {
     }
 
     getEmittedFilesPaths(compiler, compilation) {
-        let majorVersion = 4;
-
-        try {
-            majorVersion = Number(compiler.webpack.version.match(/(^\d+)/)[1]);
-        } catch (e) {}
+        const majorVersion = Number(compiler.webpack.version.match(/(^\d+)/)[1]);
 
         if (majorVersion < 5) {
             return Object.entries(compilation.assets)
@@ -66,14 +68,14 @@ class AlterFilePostBuildPlugin {
                     const [ relativePath, rawSourceObject ] = entry;
                     return {
                         relative: relativePath,
-                        absolute: rawSourceObject.existsAt
+                        absolute: rawSourceObject.existsAt,
                     };
                 });
         }
 
         return Object.keys(compilation.assets).map(relativeFilePath => ({
             relative: relativeFilePath,
-            absolute: path.resolve(compiler.outputPath, relativeFilePath)
+            absolute: path.resolve(compiler.outputPath, relativeFilePath),
         }));
     }
 
@@ -83,10 +85,32 @@ class AlterFilePostBuildPlugin {
             const newFileContents = fileContents.replace(oldText, newText);
 
             fs.writeFileSync(fileAbsPath, newFileContents);
-        } catch(e) {
-            console.error(`Error replacing text in ${fileAbsPath}. Error:`, e)
+        } catch (e) {
+            console.error(`Error replacing text in ${fileAbsPath}. Error:`, e);
         }
+    }
+
+    /**
+     * To alter a file before building it, you'd have to add your own loader to it
+     * since that's exactly what loaders do.
+     *
+     * Example: https://github.com/artemirq/modify-source-webpack-plugin/blob/master/src/ModifySourcePlugin.ts
+     *
+     * @param {Compiler} compiler
+     * @param {string} srcFilePath - Source file to modify before transpilation/build.
+     */
+    modifySourceBeforeBuild(compiler, srcFilePath) {
+        compiler.hooks.compilation.tap(this.constructor.name, compilation => {
+            NormalModule.getCompilationHooks(compilation).beforeLoaders.tap(this.constructor.name, (loaderItems, normalModule, obj) => {
+                const originalFileAbsPath = normalModule.userRequest;
+
+                if (originalFileAbsPath.includes(srcFilePath)) {
+                    console.log(originalFileAbsPath);
+                    console.log(obj);
+                }
+            });
+        });
     }
 }
 
-module.exports = AlterFilePostBuildPlugin;
+export default AlterFilePostBuildPlugin;
