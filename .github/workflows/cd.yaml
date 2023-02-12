@@ -75,7 +75,6 @@ jobs:
 
       - name: Client CD - Download CI output
         id: cd-download-artifacts
-        needs: [ cd-client-build ]
         uses: actions/download-artifact@v3
         with:
           name: ci-build-and-upload-artifacts
