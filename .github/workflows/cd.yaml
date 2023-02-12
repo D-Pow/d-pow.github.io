@@ -37,16 +37,11 @@ on:
   #   - https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#merge_group
   merge_group:
     branches: [ checks_requested ]
-  # 2. Run the pipeline on merge to `master` and do the release/deploy then.
-  # pull_request:
-  #   types: [ closed ]
-  #   branches: [ master ]
-
-  # 3. Run on CI completion (the `if:` in the `deploy` job below would need updating accordingly)
-  # workflow_run:
-  #   branches: [ master ]
-  #   workflows: [ 'CI' ]
-  #   types: [ completed ]
+  # Run on CI completion (the `if:` in the `deploy` job below would need updating accordingly)
+  workflow_run:
+    branches: [ master ]
+    workflows: [ 'CI' ]
+    types: [ completed ]
 
 
 defaults:
