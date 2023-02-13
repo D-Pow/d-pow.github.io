@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[23],{655:function(s,n,o){s.exports=o.p+"static/assets/linkedin_logo-4e1d56fc.svg"}}]);

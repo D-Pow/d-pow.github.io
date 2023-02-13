@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkd_pow_github_io=self.webpackChunkd_pow_github_io||[]).push([[579],{2579:function(s,t,e){s.exports=e.p+"static/assets/anime_atsume-ad7057af.jpg"}}]);

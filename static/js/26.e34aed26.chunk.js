@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkd_pow_github_io=self.webpackChunkd_pow_github_io||[]).push([[26],{9026:function(s,t,e){s.exports=e.p+"static/assets/github_logo.07c94e10.svg"}}]);
