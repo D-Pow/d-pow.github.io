@@ -100,8 +100,12 @@ jobs:
 
   cd-build:
     runs-on: ubuntu-latest
-    # Only run on merge to master: https://github.community/t/depend-on-another-workflow/16311/3
-    if: ${{ github.event.pull_request.merged || github.ref == 'refs/heads/master' }}
+    # Only run on merge to master, but not on PR to master since PRs are just drafts, not officially prod-ready code.
+    #
+    # See:
+    #   - https://github.community/t/depend-on-another-workflow/16311/3
+    #   - https://stackoverflow.com/questions/66205887/only-run-github-actions-step-if-not-a-pull-request/66206183#66206183
+    if: ${{ github.event_name != 'pull_request' && (github.event.pull_request.merged || github.ref == 'refs/heads/master') }}
     # Grant the permissions required for deployments to GitHub Pages.
     #
     # See:
