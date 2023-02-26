@@ -80,7 +80,7 @@ function App({ imagesStillLoading, setContextState }) {
         if (!imagesStillLoading) {
             setTimeout(() => {
                 setShowSpinnerLonger(false);
-            }, 1750);
+            }, 750);
         }
     }, [ imagesStillLoading ]);
 
