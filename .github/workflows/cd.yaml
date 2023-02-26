@@ -43,6 +43,20 @@ on:
 defaults:
   run:
     shell: bash
+    working-directory: ./
+
+
+# Set GitHub user info for ease of use of Git CLI commands.
+#
+# See:
+#   - https://docs.npmjs.com/cli/v9/commands/npm-run-script#ignore-scripts
+#   - https://stackoverflow.com/questions/59471962/how-does-npm-behave-differently-with-ignore-scripts-set-to-true
+#   - https://github.com/tschaub/gh-pages#optionsuser
+#     - https://github.com/actions/checkout/issues/13
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  gitUserName: ${{ github.actor }}
+  gitUserEmail: ${{ github.actor }}@users.noreply.github.com
 
 
 jobs:
@@ -84,10 +98,14 @@ jobs:
   #         path: |
   #           dist
 
-  cd-deploy:
+  cd-build:
     runs-on: ubuntu-latest
-    # Only run on merge to master: https://github.community/t/depend-on-another-workflow/16311/3
-    if: ${{ github.event.pull_request.merged || github.ref == 'refs/heads/master' }}
+    # Only run on merge to master, but not on PR to master since PRs are just drafts, not officially prod-ready code.
+    #
+    # See:
+    #   - https://github.community/t/depend-on-another-workflow/16311/3
+    #   - https://stackoverflow.com/questions/66205887/only-run-github-actions-step-if-not-a-pull-request/66206183#66206183
+    if: ${{ github.event_name != 'pull_request' && (github.event.pull_request.merged || github.ref == 'refs/heads/master') }}
     # Grant the permissions required for deployments to GitHub Pages.
     #
     # See:
@@ -97,6 +115,8 @@ jobs:
       id-token: write   # to verify the deployment originates from an appropriate source
       deployments: write
       packages: write
+      actions: write
+      contents: write
     steps:
       - name: Checkout repository branch
         uses: actions/checkout@v2
@@ -105,22 +125,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-
-      - name: Temp git user.name
-        run: |
-          git config --global user.name || exit 0
-
-      - name: Temp git user.email
-        run: |
-          git config --global user.email || exit 0
-
-      - name: Temp git all
-        run: |
-          git config --list || exit 0
-
-      - name: Temp cat .gitconfig
-        run: |
-          cat ~/.gitconfig || exit 0
 
       # Native GitHub `actions/download-artifact@v3` doesn't allow sharing between workflows.
       #   - Issue: https://github.com/actions/toolkit/issues/501
@@ -175,47 +179,121 @@ jobs:
       #
       # TODO: Try the cache instead of storing artifacts manually:
       #   - Related - Cache: https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
-      - name: CD Test CLI command to download stuff
+      # - name: Client CD - Download CI artifacts
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     WORKFLOW_RUN_ID: ${{ github.run_id }}
+      #   run: |
+      #     gh run download --dir ci-workflow-artifact-output --pattern '*' $(gh run list --limit 1 --workflow CI | tail -n +1 | awk '{ print $(NF - 2) }')
+      #     mkdir dist
+      #     cp -R ci-workflow-artifact-output/*/* dist
+      #     rm -rf ci-workflow-artifact-output
+      #
+      # # Only necessary if running npm scripts in CD, which we are for `deploy`
+      # - name: Client CD - Install
+      #   id: cd-client-install
+      #   shell: bash
+      #   working-directory: ./
+      #   run: |
+      #     npm install
+
+      - name: Client CD Build - Download CI cache
+        uses: actions/cache/restore@v3
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WORKFLOW_RUN_ID: ${{ github.run_id }}
-        run: |
-          gh run download --dir ci-workflow-artifact-output --pattern '*' $(gh run list --limit 1 --workflow CI | tail -n +1 | awk '{ print $(NF - 2) }')
-          mkdir dist
-          cp -R ci-workflow-artifact-output/*/* dist
-          rm -rf ci-workflow-artifact-output
+          cache-name: ci-cache
+        with:
+          path: |
+            node_modules
+            dist
+            package.json
+            package-lock.json
+          # ( declare origIFS="$IFS"; declare IFS=$'\n'; declare fileHashes=(); for file in $(find src/ -type f); do fileHashes+=("$(sha256sum "$file")"); done; declare fileHashesStr="$(printf "%s\n" "${_fileHashes[@]}")"; fileHashesStr="${fileHashesStr/%\n}"; declare fileHashesSortedByFilename="$(echo "$fileHashesStr" | sort -V -k 2)"; declare dirHash="$(echo -n "$fileHashesSortedByFilename" | sha256sum | awk '{ print $1 }')"; echo "$dirHash"; )
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
+        continue-on-error: false
 
-      - name: TEMP list dir
-        run: |
-          ls -FlAh
-
-      # Only necessary if running npm scripts in CD, which we are for `deploy`
-      - name: Client CD - Install
-        id: cd-client-install
-        shell: bash
-        working-directory: ./
-        run: |
-          npm install
-
-      # Ignore pre-/post- npm scripts since pre-deploy (`npm run build`) was already run in CI.
-      #
-      # Set `user.name` and `user.email` for ~/.gitconfig inline via the `--user` flag for `gh-pages`.
-      #
       # See:
-      #   - https://docs.npmjs.com/cli/v9/commands/npm-run-script#ignore-scripts
-      #   - https://stackoverflow.com/questions/59471962/how-does-npm-behave-differently-with-ignore-scripts-set-to-true
-      #   - https://github.com/tschaub/gh-pages#optionsuser
-      #     - https://github.com/actions/checkout/issues/13
-      - name: Deploy application
+      #   - Cache GitHub Workflow action docs: https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#example-using-the-cache-action
+      #   - Cache-restore between workflows: https://github.com/actions/cache#example-cache-workflow
+      # Only run next step if cache-hit failed.
+      # For some reason, the recommended logic from the docs doesn't work:
+      # - if: ${{ steps.ci-cache.outputs.cache-hit != 'true' }}
+      # Instead, use `failure()` as suggested here: http://chamindac.blogspot.com/2020/08/how-to-run-github-actions-step-when.html#:~:text=run%20on%20failure-,if%3A%20%24%7B%7B%20failure()%20%7D%7D,-run%3A%20%7C
+      - if: ${{ failure() }}
+        # continue-on-error: false
+        name: Client CD - Generate CI artifacts
+        run: |
+          git pull
+          git config --global user.name ${{ env.gitUserName }}
+          git config --global user.email ${{ env.gitUserEmail }}
+          npm install
+          npm version --no-git-tag-version patch
+          npm run build
+
+
+  cd-deploy:
+    runs-on: ubuntu-latest
+    needs: [ cd-build ]
+    permissions:
+      pages: write      # Grant write permissions to deploy to the `gh-pages` (or whatever is specified in "Settings") branch
+      id-token: write   # to verify the deployment originates from an appropriate source
+      deployments: write
+      packages: write
+      actions: write
+      contents: write
+    steps:
+      - name: Checkout repository branch
+        uses: actions/checkout@v2
+
+      - name: Set NodeJS version
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Client CD Deploy - Download CI cache
+        uses: actions/cache/restore@v3
         env:
-          # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          gitUserName: ${{ github.actor }}
-          gitUserEmail: ${{ github.actor }}@users.noreply.github.com
-          # npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
+          cache-name: ci-cache
+        with:
+          path: |
+            node_modules
+            dist
+            package.json
+            package-lock.json
+          # ( declare origIFS="$IFS"; declare IFS=$'\n'; declare fileHashes=(); for file in $(find src/ -type f); do fileHashes+=("$(sha256sum "$file")"); done; declare fileHashesStr="$(printf "%s\n" "${_fileHashes[@]}")"; fileHashesStr="${fileHashesStr/%\n}"; declare fileHashesSortedByFilename="$(echo "$fileHashesStr" | sort -V -k 2)"; declare dirHash="$(echo -n "$fileHashesSortedByFilename" | sha256sum | awk '{ print $1 }')"; echo "$dirHash"; )
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
+        continue-on-error: false
+
+      - name: Client CD Deploy - Upgrade app version
+        # Not necessarily required since `npm version` returns the version string (with "v" in it), but for reference:
+        #   - Normal: npm version patch; git commit --amend -m "Patch to v$(jq -r '.version' package.json)"
+        #   - Without git commit or tag: newAppVersion=$(npm version --no-git-tag-version patch); git commit -am "Patch to ${newAppVersion}"
+        #
+        # run:
+        #   newAppVersion=$(npm version --no-git-tag-version patch)
+        #   git commit -am "Patch to ${newAppVersion}"
         run: |
           git config --global user.name ${{ env.gitUserName }}
           git config --global user.email ${{ env.gitUserEmail }}
-          git remote -v
-          git branch --show-current
-          npm run --ignore-scripts deploy
+          newAppVersion="$(jq -r '.version' package.json)"
+          git commit -am "Patch to ${newAppVersion}"
+          git push
+
+      # Ignore pre-/post- npm scripts via `npm run --ignore-scripts <my-script>`.
+      # This could be useful for, e.g. scripts like `deploy` since `predeploy` (`npm run build`)
+      # was already run in CI.
+      #
+      # Set `user.name` and `user.email` for ~/.gitconfig inline via the `--user` flag for `gh-pages`:
+      #   npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
+      - name: CD - Deploy application
+        # We need to either cache the build output after the version is incremented, or re-run
+        # `npm run build` so the version is injected into the code where needed.
+        run: |
+          git pull
+          newAppVersion="$(jq -r '.version' package.json)"
+          git checkout gh-pages
+          ( for path in $(ls --ignore=dist --ignore=.git); do echo "$path"; rm -rf "$path"; done; )
+          cp -R dist/* .
+          ( for path in dist/*; do git add "$(echo "$path" | sed -E 's/dist/./')"; done; )
+          rm -rf dist
+          git commit -am "Patch to v${newAppVersion}"
+          git push

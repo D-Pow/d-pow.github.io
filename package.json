@@ -1,6 +1,6 @@
 {
   "name": "d-pow.github.io",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "private": true,
   "homepage": "http://d-pow.github.io",
   "main": "index.js",
@@ -59,7 +59,6 @@
   "overrides": {
     "react": "$react",
     "react-dom": "$react-dom",
-    "react-router": "$react-router",
     "react-router": "$react-router",
     "react-router-dom": "$react-router-dom"
   },
