@@ -15,7 +15,7 @@ export const ETRADE_LINK = (
 
 export const NEXTDOOR_LOGO = (
     <Link href={LINKS.NextdoorHome}>
-        <Image image={'nextdoor_icon.svg'} className={'w-7 h-7 mb-5px'} />
+        <Image image={'nextdoor_icon.svg'} className={'w-1-5e h-1-5e mb-3px'} />
         Nextdoor
     </Link>
 );
