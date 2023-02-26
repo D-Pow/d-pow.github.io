@@ -201,6 +201,7 @@ class ScrollToShow extends PureComponent {
         }
 
         return cloneElement(child, {
+            ...child.props,
             className: `${child.props?.className ?? ''} ${this.getClassNames(index)}`,
             key: index,
             ref: this.state.childRefs[index],
