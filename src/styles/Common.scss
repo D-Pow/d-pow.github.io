@@ -1,6 +1,7 @@
 @use "sass:math";
 
 @use "utils/json";
+@use "utils/strings";
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/functions";
@@ -70,45 +71,6 @@ $container-max-widths: (
   width: fit-content !important;
 }
 
-@for $int from 0 through 200 {
-  .w-#{$int} {
-    width: $int + 0%;
-  }
-  .w-#{$int}px {
-    width: $int + 0px;
-  }
-
-  .h-#{$int} {
-    height: $int + 0%;
-  }
-  .h-#{$int}px {
-    height: $int + 0px;
-  }
-}
-
-.full-screen {
-  height: 100vh !important;
-  width: 100vw !important;
-}
-
-.full-width-minus-scrollbar {
-  // 100vw includes Y-scrollbar area, 100% does not
-  width: calc(100vw - (100vw - 100%)) !important;
-}
-
-.full-screen-minus-scrollbar {
-  @extend .full-screen;
-  @extend .full-width-minus-scrollbar;
-}
-
-.m-auto {
-    margin: auto;
-}
-
-.margin-clear {
-    margin: 0;
-}
-
 $margin-units: (
     '': '%',
     'px': 'px',
@@ -161,6 +123,48 @@ $margin-units: (
         }
     }
 }
+
+@for $int from 0 through 1000 {
+    @each $unit-name, $unit in $margin-units {
+        $decimal: math.div($int, 10);
+        // CSS classes can't have periods in them, so replace them with hyphens
+        $cls-txt: str-replace("#{$decimal}", '.', '-');
+        $cls-name: $cls-txt + $unit-name;
+        $size-amount: $decimal + unquote($unit); // unquote() makes it literal CSS
+
+        .w-#{$cls-name} {
+            width: $size-amount;
+        }
+
+        .h-#{$cls-name} {
+            height: $size-amount;
+        }
+    }
+}
+
+.full-screen {
+  height: 100vh !important;
+  width: 100vw !important;
+}
+
+.full-width-minus-scrollbar {
+  // 100vw includes Y-scrollbar area, 100% does not
+  width: calc(100vw - (100vw - 100%)) !important;
+}
+
+.full-screen-minus-scrollbar {
+  @extend .full-screen;
+  @extend .full-width-minus-scrollbar;
+}
+
+.m-auto {
+    margin: auto;
+}
+
+.margin-clear {
+    margin: 0;
+}
+
 
 .absolute-center {
   display: flex;
