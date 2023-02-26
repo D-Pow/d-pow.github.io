@@ -13,11 +13,11 @@ function GistSection(props) {
         description: (
             <>
                 <div className={'mb-5p'}>
-                    I'm a lead front-end application architect at {NEXTDOOR_LOGO}, where I focus on improving devs' lives,
-                    including everything from accelerating build speed and client performance, to code architecture and
-                    modernization, and even to tool optimization.
+                    I'm a lead front-end architect at {NEXTDOOR_LOGO}, where I focus on improving both devs' and users'
+                    lives, including everything from accelerating build speed and client performance, to code architecture
+                    and modernization, and even to tool optimization.
                     Enhancing our devs' lives means features get delivered faster, stabler, and cleaner, resulting in an
-                    overall more enjoyable experience for us as well as all our users.
+                    overall more enjoyable experience for all of us.
                 </div>
 
                 <details>
