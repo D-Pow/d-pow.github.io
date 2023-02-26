@@ -291,9 +291,10 @@ jobs:
           git pull
           newAppVersion="$(jq -r '.version' package.json)"
           git checkout gh-pages
-          ( for path in $(ls --ignore=dist --ignore=.git); do echo "$path"; rm -rf "$path"; done; )
+          ( for path in $(ls --ignore=dist --ignore=.git --ignore=CNAME); do echo "$path"; rm -rf "$path"; done; )
           cp -R dist/* .
           ( for path in dist/*; do git add "$(echo "$path" | sed -E 's/dist/./')"; done; )
+          git add CNAME
           rm -rf dist
           git commit -am "Patch to v${newAppVersion}"
           git push
