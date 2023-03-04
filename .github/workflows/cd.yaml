@@ -198,6 +198,7 @@ jobs:
       #     npm install
 
       - name: Client CD Build - Download CI cache
+        id: client-cd-build-download-cache
         uses: actions/cache/restore@v3
         env:
           cache-name: ci-cache
@@ -211,21 +212,44 @@ jobs:
           key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
         continue-on-error: false
 
-      # See:
-      #   - Cache GitHub Workflow action docs: https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#example-using-the-cache-action
-      #   - Cache-restore between workflows: https://github.com/actions/cache#example-cache-workflow
       # Only run next step if cache-hit failed.
       # For some reason, the recommended logic from the docs doesn't work:
       # - if: ${{ steps.ci-cache.outputs.cache-hit != 'true' }}
       # Instead, use `failure()` as suggested here: http://chamindac.blogspot.com/2020/08/how-to-run-github-actions-step-when.html#:~:text=run%20on%20failure-,if%3A%20%24%7B%7B%20failure()%20%7D%7D,-run%3A%20%7C
-      - name: Client CD - Generate CI artifacts
+      - name: Client CD - Generate CI artifacts (failed CI cache)
+        if: ${{ failure() || steps.client-cd-build-download-cache.outputs.cache-hit != 'true' }}
+        run: |
+          git config --global user.name ${{ env.gitUserName }}
+          git config --global user.email ${{ env.gitUserEmail }}
+          git pull
+          npm install
+          npm version --no-git-tag-version patch
+          npm run build
+
+      # Separate this step from `CI:Verify` to ensure linting, type-checking, etc. pass before using resources for building the app.
+      # We need to either cache the build output after the version is incremented, or re-run
+      # `npm run build` so the version is injected into the code where needed.
+      #
+      # See:
+      #   - Cache GitHub Workflow action docs: https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#example-using-the-cache-action
+      #   - Cache-restore between workflows: https://github.com/actions/cache#example-cache-workflow
+      - name: Client CD Deploy - Upgrade app version
+        # Not necessarily required since `npm version` returns the version string (with "v" in it), but for reference:
+        #   - Normal: npm version patch; git commit --amend -m "Patch to v$(jq -r '.version' package.json)"
+        #   - Without git commit or tag: newAppVersion=$(npm version --no-git-tag-version patch); git commit -am "Patch to ${newAppVersion}"
+        #
+        # run:
+        #   newAppVersion=$(npm version --no-git-tag-version patch)
+        #   git commit -am "Patch to ${newAppVersion}"
         run: |
           git pull
           git config --global user.name ${{ env.gitUserName }}
           git config --global user.email ${{ env.gitUserEmail }}
-          npm install
-          npm version --no-git-tag-version patch
-          npm run build
+          newAppVersion="$(jq -r '.version' package.json)"
+          npm version --no-git-tag-version "$newAppVersion"
+          git commit -am "Update version to ${newAppVersion}"
+          git push
+
 
       - name: Client CD Build - Upload CI cache
         id: client-cd-build-upload-cache
@@ -274,26 +298,6 @@ jobs:
           # ( declare origIFS="$IFS"; declare IFS=$'\n'; declare fileHashes=(); for file in $(find src/ -type f); do fileHashes+=("$(sha256sum "$file")"); done; declare fileHashesStr="$(printf "%s\n" "${_fileHashes[@]}")"; fileHashesStr="${fileHashesStr/%\n}"; declare fileHashesSortedByFilename="$(echo "$fileHashesStr" | sort -V -k 2)"; declare dirHash="$(echo -n "$fileHashesSortedByFilename" | sha256sum | awk '{ print $1 }')"; echo "$dirHash"; )
           key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
         continue-on-error: false
-
-      # Separate this step from `CI:Verify` to ensure linting, type-checking, etc. pass before using resources for building the app.
-      # We need to either cache the build output after the version is incremented, or re-run
-      # `npm run build` so the version is injected into the code where needed.
-      - name: Client CD Deploy - Upgrade app version
-        # Not necessarily required since `npm version` returns the version string (with "v" in it), but for reference:
-        #   - Normal: npm version patch; git commit --amend -m "Patch to v$(jq -r '.version' package.json)"
-        #   - Without git commit or tag: newAppVersion=$(npm version --no-git-tag-version patch); git commit -am "Patch to ${newAppVersion}"
-        #
-        # run:
-        #   newAppVersion=$(npm version --no-git-tag-version patch)
-        #   git commit -am "Patch to ${newAppVersion}"
-        run: |
-          git pull
-          git config --global user.name ${{ env.gitUserName }}
-          git config --global user.email ${{ env.gitUserEmail }}
-          newAppVersion="$(jq -r '.version' package.json)"
-          npm version --no-git-tag-version "$newAppVersion"
-          git commit -am "Update version to ${newAppVersion}"
-          git push
 
       - name: Checkout repository branch
         uses: actions/checkout@v2
