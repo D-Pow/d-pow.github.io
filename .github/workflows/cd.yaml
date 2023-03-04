@@ -347,6 +347,7 @@ jobs:
       # Set `user.name` and `user.email` for ~/.gitconfig inline via the `--user` flag for `gh-pages`:
       #   npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
       - name: CD - Deploy application
+        shell: bash
         # We need to either cache the build output after the version is incremented, or re-run
         # `npm run build` so the version is injected into the code where needed.
         #
