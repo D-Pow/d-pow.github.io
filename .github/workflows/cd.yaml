@@ -214,7 +214,7 @@ jobs:
             package.json
             package-lock.json
           # ( declare origIFS="$IFS"; declare IFS=$'\n'; declare fileHashes=(); for file in $(find src/ -type f); do fileHashes+=("$(sha256sum "$file")"); done; declare fileHashesStr="$(printf "%s\n" "${_fileHashes[@]}")"; fileHashesStr="${fileHashesStr/%\n}"; declare fileHashesSortedByFilename="$(echo "$fileHashesStr" | sort -V -k 2)"; declare dirHash="$(echo -n "$fileHashesSortedByFilename" | sha256sum | awk '{ print $1 }')"; echo "$dirHash"; )
-          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('package.json', './src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
         continue-on-error: false
 
       # Only run next step if cache-hit failed.
@@ -292,7 +292,7 @@ jobs:
             package.json
             package-lock.json
           # ( declare origIFS="$IFS"; declare IFS=$'\n'; declare fileHashes=(); for file in $(find src/ -type f); do fileHashes+=("$(sha256sum "$file")"); done; declare fileHashesStr="$(printf "%s\n" "${_fileHashes[@]}")"; fileHashesStr="${fileHashesStr/%\n}"; declare fileHashesSortedByFilename="$(echo "$fileHashesStr" | sort -V -k 2)"; declare dirHash="$(echo -n "$fileHashesSortedByFilename" | sha256sum | awk '{ print $1 }')"; echo "$dirHash"; )
-          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('package.json', './src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
 
 
   cd-deploy:
@@ -325,7 +325,7 @@ jobs:
             package.json
             package-lock.json
           # ( declare origIFS="$IFS"; declare IFS=$'\n'; declare fileHashes=(); for file in $(find src/ -type f); do fileHashes+=("$(sha256sum "$file")"); done; declare fileHashesStr="$(printf "%s\n" "${_fileHashes[@]}")"; fileHashesStr="${fileHashesStr/%\n}"; declare fileHashesSortedByFilename="$(echo "$fileHashesStr" | sort -V -k 2)"; declare dirHash="$(echo -n "$fileHashesSortedByFilename" | sha256sum | awk '{ print $1 }')"; echo "$dirHash"; )
-          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('package.json', './src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
         continue-on-error: false
 
       - name: Checkout repository branch
