@@ -314,6 +314,15 @@ jobs:
         with:
           node-version: 16
 
+      - name: Client CD Deploy - Update branch with CD changes
+        id: client-cd-deploy-download-branch
+        shell: bash
+        run: |
+          git config --global user.name ${{ env.gitUserName }}
+          git config --global user.email ${{ env.gitUserEmail }}
+
+          git pull
+
       - name: Client CD Deploy - Download CD cache
         id: client-cd-deploy-download-cache
         uses: actions/cache/restore@v3
