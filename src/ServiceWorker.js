@@ -95,7 +95,10 @@ self.addEventListener('fetch', event => {
             return cache.match(event.request).then(function(response) {
                 var url = event.request.url;
                 var fileRequested = url.split('/').pop();
-                var isIndexHtml = url[url.length-1] === '/' || fileRequested === 'index.html';
+                var isIndexHtml = (
+                    (url[url.length-1] === '/' || fileRequested === 'index.html')
+                    && (new URL(url)).pathname.split('/').length <= 2
+                );
                 var isResourceFile = Boolean(fileRequested.match(/\.\w{2,6}$/)) && event.request.method === 'GET';
                 var shouldNotCache = urlsNotToCache.some(function (regexOrString) {
                     return (
@@ -160,6 +163,11 @@ self.addEventListener('fetch', event => {
                     }
 
                     return response;
+                }
+
+                if (isIndexHtml) {
+                    // Not cached - fetch it and then store for future network requests
+                    return fetchAndCache(event, cache);
                 }
 
                 // Not a resource file (e.g. is an endpoint request) - do not cache it so it's fresh on every request
