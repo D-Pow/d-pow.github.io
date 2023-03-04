@@ -280,6 +280,8 @@ jobs:
 
           git push
 
+          echo "Created new app version: $(jq '.version' package.json)"
+
       - name: Client CD Build - Upload CD cache
         id: client-cd-build-upload-cache
         uses: actions/cache/save@v3
@@ -357,6 +359,8 @@ jobs:
           git pull
 
           newAppVersion="$(jq -r '.version' package.json)"
+
+          echo "Deploying version ${newAppVersion}..."
 
           npm run --ignore-scripts deploy
 
