@@ -357,6 +357,12 @@ jobs:
           git config --global user.name ${{ env.gitUserName }}
           git config --global user.email ${{ env.gitUserEmail }}
 
+          # gh-pages requires this in CI environments for some reason
+          # See:
+          #   - https://github.com/tschaub/gh-pages/issues/384
+          #   - https://github.com/tschaub/gh-pages/issues/359
+          git remote set-url origin "$(echo "${{ github.repositoryUrl }}" | sed -E 's|git://|https://x-access-token:${{ secrets.GITHUB_TOKEN }}@|')"
+
           git pull
 
           newAppVersion="$(jq -r '.version' package.json)"
