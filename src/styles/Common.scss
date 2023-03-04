@@ -124,6 +124,7 @@ $margin-units: (
     }
 }
 
+
 @for $int from 0 through 1000 {
     @each $unit-name, $unit in $margin-units {
         $decimal: math.div($int, 10);
@@ -141,6 +142,7 @@ $margin-units: (
         }
     }
 }
+
 
 .full-screen {
   height: 100vh !important;
@@ -164,7 +166,6 @@ $margin-units: (
 .margin-clear {
     margin: 0;
 }
-
 
 .absolute-center {
   display: flex;

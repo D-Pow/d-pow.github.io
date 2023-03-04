@@ -71,7 +71,7 @@ jobs:
             dist
             package.json
             package-lock.json
-          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('package.json', './src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
 
       # Ensure old cache is deleted so that the build step's cache request isn't ignored
       #
@@ -81,7 +81,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WORKFLOW_RUN_ID: ${{ github.run_id }}
-          CACHE_NAME: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
+          CACHE_NAME: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('package.json', './src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
         run: |
           CACHES_API_URL="https://api.github.com/repos/$(gh repo view --json owner --jq '.owner.login')/$(gh repo view --json name --jq '.name')/actions/caches"
           cacheIds=($(gh api "${CACHES_API_URL}" --jq ".actions_caches[] | select(.key | contains(\"${{ env.CACHE_NAME }}\")) | .id"))
@@ -92,21 +92,9 @@ jobs:
         # Import reusable GitHub Action logic via `uses`
         uses: ./.github/workflows/actions/client
 
-      # Separate this step from `verify` to ensure linting, type-checking, etc. pass before using resources for building the app.
-      # We need to either cache the build output after the version is incremented, or re-run
-      # `npm run build` so the version is injected into the code where needed.
-      - name: Client CI - Build and increment app version
-        id: client-build
-        run: |
-          git pull
-          git config --global user.name ${{ env.gitUserName }}
-          git config --global user.email ${{ env.gitUserEmail }}
-          npm version --no-git-tag-version patch
-          npm run build
-
       - name: Client cache build and install artifacts
         id: ci-cache
-        uses: actions/cache@v3
+        uses: actions/cache/save@v3
         env:
           cache-name: ci-cache
         with:
@@ -115,7 +103,7 @@ jobs:
             dist
             package.json
             package-lock.json
-          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
-          restore-keys: |
-            ${{ env.cache-name }}-${{ runner.os }}-
-            ${{ env.cache-name }}-
+          key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('package.json', './src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
+          # restore-keys: |
+          #   ${{ env.cache-name }}-${{ runner.os }}-
+          #   ${{ env.cache-name }}-
