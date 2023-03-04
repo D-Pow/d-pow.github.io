@@ -358,15 +358,17 @@ jobs:
 
           newAppVersion="$(jq -r '.version' package.json)"
 
-          git checkout gh-pages
+          npm run deploy -- --version "${newAppVersion}"
 
-          ( for path in $(ls --ignore=dist --ignore=.git --ignore=package.json); do echo "$path"; rm -rf "$path"; done; )
-
-          cp -R dist/* .
-
-          ( for path in dist/*; do git add "$(echo "$path" | sed -E 's/dist/./')"; done; )
-
-          rm -rf dist
-
-          git commit -am "Update version to v${newAppVersion}"
-          git push
+          # git checkout gh-pages
+          #
+          # ( for path in $(ls --ignore=dist --ignore=.git --ignore=package.json); do echo "$path"; rm -rf "$path"; done; )
+          #
+          # cp -R dist/* .
+          #
+          # ( for path in dist/*; do git add "$(echo "$path" | sed -E 's/dist/./')"; done; )
+          #
+          # rm -rf dist
+          #
+          # git commit -am "Update version to v${newAppVersion}"
+          # git push
