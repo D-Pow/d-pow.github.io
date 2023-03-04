@@ -270,8 +270,10 @@ jobs:
           if [[ -z "$newAppVersion" ]] || [[ "$newAppVersion" == "v$(jq -r '.version' package.json)" ]]; then
               npm version --no-git-tag-version patch -m "Upgrade version to %s"
           else
-              npm version --no-git-tag-version "$newAppVersion"
+              npm version --no-git-tag-version "$newAppVersion" -m "Upgrade version to %s"
           fi
+
+          newAppVersion="$(jq -r '.version' package.json)"
 
           git commit -am "Update version to v${newAppVersion}"
           git push
