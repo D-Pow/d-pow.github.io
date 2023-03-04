@@ -104,6 +104,6 @@ jobs:
             package.json
             package-lock.json
           key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
-          restore-keys: |
-            ${{ env.cache-name }}-${{ runner.os }}-
-            ${{ env.cache-name }}-
+          # restore-keys: |
+          #   ${{ env.cache-name }}-${{ runner.os }}-
+          #   ${{ env.cache-name }}-
