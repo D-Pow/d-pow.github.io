@@ -242,14 +242,10 @@ jobs:
         #   newAppVersion=$(npm version --no-git-tag-version patch)
         #   git commit -am "Patch to ${newAppVersion}"
         run: |
-          git pull
-          git config --global user.name ${{ env.gitUserName }}
-          git config --global user.email ${{ env.gitUserEmail }}
           newAppVersion="$(jq -r '.version' package.json)"
           npm version --no-git-tag-version "$newAppVersion"
           git commit -am "Update version to ${newAppVersion}"
           git push
-
 
       - name: Client CD Build - Upload CI cache
         id: client-cd-build-upload-cache
