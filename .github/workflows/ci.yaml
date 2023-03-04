@@ -94,7 +94,7 @@ jobs:
 
       - name: Client cache build and install artifacts
         id: ci-cache
-        uses: actions/cache@v3
+        uses: actions/cache/save@v3
         env:
           cache-name: ci-cache
         with:
