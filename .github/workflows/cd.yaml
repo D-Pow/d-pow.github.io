@@ -223,8 +223,6 @@ jobs:
           git config --global user.email ${{ env.gitUserEmail }}
           git pull
           npm install
-          npm version --no-git-tag-version patch
-          npm run build
 
       # Separate this step from `CI:Verify` to ensure linting, type-checking, etc. pass before using resources for building the app.
       # We need to either cache the build output after the version is incremented, or re-run
@@ -246,6 +244,7 @@ jobs:
           npm version --no-git-tag-version "$newAppVersion"
           git commit -am "Update version to ${newAppVersion}"
           git push
+          npm run build
 
       - name: Client CD Build - Upload CI cache
         id: client-cd-build-upload-cache
