@@ -32,6 +32,11 @@ name: CD
 
 on:
   workflow_dispatch:
+    inputs:
+      clientVersion:
+        description: "Sets (or increments if 'true') client app version"
+        required: false
+        default: ""
   release:
     types: [ published ]
   workflow_run:
@@ -224,6 +229,23 @@ jobs:
           git pull
           npm install
 
+      # Consolidate any source of the new client version into one place, `env.clientVersion`, for ease of use
+      # throughout all other workflows/jobs/actions/steps.
+      #
+      # Since the only `release` event we listen to is `publish`, we can safely assume the ref-name is the tag name.
+      #
+      # See:
+      #   - "Release" event and object info: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#release
+      - name: CD:Client - Set version number
+        run: |
+          if [[ -n "${{ env.clientVersion }}" ]] || [[ -n "${{ inputs.clientVersion }}" ]] || [[ "$GITHUB_EVENT_NAME" == 'release' ]]; then
+              if [[ "$GITHUB_EVENT_NAME" == 'release' ]]; then
+                  echo "clientVersion=$GITHUB_REF_NAME" >> $GITHUB_ENV
+              elif [[ -n "${{ inputs.clientVersion }}" ]]; then
+                  echo "clientVersion=${{ inputs.clientVersion }}" >> $GITHUB_ENV
+              fi
+          fi
+
       # Separate this step from `CI:Verify` to ensure linting, type-checking, etc. pass before using resources for building the app.
       # We need to either cache the build output after the version is incremented, or re-run
       # `npm run build` so the version is injected into the code where needed.
@@ -240,7 +262,7 @@ jobs:
         #   newAppVersion=$(npm version --no-git-tag-version patch)
         #   git commit -am "Patch to ${newAppVersion}"
         run: |
-          newAppVersion="$(jq -r '.version' package.json)"
+          newAppVersion="${{ env.clientVersion }}"
           npm version --no-git-tag-version "$newAppVersion" || npm version --no-git-tag-version patch
           git commit -am "Update version to ${newAppVersion}"
           git push
