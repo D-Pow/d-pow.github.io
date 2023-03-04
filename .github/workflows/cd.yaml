@@ -358,7 +358,7 @@ jobs:
 
           newAppVersion="$(jq -r '.version' package.json)"
 
-          npm run --ignore-scripts deploy -- --version "${newAppVersion}"
+          npm run --ignore-scripts deploy
 
           # git checkout gh-pages
           #
