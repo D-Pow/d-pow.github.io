@@ -92,18 +92,6 @@ jobs:
         # Import reusable GitHub Action logic via `uses`
         uses: ./.github/workflows/actions/client
 
-      # Separate this step from `verify` to ensure linting, type-checking, etc. pass before using resources for building the app.
-      # We need to either cache the build output after the version is incremented, or re-run
-      # `npm run build` so the version is injected into the code where needed.
-      - name: Client CI - Build and increment app version
-        id: client-build
-        run: |
-          git pull
-          git config --global user.name ${{ env.gitUserName }}
-          git config --global user.email ${{ env.gitUserEmail }}
-          npm version --no-git-tag-version patch
-          npm run build
-
       - name: Client cache build and install artifacts
         id: ci-cache
         uses: actions/cache@v3

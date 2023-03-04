@@ -263,6 +263,9 @@ jobs:
           key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('./src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
         continue-on-error: false
 
+      # Separate this step from `CI:Verify` to ensure linting, type-checking, etc. pass before using resources for building the app.
+      # We need to either cache the build output after the version is incremented, or re-run
+      # `npm run build` so the version is injected into the code where needed.
       - name: Client CD Deploy - Upgrade app version
         # Not necessarily required since `npm version` returns the version string (with "v" in it), but for reference:
         #   - Normal: npm version patch; git commit --amend -m "Patch to v$(jq -r '.version' package.json)"
@@ -272,10 +275,12 @@ jobs:
         #   newAppVersion=$(npm version --no-git-tag-version patch)
         #   git commit -am "Patch to ${newAppVersion}"
         run: |
+          git pull
           git config --global user.name ${{ env.gitUserName }}
           git config --global user.email ${{ env.gitUserEmail }}
           newAppVersion="$(jq -r '.version' package.json)"
-          git commit -am "Patch to ${newAppVersion}"
+          npm version --no-git-tag-version "$newAppVersion"
+          git commit -am "Update version to ${newAppVersion}"
           git push
 
       # Ignore pre-/post- npm scripts via `npm run --ignore-scripts <my-script>`.
