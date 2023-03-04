@@ -328,9 +328,6 @@ jobs:
           key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('package.json', './src/**', './test/**', './tests/**', './config/**', './mocks/**') }}
         continue-on-error: false
 
-      - name: Checkout repository branch
-        uses: actions/checkout@v2
-
       # Ignore pre-/post- npm scripts via `npm run --ignore-scripts <my-script>`.
       # This could be useful for, e.g. scripts like `deploy` since `predeploy` (`npm run build`)
       # was already run in CI.
