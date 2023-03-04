@@ -273,7 +273,7 @@ jobs:
               npm version --no-git-tag-version "$newAppVersion"
           fi
 
-          git commit -am "Update version to ${newAppVersion}"
+          git commit -am "Update version to v${newAppVersion}"
           git push
 
           npm run build
