@@ -71,6 +71,14 @@ $container-max-widths: (
   width: fit-content !important;
 }
 
+.m-auto {
+    margin: auto;
+}
+
+.margin-clear {
+    margin: 0;
+}
+
 $margin-units: (
     '': '%',
     'px': 'px',
@@ -159,13 +167,6 @@ $margin-units: (
   @extend .full-width-minus-scrollbar;
 }
 
-.m-auto {
-    margin: auto;
-}
-
-.margin-clear {
-    margin: 0;
-}
 
 .absolute-center {
   display: flex;
