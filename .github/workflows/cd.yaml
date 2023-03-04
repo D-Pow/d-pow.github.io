@@ -278,8 +278,6 @@ jobs:
 
           npm run build
 
-          git push
-
           echo "Created new app version: $(jq '.version' package.json)"
 
       - name: Client CD Build - Upload CD cache
