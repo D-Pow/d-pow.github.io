@@ -280,7 +280,7 @@ jobs:
 
           git push
 
-      - name: Client CD Build - Upload CI cache
+      - name: Client CD Build - Upload CD cache
         id: client-cd-build-upload-cache
         uses: actions/cache/save@v3
         env:
@@ -314,7 +314,8 @@ jobs:
         with:
           node-version: 16
 
-      - name: Client CD Deploy - Download CI cache
+      - name: Client CD Deploy - Download CD cache
+        id: client-cd-deploy-download-cache
         uses: actions/cache/restore@v3
         env:
           cache-name: ci-cache
