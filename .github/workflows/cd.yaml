@@ -283,6 +283,9 @@ jobs:
           git commit -am "Update version to ${newAppVersion}"
           git push
 
+      - name: Checkout repository branch
+        uses: actions/checkout@v2
+
       # Ignore pre-/post- npm scripts via `npm run --ignore-scripts <my-script>`.
       # This could be useful for, e.g. scripts like `deploy` since `predeploy` (`npm run build`)
       # was already run in CI.
@@ -293,7 +296,6 @@ jobs:
         # We need to either cache the build output after the version is incremented, or re-run
         # `npm run build` so the version is injected into the code where needed.
         run: |
-          git pull
           newAppVersion="$(jq -r '.version' package.json)"
           git checkout gh-pages
           ( for path in $(ls --ignore=dist --ignore=.git); do echo "$path"; rm -rf "$path"; done; )
