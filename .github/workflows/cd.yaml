@@ -241,7 +241,7 @@ jobs:
         #   git commit -am "Patch to ${newAppVersion}"
         run: |
           newAppVersion="$(jq -r '.version' package.json)"
-          npm version --no-git-tag-version "$newAppVersion"
+          npm version --no-git-tag-version "$newAppVersion" || npm version --no-git-tag-version patch
           git commit -am "Update version to ${newAppVersion}"
           git push
           npm run build
