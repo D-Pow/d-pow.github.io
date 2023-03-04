@@ -278,6 +278,8 @@ jobs:
 
           npm run build
 
+          git push
+
       - name: Client CD Build - Upload CI cache
         id: client-cd-build-upload-cache
         uses: actions/cache/save@v3
@@ -338,7 +340,15 @@ jobs:
       - name: CD - Deploy application
         # We need to either cache the build output after the version is incremented, or re-run
         # `npm run build` so the version is injected into the code where needed.
+        #
+        # Run `git config user.<info>` and `git pull` so we can push to a branch other than the
+        # one cloned via `actions/checkout`, e.g. cloning `master` and pushing to `gh-pages`.
         run: |
+          git config --global user.name ${{ env.gitUserName }}
+          git config --global user.email ${{ env.gitUserEmail }}
+
+          git pull
+
           newAppVersion="$(jq -r '.version' package.json)"
           git checkout gh-pages
           ( for path in $(ls --ignore=dist --ignore=.git); do echo "$path"; rm -rf "$path"; done; )
