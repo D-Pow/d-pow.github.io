@@ -495,9 +495,9 @@ function getWebpackConfig(webpackArgs) {
                 'ServiceWorker.js',
                 /urlsNotToCache ?= ?\[\]/g,
                 `urlsNotToCache=[${fileUrlsNotToCacheInPwa
-                    // CNAME isn't accessible via URL, and `cache.addAll(urls)` will fail if any of the URLs
-                    // isn't available, so remove it from the build output file list
-                    .filter(url => !url.match(/CNAME/i))
+                    // CNAME (and similar files) aren't accessible via URL, and `cache.addAll(urls)` will fail if any
+                    // of the URLs isn't available, so remove them from the build output file list
+                    .filter(url => !url.match(/CNAME|LICENSE/))
                     .map(url => url instanceof RegExp ? url : `"./${url}"`)
                     .join(',')
                 }]`,
