@@ -33,10 +33,6 @@ class Shape extends PureComponent {
             imageSrc: '',
             svgBoundingClientRect: {},
         };
-
-        if (this.props.image) {
-            importImageAsync(this.props.image).then(imageSrc => this.setState({ imageSrc }));
-        }
     }
 
     updateSvgBoundingClientRect() {
@@ -54,6 +50,10 @@ class Shape extends PureComponent {
     }
 
     componentDidMount() {
+        if (this.props.image) {
+            importImageAsync(this.props.image).then(imageSrc => this.setState({ imageSrc }));
+        }
+
         if (this.svgRef.current && this.isUsingHtmlChildrenWithCustomResizeElem) {
             this.updateSvgBoundingClientRect();
 
