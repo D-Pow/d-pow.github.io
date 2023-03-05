@@ -270,15 +270,17 @@ jobs:
           if [[ -z "$newAppVersion" ]] || [[ "$newAppVersion" == "v$(jq -r '.version' package.json)" ]]; then
               npm version --no-git-tag-version patch -m "Upgrade version to %s"
           else
-              npm version --no-git-tag-version "$newAppVersion"
+              npm version --no-git-tag-version "$newAppVersion" -m "Upgrade version to %s"
           fi
 
-          git commit -am "Update version to ${newAppVersion}"
+          newAppVersion="$(jq -r '.version' package.json)"
+
+          git commit -am "Update version to v${newAppVersion}"
           git push
 
           npm run build
 
-          git push
+          echo "Created new app version: $(jq '.version' package.json)"
 
       - name: Client CD Build - Upload CD cache
         id: client-cd-build-upload-cache
@@ -314,6 +316,15 @@ jobs:
         with:
           node-version: 16
 
+      - name: Client CD Deploy - Update branch with CD changes
+        id: client-cd-deploy-download-branch
+        shell: bash
+        run: |
+          git config --global user.name ${{ env.gitUserName }}
+          git config --global user.email ${{ env.gitUserEmail }}
+
+          git pull
+
       - name: Client CD Deploy - Download CD cache
         id: client-cd-deploy-download-cache
         uses: actions/cache/restore@v3
@@ -336,6 +347,7 @@ jobs:
       # Set `user.name` and `user.email` for ~/.gitconfig inline via the `--user` flag for `gh-pages`:
       #   npm run --ignore-scripts deploy -- --user "${{ env.gitUserName }} <${{ env.gitUserEmail }}>"
       - name: CD - Deploy application
+        shell: bash
         # We need to either cache the build output after the version is incremented, or re-run
         # `npm run build` so the version is injected into the code where needed.
         #
@@ -345,17 +357,29 @@ jobs:
           git config --global user.name ${{ env.gitUserName }}
           git config --global user.email ${{ env.gitUserEmail }}
 
+          # gh-pages requires this in CI environments for some reason
+          # See:
+          #   - https://github.com/tschaub/gh-pages/issues/384
+          #   - https://github.com/tschaub/gh-pages/issues/359
+          git remote set-url origin "$(echo "${{ github.repositoryUrl }}" | sed -E 's|git://|https://x-access-token:${{ secrets.GITHUB_TOKEN }}@|')"
+
           git pull
 
-          git checkout gh-pages
+          newAppVersion="$(jq -r '.version' package.json)"
 
-          ( for path in $(ls --ignore=dist --ignore=.git --ignore=package.json); do echo "$path"; rm -rf "$path"; done; )
+          echo "Deploying version ${newAppVersion}..."
 
-          cp -R dist/* .
+          npm run --ignore-scripts deploy
 
-          ( for path in dist/*; do git add "$(echo "$path" | sed -E 's/dist/./')"; done; )
-
-          rm -rf dist
-
-          git commit -am "Patch to v$(jq -r '.version' package.json)"
-          git push
+          # git checkout gh-pages
+          #
+          # ( for path in $(ls --ignore=dist --ignore=.git --ignore=package.json); do echo "$path"; rm -rf "$path"; done; )
+          #
+          # cp -R dist/* .
+          #
+          # ( for path in dist/*; do git add "$(echo "$path" | sed -E 's/dist/./')"; done; )
+          #
+          # rm -rf dist
+          #
+          # git commit -am "Update version to v${newAppVersion}"
+          # git push
