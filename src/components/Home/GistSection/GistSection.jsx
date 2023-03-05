@@ -12,10 +12,10 @@ function GistSection(props) {
         title: 'Full-stack software engineer',
         description: (
             <>
-                <div className={'mb-5p'}>
+                <div className={'mb-4'}>
                     I'm a lead front-end architect at {NEXTDOOR_LOGO}, where I focus on improving both devs' and users'
                     lives, including everything from accelerating build speed and client performance, to code architecture
-                    and modernization, and even to tool optimization.
+                    and modernization, and even to local tool optimizations.
                     Enhancing our devs' lives means features get delivered faster, stabler, and cleaner, resulting in an
                     overall more enjoyable experience for all of us.
                 </div>
