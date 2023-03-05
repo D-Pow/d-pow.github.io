@@ -66,8 +66,6 @@ function registerValidSW(swUrl) {
     navigator.serviceWorker
         .register(swUrl)
         .then(registration => {
-            registration.update();
-
             registration.addEventListener('updatefound', () => {
                 const installingWorker = registration.installing;
 
