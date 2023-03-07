@@ -30,8 +30,23 @@ $theme-colors: (
 
 $body-bg: $lightest;
 
-// Copy Bootstrap's grid breakpoints and max-widths here in order
-// to add an extra .container `xxl` breakpoint for very large monitors
+/*
+ * Copy Bootstrap's grid breakpoints and max-widths here in order
+ * to add an extra .container `xxl` breakpoint for very large monitors.
+ *
+ * Note: Bootstrap's breakpoints work by applying the selected style (e.g. `col-sm-4`)
+ * to all sizes >= the breakpoint's size declaration.
+ * No size is the default (e.g. `col-4`) for all sizes <= the specified size in the component's `props.className`.
+ * e.g.
+ *  - 'col-md-4' works on all screens >= `md`, but not on <= `sm`.
+ *  - 'col-2' would work for >= [unspecified] until `sm`, `md`, etc. are encountered.
+ *  - 'col-8 col-md-6 col-lg-4' means "col-8 until we reach `md`, then col-6 until we reach `lg`, then col-4 onwards".
+ *
+ * Note also that the container-max-widths are <= the breakpoints to signify how much to shrink the max-width
+ * when that breakpoint is reached.
+ * This helps prevent elements from reaching to the absolute edges of their containers (and thereby the device screens)
+ * which makes elements easier to see and is overall a better user experience.
+ */
 $grid-breakpoints: (
     xs: 0,
     sm: 576px,
