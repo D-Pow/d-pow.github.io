@@ -7,6 +7,7 @@ import Image from '@/components/ui/Image';
 import Link from '@/components/ui/Link';
 import { LINKS } from '@/utils/Constants';
 import { useTimedArrayToggle } from '@/utils/Hooks';
+import { ReactComponent as PdfIcon } from '@/assets/pdf-icon.svg';
 
 function PersonalContact(props) {
     const [ showModal, setShowModal ] = useState(false);
@@ -20,6 +21,21 @@ function PersonalContact(props) {
         </Link>,
         <Link href={LINKS.GitHub} key={LINKS.GitHub}>
             <Image className={'w-60 mb-4'} image={'github_logo.svg'} />
+        </Link>,
+        <Link href={LINKS.ResumeFileViewer} key={LINKS.ResumeFileViewer}>
+            {/* <Image className={'w-60 mb-4'} image={'pdf-icon.svg'} /> */}
+            <PdfIcon
+                className={'w-60 mb4'}
+                key={LINKS.ResumeFileViewer}
+            >
+                <text
+                    x="2.65"
+                    y="14.75"
+                    style={{ fontSize: '0.15em' }}
+                >
+                    Resume
+                </text>
+            </PdfIcon>
         </Link>,
     ];
 
