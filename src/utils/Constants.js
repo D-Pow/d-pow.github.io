@@ -34,6 +34,7 @@ export const LINKS = {
     SrcCode: 'https://github.com/D-Pow/d-pow.github.io',
     LinkedIn: 'https://www.linkedin.com/in/devon-powell/',
     GitHub: 'https://github.com/D-Pow',
+    EmbeddedFileViewerGoogle: 'https://docs.google.com/viewer?embedded=true&url=',
     MutualFundsHome: 'https://us.etrade.com/what-we-offer/investment-choices/mutual-funds',
     PrebuiltPortfolios: 'https://us.etrade.com/etx/wm/prebuiltmutualfundportfolios',
     AutomaticInvesting: 'https://us.etrade.com/etx/wm/automaticinvesting',
