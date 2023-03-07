@@ -164,15 +164,15 @@ function Pastimes(props) {
                 {renderedTitle}
             </ScrollToShow>
             <div className={'container'}>
-                <div className={'row mb-5'}>
-                    <div className={'col-sm-6 mb-4'}>
+                <div className={'row flex-center mb-5'}>
+                    <div className={'col-10 col-sm-6 mb-4'}>
                         <ScrollToShow addClasses={'slide-in-bottom show'} distributeClassesBeforeShow={'animated duration-15'}>
                             <div>
                                 {renderedHoverTranslateInShape}
                             </div>
                         </ScrollToShow>
                     </div>
-                    <div className={'col-sm-6'}>
+                    <div className={'col-10 col-sm-6'}>
                         <div className={'row'}>
                             <ScrollToShow
                                 addClasses={'slide-in-bottom show'}
