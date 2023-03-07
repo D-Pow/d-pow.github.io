@@ -64,7 +64,7 @@ function Productions(props) {
                                 return (
                                     <div className={`col-sm-6 p-0 ${centerCls}`} key={index}>
                                         {index !== 0 && (
-                                            <div className={'d-block d-sm-none py-2'}>
+                                            <div className={'d-block d-sm-none flex-center w-90 py-2'}>
                                                 <div className={'segment-bar bg-dark'} />
                                             </div>
                                         )}
