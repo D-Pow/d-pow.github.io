@@ -42,6 +42,10 @@ export const LINKS = {
     MockRequests: 'https://www.npmjs.com/package/mock-requests',
     AnimeAtsumeGitHub: 'https://github.com/D-Pow/anime-atsume',
     AnimeAtsumeLive: 'https://anime-atsume.herokuapp.com',
+    ResumeGithub: 'https://github.com/D-Pow/resume',
+    get ResumeFileViewer() {
+        return `${this.EmbeddedFileViewerGoogle}${this.ResumeGithub}/raw/master/Resume%20-%20Devon%20Powell.pdf`;
+    },
     AtomsOfConfusion: 'https://atomsofconfusion.com',
     AnticancerPeptides: 'https://www.ncbi.nlm.nih.gov/pubmed/29897657',
     TardigradeStratification: 'https://bioone.org/journals/Transactions-of-the-Kansas-Academy-of-Science/volume-118/issue-3-4/062.118.0306/Tardigrades-of-the-Canopy-Evidence-of-Stratification/10.1660/062.118.0306.short',
