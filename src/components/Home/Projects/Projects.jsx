@@ -16,12 +16,24 @@ function Projects(props) {
             },
             {
                 image: 'peptide_nmr.jpg',
-                title: <Link className={'text-primary'} href={LINKS.AnticancerPeptides}>Anti-cancer Polypeptides</Link>,
-                description: 'Research to develop polypeptides which destroy tumors upon proteolysis',
+                title: <Link className={'text-primary'} href={LINKS.AnticancerPeptides}>Anti-cancer Proteins</Link>,
+                description: 'Research to develop polypeptides to destroy tumors via nanofibers in proteolysis',
             },
             {
                 image: 'tardigrade.jpg',
-                title: <Link className={'text-primary'} href={LINKS.TardigradeStratification}>Tardigrade Stratification</Link>,
+                title: (
+                    <Link
+                        className={'text-primary'}
+                        href={LINKS.TardigradeStratification}
+                        aria={{
+                            style: {
+                                fontSize: '1.68rem',
+                            },
+                        }}
+                    >
+                        Tardigrade Stratification
+                    </Link>
+                ),
                 description: 'Research demonstrating tardigrade distributions and populations at various altitudes',
             },
         ],
@@ -36,7 +48,7 @@ function Projects(props) {
             : null,
     };
     const projectInfoCardEntries = pageText.infoCards.map((props, index) => (
-        <div className={'col-sm-4 mb-5 p-0 px-1'} key={index}>
+        <div className={'col-11 col-sm-4 mb-5 p-0 px-1'} key={index}>
             <InfoCard {...props} />
         </div>
     ));
@@ -47,12 +59,10 @@ function Projects(props) {
                 <h1 className={'p-5'}>Projects and Publications</h1>
             </ScrollToShow>
             <div className={'container'}>
-                <div className={'row'}>
-                    <div className={`w-100 ${isDesktop ? 'd-flex' : ''}`}>
-                        <ScrollToShow {...projectEntriesScrollToShowClassProps}>
-                            {projectInfoCardEntries}
-                        </ScrollToShow>
-                    </div>
+                <div className={'row flex-center'}>
+                    <ScrollToShow {...projectEntriesScrollToShowClassProps}>
+                        {projectInfoCardEntries}
+                    </ScrollToShow>
                 </div>
             </div>
         </section>
