@@ -14,7 +14,7 @@
 # If we decide to use Docker - Using local Dockerfile in pipeline:
 #   steps:
 #   - name: Check out code
-#     uses: actions/checkout@v2
+#     uses: actions/checkout@v3
 #   - name: Build docker images
 #     run: docker build -t local < .devcontainer/Dockerfile # .devcontainer is the local path
 #   - name: Run tests
@@ -69,7 +69,7 @@ jobs:
   #   runs-on: ubuntu-latest
   #   steps:
   #     - name: Checkout repository branch
-  #       uses: actions/checkout@v2
+  #       uses: actions/checkout@v3
   #
   #     - name: CD Client build
   #       # Workflows require at least one job that has no dependencies.
@@ -83,7 +83,7 @@ jobs:
   #   runs-on: ubuntu-latest
   #   steps:
   #     - name: Checkout repository branch
-  #       uses: actions/checkout@v2
+  #       uses: actions/checkout@v3
   #
   # cd-client-build:
   #   runs-on: ubuntu-latest
@@ -124,10 +124,10 @@ jobs:
       contents: write
     steps:
       - name: Checkout repository branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set NodeJS version
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16
 
@@ -309,10 +309,10 @@ jobs:
       contents: write
     steps:
       - name: Checkout repository branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set NodeJS version
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16
 
