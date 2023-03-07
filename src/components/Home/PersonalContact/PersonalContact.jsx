@@ -51,7 +51,12 @@ function PersonalContact(props) {
 
     const renderedContactLinks = contactLinks.map((renderedContactLink, shownChildrenIndex) => {
         return (
-            <div className={'col'} key={shownChildrenIndex}>
+            <div
+                // Make links appear on individual rows on xs screen sizes, 2 per row on small screens,
+                // and all on one row for larger ones
+                className={`col-8 col-sm-6 col-md-${Math.floor(12 / contactLinks.length)}`}
+                key={shownChildrenIndex}
+            >
                 <div className={getContactMethodCls(shownChildrenIndex)}>
                     {renderedContactLink}
                 </div>
@@ -83,14 +88,14 @@ function PersonalContact(props) {
 
             <div className={'container'}>
                 <div className={'row flex-center mb-5'}>
-                    <div className={'col-sm-6 mb-5'}>
-                        <div className={'row mb-4'}>
+                    <div className={'col-12 col-sm-10 col-md-11 col-lg-8'}>
+                        <div className={'row flex-center'}>
                             {renderedContactLinks}
                         </div>
-                        <div className={'row'}>
-                            {renderedModalButton}
-                        </div>
                     </div>
+                </div>
+                <div className={'row flex-center'}>
+                    {renderedModalButton}
                 </div>
             </div>
 
