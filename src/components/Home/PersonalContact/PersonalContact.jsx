@@ -82,7 +82,7 @@ function PersonalContact(props) {
             </ScrollToShow>
 
             <div className={'container'}>
-                <div className={'row justify-content-sm-center'}>
+                <div className={'row flex-center mb-5'}>
                     <div className={'col-sm-6 mb-5'}>
                         <div className={'row mb-4'}>
                             {renderedContactLinks}
