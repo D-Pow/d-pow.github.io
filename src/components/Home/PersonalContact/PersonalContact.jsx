@@ -6,8 +6,10 @@ import ContactModal from '@/components/ui/ContactModal';
 import Image from '@/components/ui/Image';
 import Link from '@/components/ui/Link';
 import { LINKS } from '@/utils/Constants';
+import { getGridBreakpoints } from '@/utils/Scss';
 import { useTimedArrayToggle } from '@/utils/Hooks';
 import { ReactComponent as PdfIcon } from '@/assets/pdf-icon.svg';
+
 
 function PersonalContact(props) {
     const [ showModal, setShowModal ] = useState(false);
@@ -47,7 +49,10 @@ function PersonalContact(props) {
         triggerShowChildren();
     };
 
-    const getContactMethodCls = index => `animated duration-5 ${shownChildren[index] ? 'flip-x show' : ''}`;
+    const isMobileScreenSize = window.innerWidth <= getGridBreakpoints().sm;
+    const animationCls = isMobileScreenSize ? 'slide-in-bottom' : 'flip-x';
+
+    const getContactMethodCls = index => `animated duration-5 ${shownChildren[index] ? `show ${animationCls}` : ''}`;
 
     const renderedContactLinks = contactLinks.map((renderedContactLink, shownChildrenIndex) => {
         return (
