@@ -1,0 +1,17 @@
+@use "browsers";
+
+$sample-var: 100%;
+$sample-var-safari-is-the-new-ie-fix: 50%;
+
+:root {
+    // Variables and styles changing based on browser aren't available in SCSS.
+    // Thus, we have to set a CSS variable (both default value and value based on
+    // browser being used) and then use that in the desired style blocks.
+    --css-var-for-dynamic-browser-behavior: #{$sample-var};
+}
+
+@include browsers.safari {
+    :root {
+        --css-var-for-dynamic-browser-behavior: #{$sample-var-safari-is-the-new-ie-fix};
+    }
+}
