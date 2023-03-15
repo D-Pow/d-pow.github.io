@@ -1,7 +1,6 @@
 @use "sass:math";
 
-@use "utils/json";
-@use "utils/strings";
+@use "utils";
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/functions";
@@ -152,7 +151,7 @@ $margin-units: (
     @each $unit-name, $unit in $margin-units {
         $decimal: math.div($int, 10);
         // CSS classes can't have periods in them, so replace them with hyphens
-        $cls-txt: str-replace("#{$decimal}", '.', '-');
+        $cls-txt: utils.str-replace("#{$decimal}", '.', '-');
         $cls-name: $cls-txt + $unit-name;
         $size-amount: $decimal + unquote($unit); // unquote() makes it literal CSS
 
@@ -252,6 +251,6 @@ input.text-white::placeholder, textarea.text-white::placeholder {
 @import "~bootstrap/scss/bootstrap";
 
 :export {
-  themeColors: json.json-stringify($theme-colors);
-  gridBreakpoints: json.json-stringify($grid-breakpoints);
+  themeColors: utils.json-stringify($theme-colors);
+  gridBreakpoints: utils.json-stringify($grid-breakpoints);
 }
