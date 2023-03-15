@@ -1,4 +1,10 @@
-import { useState, useReducer, useEffect, useRef } from 'react';
+import {
+    useState,
+    useEffect,
+    useCallback,
+    useReducer,
+    useRef,
+} from 'react';
 
 import { asNumber } from '@/utils/Numbers';
 import { debounce, elementIsInClickPath, getClickPath, setDocumentScrolling } from '@/utils/Events';
@@ -325,11 +331,11 @@ export function useHover(overrideBoundingClientRect) {
  * @returns {[ boolean[], Function ]} - An array of booleans to toggle and a function to initiate array toggling
  */
 export function useTimedArrayToggle(arrayLength, intervalTimeMs, allowBackwardsToggle = false) {
-    const toggleArrayEntryReducer = (prevArray, index) => {
+    const toggleArrayEntryReducer = useCallback((prevArray, index) => {
         const toggledEntries = [ ...prevArray ];
         toggledEntries[index] = !toggledEntries[index];
         return toggledEntries;
-    };
+    }, []);
 
     const origState = Array.from({ length: arrayLength }).fill(false);
 
