@@ -152,9 +152,11 @@ class ScrollToShow extends PureComponent {
 
         newShownChildren[index] = true;
 
-        this.setState({
-            shownChildren: newShownChildren,
-        });
+        if (this.state.shownChildren[index] !== newShownChildren[index]) {
+            this.setState({
+                shownChildren: newShownChildren,
+            });
+        }
     };
 
     getTotalOffsetTop(element) {
