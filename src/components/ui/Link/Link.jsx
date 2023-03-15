@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 
 function Link(props) {
@@ -30,4 +31,4 @@ Link.defaultProps = {
     aria: {},
 };
 
-export default Link;
+export default memo(Link);
