@@ -1,21 +1,37 @@
 /**
- * Asynchronously imports the specified image from the 'assets/' folder.
- * Optionally returns the resolved image data encoded with Base64.
- * Since this uses dynamic imports, images are cached, so multiple calls
+ * Asynchronously imports the specified binary asset from the 'assets/' folder.
+ * Could be images, PDFs, videos, etc.
+ *
+ * Optionally returns the resolved asset data encoded with Base64.
+ * Since this uses dynamic imports, results are cached, so multiple calls
  * for the same asset don't need to be memoized.
  *
- * @param {string} image - Image file name under 'assets/'
- * @param {boolean} [base64=false] - Return base64-encoded image data instead of image src path
- * @returns {Promise<string>} - Path of the image (base64=false) or Base64-encoded image data (base64=true)
+ * @param {string} assetRelPath - Relative path to the asset file under 'assets/'.
+ * @param {boolean} [base64=false] - Return Base64-encoded data instead of the `src` url.
+ * @returns {Promise<string>} - Path of the asset (base64=false) or Base64-encoded asset data (base64=true)
  */
-export async function importImageAsync(image, base64 = false) {
-    if (image != null && image !== '') {
+export async function importImageAsync(assetRelPath, base64 = false) {
+    if (assetRelPath != null && assetRelPath !== '') {
+        const pathIsFromAssetsDirRegex = new RegExp(`^${location.origin}/.*/?${process.env.PUBLIC_URL}/assets/`, 'i');
+
+        if (pathIsFromAssetsDirRegex) {
+            assetRelPath = assetRelPath.replace(pathIsFromAssetsDirRegex, '');
+        }
+
         try {
-            const module = await import(`@/assets/${image}`);
-            const imageSrc = module.default;
+            // Alternative: // const module = await import(/* webpackMode: 'lazy-once' */ `@/assets/${assetRelPath}`);
+            // See:
+            // - https://stackoverflow.com/questions/49121053/how-to-use-a-webpack-dynamic-import-with-a-variable-query-string/65298694#65298694
+            // - https://webpack.js.org/api/module-methods/#magic-comments
+            // - https://stackoverflow.com/questions/42908116/webpack-critical-dependency-the-request-of-a-dependency-is-an-expression
+            // - Actual solution: https://webpack.js.org/plugins/context-replacement-plugin/
+            const module = await import(`@/assets/${assetRelPath}`);
+            const assetSrc = module.default;
 
             if (base64) {
-                return fetch(imageSrc).then(res => res.blob()).then(blob => new Promise((res, rej) => {
+                const res = await fetch(assetRelPath);
+                const blob = await res.blob();
+                const base64String = await new Promise((res, rej) => {
                     const reader = new FileReader();
                     reader.onload = () => {
                         res(reader.result);
@@ -24,14 +40,26 @@ export async function importImageAsync(image, base64 = false) {
                         rej(); // error handled below
                     };
                     reader.readAsDataURL(blob);
-                }));
+                });
+
+                return base64String;
             }
 
-            return imageSrc;
-        } catch (error) {} // default return below handles error case
+            return assetSrc;
+        } catch (error) {
+            const assetRelPathWithoutHash = assetRelPath.replace(/[.-]\w+(\.\w+)$/, '$1');
+
+            if (assetRelPathWithoutHash !== assetRelPath) {
+                // Attempt removing hashes injected to filenames since they only work with direct URL references but not imports.
+                // Only attempt if the hash was found to prevent infinite loops.
+                return await importImageAsync(assetRelPathWithoutHash, base64);
+            }
+
+            // Default return below handles error case
+        }
     }
 
-    throw new Error(`${image} was not found`);
+    throw new Error(`${assetRelPath} was not found`);
 }
 
 /**
