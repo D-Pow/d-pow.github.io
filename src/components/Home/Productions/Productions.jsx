@@ -53,7 +53,7 @@ function Productions(props) {
                     <SameHeightImageCard.Provider>
                         <ScrollToShow
                             addClasses={'flip-y show'}
-                            distributeClassesBeforeShow={'animated duration-15'}
+                            distributeClassesBeforeShow={'animated duration-10'}
                             distributeSimultaneouslyInterval={0.5}
                         >
                             {pageText.imageCards.map((imageCardProps, index) => {
