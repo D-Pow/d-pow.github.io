@@ -22,7 +22,7 @@ function PersonalContact(props) {
         <Link href={LINKS.GitHub} key={LINKS.GitHub}>
             <Image className={'w-60 mb-4'} image={'github_logo.svg'} />
         </Link>,
-        <Link href={LINKS.ResumeFileViewer} key={LINKS.ResumeFileViewer}>
+        <Link href={LINKS.ResumeFileViewer} underlineText={false} key={LINKS.ResumeFileViewer}>
             {/* <Image className={'w-60 mb-4'} image={'pdf-icon.svg'} /> */}
             <PdfIcon
                 className={'w-60 mb4'}
