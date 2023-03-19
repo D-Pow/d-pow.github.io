@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useCallback } from 'react';
 
+import { getElementDimensions } from '@/utils/Events';
 import ContextFactory from '@/utils/ContextFactory';
 import { useWindowResize } from '@/utils/Hooks';
 
@@ -10,7 +11,7 @@ const { Provider, Context } = ImageCardSizeContext;
 
 
 function getMountedImageHeight(elemRef) {
-    return elemRef?.current?.getBoundingClientRect?.().height;
+    return getElementDimensions(elemRef)?.height;
 }
 
 function SameHeightImageCard({ imageAria, imageStyle, onLoad, ...imageCardProps }) {

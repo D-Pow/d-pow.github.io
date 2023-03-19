@@ -192,3 +192,39 @@ export function scrollWindowToTop() {
 export function setDocumentScrolling(allowScrolling = true) {
     document.body.style.overflow = allowScrolling ? 'auto' : 'hidden';
 }
+
+
+/**
+ * Gets a DOM element's dimensions.
+ *
+ * Could be the rendered or the intrinsic, "real" dimensions (typically only available on images).
+ *
+ * @param {(HTMLElement | { current?: HTMLElement })} elemOrRef - DOM element (or React ref) from which to extract the dimensions.
+ * @param {Object} [options]
+ * @param {boolean} [options.intrinsic] - Get the native dimensions of the (image) element rather than what's rendered.
+ * @returns {({ width: number; height: number; } | null)} - The height of the element.
+ */
+export function getElementDimensions(elemOrRef, {
+    intrinsic = false,
+} = {}) {
+    const elem = (elemOrRef?.current || elemOrRef);
+    const elemRenderedDimensions = elem?.getBoundingClientRect?.();
+    const elemRenderedWidth = elemRenderedDimensions?.width;
+    const elemRenderedHeight = elemRenderedDimensions?.height;
+    const elemIntrinsicWidth = elem?.naturalWidth;
+    const elemIntrinsicHeight = elem?.naturalHeight;
+
+    const elemWidth = intrinsic
+        ? elemIntrinsicWidth ?? elemRenderedWidth
+        : elemRenderedWidth;
+    const elemHeight = intrinsic
+        ? elemIntrinsicHeight ?? elemRenderedHeight
+        : elemRenderedHeight;
+
+    return (elemWidth && elemHeight)
+        ? {
+            width: elemWidth,
+            height: elemHeight,
+        }
+        : null;
+}
