@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import ContextFactory from '@/utils/ContextFactory';
-import { validateObjNestedFields } from '@/utils/Objects';
 import { useWindowResize } from '@/utils/Hooks';
 
 import ImageCard from './ImageCard';
 
 const ImageCardSizeContext = ContextFactory([]);
 const { Provider, Context } = ImageCardSizeContext;
+
+
+function getMountedImageHeight(elemRef) {
+    return elemRef?.current?.getBoundingClientRect?.().height;
+}
 
 function SameHeightImageCard({ imageAria, imageStyle, onLoad, ...imageCardProps }) {
     const imageRef = React.createRef();
@@ -31,19 +35,8 @@ function SameHeightImageCard({ imageAria, imageStyle, onLoad, ...imageCardProps 
         return newImageHeights;
     });
 
-    function getMountedImageHeight() {
-        const imageMounted = validateObjNestedFields(imageRef, 'current');
-
-        if (imageMounted) {
-            const imageElement = imageRef.current;
-            const { height } = imageElement.getBoundingClientRect();
-
-            return height;
-        }
-    }
-
     function addMountedImageHeightToContext() {
-        const height = getMountedImageHeight();
+        const height = getMountedImageHeight(imageRef);
 
         if (height != null) {
             addImageHeightToContext(height);
@@ -62,7 +55,7 @@ function SameHeightImageCard({ imageAria, imageStyle, onLoad, ...imageCardProps 
         const windowWidthChanged = windowSizeState.prevWidth !== window.innerWidth;
 
         if (windowSizeState.wasResized && windowWidthChanged) {
-            updateImageHeightInContext(imageIndex, getMountedImageHeight());
+            updateImageHeightInContext(imageIndex, getMountedImageHeight(imageRef));
 
             resetWasResized();
         }
