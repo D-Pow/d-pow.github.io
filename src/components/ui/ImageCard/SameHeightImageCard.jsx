@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useCallback } from 'react';
 
 import ContextFactory from '@/utils/ContextFactory';
 import { useWindowResize } from '@/utils/Hooks';
 
 import ImageCard from './ImageCard';
 
-const ImageCardSizeContext = ContextFactory([]);
+const ImageCardSizeContext = ContextFactory({});
 const { Provider, Context } = ImageCardSizeContext;
 
 
@@ -15,39 +15,25 @@ function getMountedImageHeight(elemRef) {
 
 function SameHeightImageCard({ imageAria, imageStyle, onLoad, ...imageCardProps }) {
     const imageRef = React.createRef();
-    const [ imageIndex, setImageIndex ] = useState();
     const { contextState: allImageHeights, setContextState } = useContext(Context);
 
-    // don't sort in-place/maintain index vals
-    const getSmallestImageHeightFromContext = () => Math.min(...allImageHeights);
-    const addImageHeightToContext = height => setContextState(prevState => {
-        const newImageHeights = [ ...prevState ];
+    const getSmallestImageHeightFromContext = () => Math.min(...Object.values(allImageHeights));
+    const updateImageHeightInContext = useCallback((imageId, height) => setContextState(prevState => {
+        const newImageHeights = { ...prevState };
 
-        newImageHeights.push(height);
-
-        return newImageHeights;
-    });
-    const updateImageHeightInContext = (index, height) => setContextState(prevState => {
-        const newImageHeights = [ ...prevState ];
-
-        newImageHeights[index] = height;
-
-        return newImageHeights;
-    });
-
-    function addMountedImageHeightToContext() {
-        const height = getMountedImageHeight(imageRef);
-
-        if (height != null) {
-            addImageHeightToContext(height);
+        if (height) {
+            newImageHeights[imageId] = height;
+        } else {
+            delete newImageHeights[imageId];
         }
-    }
 
-    const handleOnLoad = e => {
+        return newImageHeights;
+    }), [ setContextState ]);
+
+    const handleOnLoad = useCallback(e => {
         onLoad(e);
-        setImageIndex(allImageHeights.length);
-        addMountedImageHeightToContext();
-    };
+        updateImageHeightInContext(imageCardProps.image, getMountedImageHeight(imageRef));
+    }, [ onLoad, imageCardProps.image, imageRef, updateImageHeightInContext ]);
 
     const [ windowSizeState, resetWasResized ] = useWindowResize();
 
@@ -55,7 +41,7 @@ function SameHeightImageCard({ imageAria, imageStyle, onLoad, ...imageCardProps 
         const windowWidthChanged = windowSizeState.prevWidth !== window.innerWidth;
 
         if (windowSizeState.wasResized && windowWidthChanged) {
-            updateImageHeightInContext(imageIndex, getMountedImageHeight(imageRef));
+            updateImageHeightInContext(imageCardProps.image, getMountedImageHeight(imageRef));
 
             resetWasResized();
         }
