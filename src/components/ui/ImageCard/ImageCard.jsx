@@ -17,6 +17,7 @@ function ImageCard(props) {
         description,
         widthFit,
         showBorder,
+        showHoverContent,
         aria,
         onLoad,
     } = props;
@@ -76,7 +77,7 @@ function ImageCard(props) {
                     onLoad={onLoad}
                     aria={imageAria}
                 />
-                {renderHoverContent()}
+                {showHoverContent && renderHoverContent()}
             </div>
         </div>
     );
@@ -99,6 +100,7 @@ ImageCard.propTypes = {
     title: PropTypes.node,
     description: PropTypes.node,
     showBorder: PropTypes.bool,
+    showHoverContent: PropTypes.bool,
     widthFit: PropTypes.oneOf(Object.values(ImageCard.WidthFits)),
     aria: PropTypes.object,
     onLoad: PropTypes.func,
@@ -115,6 +117,7 @@ ImageCard.defaultProps = {
     title: '',
     description: '',
     showBorder: false,
+    showHoverContent: true,
     widthFit: ImageCard.WidthFits.FIT,
     aria: {},
     onLoad: () => {},
