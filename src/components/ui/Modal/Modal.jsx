@@ -9,6 +9,8 @@ function Modal({
     footer,
     useGridForBody,
     useGridForFooter,
+    sizeCompact,
+    sizeMax,
     preventDocumentScrolling,
     show,
     showCloseButton,
@@ -67,8 +69,14 @@ function Modal({
             }}
         >
             <div className={'d-block w-100'}>
-                <div className={'modal-dialog modal-dialog-centered flex-center'}>
-                    <div className={'modal-content overflow-auto'} style={{ maxWidth: '90vw', maxHeight: '90vh' }}>
+                <div className={`${sizeCompact ? 'modal-dialog' : ''} modal-dialog-centered flex-center`}>
+                    <div
+                        className={'modal-content overflow-auto'}
+                        style={{
+                            [sizeMax ? 'width' : 'maxWidth']: '90vw',
+                            [sizeMax ? 'height' : 'maxHeight']: '90vh',
+                        }}
+                    >
 
                         <div className={'modal-header'}>
                             <div className={'modal-title'}>
@@ -82,14 +90,14 @@ function Modal({
                         </div>
 
                         <div className={'modal-body'}>
-                            <div className={useGridForBody ? 'container-fluid' : ''}>
+                            <div className={useGridForBody ? 'container-fluid h-100' : ''}>
                                 {children}
                             </div>
                         </div>
 
                         {footer && (
                             <div className={'modal-footer'}>
-                                <div className={useGridForFooter ? 'container-fluid' : ''}>
+                                <div className={useGridForFooter ? 'container-fluid h-100' : ''}>
                                     {footer}
                                 </div>
                             </div>
@@ -108,6 +116,8 @@ Modal.propTypes = {
     footer: PropTypes.node,
     useGridForBody: PropTypes.bool,
     useGridForFooter: PropTypes.bool,
+    sizeCompact: PropTypes.bool,
+    sizeMax: PropTypes.bool,
     preventDocumentScrolling: PropTypes.bool,
     show: PropTypes.bool,
     showCloseButton: PropTypes.bool,
@@ -120,6 +130,8 @@ Modal.defaultProps = {
     footer: '',
     useGridForBody: true,
     useGridForFooter: true,
+    sizeCompact: false,
+    sizeMax: false,
     preventDocumentScrolling: true,
     show: false,
     showCloseButton: true,

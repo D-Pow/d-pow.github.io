@@ -221,6 +221,7 @@ class ContactModal extends Component {
                 footer={modalFooter}
                 show={this.props.show}
                 onClose={this.handleCloseModal}
+                sizeCompact
             >
                 {modalBody}
             </Modal>
