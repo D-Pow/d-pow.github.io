@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ScrollToShow from '@/components/ui/ScrollToShow';
 import ContactModal from '@/components/ui/ContactModal';
 import Image from '@/components/ui/Image';
-import Link from '@/components/ui/Link';
+import Anchor from '@/components/ui/Anchor';
 import { LINKS } from '@/utils/Constants';
 import { getGridBreakpoints } from '@/utils/Scss';
 import { useTimedArrayToggle } from '@/utils/Hooks';
@@ -18,13 +18,13 @@ function PersonalContact(props) {
     const handleCloseModal = () => setShowModal(false);
 
     const contactLinks = [
-        <Link href={LINKS.LinkedIn} key={LINKS.LinkedIn}>
+        <Anchor href={LINKS.LinkedIn} key={LINKS.LinkedIn}>
             <Image className={'w-60 mb-4'} image={'linkedin_logo.svg'} />
-        </Link>,
-        <Link href={LINKS.GitHub} key={LINKS.GitHub}>
+        </Anchor>,
+        <Anchor href={LINKS.GitHub} key={LINKS.GitHub}>
             <Image className={'w-60 mb-4'} image={'github_logo.svg'} />
-        </Link>,
-        <Link href={LINKS.ResumeFileViewer} underlineText={false} key={LINKS.ResumeFileViewer}>
+        </Anchor>,
+        <Anchor href={LINKS.ResumeFileViewer} underlineText={false} key={LINKS.ResumeFileViewer}>
             {/* <Image className={'w-60 mb-4'} image={'pdf-icon.svg'} /> */}
             <PdfIcon
                 className={'w-60 mb4'}
@@ -38,7 +38,7 @@ function PersonalContact(props) {
                     Resume
                 </text>
             </PdfIcon>
-        </Link>,
+        </Anchor>,
     ];
 
     const numChildrenToFlip = contactLinks.length + 1; // include 'contact me' modal-opening button

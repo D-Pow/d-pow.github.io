@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import ScrollToShow from '@/components/ui/ScrollToShow';
 import Shape from '@/components/ui/Shape';
-import Link from '@/components/ui/Link';
+import Anchor from '@/components/ui/Anchor';
 import { LINKS } from '@/utils/Constants';
 import { ETRADE_LINK, NEXTDOOR_LOGO } from '@/utils/CommonRenders';
 import { getGridBreakpoints } from '@/utils/Scss';
@@ -24,7 +24,7 @@ function GistSection(props) {
                 <details>
                     <summary>I've also worked at E-Trade!</summary>
 
-                    I built platforms at {ETRADE_LINK} for creating <Link href={LINKS.MutualFundsHome}>Mutual Fund/ETF</Link>{' '}
+                    I built platforms at {ETRADE_LINK} for creating <Anchor href={LINKS.MutualFundsHome}>Mutual Fund/ETF</Anchor>{' '}
                     investment plans. I have a passion for good coding practices, both for humans (readability, design patterns) and
                     computers (efficiency). Enjoying my work is all about learning new things, making meaningful
                     contributions, and collaborating with my teammates, because it's the people who make the workplace

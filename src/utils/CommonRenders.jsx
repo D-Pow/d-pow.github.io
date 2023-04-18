@@ -1,23 +1,23 @@
-import Link from '@/components/ui/Link';
+import Anchor from '@/components/ui/Anchor';
 import Image from '@/components/ui/Image';
 import { LINKS } from '@/utils/Constants';
 
 export const SRC_CODE = (
-    <Link href={LINKS.SrcCode}>source code</Link>
+    <Anchor href={LINKS.SrcCode}>source code</Anchor>
 );
 
 export const ETRADE_LINK = (
-    <Link href={LINKS.EtradeHome}>
+    <Anchor href={LINKS.EtradeHome}>
         <Image image={'etrade_icon.png'} aria={{ style: { marginTop: '-1%' }}} />
         E-Trade
-    </Link>
+    </Anchor>
 );
 
 export const NEXTDOOR_LOGO = (
-    <Link href={LINKS.NextdoorHome}>
+    <Anchor href={LINKS.NextdoorHome}>
         <Image image={'nextdoor_icon.svg'} className={'w-1-5e h-1-5e mb-3px'} />
         Nextdoor
-    </Link>
+    </Anchor>
 );
 
 export function EasterEgg({ className = '', ...props }) {

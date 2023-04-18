@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import ScrollToShow from '@/components/ui/ScrollToShow';
 import InfoCard from '@/components/ui/InfoCard';
-import Link from '@/components/ui/Link';
+import Anchor from '@/components/ui/Anchor';
 import { LINKS } from '@/utils/Constants';
 import { getGridBreakpoints } from '@/utils/Scss';
 
@@ -11,18 +11,18 @@ function Projects(props) {
         infoCards: [
             {
                 image: 'atoms_of_confusion.jpg',
-                title: <Link className={'text-primary'} href={LINKS.AtomsOfConfusion}>Atoms of Confusion</Link>,
+                title: <Anchor className={'text-primary'} href={LINKS.AtomsOfConfusion}>Atoms of Confusion</Anchor>,
                 description: 'Research to understand fundamental causes of source code misunderstandings',
             },
             {
                 image: 'peptide_nmr.jpg',
-                title: <Link className={'text-primary'} href={LINKS.AnticancerPeptides}>Anti-cancer Proteins</Link>,
+                title: <Anchor className={'text-primary'} href={LINKS.AnticancerPeptides}>Anti-cancer Proteins</Anchor>,
                 description: 'Research to develop polypeptides to destroy tumors via nanofibers in proteolysis',
             },
             {
                 image: 'tardigrade.jpg',
                 title: (
-                    <Link
+                    <Anchor
                         className={'text-primary'}
                         href={LINKS.TardigradeStratification}
                         aria={{
@@ -32,7 +32,7 @@ function Projects(props) {
                         }}
                     >
                         Tardigrade Stratification
-                    </Link>
+                    </Anchor>
                 ),
                 description: 'Research demonstrating tardigrade distributions and populations at various altitudes',
             },

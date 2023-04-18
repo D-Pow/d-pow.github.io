@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import ScrollToShow from '@/components/ui/ScrollToShow';
 import { SameHeightImageCard } from '@/components/ui/ImageCard';
-import Link from '@/components/ui/Link';
+import Anchor from '@/components/ui/Anchor';
 import { LINKS } from '@/utils/Constants';
 
 function Productions(props) {
@@ -10,12 +10,12 @@ function Productions(props) {
         imageCards: [
             {
                 image: 'prebuilt_portfolios.jpg',
-                title: <Link className={'text-light'} href={LINKS.PrebuiltPortfolios}>Prebuilt Portfolios</Link>,
+                title: <Anchor className={'text-light'} href={LINKS.PrebuiltPortfolios}>Prebuilt Portfolios</Anchor>,
                 description: 'Selections of funds to fit individual investment styles',
             },
             {
                 image: 'automatic_investing.jpg',
-                title: <Link className={'text-light'} href={LINKS.AutomaticInvesting}>Automatic Investing</Link>,
+                title: <Anchor className={'text-light'} href={LINKS.AutomaticInvesting}>Automatic Investing</Anchor>,
                 description: 'Automates investing with varying frequencies and amounts',
             },
             {
@@ -25,19 +25,19 @@ function Productions(props) {
             },
             {
                 image: 'edge_panel_widget.png',
-                title: <Link className={'text-light'} href={LINKS.EtradeAndroidApp}>Edge Panel</Link>,
+                title: <Anchor className={'text-light'} href={LINKS.EtradeAndroidApp}>Edge Panel</Anchor>,
                 description: 'Android widget for edge-devices to display stock watch lists',
             },
             {
                 image: 'mock_requests.png',
-                title: <Link className={'text-light'} href={LINKS.MockRequests}>MockRequests</Link>,
+                title: <Anchor className={'text-light'} href={LINKS.MockRequests}>MockRequests</Anchor>,
                 description: 'Open-source JS network mocking system',
                 imageCls: 'h-100 w-auto',
                 className: 'bg-lighter',
             },
             {
                 image: 'anime_atsume.jpg',
-                title: <Link className={'text-light'} href={LINKS.AnimeAtsumeLive}>Anime Atsume</Link>,
+                title: <Anchor className={'text-light'} href={LINKS.AnimeAtsumeLive}>Anime Atsume</Anchor>,
                 description: 'Aggregator for searching and watching anime',
             },
         ],
