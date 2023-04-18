@@ -12,10 +12,10 @@ import { ReactComponent as PdfIcon } from '@/assets/pdf-icon.svg';
 
 
 function PersonalContact(props) {
-    const [ showModal, setShowModal ] = useState(false);
+    const [ contactModalShown, setContactModalShown ] = useState(false);
 
-    const showContactModal = () => setShowModal(true);
-    const handleCloseModal = () => setShowModal(false);
+    const showContactModal = () => setContactModalShown(true);
+    const handleCloseModal = () => setContactModalShown(false);
 
     const contactLinks = [
         <Anchor href={LINKS.LinkedIn} key={LINKS.LinkedIn}>
@@ -104,7 +104,7 @@ function PersonalContact(props) {
                 </div>
             </div>
 
-            <ContactModal show={showModal} onClose={handleCloseModal} />
+            <ContactModal show={contactModalShown} onClose={handleCloseModal} />
         </section>
     );
 }
