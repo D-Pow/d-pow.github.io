@@ -21,7 +21,7 @@ function PersonalContact(props) {
         <Anchor href={LINKS.LinkedIn} key={LINKS.LinkedIn}>
             <Image className={'w-60 mb-4'} image={'linkedin_logo.svg'} />
         </Anchor>,
-        <Anchor href={LINKS.GitHub} key={LINKS.GitHub}>
+        <Anchor href={LINKS.GitHubProfile} key={LINKS.GitHubProfile}>
             <Image className={'w-60 mb-4'} image={'github_logo.svg'} />
         </Anchor>,
         <Anchor href={LINKS.ResumeFileViewer} underlineText={false} key={LINKS.ResumeFileViewer}>
