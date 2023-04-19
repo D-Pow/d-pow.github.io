@@ -1,3 +1,5 @@
+import { blobToBase64 } from '@/utils/Text';
+
 /**
  * Asynchronously imports the specified binary asset from the 'assets/' folder.
  * Could be images, PDFs, videos, etc.
@@ -31,16 +33,7 @@ export async function importImageAsync(assetRelPath, base64 = false) {
             if (base64) {
                 const res = await fetch(assetRelPath);
                 const blob = await res.blob();
-                const base64String = await new Promise((res, rej) => {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        res(reader.result);
-                    };
-                    reader.onerror = () => {
-                        rej(); // error handled below
-                    };
-                    reader.readAsDataURL(blob);
-                });
+                const base64String = await blobToBase64(blob);
 
                 return base64String;
             }
