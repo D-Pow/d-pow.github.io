@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 import ScrollToShow from '@/components/ui/ScrollToShow';
 import ContactModal from '@/components/ui/ContactModal';
+import ResumeModal from '@/components/ui/ResumeModal';
 import Image from '@/components/ui/Image';
 import Anchor from '@/components/ui/Anchor';
 import { LINKS } from '@/utils/Constants';
 import { getGridBreakpoints } from '@/utils/Scss';
 import { useTimedArrayToggle } from '@/utils/Hooks';
-import { ReactComponent as PdfIcon } from '@/assets/pdf-icon.svg';
 
 
 function PersonalContact(props) {
@@ -24,21 +24,7 @@ function PersonalContact(props) {
         <Anchor href={LINKS.GitHubProfile} key={LINKS.GitHubProfile}>
             <Image className={'w-60 mb-4'} image={'github_logo.svg'} />
         </Anchor>,
-        <Anchor href={LINKS.ResumeFileViewer} underlineText={false} key={LINKS.ResumeFileViewer}>
-            {/* <Image className={'w-60 mb-4'} image={'pdf-icon.svg'} /> */}
-            <PdfIcon
-                className={'w-60 mb4'}
-                key={LINKS.ResumeFileViewer}
-            >
-                <text
-                    x="2.65"
-                    y="14.75"
-                    style={{ fontSize: '0.15em' }}
-                >
-                    Resume
-                </text>
-            </PdfIcon>
-        </Anchor>,
+        <ResumeModal key={LINKS.ResumeFileUrl} />,
     ];
 
     const numChildrenToFlip = contactLinks.length + 1; // include 'contact me' modal-opening button
