@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import ReactPortal from '@/components/ui/ReactPortal';
 import { useRootClose, useBlockDocumentScrolling } from '@/utils/Hooks';
 
 function Modal({
@@ -15,6 +16,7 @@ function Modal({
     show,
     showCloseButton,
     onClose,
+    portalId,
 }) {
     const [ hideMomentarily, setHideMomentarily ] = useState(false);
     const [ rootWasClosed, resetRootClosed ] = useRootClose(
@@ -59,7 +61,7 @@ function Modal({
         ? <h4 className={'margin-clear'}>{title}</h4>
         : title;
 
-    return (
+    const renderedModal = (
         <div className={`modal fade d-flex flex-center ${displayCls}`}
             style={{
                 // Bootstrap's CSS for the modal backdrop's opacity and size doesn't work correctly. Override it here
@@ -108,6 +110,20 @@ function Modal({
             </div>
         </div>
     );
+
+    if (portalId) {
+        return (
+            <ReactPortal
+                // Only add wrapper-element ID if it was specified by the parent.
+                // If `true` were passed, then use the default UUID-generation logic within `ReactPortal` component.
+                wrapperId={portalId === true ? undefined : portalId}
+            >
+                {renderedModal}
+            </ReactPortal>
+        );
+    }
+
+    return renderedModal;
 }
 
 Modal.propTypes = {
@@ -122,6 +138,10 @@ Modal.propTypes = {
     show: PropTypes.bool,
     showCloseButton: PropTypes.bool,
     onClose: PropTypes.func,
+    portalId: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.bool,
+    ]),
 };
 
 Modal.defaultProps = {
