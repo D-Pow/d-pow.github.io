@@ -98,7 +98,7 @@ export const LINKS = {
     EtradeAndroidApp: 'https://play.google.com/store/apps/details?id=com.etrade.mobilepro.activity',
     MockRequests: 'https://www.npmjs.com/package/mock-requests',
     AnimeAtsumeGitHub: 'https://github.com/D-Pow/anime-atsume',
-    AnimeAtsumeLive: 'https://anime-atsume.herokuapp.com',
+    AnimeAtsumeLive: 'https://d-pow.github.io/anime-atsume',
     ResumeGithub: 'https://github.com/D-Pow/resume',
     ResumeGithubFilename: 'Resume - Devon Powell.pdf',
     get ResumeFileUrl() {
