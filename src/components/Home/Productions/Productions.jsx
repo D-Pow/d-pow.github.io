@@ -37,7 +37,7 @@ function Productions(props) {
             },
             {
                 image: 'anime_atsume.jpg',
-                title: <Anchor className={'text-light'} href={LINKS.AnimeAtsumeLive}>Anime Atsume</Anchor>,
+                title: <Anchor className={'text-light'} href={LINKS.AnimeAtsumeGitHub}>Anime Atsume</Anchor>,
                 description: 'Aggregator for searching and watching anime',
             },
         ],
