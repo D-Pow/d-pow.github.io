@@ -397,7 +397,8 @@ module.exports = {
                          *
                          * @see [Related StackOverflow post]{@link https://stackoverflow.com/questions/71090960/is-there-a-way-to-make-eslint-understand-the-new-import-assertion-syntax-without/71128316#71128316}
                          */
-                        '@babel/plugin-syntax-import-assertions',
+                        // TODO
+                        // '@babel/plugin-syntax-import-assertions',
                     ],
                 },
             },
