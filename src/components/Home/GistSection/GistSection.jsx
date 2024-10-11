@@ -11,6 +11,8 @@ import {
 } from '@/utils/CommonRenders';
 import { getGridBreakpoints } from '@/utils/Scss';
 
+import '@/styles/GistSection.scss';
+
 function GistSection(props) {
     const pageText = {
         title: 'Full-stack software engineer',
@@ -35,8 +37,8 @@ function GistSection(props) {
                 <div className={'mb-4'}>
                     I've also worked at:
 
-                    <ul style={{ paddingLeft: '0', listStyleType: 'none' }}>
-                        <li style={{ marginTop: '0.5rem' }}>
+                    <ul className={'previous-work'}>
+                        <li>
                             <details>
                                 <summary>Nextdoor</summary>
 
@@ -53,7 +55,7 @@ function GistSection(props) {
                             </details>
                         </li>
 
-                        <li style={{ marginTop: '0.5rem' }}>
+                        <li>
                             <details>
                                 <summary>E-Trade</summary>
 
