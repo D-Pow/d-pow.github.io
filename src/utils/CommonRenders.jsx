@@ -25,7 +25,7 @@ export const HOME_DEPOT_LOGO = (
         <Image image={'home_depot.svg'} className={'w-1-5e h-1-5e mb-3px'} />
         The Home Depot
     </Anchor>
-)
+);
 
 export function EasterEgg({ className = '', ...props }) {
     return (

@@ -11,7 +11,7 @@ function Productions(props) {
             {
                 image: 'home_depot_pos.png',
                 title: <Anchor className={'text-light'} href={LINKS.HomeDepotHome}>The Home Depot</Anchor>,
-                description: 'Point of Sale, self-checkout, and loyalty management'
+                description: 'Point of Sale, self-checkout, and loyalty management',
             },
             {
                 image: 'nextdoor_feed_sample.png',
