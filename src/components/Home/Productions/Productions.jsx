@@ -9,6 +9,11 @@ function Productions(props) {
     const pageText = {
         imageCards: [
             {
+                image: 'nextdoor_feed_sample.png',
+                title: <Anchor className={'text-light'} href={LINKS.NextdoorHome}>Nextdoor code foundation</Anchor>,
+                description: 'Nextdoor full website architecture, state management, build cycle, etc.',
+            },
+            {
                 image: 'prebuilt_portfolios.jpg',
                 title: <Anchor className={'text-light'} href={LINKS.PrebuiltPortfolios}>Prebuilt Portfolios</Anchor>,
                 description: 'Selections of funds to fit individual investment styles',
