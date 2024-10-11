@@ -4,7 +4,11 @@ import ScrollToShow from '@/components/ui/ScrollToShow';
 import Shape from '@/components/ui/Shape';
 import Anchor from '@/components/ui/Anchor';
 import { LINKS } from '@/utils/Constants';
-import { ETRADE_LINK, NEXTDOOR_LOGO } from '@/utils/CommonRenders';
+import {
+    ETRADE_LINK,
+    NEXTDOOR_LOGO,
+    HOME_DEPOT_LOGO,
+} from '@/utils/CommonRenders';
 import { getGridBreakpoints } from '@/utils/Scss';
 
 function GistSection(props) {
@@ -13,27 +17,67 @@ function GistSection(props) {
         description: (
             <>
                 <div className={'mb-4'}>
-                    I'm a lead front-end architect at {NEXTDOOR_LOGO}, where I focus on improving both devs' and users'
-                    lives, including everything from accelerating build speed and client performance, to code architecture
-                    modernization, pipeline parallelization, founding our new SSR codebase, and even to local tool
-                    optimizations.
-                    Enhancing our devs' lives means features get delivered faster, stabler, and cleaner, resulting in an
-                    overall more enjoyable experience for all of us.
+                    <p style={{ fontSize: '1rem' }}>
+                        As a principal software engineer at {HOME_DEPOT_LOGO}, I balance responsibilities between making
+                        decisions for the company and onboarding our new (and current) coworkers. With my understanding
+                        of the company's internal/external ecosystems, I have both enhanced the customer membership
+                        experience for customers as well as reshaped the developer experience and mentored multiple new
+                        hires as they join our teams.
+                    </p>
+
+                    <p style={{ fontSize: '1rem' }}>
+                        Improving customers' experiences is all about usability and clarity of the company's systems.
+                        Enhancing our devs' lives means features get delivered faster, stabler, and cleaner,
+                        resulting in an overall more enjoyable experience for all of us.
+                    </p>
                 </div>
 
-                <details>
-                    <summary>I've also worked at E-Trade!</summary>
+                <div className={'mb-4'}>
+                    I've also worked at:
 
-                    I built platforms at {ETRADE_LINK} for creating <Anchor href={LINKS.MutualFundsHome}>Mutual Fund/ETF</Anchor>{' '}
-                    investment plans. I have a passion for good coding practices, both for humans (readability, design patterns) and
-                    computers (efficiency). Enjoying my work is all about learning new things, making meaningful
-                    contributions, and collaborating with my teammates, because it's the people who make the workplace
-                    worthwhile.
-                </details>
+                    <ul style={{ paddingLeft: '0', listStyleType: 'none' }}>
+                        <li style={{ marginTop: '0.5rem' }}>
+                            <details>
+                                <summary>Nextdoor</summary>
+
+                                <p style={{ fontSize: '1rem' }}>
+                                    As a lead front-end architect at {NEXTDOOR_LOGO}, I focused on improving both
+                                    devs' and users' lives, including everything from accelerating build speed and
+                                    client performance, to code architecture modernization, pipeline parallelization,
+                                    founding our new SSR codebase, and even to local tool optimizations.
+                                </p>
+
+                                <p style={{ fontSize: '1rem' }}>
+                                    Improving devs' ecosystem facilitates a better experience for both employee and customer.
+                                </p>
+                            </details>
+                        </li>
+
+                        <li style={{ marginTop: '0.5rem' }}>
+                            <details>
+                                <summary>E-Trade</summary>
+
+                                <p style={{ fontSize: '1rem' }}>
+                                    I built platforms at {ETRADE_LINK} for creating
+                                    <Anchor href={LINKS.MutualFundsHome}>Mutual Fund/ETF</Anchor>{' '} investment plans.
+                                    I have a passion for good coding practices, both for humans (readability, design
+                                    patterns)
+                                    and computers (efficiency).
+                                </p>
+
+                                <p style={{ fontSize: '1rem' }}>
+                                    Enjoying my work is all about learning new things, making
+                                    meaningful contributions, and collaborating with my teammates, because it's the
+                                    people who make the workplace worthwhile.
+                                </p>
+                            </details>
+                        </li>
+                    </ul>
+                </div>
             </>
         ),
     };
-    const mainContentShowThreshold = 2/3;
+    const mainContentShowThreshold = 2 / 3;
 
     return (
         <section id={'the-gist'} className={props.className}>

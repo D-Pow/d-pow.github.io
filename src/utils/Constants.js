@@ -117,6 +117,7 @@ export const LINKS = {
     EtradeHome: 'https://etrade.com',
     EtradeIcon: 'https://cdn.etrade.net/1/19042220580.0/aempros/etc/designs/responsive-etrade/pagemeta/images/favicon-16x16.png',
     NextdoorHome: 'https://nextdoor.com',
+    HomeDepotHome: 'https://www.homedepot.com',
 };
 
 // Submit contact requests to FormSpree so bots can't scan for my email address

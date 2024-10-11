@@ -20,6 +20,13 @@ export const NEXTDOOR_LOGO = (
     </Anchor>
 );
 
+export const HOME_DEPOT_LOGO = (
+    <Anchor href={LINKS.HomeDepotHome}>
+        <Image image={'home_depot.svg'} className={'w-1-5e h-1-5e mb-3px'} />
+        The Home Depot
+    </Anchor>
+)
+
 export function EasterEgg({ className = '', ...props }) {
     return (
         <h4 className={`d-inline-block margin-clear ${className}`} {...props}>🐣</h4>

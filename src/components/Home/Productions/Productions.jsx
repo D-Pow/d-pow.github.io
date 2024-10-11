@@ -9,6 +9,11 @@ function Productions(props) {
     const pageText = {
         imageCards: [
             {
+                image: 'home_depot_pos.png',
+                title: <Anchor className={'text-light'} href={LINKS.HomeDepotHome}>The Home Depot</Anchor>,
+                description: 'Point of Sale, self-checkout, and loyalty management'
+            },
+            {
                 image: 'nextdoor_feed_sample.png',
                 title: <Anchor className={'text-light'} href={LINKS.NextdoorHome}>Nextdoor code foundation</Anchor>,
                 description: 'Nextdoor full website architecture, state management, build cycle, etc.',
