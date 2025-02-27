@@ -20,11 +20,10 @@ function GistSection(props) {
             <>
                 <div className={'mb-4'}>
                     <p style={{ fontSize: '1rem' }}>
-                        As a principal software engineer at {HOME_DEPOT_LOGO}, I balance responsibilities between making
-                        decisions for the company and onboarding our new (and current) coworkers. With my understanding
-                        of the company's internal/external ecosystems, I have both enhanced the customer membership
-                        experience for customers as well as reshaped the developer experience and mentored multiple new
-                        hires as they join our teams.
+                        As a principal software engineer at {HOME_DEPOT_LOGO}, I balance responsibilities between
+                        making major innovations for the company and mentoring coworkers.
+                        While creating the new HD Pass loyalty program, I enhanced both the customer and developer
+                        experiences such that features were delivered faster and apps ran smoother.
                     </p>
 
                     <p style={{ fontSize: '1rem' }}>
