@@ -28,9 +28,9 @@ function GistSection(props) {
                     </p>
 
                     <p style={{ fontSize: '1rem' }}>
-                        Improving customers' experiences is all about usability and clarity of the company's systems.
-                        Enhancing our devs' lives means features get delivered faster, stabler, and cleaner,
-                        resulting in an overall more enjoyable experience for all of us.
+                        Enjoying my work is all about learning new things, making
+                        meaningful contributions, and collaborating with my teammates, because it's the
+                        people who make the workplace worthwhile.
                     </p>
                 </div>
 
@@ -44,13 +44,9 @@ function GistSection(props) {
 
                                 <p style={{ fontSize: '1rem' }}>
                                     As a lead front-end architect at {NEXTDOOR_LOGO}, I focused on improving both
-                                    devs' and users' lives, including everything from accelerating build speed and
-                                    client performance, to code architecture modernization, pipeline parallelization,
-                                    founding our new SSR codebase, and even to local tool optimizations.
-                                </p>
-
-                                <p style={{ fontSize: '1rem' }}>
-                                    Improving devs' ecosystem facilitates a better experience for both employee and customer.
+                                    devs' and users' lives, including everything from founding our new SSR codebase to
+                                    code architecture modernization, pipeline parallelization, accelerating build speed
+                                    and client performance, and even local tool optimizations.
                                 </p>
                             </details>
                         </li>
@@ -61,16 +57,10 @@ function GistSection(props) {
 
                                 <p style={{ fontSize: '1rem' }}>
                                     I built platforms at {ETRADE_LINK} for creating
-                                    <Anchor href={LINKS.MutualFundsHome}>Mutual Fund/ETF</Anchor>{' '} investment plans.
+                                    {' '}<Anchor href={LINKS.MutualFundsHome}>Mutual Fund/ETF</Anchor>{' '} investment plans.
                                     I have a passion for good coding practices, both for humans (readability, design
                                     patterns)
                                     and computers (efficiency).
-                                </p>
-
-                                <p style={{ fontSize: '1rem' }}>
-                                    Enjoying my work is all about learning new things, making
-                                    meaningful contributions, and collaborating with my teammates, because it's the
-                                    people who make the workplace worthwhile.
                                 </p>
                             </details>
                         </li>
