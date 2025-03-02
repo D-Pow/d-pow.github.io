@@ -1,5 +1,6 @@
 import {
     memo,
+    type ReactNode,
     type Ref,
 } from 'react';
 
@@ -98,7 +99,7 @@ function ResourceViewer({
                     type={mimeType}
                 />
             )}
-            {children}
+            {children as unknown as ReactNode}
         </object>
     );
 }
