@@ -129,7 +129,7 @@ jobs:
       - name: Set NodeJS version
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 21
 
       # Native GitHub `actions/download-artifact@v3` doesn't allow sharing between workflows.
       #   - Issue: https://github.com/actions/toolkit/issues/501
@@ -314,7 +314,7 @@ jobs:
       - name: Set NodeJS version
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 21
 
       - name: Client CD Deploy - Update branch with CD changes
         id: client-cd-deploy-download-branch

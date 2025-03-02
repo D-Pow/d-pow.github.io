@@ -13,7 +13,7 @@ runs:
     - name: Set NodeJS version
       uses: actions/setup-node@v3
       with:
-        node-version: 16
+        node-version: 21
 
     - name: Server Install
       id: server-install

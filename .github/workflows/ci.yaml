@@ -59,7 +59,7 @@ jobs:
       - name: Set NodeJS version
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 21
 
       - name: Client CI - Download cache
         uses: actions/cache/restore@v3
