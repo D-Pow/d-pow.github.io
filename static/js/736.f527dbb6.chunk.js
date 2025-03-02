@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkd_pow_github_io=self.webpackChunkd_pow_github_io||[]).push([[736],{2736:function(s,t,i){s.exports=i.p+"static/assets/fonts/BrushScript.woff"}}]);

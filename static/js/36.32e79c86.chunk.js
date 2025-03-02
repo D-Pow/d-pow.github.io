@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkd_pow_github_io=self.webpackChunkd_pow_github_io||[]).push([[36],{1036:function(s,t,e){s.exports=e.p+"static/assets/night_forest.61beb17b.svg"}}]);

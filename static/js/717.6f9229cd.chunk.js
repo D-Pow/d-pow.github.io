@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkd_pow_github_io=self.webpackChunkd_pow_github_io||[]).push([[717],{2098:function(s,t,e){s.exports=e.p+"static/assets/pdf-icon.a3187e88.svg"}}]);

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkd_pow_github_io=self.webpackChunkd_pow_github_io||[]).push([[835],{1835:function(s,t,e){s.exports=e.p+"static/assets/fonts/BrushScript.eot"}}]);
