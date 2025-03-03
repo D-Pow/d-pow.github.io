@@ -44,7 +44,7 @@ runs:
     - name: Set NodeJS version
       uses: actions/setup-node@v3
       with:
-        node-version: 21
+        node-version: 22
 
     - name: Client Install
       id: client-install
