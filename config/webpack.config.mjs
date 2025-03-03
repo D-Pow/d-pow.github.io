@@ -21,8 +21,8 @@ import {
 } from './utils/index.js';
 import babelConfig from './babel.config.js';
 
-import packageJson from '../package.json' assert { type: 'json' };
-import manifestJson from '../src/manifest.json' assert { type: 'json' };
+import packageJson from '../package.json' with { type: 'json' };
+import manifestJson from '../src/manifest.json' with { type: 'json' };
 
 // TODO Make import aliases available to npm scripts
 //  Best option is likely through ts-node: https://www.npmjs.com/package/ts-node
@@ -492,21 +492,21 @@ function getWebpackConfig(webpackArgs) {
                 patterns: [
                     {
                         from: `${Paths.ROOT.ABS}/package.json`,
-                        to: '[name].[ext]',
+                        to: '[name][ext]',
                     },
                     {
                         from: `${Paths.SRC.REL}/manifest.json`,
-                        to: '[name].[ext]',
+                        to: '[name][ext]',
                     },
                     {
                         from: `${Paths.SRC.REL}/ServiceWorker.js`,
-                        to: '[name].[ext]',
+                        to: '[name][ext]',
                     },
                     {
                         // Ensures CNAME is copied to the build-output dir for gh-pages and similar deployments
                         // CopyWebpackPlugin uses globs, so make CNAME optional via `?(filename)`
                         from: `${Paths.ROOT.ABS}/CNAME`,
-                        to: '[name].[ext]',
+                        to: '[name][ext]',
                         noErrorOnMissing: true,
                     },
                 ],
